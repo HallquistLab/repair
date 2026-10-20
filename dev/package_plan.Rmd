@@ -1,0 +1,55 @@
+---
+title: '`repair` Package Outline'
+author: "Zach Vig"
+date: "2026-10-20"
+output: pdf_document
+---
+
+# Package Plan
+
+The `repair` package will fit regression models among random effect predictions using the 
+REPAIR method (Vig & Hallquist, in prep). It is intended to be "one size fits all"
+in that both level 1 (MLM) and level 2 (regression) models can be specified and 
+fit in a single function call. Summary and print methods will provide appropriate
+information formatted similarly to `lm()`, `lmer()`, and `lavaan()` outputs.
+
+
+# Formula Approach
+
+Both MLM and structural models will be fit using native R formulas. MLM formulas
+will follow the regular `lme4` syntax:
+
+```
+mlm <- y ~ 1 + x + (1 + x|id)
+```
+Structural models will introduce a new, but simple, syntax via the `re()` helper (for
+random effect). This small wrapper will specify the random effect from the first 
+model the user wishes to use as a variable, e.g.:
+```
+struc <- w ~ 1 + re("x")
+```
+where `re("x")` is the random slope from `mlm`, grouped by `id`. Random intercepts
+will be specified using `re("1")`, or `re("Intercept")`.
+
+# Main `repair` Function
+
+The workhorse function of the package will simply be `repair()`. It will take arguments
+specifying one (or more) level 1 formulas, a level 2 formula (possibly more), and data
+for each level. Multiple formulas and datasets will be provided as lists and can be named.
+The output of the function will be of class `repair`.
+
+## Steps
+
+The rough internal steps of the function will be:
+
+1. Validate input types
+2. Parse formulas
+3. Compare formulas to data and ensure all variables are present/not duplicated
+4. Run level 1 models via `lmer` or `lme`
+5. Run M-MOM for structural models
+6. Gather estimates and diagnostics
+7. Create `repair` class object and return
+
+
+
+
