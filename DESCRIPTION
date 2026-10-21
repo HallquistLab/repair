@@ -8,12 +8,13 @@ License: MIT + file LICENSE
 Imports:
     geigen,
     Rcpp,
-    S7
+    S7,
+    cli,
+    rlang
 LinkingTo:
     Rcpp,
     RcppArmadillo
 Suggests: 
-    cli,
     lme4,
     reformulas,
     testthat (>= 3.0.0)

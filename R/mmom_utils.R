@@ -1,37 +1,51 @@
-# Small, shared operations used by the three M-MOM estimation steps.
+# Shared operations used by the three M-MOM estimation steps.
 
+# Fall back to value if first one is NULL
 `%||%` <- function(value, fallback) if (is.null(value)) fallback else value
 
 # Backend and correction-control normalization.
-mmom_backend <- function(backend) {
-  if (length(backend) != 1L || !backend %in% c("auto", "r", "rcpp")) {
-    repair_error("`backend` must be one of `auto`, `r`, or `rcpp`.")
-  }
-  if (backend == "auto") {
-    return(if (exists("mmom_normalize_err_cov_cpp")) "rcpp" else "r")
+mmom_backend <- function(backend, supported = c("auto", "r", "rcpp")) {
+  if (length(backend) > 1L) backend <- backend[[1L]]
+  backend <- tolower(backend)
+  backend <- rlang::arg_match(backend, supported)
+  if (identical(backend, "auto")) {
+    return(if (exists("mmom_normalize_err_x_cpp")) "rcpp" else "r")
   }
   backend
 }
 
+# Parse a control object (for preliminary and final moment corrections)
 mmom_control <- function(control, npredictors, label) {
   if (!is.list(control)) {
-    repair_error(sprintf("`%s` must be a list.", label))
+    repair_error("{label} must be a list.")
   }
-  alpha <- control$alpha %||% (npredictors + 2L)
-  if (!is.numeric(alpha) || length(alpha) != 1L ||
-      !is.finite(alpha) || alpha <= 0) {
-    repair_error(sprintf(
-      "`%s$alpha` must be a finite, positive scalar.", label
-    ))
+  correction <- control$correction %||% "minimum"
+  if (!correction %in% c("none", "minimum", "step_up", "custom")) {
+    repair_error("{label}$correction must be one of `none`, `minimum`, `step_up`, or `custom`.")
+  }
+  
+  if (identical(correction, "none") || identical(correction, "step_up")) {
+    alpha <- NULL
+  } else if (identical(correction, "minimum")) {
+    alpha <- npredictors + 2L
+  } else if (identical(correction, "custom")) {
+    alpha <- control$alpha %||% (npredictors + 2L)
+    if (!is.numeric(alpha) || length(alpha) != 1L ||
+        !is.finite(alpha) || alpha <= 0) {
+      repair_error("{label}$alpha must be a finite, positive scalar.")
+    }
+    if (alpha < npredictors + 2L) {
+      repair_error("{label}$alpha must be greater than or equal to `npredictors + 2`.")
+    }
   }
   list(
-    regularize = isTRUE(control$regularize),
-    alpha = max(alpha, npredictors + 2L)
+    correction = correction,
+    alpha = alpha
   )
 }
 
 mmom_prepare <- function(
-  data_list, preliminary_moment, variance_bread, backend
+  data_list, preliminary_moment_control, final_moment_control, backend
 ) {
   # Coerce the supported row-wise and matrix-style input forms.
   data <- mmom_coerce_data(data_list)
@@ -66,26 +80,26 @@ mmom_prepare <- function(
       )
     )
   }
-  err_cov <- mmom_normalize_err_cov(data$err_cov, nobs, npredictors, backend)
-  err_var <- data$err_var
-  if (is.null(err_var)) err_var <- rep(0, nobs)
-  if (!is.numeric(err_var) || length(err_var) != nobs ||
-      any(!is.finite(err_var)) || any(err_var < 0)) {
+  err_x <- mmom_normalize_err_x(data$err_x, nobs, npredictors, backend)
+  err_y <- data$err_y
+  if (is.null(err_y)) err_y <- rep(0, nobs)
+  if (!is.numeric(err_y) || length(err_y) != nobs ||
+      any(!is.finite(err_y)) || any(err_y < 0)) {
     repair_error(
-      "`err_var` must be a finite, nonnegative vector of length nobs."
+      "`err_y` must be a finite, nonnegative vector of length nobs."
     )
   }
-  err_cross <- mmom_normalize_err_cross(data$err_cross, nobs, npredictors)
+  err_xy <- mmom_normalize_err_xy(data$err_xy, nobs, npredictors)
 
   # Validate the predictor and joint outcome/predictor error blocks.
-  mmom_validate_joint_cov(err_cov, err_var, err_cross, backend)
+  mmom_validate_joint_cov(err_x, err_y, err_xy, backend)
   design <- cbind(`(Intercept)` = 1, predictors)
   list(
     outcome = outcome,
     predictors = predictors,
-    err_cov = err_cov,
-    err_var = err_var,
-    err_cross = err_cross,
+    err_x = err_x,
+    err_y = err_y,
+    err_xy = err_xy,
     design = design,
     design_index = seq_len(npredictors + 1L) + 1L,
     predictor_index = seq.int(2L, npredictors + 1L),
@@ -93,11 +107,11 @@ mmom_prepare <- function(
     npredictors = npredictors,
     ncoef = npredictors + 1L,
     backend = backend,
-    preliminary = mmom_control(
-      preliminary_moment, npredictors, "preliminary_moment"
+    preliminary_moment_control = mmom_control(
+      preliminary_moment_control, npredictors, "preliminary_moment"
     ),
-    variance = mmom_control(
-      variance_bread, npredictors, "variance_bread"
+    final_moment_control = mmom_control(
+      final_moment_control, npredictors, "final_moment"
     )
   )
 }
@@ -111,15 +125,6 @@ mmom_coerce_data <- function(data_list) {
   if (!is.list(data_list)) repair_error("`data_list` must be a list.")
   if (!is.null(data_list$outcome) &&
       !is.null(data_list$predictors)) {
-    return(data_list)
-  }
-  if (!is.null(data_list$y) && !is.null(data_list$x)) {
-    data_list$outcome <- data_list$y
-    data_list$predictors <- data_list$x
-    data_list$err_var <- data_list$err_var %||%
-      data_list$err_var_y %||% data_list$omega_y
-    data_list$err_cross <- data_list$err_cross %||%
-      data_list$err_cov_xy %||% data_list$omega_xy
     return(data_list)
   }
   if (!length(data_list) || !all(vapply(data_list, is.list, logical(1)))) {
@@ -145,24 +150,24 @@ mmom_coerce_data <- function(data_list) {
       numeric(1)
     ),
     predictors = do.call(rbind, predictors),
-    err_cov = lapply(
+    err_x = lapply(
       data_list,
-      function(observation) get_field(observation, c("err_cov", "omega_x"))
+      function(observation) get_field(observation, "err_x")
     ),
-    err_var = vapply(
+    err_y = vapply(
       data_list,
       function(observation) {
         as.numeric(get_field(
-          observation, c("err_var", "err_var_y", "omega_y"), 0
+          observation, c("err_y"), 0
         ))
       },
       numeric(1)
     ),
-    err_cross = {
+    err_xy = {
       values <- lapply(
         data_list,
         function(observation) {
-          get_field(observation, c("err_cross", "err_cov_xy", "omega_xy"))
+          get_field(observation, "err_xy")
         }
       )
       if (all(vapply(values, is.null, logical(1)))) NULL else values
@@ -171,21 +176,20 @@ mmom_coerce_data <- function(data_list) {
 }
 
 # Covariance coercion and positive-semidefinite checks.
-mmom_normalize_err_cov <- function(
-  err_cov, nobs, npredictors, backend, tolerance = 1e-8
+mmom_normalize_err_x <- function(
+  err_x, nobs, npredictors, backend, tolerance = 1e-8
 ) {
-  out <- mmom_coerce_err_cov(err_cov, nobs, npredictors)
+  out <- mmom_coerce_err_x(err_x, nobs, npredictors)
   if (backend == "rcpp") {
     normalized <- mmom_cpp_call(
-      mmom_normalize_err_cov_cpp, out, nobs, npredictors, tolerance
+      mmom_normalize_err_x_cpp, out, nobs, npredictors, tolerance
     )
     if (normalized$bad_row > 0L) {
-      repair_error(sprintf(
-        "`err_cov` is not positive semidefinite for row %d.",
-        normalized$bad_row
-      ))
+      repair_error(
+        "`err_x` is not positive semidefinite for row {normalized$bad_row}.",
+      )
     }
-    return(normalized$err_cov)
+    return(normalized$err_x)
   }
   for (row_index in seq_len(nobs)) {
     out[, , row_index] <- mmom_symmetrize(out[, , row_index])
@@ -194,50 +198,50 @@ mmom_normalize_err_cov <- function(
         diagnostics$min_eigen < -tolerance * max(
           1, abs(diagnostics$max_eigen)
         )) {
-      repair_error(sprintf(
-        "`err_cov` is not positive semidefinite for row %d.", row_index
-      ))
+      repair_error(
+        "`err_x` is not positive semidefinite for row {row_index}."
+      )
     }
   }
   out
 }
 
-mmom_coerce_err_cov <- function(err_cov, nobs, npredictors) {
-  if (is.matrix(err_cov)) {
-    if (!identical(dim(err_cov), c(npredictors, npredictors))) {
+mmom_coerce_err_x <- function(err_x, nobs, npredictors) {
+  if (is.matrix(err_x)) {
+    if (!identical(dim(err_x), c(npredictors, npredictors))) {
       repair_error(
-        "A common `err_cov` matrix must be square with one row per predictor."
+        "A common `err_x` matrix must be square with one row per predictor."
       )
     }
     out <- array(
-      rep(as.numeric(err_cov), nobs),
+      rep(as.numeric(err_x), nobs),
       c(npredictors, npredictors, nobs)
     )
-  } else if (is.array(err_cov) && length(dim(err_cov)) == 3L) {
-    dimensions <- dim(err_cov)
+  } else if (is.array(err_x) && length(dim(err_x)) == 3L) {
+    dimensions <- dim(err_x)
     if (identical(dimensions, c(npredictors, npredictors, nobs))) {
-      out <- err_cov
+      out <- err_x
     } else if (identical(dimensions, c(nobs, npredictors, npredictors))) {
-      out <- aperm(err_cov, c(2, 3, 1))
+      out <- aperm(err_x, c(2, 3, 1))
     } else {
       repair_error(
         paste(
-          "`err_cov` must be npredictors by npredictors by nobs or",
+          "`err_x` must be npredictors by npredictors by nobs or",
           "nobs by npredictors by npredictors."
         )
       )
     }
-  } else if (is.list(err_cov)) {
-    if (length(err_cov) != nobs) {
-      repair_error("An `err_cov` list must have length nobs.")
+  } else if (is.list(err_x)) {
+    if (length(err_x) != nobs) {
+      repair_error("An `err_x` list must have length nobs.")
     }
     out <- array(NA_real_, c(npredictors, npredictors, nobs))
     for (row_index in seq_len(nobs)) {
-      block <- as.matrix(err_cov[[row_index]])
+      block <- as.matrix(err_x[[row_index]])
       if (!identical(dim(block), c(npredictors, npredictors))) {
         repair_error(
           paste(
-            "Every `err_cov` block must be square with",
+            "Every `err_x` block must be square with",
             "one row per predictor."
           )
         )
@@ -247,72 +251,141 @@ mmom_coerce_err_cov <- function(err_cov, nobs, npredictors) {
   } else {
     repair_error(
       paste(
-        "`err_cov` must be a matrix, three-dimensional array,",
+        "`err_x` must be a matrix, three-dimensional array,",
         "or list of matrices."
       )
     )
   }
   if (any(!is.finite(out))) {
-    repair_error("`err_cov` contains non-finite values.")
+    repair_error("`err_x` contains non-finite values.")
   }
   out
 }
 
-mmom_normalize_err_cross <- function(err_cross, nobs, npredictors) {
-  if (is.null(err_cross)) {
-    return(matrix(0, nobs, npredictors))
+mmom_normalize_err_xy <- function(err_xy, nobs, npredictors) {
+  if (is.null(err_xy)) {
+    return(matrix(
+      0,
+      nrow = nobs,
+      ncol = npredictors
+    ))
   }
-  if (is.vector(err_cross) && length(err_cross) == npredictors) {
-    return(matrix(rep(err_cross, each = nobs), nobs, npredictors))
-  }
-  err_cross <- as.matrix(err_cross)
-  if (!identical(dim(err_cross), c(nobs, npredictors))) {
+  mmom_coerce_err_xy(
+    err_xy = err_xy,
+    nobs = nobs,
+    npredictors = npredictors
+  )
+}
+
+mmom_coerce_err_xy <- function(err_xy, nobs, npredictors) {
+  if (is.numeric(err_xy) && is.null(dim(err_xy))) {
+    if (length(err_xy) != npredictors) {
+      repair_error(
+        "`err_xy` must have length npredictors."
+      )
+    }
+    out <- matrix(
+      rep(err_xy, each = nobs),
+      nrow = nobs,
+      ncol = npredictors
+    )
+  } else if (is.matrix(err_xy)) {
+    dimensions <- dim(err_xy)
+    if (identical(dimensions, c(npredictors, 1L))) {
+      out <- matrix(
+        rep(as.numeric(err_xy), each = nobs),
+        nrow = nobs,
+        ncol = npredictors
+      )
+    } else if (identical(dimensions, c(nobs, npredictors))) {
+      out <- err_xy
+    } else {
+      repair_error(
+        paste(
+          "`err_xy` must be length npredictors,",
+          "npredictors by 1, or nobs by npredictors."
+        )
+      )
+    }
+  } else if (is.list(err_xy)) {
+    if (length(err_xy) != nobs) {
+      repair_error(
+        "An `err_xy` list must have length nobs."
+      )
+    }
+    out <- matrix(
+      NA_real_,
+      nrow = nobs,
+      ncol = npredictors
+    )
+    for (row_index in seq_len(nobs)) {
+      block <- err_xy[[row_index]]
+      if (is.matrix(block)) {
+        if (!identical(dim(block), c(npredictors, 1L))) {
+          repair_error(
+            paste(
+              "Every `err_xy` matrix must have dimensions",
+              "npredictors by 1."
+            )
+          )
+        }
+        block <- as.numeric(block)
+      } else {
+        block <- as.numeric(block)
+        if (length(block) != npredictors) {
+          repair_error(
+            paste(
+              "Every `err_xy` element must have length",
+              "npredictors."
+            )
+          )
+        }
+      }
+      out[row_index, ] <- block
+    }
+  } else {
     repair_error(
       paste(
-        "`err_cross` must be length npredictors or an",
-        "nobs by npredictors matrix."
+        "`err_xy` must be a numeric vector, matrix,",
+        "or list of vectors or matrices."
       )
     )
   }
-  if (any(!is.finite(err_cross))) {
-    repair_error("`err_cross` contains non-finite values.")
+  if (any(!is.finite(out))) {
+    repair_error("`err_xy` contains non-finite values.")
   }
-  err_cross
+  out
 }
 
+
 mmom_validate_joint_cov <- function(
-  err_cov, err_var, err_cross, backend, tolerance = 1e-8
+  err_x, err_y, err_xy, backend, tolerance = 1e-8
 ) {
   if (backend == "rcpp") {
     bad_row <- mmom_cpp_call(
       mmom_joint_err_cov_bad_row_cpp,
-      err_cov,
-      err_var,
-      err_cross,
+      err_x,
+      err_y,
+      err_xy,
       tolerance
     )
     if (bad_row > 0L) {
-      repair_error(sprintf(
-        "The joint measurement-error covariance is not PSD for row %d.",
-        bad_row
-      ))
+      repair_error("The joint measurement-error covariance is not PSD for row {bad_row}.")
     }
     return(invisible(NULL))
   }
-  for (row_index in seq_along(err_var)) {
+  for (row_index in seq_along(err_y)) {
     joint <- rbind(
-      c(err_var[[row_index]], err_cross[row_index, ]),
-      cbind(err_cross[row_index, ], err_cov[, , row_index])
+      c(err_y[[row_index]], err_xy[row_index, ]),
+      cbind(err_xy[row_index, ], err_x[, , row_index])
     )
     diagnostics <- mmom_matrix_diagnostics(joint)
     if (!is.finite(diagnostics$min_eigen) ||
         diagnostics$min_eigen < -tolerance * max(
           1, abs(diagnostics$max_eigen)
         )) {
-      repair_error(sprintf(
-        "The joint measurement-error covariance is not PSD for row %d.",
-        row_index
-      ))
+      repair_error(
+        "The joint measurement-error covariance is not PSD for row {row_index}.")
     }
   }
 }
@@ -357,6 +430,11 @@ mmom_smallest_det_root <- function(left, right) {
   if (!requireNamespace("geigen", quietly = TRUE)) {
     repair_error("The `geigen` package is required for M-MOM estimation.")
   }
+  # Roots solve det(a - lambda * b) = 0. The error-free intercept makes b
+  # singular, so the solver must permit positive-semidefinite b; its symmetric
+  # mode requires positive definiteness. Ignore infinite roots and numerical
+  # imaginary noise. NA means no usable finite root and selects the alpha-only
+  # correction branch in the caller, matching the established R estimator.
   roots <- tryCatch(
     geigen::geigen(
       left, right, symmetric = FALSE, only.values = TRUE
@@ -381,55 +459,55 @@ mmom_smallest_det_root <- function(left, right) {
   if (length(roots)) min(roots) else NA_real_
 }
 
-mmom_weighted_err_cov_sum <- function(err_cov, weights, backend) {
+mmom_weighted_err_cov_sum <- function(err_x, weights, backend) {
   if (backend == "rcpp") {
     return(mmom_symmetrize(mmom_cpp_call(
-      mmom_weighted_err_cov_sum_cpp, err_cov, weights
+      mmom_weighted_err_cov_sum_cpp, err_x, weights
     )))
   }
-  result <- matrix(0, dim(err_cov)[1L], dim(err_cov)[2L])
-  for (row_index in seq_len(dim(err_cov)[3L])) {
-    result <- result + weights[[row_index]] * err_cov[, , row_index]
+  result <- matrix(0, dim(err_x)[1L], dim(err_x)[2L])
+  for (row_index in seq_len(dim(err_x)[3L])) {
+    result <- result + weights[[row_index]] * err_x[, , row_index]
   }
   mmom_symmetrize(result)
 }
 
 # Moment construction, residual variance, and sandwich components.
-mmom_error_moment <- function(err_cov_sum, err_var_sum, err_cross_sum) {
-  nvars <- nrow(err_cov_sum) + 1L
+mmom_error_moment <- function(err_x_sum, err_y_sum, err_xy_sum) {
+  nvars <- nrow(err_x_sum) + 1L
   moment <- matrix(0, nvars + 1L, nvars + 1L)
-  moment[1, 1] <- err_var_sum
-  moment[1, 2:(nvars + 1L)] <- err_cross_sum
-  moment[2:(nvars + 1L), 1] <- err_cross_sum
+  moment[1, 1] <- err_y_sum
+  moment[1, 2:(nvars + 1L)] <- err_xy_sum
+  moment[2:(nvars + 1L), 1] <- err_xy_sum
 
   # The intercept is measured without error.
   moment[2:(nvars + 1L), 2:(nvars + 1L)] <- {
     predictor_block <- matrix(0, nvars, nvars)
-    predictor_block[-1L, -1L] <- err_cov_sum
+    predictor_block[-1L, -1L] <- err_x_sum
     predictor_block
   }
   moment
 }
 
-mmom_composite_err_var <- function(inputs, coef_predictors) {
+mmom_composite_err_y <- function(inputs, coef_predictors) {
   if (inputs$backend == "rcpp") {
     # The native path replaces the row-wise covariance loop.
     cov_times_coef <- mmom_cpp_call(
-      mmom_err_cov_matvec_cpp, inputs$err_cov, coef_predictors
+      mmom_err_cov_matvec_cpp, inputs$err_x, coef_predictors
     )
     repeated_coef <- rep(coef_predictors, each = inputs$nobs)
     return(
-      inputs$err_var -
-        2 * rowSums(inputs$err_cross * repeated_coef) +
+      inputs$err_y -
+        2 * rowSums(inputs$err_xy * repeated_coef) +
         rowSums(cov_times_coef * repeated_coef)
     )
   }
   vapply(seq_len(inputs$nobs), function(row_index) {
-    inputs$err_var[[row_index]] -
-      2 * sum(coef_predictors * inputs$err_cross[row_index, ]) +
+    inputs$err_y[[row_index]] -
+      2 * sum(coef_predictors * inputs$err_xy[row_index, ]) +
       as.numeric(crossprod(
         coef_predictors,
-        inputs$err_cov[, , row_index] %*% coef_predictors
+        inputs$err_x[, , row_index] %*% coef_predictors
       ))
   }, numeric(1))
 }
@@ -439,8 +517,8 @@ mmom_tilde_crossprod <- function(inputs, coef_predictors, case_weight) {
     # The native path replaces the row-wise variance loop.
     return(mmom_cpp_call(
       mmom_tilde_crossprod_cpp,
-      inputs$err_cov,
-      inputs$err_cross,
+      inputs$err_x,
+      inputs$err_xy,
       coef_predictors,
       case_weight
     ))
@@ -448,8 +526,8 @@ mmom_tilde_crossprod <- function(inputs, coef_predictors, case_weight) {
   tilde <- matrix(0, inputs$nobs, inputs$ncoef)
   for (row_index in seq_len(inputs$nobs)) {
     tilde[row_index, inputs$predictor_index] <-
-      inputs$err_cross[row_index, ] -
-      inputs$err_cov[, , row_index] %*% coef_predictors
+      inputs$err_xy[row_index, ] -
+      inputs$err_x[, , row_index] %*% coef_predictors
   }
   crossprod(tilde * case_weight)
 }
@@ -471,7 +549,6 @@ mmom_solve <- function(left, right, step, failure_message, tolerance = 1e-10) {
       list(solver = "qr", dimensions = dim(left))
     ))
   }
-
   qr_left <- qr(left, tol = tolerance, LAPACK = FALSE)
   rank <- qr_left$rank
   condition_number <- tryCatch(
@@ -490,7 +567,6 @@ mmom_solve <- function(left, right, step, failure_message, tolerance = 1e-10) {
       )
     ))
   }
-
   result <- tryCatch(
     qr.coef(qr_left, right),
     error = function(e) NULL
@@ -541,13 +617,13 @@ mmom_is_failure <- function(value) {
 }
 
 mmom_failure <- function(step, message, diagnostics = list()) {
-  mmom_fit(
+  class_mmom_fit(
     converged = FALSE,
     status_code = 1L,
     message = paste(step, message, sep = ": "),
     coefficients = NULL,
     vcov = NULL,
-    preliminary_coefficients = NULL,
+    preliminary_coef = NULL,
     corrected_design_moment = NULL,
     analysis_weights = NULL,
     diagnostics = c(list(step = step, reason = message), diagnostics)

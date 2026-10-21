@@ -6,8 +6,8 @@
 \usage{
 fit_mmom(
   data_list,
-  preliminary_moment = list(regularize = FALSE, alpha = NULL),
-  variance_bread = list(regularize = FALSE, alpha = NULL),
+  preliminary_moment_control = list(correction = "minimum", alpha = NULL),
+  final_moment_control = list(correction = "minimum", alpha = NULL),
   backend = c("auto", "r", "rcpp")
 )
 }
@@ -15,14 +15,14 @@ fit_mmom(
 \item{data_list}{Level-2 observations or a normalized list containing
 \code{y}, \code{predictors}, and \code{err_cov}.}
 
-\item{preliminary_moment}{Correction controls with \code{regularize} and \code{alpha}.}
+\item{preliminary_moment_control}{Correction controls with \code{correction} and \code{alpha}.}
 
-\item{variance_bread}{Correction controls for the variance bread.}
+\item{final_moment_control}{Correction controls with \code{correction} and \code{alpha}.}
 
 \item{backend}{Computation backend: \code{"auto"}, \code{"r"}, or \code{"rcpp"}.}
 }
 \value{
-An S7 \code{mmom_fit} object. Numerical failures use the same class.
+An S7 \code{class_mmom_fit} object. Numerical failures use the same class.
 }
 \description{
 Fit the stabilized M-MOM structural model.

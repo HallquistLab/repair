@@ -38,16 +38,16 @@ bool matrix_is_psd(const arma::mat& matrix, double tolerance) {
 }
 
 // [[Rcpp::export]]
-List mmom_normalize_err_cov_cpp(
-    NumericVector err_cov,
+List mmom_normalize_err_x_cpp(
+    NumericVector err_x,
     int nobs,
     int npredictors,
     double tolerance = 1e-8) {
-  const IntegerVector dimensions = err_cov.attr("dim");
+  const IntegerVector dimensions = err_x.attr("dim");
   const bool common_matrix = dimensions.size() == 2;
   if (common_matrix) {
     if (dimensions[0] != npredictors || dimensions[1] != npredictors) {
-      stop("Internal error: common err_cov must be a q by q matrix.");
+      stop("Internal error: common err_x must be a q by q matrix.");
     }
   } else {
     check_err_cov_dimensions(dimensions, nobs, npredictors);
@@ -55,7 +55,7 @@ List mmom_normalize_err_cov_cpp(
 
   NumericVector normalized = common_matrix
       ? NumericVector(static_cast<R_xlen_t>(npredictors) * npredictors * nobs)
-      : clone(err_cov);
+      : clone(err_x);
   arma::mat row_covariance(npredictors, npredictors);
   int bad_row = 0;
   const int matrices_to_validate = common_matrix ? 1 : nobs;
@@ -69,10 +69,10 @@ List mmom_normalize_err_cov_cpp(
           ++predictor_index
         ) {
         const double value = 0.5 * (
-          err_cov[
+          err_x[
             source_offset + predictor_index + npredictors * column_index
           ] +
-          err_cov[
+          err_x[
             source_offset + column_index + npredictors * predictor_index
           ]
         );
@@ -111,42 +111,42 @@ List mmom_normalize_err_cov_cpp(
   normalized.attr("dim") = IntegerVector::create(
       npredictors, npredictors, nobs
   );
-  return List::create(_["err_cov"] = normalized, _["bad_row"] = bad_row);
+  return List::create(_["err_x"] = normalized, _["bad_row"] = bad_row);
 }
 
 // [[Rcpp::export]]
 int mmom_joint_err_cov_bad_row_cpp(
-    const NumericVector& err_cov,
-    const NumericVector& err_var_y,
-    const NumericMatrix& err_cov_xy,
+    const NumericVector& err_x,
+    const NumericVector& err_y,
+    const NumericMatrix& err_xy,
     double tolerance = 1e-8) {
-  const IntegerVector dimensions = err_cov.attr("dim");
+  const IntegerVector dimensions = err_x.attr("dim");
   if (dimensions.size() != 3) {
-    stop("Internal error: err_cov must be a q by q by n array.");
+    stop("Internal error: err_x must be a q by q by n array.");
   }
   const int npredictors = dimensions[0];
   const int nobs = dimensions[2];
   check_err_cov_dimensions(dimensions, nobs, npredictors);
-  if (err_var_y.size() != nobs || err_cov_xy.nrow() != nobs ||
-      err_cov_xy.ncol() != npredictors) {
+  if (err_y.size() != nobs || err_xy.nrow() != nobs ||
+      err_xy.ncol() != npredictors) {
     stop("Internal error: joint measurement-error inputs are not aligned.");
   }
 
   arma::mat joint(npredictors + 1, npredictors + 1, arma::fill::zeros);
   for (int row_index = 0; row_index < nobs; ++row_index) {
     joint.zeros();
-    joint(0, 0) = err_var_y[row_index];
+    joint(0, 0) = err_y[row_index];
     const R_xlen_t offset =
       static_cast<R_xlen_t>(row_index) * npredictors * npredictors;
     for (int column_index = 0; column_index < npredictors; ++column_index) {
-      joint(0, column_index + 1) = err_cov_xy(row_index, column_index);
-      joint(column_index + 1, 0) = err_cov_xy(row_index, column_index);
+      joint(0, column_index + 1) = err_xy(row_index, column_index);
+      joint(column_index + 1, 0) = err_xy(row_index, column_index);
         for (
           int predictor_index = 0;
           predictor_index < npredictors;
           ++predictor_index
         ) {
-        joint(predictor_index + 1, column_index + 1) = err_cov[
+        joint(predictor_index + 1, column_index + 1) = err_x[
           offset + predictor_index + npredictors * column_index
         ];
       }
@@ -158,17 +158,17 @@ int mmom_joint_err_cov_bad_row_cpp(
 
 // [[Rcpp::export]]
 NumericMatrix mmom_weighted_err_cov_sum_cpp(
-    const NumericVector& err_cov,
+    const NumericVector& err_x,
     const NumericVector& weights) {
-  const IntegerVector dimensions = err_cov.attr("dim");
+  const IntegerVector dimensions = err_x.attr("dim");
   if (dimensions.size() != 3) {
-    stop("Internal error: err_cov must be a q by q by n array.");
+    stop("Internal error: err_x must be a q by q by n array.");
   }
   const int npredictors = dimensions[0];
   const int nobs = dimensions[2];
   check_err_cov_dimensions(dimensions, nobs, npredictors);
   if (weights.size() != nobs) {
-    stop("Internal error: err_cov and weights are not aligned.");
+    stop("Internal error: err_x and weights are not aligned.");
   }
 
   NumericMatrix result(npredictors, npredictors);
@@ -182,7 +182,7 @@ NumericMatrix mmom_weighted_err_cov_sum_cpp(
           ++predictor_index
         ) {
         result(predictor_index, column_index) += weights[row_index] *
-          err_cov[offset + predictor_index + npredictors * column_index];
+          err_x[offset + predictor_index + npredictors * column_index];
       }
     }
   }
@@ -191,17 +191,17 @@ NumericMatrix mmom_weighted_err_cov_sum_cpp(
 
 // [[Rcpp::export]]
 NumericMatrix mmom_err_cov_matvec_cpp(
-    const NumericVector& err_cov,
+    const NumericVector& err_x,
   const NumericVector& predictor_coef) {
-  const IntegerVector dimensions = err_cov.attr("dim");
+  const IntegerVector dimensions = err_x.attr("dim");
   if (dimensions.size() != 3) {
-    stop("Internal error: err_cov must be a q by q by n array.");
+    stop("Internal error: err_x must be a q by q by n array.");
   }
   const int npredictors = dimensions[0];
   const int nobs = dimensions[2];
   check_err_cov_dimensions(dimensions, nobs, npredictors);
   if (predictor_coef.size() != npredictors) {
-    stop("Internal error: err_cov and predictor_coef are not conformable.");
+    stop("Internal error: err_x and predictor_coef are not conformable.");
   }
 
   NumericMatrix result(nobs, npredictors);
@@ -215,7 +215,7 @@ NumericMatrix mmom_err_cov_matvec_cpp(
     ) {
       double value = 0.0;
       for (int column_index = 0; column_index < npredictors; ++column_index) {
-        value += err_cov[
+        value += err_x[
           offset + predictor_index + npredictors * column_index
         ] * predictor_coef[column_index];
       }
@@ -227,13 +227,13 @@ NumericMatrix mmom_err_cov_matvec_cpp(
 
 // [[Rcpp::export]]
 NumericMatrix mmom_tilde_crossprod_cpp(
-    const NumericVector& err_cov,
-    const NumericMatrix& err_cov_xy,
+    const NumericVector& err_x,
+    const NumericMatrix& err_xy,
     const NumericVector& coef_x,
     const NumericVector& inverse_case_variance) {
-  const int nobs = err_cov_xy.nrow();
-  const int npredictors = err_cov_xy.ncol();
-  const IntegerVector dimensions = err_cov.attr("dim");
+  const int nobs = err_xy.nrow();
+  const int npredictors = err_xy.ncol();
+  const IntegerVector dimensions = err_x.attr("dim");
   check_err_cov_dimensions(dimensions, nobs, npredictors);
   if (coef_x.size() != npredictors || inverse_case_variance.size() != nobs) {
     stop("Internal error: variance-kernel inputs are not aligned.");
@@ -249,9 +249,9 @@ NumericMatrix mmom_tilde_crossprod_cpp(
       predictor_index < npredictors;
       ++predictor_index
     ) {
-      double value = err_cov_xy(row_index, predictor_index);
+      double value = err_xy(row_index, predictor_index);
       for (int column_index = 0; column_index < npredictors; ++column_index) {
-        value -= err_cov[
+        value -= err_x[
           offset + predictor_index + npredictors * column_index
         ] * coef_x[column_index];
       }

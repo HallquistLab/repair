@@ -10,6 +10,6 @@ repair <- function(f_mlm, f_struc, data) {
   struc_data <- build_struc_data(mlm_fit, parsed_struc_form, data)
   struc_fit <- run_struc(parsed_struc_form, struc_data)
 
-  repairMod(mlm_fit, struc_fit)
+  class_repair_mod(mlm_fit, struc_fit)
 
 }

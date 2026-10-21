@@ -1,1 +1,1 @@
-# this file will contain the machinery for summary(repairMod) and pretty printing of the results
+# this file will contain the machinery for summary(class_repair_mod) and pretty printing of the results

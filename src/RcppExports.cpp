@@ -11,75 +11,75 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// mmom_normalize_err_cov_cpp
-List mmom_normalize_err_cov_cpp(NumericVector err_cov, int nobs, int npredictors, double tolerance);
-RcppExport SEXP _repair_mmom_normalize_err_cov_cpp(SEXP err_covSEXP, SEXP nobsSEXP, SEXP npredictorsSEXP, SEXP toleranceSEXP) {
+// mmom_normalize_err_x_cpp
+List mmom_normalize_err_x_cpp(NumericVector err_x, int nobs, int npredictors, double tolerance);
+RcppExport SEXP _repair_mmom_normalize_err_x_cpp(SEXP err_xSEXP, SEXP nobsSEXP, SEXP npredictorsSEXP, SEXP toleranceSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type err_cov(err_covSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type err_x(err_xSEXP);
     Rcpp::traits::input_parameter< int >::type nobs(nobsSEXP);
     Rcpp::traits::input_parameter< int >::type npredictors(npredictorsSEXP);
     Rcpp::traits::input_parameter< double >::type tolerance(toleranceSEXP);
-    rcpp_result_gen = Rcpp::wrap(mmom_normalize_err_cov_cpp(err_cov, nobs, npredictors, tolerance));
+    rcpp_result_gen = Rcpp::wrap(mmom_normalize_err_x_cpp(err_x, nobs, npredictors, tolerance));
     return rcpp_result_gen;
 END_RCPP
 }
 // mmom_joint_err_cov_bad_row_cpp
-int mmom_joint_err_cov_bad_row_cpp(const NumericVector& err_cov, const NumericVector& err_var_y, const NumericMatrix& err_cov_xy, double tolerance);
-RcppExport SEXP _repair_mmom_joint_err_cov_bad_row_cpp(SEXP err_covSEXP, SEXP err_var_ySEXP, SEXP err_cov_xySEXP, SEXP toleranceSEXP) {
+int mmom_joint_err_cov_bad_row_cpp(const NumericVector& err_x, const NumericVector& err_y, const NumericMatrix& err_xy, double tolerance);
+RcppExport SEXP _repair_mmom_joint_err_cov_bad_row_cpp(SEXP err_xSEXP, SEXP err_ySEXP, SEXP err_xySEXP, SEXP toleranceSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type err_cov(err_covSEXP);
-    Rcpp::traits::input_parameter< const NumericVector& >::type err_var_y(err_var_ySEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type err_cov_xy(err_cov_xySEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type err_x(err_xSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type err_y(err_ySEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type err_xy(err_xySEXP);
     Rcpp::traits::input_parameter< double >::type tolerance(toleranceSEXP);
-    rcpp_result_gen = Rcpp::wrap(mmom_joint_err_cov_bad_row_cpp(err_cov, err_var_y, err_cov_xy, tolerance));
+    rcpp_result_gen = Rcpp::wrap(mmom_joint_err_cov_bad_row_cpp(err_x, err_y, err_xy, tolerance));
     return rcpp_result_gen;
 END_RCPP
 }
 // mmom_weighted_err_cov_sum_cpp
-NumericMatrix mmom_weighted_err_cov_sum_cpp(const NumericVector& err_cov, const NumericVector& weights);
-RcppExport SEXP _repair_mmom_weighted_err_cov_sum_cpp(SEXP err_covSEXP, SEXP weightsSEXP) {
+NumericMatrix mmom_weighted_err_cov_sum_cpp(const NumericVector& err_x, const NumericVector& weights);
+RcppExport SEXP _repair_mmom_weighted_err_cov_sum_cpp(SEXP err_xSEXP, SEXP weightsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type err_cov(err_covSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type err_x(err_xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type weights(weightsSEXP);
-    rcpp_result_gen = Rcpp::wrap(mmom_weighted_err_cov_sum_cpp(err_cov, weights));
+    rcpp_result_gen = Rcpp::wrap(mmom_weighted_err_cov_sum_cpp(err_x, weights));
     return rcpp_result_gen;
 END_RCPP
 }
 // mmom_err_cov_matvec_cpp
-NumericMatrix mmom_err_cov_matvec_cpp(const NumericVector& err_cov, const NumericVector& predictor_coef);
-RcppExport SEXP _repair_mmom_err_cov_matvec_cpp(SEXP err_covSEXP, SEXP predictor_coefSEXP) {
+NumericMatrix mmom_err_cov_matvec_cpp(const NumericVector& err_x, const NumericVector& predictor_coef);
+RcppExport SEXP _repair_mmom_err_cov_matvec_cpp(SEXP err_xSEXP, SEXP predictor_coefSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type err_cov(err_covSEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type err_x(err_xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type predictor_coef(predictor_coefSEXP);
-    rcpp_result_gen = Rcpp::wrap(mmom_err_cov_matvec_cpp(err_cov, predictor_coef));
+    rcpp_result_gen = Rcpp::wrap(mmom_err_cov_matvec_cpp(err_x, predictor_coef));
     return rcpp_result_gen;
 END_RCPP
 }
 // mmom_tilde_crossprod_cpp
-NumericMatrix mmom_tilde_crossprod_cpp(const NumericVector& err_cov, const NumericMatrix& err_cov_xy, const NumericVector& coef_x, const NumericVector& inverse_case_variance);
-RcppExport SEXP _repair_mmom_tilde_crossprod_cpp(SEXP err_covSEXP, SEXP err_cov_xySEXP, SEXP coef_xSEXP, SEXP inverse_case_varianceSEXP) {
+NumericMatrix mmom_tilde_crossprod_cpp(const NumericVector& err_x, const NumericMatrix& err_xy, const NumericVector& coef_x, const NumericVector& inverse_case_variance);
+RcppExport SEXP _repair_mmom_tilde_crossprod_cpp(SEXP err_xSEXP, SEXP err_xySEXP, SEXP coef_xSEXP, SEXP inverse_case_varianceSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const NumericVector& >::type err_cov(err_covSEXP);
-    Rcpp::traits::input_parameter< const NumericMatrix& >::type err_cov_xy(err_cov_xySEXP);
+    Rcpp::traits::input_parameter< const NumericVector& >::type err_x(err_xSEXP);
+    Rcpp::traits::input_parameter< const NumericMatrix& >::type err_xy(err_xySEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type coef_x(coef_xSEXP);
     Rcpp::traits::input_parameter< const NumericVector& >::type inverse_case_variance(inverse_case_varianceSEXP);
-    rcpp_result_gen = Rcpp::wrap(mmom_tilde_crossprod_cpp(err_cov, err_cov_xy, coef_x, inverse_case_variance));
+    rcpp_result_gen = Rcpp::wrap(mmom_tilde_crossprod_cpp(err_x, err_xy, coef_x, inverse_case_variance));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_repair_mmom_normalize_err_cov_cpp", (DL_FUNC) &_repair_mmom_normalize_err_cov_cpp, 4},
+    {"_repair_mmom_normalize_err_x_cpp", (DL_FUNC) &_repair_mmom_normalize_err_x_cpp, 4},
     {"_repair_mmom_joint_err_cov_bad_row_cpp", (DL_FUNC) &_repair_mmom_joint_err_cov_bad_row_cpp, 4},
     {"_repair_mmom_weighted_err_cov_sum_cpp", (DL_FUNC) &_repair_mmom_weighted_err_cov_sum_cpp, 2},
     {"_repair_mmom_err_cov_matvec_cpp", (DL_FUNC) &_repair_mmom_err_cov_matvec_cpp, 2},
