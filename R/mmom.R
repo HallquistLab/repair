@@ -5,18 +5,6 @@
 #' @param preliminary_moment_control Correction controls with `correction` and `alpha`.
 #' @param final_moment_control Correction controls with `correction` and `alpha`.
 #' @param backend Computation backend: `"auto"`, `"r"`, or `"rcpp"`.
-#' @details
-#' Inputs must be likelihood-only scores and their additive sampling-error
-#' covariances, not raw BLUPs or posterior BLUP covariances. Error-free observed
-#' variables have zero sampling-error variances and covariances.
-#'
-#' Standard errors use the final modified predictor moment matrix on both sides
-#' of the model-based covariance expression, matching the manuscript's M-MOM
-#' appendix and the primary (`"stabilized"`) REPAIR simulation estimator. The
-#' covariance meat uses the preliminary coefficients and squared inverse
-#' case-variance weights. This calculation assumes normal errors and conditions
-#' on the estimated first-stage quantities; it does not propagate their
-#' estimation uncertainty. Confidence intervals are normal-based 95% intervals.
 #' @return An S7 `class_mmom_fit` object. Numerical failures use the same class.
 #' @export
 fit_mmom <- function(data_list,
@@ -268,12 +256,6 @@ mmom_step3 <- function(inputs, case_weight) {
 
 # Compute the conditional model-based coefficient covariance.
 mmom_step_se <- function(inputs, step1, step2, step3) {
-  # REPAIR uses the same modified final predictor moment for the point estimate
-  # and variance bread (S_2x* in the manuscript; variance_bread = "modified"
-  # in the simulation code). Fully subtracting the error moment here instead
-  # implements a different, unregularized covariance estimator.
-  # The tilde term uses the preliminary slopes and squared inverse case weights.
-  # Dividing the bread by n and the covariance by n^2 cancels the normalization.
   bread <- step3@coef_moment
   bread_inverse_solve <- repair_solve(
     bread / inputs$nobs, diag(inputs$ncoef),
@@ -315,8 +297,6 @@ mmom_step_se <- function(inputs, step1, step2, step3) {
     coef_vcov = coef_vcov,
     diagnostics = list(
       bread_solver = bread_diagnostics$solver,
-      variance_bread = "modified",
-      conditional_on_stage1 = TRUE,
       covariance_dimension = nrow(coef_vcov)
     )
   )
@@ -361,8 +341,6 @@ construct_mmom_fit <- function(inputs, step1, step2, step3, step_se, alpha = 0.0
       correction_prelim = step1@correction_prelim,
       correction_final = step3@correction_final,
       resid_var = step2@resid_var,
-      variance_bread = "modified",
-      conditional_on_stage1 = TRUE,
       preliminary_moment_control = inputs$preliminary_moment_control,
       final_moment_control = inputs$final_moment_control
     )
@@ -378,15 +356,6 @@ construct_mmom_fit <- function(inputs, step1, step2, step3, step_se, alpha = 0.0
 #' @param mlm An `lme4::lmer()` Gaussian model with one grouping factor and
 #'   finite, positive prior weights.
 #' @param method Scoring method. `"direct"` is currently implemented.
-#' @details A singular estimated random-effect covariance does not prevent
-#'   direct scoring. A cluster's random-effect design must have full column
-#'   rank. Numerical failures leave that cluster's scores and covariances
-#'   missing, issue a warning, and are recorded in `diagnostics$failed_clusters`
-#'   and `diagnostics$clusters`. Unexpected programming errors are not suppressed.
-#' @return A list containing `success`, cluster-level `estimates`, and additive
-#'   sampling-error covariance blocks in `err_cov` (`score_cov` is an alias).
-#'   Scores are deviations from the fitted fixed effects, not total individual
-#'   coefficients. `success` is true only when all clusters were scored.
 #' @export
 ranef_like <- function(mlm, method = c("direct", "unshrink")) {
   method <- match.arg(method)

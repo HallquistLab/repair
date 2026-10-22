@@ -24,8 +24,6 @@ for (case_name in names(reference$cases)) {
         rownames(focal) <- NULL
         expect_equal(focal, fixture$simulation_focal, tolerance = 1e-8)
         expect_equal(focal, fixture$independent_audit_focal, tolerance = 1e-8)
-        expect_identical(fit@diagnostics$variance_bread, 'modified')
-        expect_true(fit@diagnostics$conditional_on_stage1)
       }
     })
   })
