@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmom.R
 \name{fit_mmom}
 \alias{fit_mmom}
-\title{Fit the stabilized M-MOM structural model.}
+\title{Internal fitting function for the M-MOM structural model.}
 \usage{
 fit_mmom(
   data_list,
@@ -12,8 +12,8 @@ fit_mmom(
 )
 }
 \arguments{
-\item{data_list}{Level-2 observations or a normalized list containing
-\code{y}, \code{predictors}, and \code{err_cov}.}
+\item{data_list}{A list. Each element should correspond to an observation and itself
+be a list with fields \code{outcome}, \code{predictors}, \code{err_x}, \code{err_y}, and \code{err_xy}.}
 
 \item{preliminary_moment_control}{Correction controls with \code{correction} and \code{alpha}.}
 
@@ -25,5 +25,5 @@ fit_mmom(
 An S7 \code{class_mmom_fit} object. Numerical failures use the same class.
 }
 \description{
-Fit the stabilized M-MOM structural model.
+Internal fitting function for the M-MOM structural model.
 }

@@ -1,8 +1,5 @@
 # Shared operations used by the three M-MOM estimation steps.
 
-# Fall back to value if first one is NULL
-`%||%` <- function(value, fallback) if (is.null(value)) fallback else value
-
 # Backend and correction-control normalization.
 mmom_backend <- function(backend, supported = c("auto", "r", "rcpp")) {
   if (length(backend) > 1L) backend <- backend[[1L]]
@@ -538,76 +535,6 @@ mmom_correction <- function(lambda, nobs, alpha) {
   } else {
     1 - alpha / nobs
   }
-}
-
-mmom_solve <- function(left, right, step, failure_message, tolerance = 1e-10) {
-  left <- as.matrix(left)
-  if (nrow(left) != ncol(left)) {
-    return(mmom_failure(
-      step,
-      "The solver matrix was not square.",
-      list(solver = "qr", dimensions = dim(left))
-    ))
-  }
-  qr_left <- qr(left, tol = tolerance, LAPACK = FALSE)
-  rank <- qr_left$rank
-  condition_number <- tryCatch(
-    kappa(left, exact = TRUE),
-    error = function(e) Inf
-  )
-  if (rank < ncol(left)) {
-    return(mmom_failure(
-      step,
-      failure_message,
-      list(
-        solver = "qr",
-        rank = rank,
-        dimension = ncol(left),
-        condition_number = condition_number
-      )
-    ))
-  }
-  result <- tryCatch(
-    qr.coef(qr_left, right),
-    error = function(e) NULL
-  )
-  if (is.null(result) || any(!is.finite(result))) {
-    return(mmom_failure(
-      step,
-      "The rank-aware solve returned a non-finite result.",
-      list(
-        solver = "qr",
-        rank = rank,
-        dimension = ncol(left),
-        condition_number = condition_number
-      )
-    ))
-  }
-  attr(result, "mmom_solver_diagnostics") <- list(
-    solver = "qr",
-    rank = rank,
-    dimension = ncol(left),
-    condition_number = condition_number
-  )
-  result
-}
-
-mmom_chol_solve <- function(matrix_value, right) {
-  chol_factor <- chol(matrix_value)
-  solution <- backsolve(
-    chol_factor,
-    forwardsolve(t(chol_factor), right)
-  )
-  list(
-    solution = solution,
-    inverse = chol2inv(chol_factor),
-    diagnostics = list(
-      solver = "chol",
-      rank = ncol(matrix_value),
-      dimension = ncol(matrix_value),
-      condition_number = kappa(matrix_value, exact = TRUE)
-    )
-  )
 }
 
 mmom_is_failure <- function(value) {
