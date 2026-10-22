@@ -5,6 +5,18 @@
 #' @param preliminary_moment_control Correction controls with `correction` and `alpha`.
 #' @param final_moment_control Correction controls with `correction` and `alpha`.
 #' @param backend Computation backend: `"auto"`, `"r"`, or `"rcpp"`.
+#' @details
+#' Inputs must be likelihood-only scores and their additive sampling-error
+#' covariances, not raw BLUPs or posterior BLUP covariances. Error-free observed
+#' variables have zero sampling-error variances and covariances.
+#'
+#' Standard errors use the final modified predictor moment matrix on both sides
+#' of the model-based covariance expression, matching the manuscript's M-MOM
+#' appendix and the primary (`"stabilized"`) REPAIR simulation estimator. The
+#' covariance meat uses the preliminary coefficients and squared inverse
+#' case-variance weights. This calculation assumes normal errors and conditions
+#' on the estimated first-stage quantities; it does not propagate their
+#' estimation uncertainty. Confidence intervals are normal-based 95% intervals.
 #' @return An S7 `class_mmom_fit` object. Numerical failures use the same class.
 #' @export
 fit_mmom <- function(data_list,
@@ -137,7 +149,7 @@ mmom_step2 <- function(inputs, coef0, predictor_idx, lambda_prelim) {
     return(mmom_failure(
       "resid_var",
       "The corrected structural residual variance was non-finite.",
-      diagnostics = list(computation_backend = backend)
+      diagnostics = list(computation_backend = inputs$backend)
     ))
   }
   if (resid_var < 0) {
@@ -256,19 +268,13 @@ mmom_step3 <- function(inputs, case_weight) {
 
 # Compute the conditional model-based coefficient covariance.
 mmom_step_se <- function(inputs, step1, step2, step3) {
-  # Fuller's model-based covariance, conditional on Stage-1 estimates.
-  # Changing the bread does not refit gamma. The tilde term uses gamma0_x
-  # (the preliminary slopes), and its crossproduct squares the inverse case
-  # weights. Dividing the bread by n and the covariance by n^2 cancels the
-  # normalization, preserving the established R equations.
-  bread <- if (inputs$final_moment_control$correction != "none") {
-    step3@weighted_moment[
-      inputs$design_index, inputs$design_index,
-      drop = FALSE
-    ] - step3@weighted_cov_design
-  } else {
-    step3@coef_moment
-  }
+  # REPAIR uses the same modified final predictor moment for the point estimate
+  # and variance bread (S_2x* in the manuscript; variance_bread = "modified"
+  # in the simulation code). Fully subtracting the error moment here instead
+  # implements a different, unregularized covariance estimator.
+  # The tilde term uses the preliminary slopes and squared inverse case weights.
+  # Dividing the bread by n and the covariance by n^2 cancels the normalization.
+  bread <- step3@coef_moment
   bread_inverse_solve <- repair_solve(
     bread / inputs$nobs, diag(inputs$ncoef),
     method = "qr"
@@ -291,6 +297,7 @@ mmom_step_se <- function(inputs, step1, step2, step3) {
   coef_vcov <- mmom_symmetrize(
     bread_inverse %*% meat %*% bread_inverse / inputs$nobs^2
   )
+  dimnames(coef_vcov) <- list(colnames(inputs$design), colnames(inputs$design))
   coef_var <- diag(coef_vcov)
   if (any(!is.finite(coef_var)) || any(coef_var < 0)) {
     return(mmom_failure(
@@ -308,6 +315,8 @@ mmom_step_se <- function(inputs, step1, step2, step3) {
     coef_vcov = coef_vcov,
     diagnostics = list(
       bread_solver = bread_diagnostics$solver,
+      variance_bread = "modified",
+      conditional_on_stage1 = TRUE,
       covariance_dimension = nrow(coef_vcov)
     )
   )
@@ -352,6 +361,8 @@ construct_mmom_fit <- function(inputs, step1, step2, step3, step_se, alpha = 0.0
       correction_prelim = step1@correction_prelim,
       correction_final = step3@correction_final,
       resid_var = step2@resid_var,
+      variance_bread = "modified",
+      conditional_on_stage1 = TRUE,
       preliminary_moment_control = inputs$preliminary_moment_control,
       final_moment_control = inputs$final_moment_control
     )
@@ -360,22 +371,36 @@ construct_mmom_fit <- function(inputs, step1, step2, step3, step_se, alpha = 0.0
 
 #' Extract likelihood-only random-effect scores.
 #'
-#' The direct method computes the closed-form GLS score for each cluster.
+#' The direct method computes the closed-form GLS score for each cluster after
+#' subtracting the fitted fixed effects and offset. Prior weights, when supplied
+#' to `lmer()`, give residual variances `sigma(mlm)^2 / weights`.
 #'
-#' @param mlm An `lme4` mixed-model fit.
+#' @param mlm An `lme4::lmer()` Gaussian model with one grouping factor and
+#'   finite, positive prior weights.
 #' @param method Scoring method. `"direct"` is currently implemented.
-#' @return A list containing cluster-level scores and covariance blocks.
+#' @details A singular estimated random-effect covariance does not prevent
+#'   direct scoring. A cluster's random-effect design must have full column
+#'   rank. Numerical failures leave that cluster's scores and covariances
+#'   missing, issue a warning, and are recorded in `diagnostics$failed_clusters`
+#'   and `diagnostics$clusters`. Unexpected programming errors are not suppressed.
+#' @return A list containing `success`, cluster-level `estimates`, and additive
+#'   sampling-error covariance blocks in `err_cov` (`score_cov` is an alias).
+#'   Scores are deviations from the fitted fixed effects, not total individual
+#'   coefficients. `success` is true only when all clusters were scored.
 #' @export
 ranef_like <- function(mlm, method = c("direct", "unshrink")) {
   method <- match.arg(method)
   if (identical(method, "unshrink")) {
     repair_error("`method = \"unshrink\"` is not implemented yet.")
   }
-  if (!inherits(mlm, "merMod")) {
-    repair_error("`mlm` must be an lme4 mixed-model fit.")
-  }
   if (!requireNamespace("lme4", quietly = TRUE)) {
     repair_error("The `lme4` package is required for direct scoring.")
+  }
+  if (!inherits(mlm, "lmerMod")) {
+    repair_error("`mlm` must be a Gaussian lme4::lmer() fit.")
+  }
+  if (length(lme4::getME(mlm, "flist")) != 1L) {
+    repair_error("Direct scoring currently requires exactly one grouping factor.")
   }
 
   # Extract fixed effects, random-effect designs, and cluster membership.
@@ -384,10 +409,16 @@ ranef_like <- function(mlm, method = c("direct", "unshrink")) {
   grouping <- as.character(lme4::getME(mlm, "flist")[[group]])
   cluster_ids <- rownames(random_effects[[group]])
   cluster_rows <- split(seq_along(grouping), grouping, drop = TRUE)[cluster_ids]
-  z_terms <- lapply(lme4::getME(mlm, "Ztlist"), as.matrix)
+  z_terms <- lme4::getME(mlm, "Ztlist")
   fixed_design <- lme4::getME(mlm, "X")
   fixed_coefs <- lme4::fixef(mlm)
-  response <- stats::model.response(stats::model.frame(mlm))
+  model_frame <- stats::model.frame(mlm)
+  response <- stats::model.response(model_frame)
+  offset <- stats::model.offset(model_frame) %||% rep(0, length(response))
+  prior_weights <- stats::model.weights(model_frame) %||% rep(1, length(response))
+  if (any(!is.finite(prior_weights)) || any(prior_weights <= 0)) {
+    repair_error("Direct scoring requires finite, positive prior weights.")
+  }
   resid_var <- stats::sigma(mlm)^2
 
   if (!is.finite(resid_var) || resid_var <= 0) {
@@ -421,49 +452,55 @@ ranef_like <- function(mlm, method = c("direct", "unshrink")) {
         as.numeric(term[cluster_pos, rows, drop = TRUE])
       })
     )
-    residual <- response[rows] - as.vector(
+    residual <- response[rows] - offset[rows] - as.vector(
       fixed_design[rows, , drop = FALSE] %*% fixed_coefs
     )
-
-    score <- tryCatch(
-      {
-        information <- crossprod(random_design) / resid_var
-        score_rhs <- crossprod(random_design, residual) / resid_var
-        chol_result <- mmom_chol_solve(information, score_rhs)
-        list(
-          score = as.vector(chol_result$solution),
-          covariance = chol_result$inverse,
-          diagnostics = chol_result$diagnostics
-        )
-      }, error = function(error) {
-        list(
-          score = rep(NA_real_, nrandom),
-          covariance = matrix(NA_real_, nrandom, nrandom),
-          diagnostics = list(
-            solver = "chol",
-            rank = NA_integer_,
-            dimension = nrandom,
-            condition_number = Inf,
-            error = conditionMessage(error)
-          )
-        )
-      }
+    weighted_design <- random_design * sqrt(prior_weights[rows])
+    design_rank <- qr(weighted_design, tol = 1e-10)$rank
+    if (design_rank < nrandom) {
+      score_diagnostics[[cluster_pos]] <- list(
+        solver = "chol", rank = design_rank, dimension = nrandom,
+        condition_number = Inf,
+        error = "The within-cluster random-effect design was rank-deficient."
+      )
+      next
+    }
+    information <- crossprod(weighted_design) / resid_var
+    score_rhs <- crossprod(
+      weighted_design, residual * sqrt(prior_weights[rows])
+    ) / resid_var
+    score <- repair_solve(
+      information, score_rhs, method = "chol"
     )
-    scores[cluster_pos, ] <- score$score
-    err_cov[, , cluster_pos] <- score$covariance
-    score_diagnostics[[cluster_pos]] <- score$diagnostics
+    score_diagnostics[[cluster_pos]] <- score@diagnostics
+    if (!score@success) {
+      score_diagnostics[[cluster_pos]]$error <- score@message
+      next
+    }
+    scores[cluster_pos, ] <- as.vector(score@solution)
+    err_cov[, , cluster_pos] <- score@inverse
+  }
+  failed_clusters <- cluster_ids[vapply(
+    score_diagnostics, function(item) !is.null(item$error), logical(1)
+  )]
+  if (length(failed_clusters)) {
+    repair_warn(paste0(
+      "Likelihood-only scoring failed for {length(failed_clusters)} cluster(s); ",
+      "their scores and covariances are missing. See `diagnostics$clusters`."
+    ))
   }
   list(
+    success = !length(failed_clusters),
     group = group,
     levels = cluster_ids,
     estimates = scores,
-    # TODO: why both?
     err_cov = err_cov,
     score_cov = err_cov,
     method = method,
     diagnostics = list(
       step = "ranef_like",
       solver = "chol",
+      failed_clusters = failed_clusters,
       clusters = stats::setNames(score_diagnostics, cluster_ids)
     )
   )

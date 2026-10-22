@@ -27,3 +27,16 @@ An S7 \code{class_mmom_fit} object. Numerical failures use the same class.
 \description{
 Internal fitting function for the M-MOM structural model.
 }
+\details{
+Inputs must be likelihood-only scores and their additive sampling-error
+covariances, not raw BLUPs or posterior BLUP covariances. Error-free observed
+variables have zero sampling-error variances and covariances.
+
+Standard errors use the final modified predictor moment matrix on both sides
+of the model-based covariance expression, matching the manuscript's M-MOM
+appendix and the primary (\code{"stabilized"}) REPAIR simulation estimator. The
+covariance meat uses the preliminary coefficients and squared inverse
+case-variance weights. This calculation assumes normal errors and conditions
+on the estimated first-stage quantities; it does not propagate their
+estimation uncertainty. Confidence intervals are normal-based 95\% intervals.
+}
