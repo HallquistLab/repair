@@ -21,6 +21,7 @@ test_that("M-MOM fits the zero-error OLS limit with both backends", {
     fit_cpp@coefficients$estimate,
     tolerance = 1e-7
   )
+  expect_equal(unname(fit_r@vcov), unname(vcov(lm(y ~ x))), tolerance = 1e-10)
   expect_equal(
     fit_r@vcov,
     fit_cpp@vcov,

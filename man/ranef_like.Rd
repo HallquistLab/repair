@@ -7,13 +7,26 @@
 ranef_like(mlm, method = c("direct", "unshrink"))
 }
 \arguments{
-\item{mlm}{An \code{lme4} mixed-model fit.}
+\item{mlm}{An \code{lme4::lmer()} Gaussian model with one grouping factor and
+finite, positive prior weights.}
 
 \item{method}{Scoring method. \code{"direct"} is currently implemented.}
 }
 \value{
-A list containing cluster-level scores and covariance blocks.
+A list containing \code{success}, cluster-level \code{estimates}, and additive
+sampling-error covariance blocks in \code{err_cov} (\code{score_cov} is an alias).
+Scores are deviations from the fitted fixed effects, not total individual
+coefficients. \code{success} is true only when all clusters were scored.
 }
 \description{
-The direct method computes the closed-form GLS score for each cluster.
+The direct method computes the closed-form GLS score for each cluster after
+subtracting the fitted fixed effects and offset. Prior weights, when supplied
+to \code{lmer()}, give residual variances \code{sigma(mlm)^2 / weights}.
+}
+\details{
+A singular estimated random-effect covariance does not prevent
+direct scoring. A cluster's random-effect design must have full column
+rank. Numerical failures leave that cluster's scores and covariances
+missing, issue a warning, and are recorded in \code{diagnostics$failed_clusters}
+and \code{diagnostics$clusters}. Unexpected programming errors are not suppressed.
 }
