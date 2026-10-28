@@ -33,7 +33,7 @@ repair_ranef_gls <- function(model, term, supported = c("merMod", )) {
       "Direct scoring requires a finite, positive residual variance."
     )
   }
-  
+
   random_names <- colnames(random_effects[[group]])
   nrandom <- length(random_names)
 
@@ -73,7 +73,8 @@ repair_ranef_gls <- function(model, term, supported = c("merMod", )) {
           covariance = chol_result@inverse,
           diagnostics = chol_result@diagnostics
         )
-      }, error = function(error) {
+      },
+      error = function(error) {
         list(
           score = rep(NA_real_, nrandom),
           covariance = matrix(NA_real_, nrandom, nrandom),
@@ -104,3 +105,4 @@ repair_ranef_gls <- function(model, term, supported = c("merMod", )) {
       clusters = stats::setNames(score_diagnostics, cluster_ids)
     )
   )
+}
