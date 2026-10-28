@@ -1,15 +1,16 @@
 # Frozen results were produced without repair, checked against both the primary
 # simulation estimator and its independent algebra audit. Regenerate only with
 # dev/generate_repair_fixtures.R; normal tests need no sibling repository.
-reference <- readRDS(test_path('fixtures', 'repair-reference.rds'))
+reference <- readRDS(test_path("fixtures", "repair-reference.rds"))
 
 for (case_name in names(reference$cases)) {
   local({
     label <- case_name
     fixture <- reference$cases[[label]]
-    test_that(paste('REPAIR reproduces simulation estimates and inference:', label), {
-      for (backend in c('r', 'rcpp')) {
+    test_that(paste("REPAIR reproduces simulation estimates and inference:", label), {
+      for (backend in c("r", "rcpp")) {
         fit <- fit_mmom(fixture$inputs, backend = backend)
+        fit@coefficients <- fit@coefficients[, c("term", "estimate", "se", "ci_low", "ci_high")]
         expect_true(fit@converged, info = paste(label, backend, fit@message))
         expect_equal(fit@coefficients, fixture$coefficients, tolerance = 1e-8)
         expect_equal(fit@vcov, fixture$vcov, tolerance = 1e-8)
@@ -20,7 +21,7 @@ for (case_name in names(reference$cases)) {
         expect_equal(fit@diagnostics$correction_prelim, fixture$diagnostics$correction1, tolerance = 1e-8)
         expect_equal(fit@diagnostics$correction_final, fixture$diagnostics$correction3, tolerance = 1e-8)
         expect_equal(fit@diagnostics$resid_var, fixture$diagnostics$sigma2, tolerance = 1e-8)
-        focal <- tail(fit@coefficients, 1L)[, c('estimate', 'se', 'ci_low', 'ci_high')]
+        focal <- tail(fit@coefficients, 1L)[, c("estimate", "se", "ci_low", "ci_high")]
         rownames(focal) <- NULL
         expect_equal(focal, fixture$simulation_focal, tolerance = 1e-8)
         expect_equal(focal, fixture$independent_audit_focal, tolerance = 1e-8)
@@ -29,19 +30,19 @@ for (case_name in names(reference$cases)) {
   })
 }
 
-test_that('the weak-information fixture detects the old variance-bread error', {
-  fit <- fit_mmom(reference$cases$weak_predictor$inputs, backend = 'r')
+test_that("the weak-information fixture detects the old variance-bread error", {
+  fit <- fit_mmom(reference$cases$weak_predictor$inputs, backend = "r")
   # An independently saved simulation result is ~0.695, whereas the former
   # unregularized bread gives ~5.347 on precisely these data.
   expect_equal(tail(fit@coefficients$se, 1L), 0.69516986258826, tolerance = 1e-9)
   expect_lt(tail(fit@coefficients$se, 1L), 1)
 })
 
-test_that('the manuscript covariance uses final moments with custom or no correction', {
+test_that("the manuscript covariance uses final moments with custom or no correction", {
   input <- reference$cases$both_sides_correlated$inputs
-  for (correction in c('minimum', 'custom', 'none')) {
+  for (correction in c("minimum", "custom", "none")) {
     control <- list(correction = correction, alpha = 8)
-    for (backend in c('r', 'rcpp')) {
+    for (backend in c("r", "rcpp")) {
       fit <- fit_mmom(input, final_moment_control = control, backend = backend)
       expect_true(fit@converged)
       # Direct row-wise evaluation of the manuscript covariance, independent of

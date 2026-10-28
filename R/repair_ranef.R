@@ -7,26 +7,38 @@
 #' @param term The term for which to extract random-effect scores.
 #' @return A list containing cluster-level scores and covariance blocks.
 #' @export
-repair_ranef_gls <- function(model, term, supported = c("merMod", )) {
-  model_class <- class(model)
-  if (!inherits(model, "merMod")) {
-    repair_error("`model` must be an lme4 mixed-model fit.")
+repair_ranef_gls <- function(mlm, method = c("direct", "unshrink")) {
+  method <- match.arg(method)
+  if (identical(method, "unshrink")) {
+    repair_error("`method = \"unshrink\"` is not implemented yet.")
   }
   if (!requireNamespace("lme4", quietly = TRUE)) {
     repair_error("The `lme4` package is required for direct scoring.")
   }
+  if (!inherits(mlm, "lmerMod")) {
+    repair_error("`mlm` must be a Gaussian lme4::lmer() fit.")
+  }
+  if (length(lme4::getME(mlm, "flist")) != 1L) {
+    repair_error("Direct scoring currently requires exactly one grouping factor.")
+  }
 
   # Extract fixed effects, random-effect designs, and cluster membership.
-  random_effects <- lme4::ranef(model)
+  random_effects <- lme4::ranef(mlm)
   group <- names(random_effects)[[1L]]
-  grouping <- as.character(lme4::getME(model, "flist")[[group]])
+  grouping <- as.character(lme4::getME(mlm, "flist")[[group]])
   cluster_ids <- rownames(random_effects[[group]])
   cluster_rows <- split(seq_along(grouping), grouping, drop = TRUE)[cluster_ids]
-  z_terms <- lapply(lme4::getME(model, "Ztlist"), as.matrix)
-  fixed_design <- lme4::getME(model, "X")
-  fixed_coefs <- lme4::fixef(model)
-  response <- stats::model.response(stats::model.frame(model))
-  resid_var <- stats::sigma(model)^2
+  z_terms <- lme4::getME(mlm, "Ztlist")
+  fixed_design <- lme4::getME(mlm, "X")
+  fixed_coefs <- lme4::fixef(mlm)
+  model_frame <- stats::model.frame(mlm)
+  response <- stats::model.response(model_frame)
+  offset <- stats::model.offset(model_frame) %||% rep(0, length(response))
+  prior_weights <- stats::model.weights(model_frame) %||% rep(1, length(response))
+  if (any(!is.finite(prior_weights)) || any(prior_weights <= 0)) {
+    repair_error("Direct scoring requires finite, positive prior weights.")
+  }
+  resid_var <- stats::sigma(mlm)^2
 
   if (!is.finite(resid_var) || resid_var <= 0) {
     repair_error(
@@ -59,49 +71,56 @@ repair_ranef_gls <- function(model, term, supported = c("merMod", )) {
         as.numeric(term[cluster_pos, rows, drop = TRUE])
       })
     )
-    residual <- response[rows] - as.vector(
+    residual <- response[rows] - offset[rows] - as.vector(
       fixed_design[rows, , drop = FALSE] %*% fixed_coefs
     )
-
-    score <- tryCatch(
-      {
-        information <- crossprod(random_design) / resid_var
-        score_rhs <- crossprod(random_design, residual) / resid_var
-        chol_result <- repair_solve(information, score_rhs, method = "chol")
-        list(
-          score = as.vector(chol_result@solution),
-          covariance = chol_result@inverse,
-          diagnostics = chol_result@diagnostics
-        )
-      },
-      error = function(error) {
-        list(
-          score = rep(NA_real_, nrandom),
-          covariance = matrix(NA_real_, nrandom, nrandom),
-          diagnostics = list(
-            solver = "chol",
-            rank = NA_integer_,
-            dimension = nrandom,
-            condition_number = Inf,
-            error = conditionMessage(error)
-          )
-        )
-      }
+    weighted_design <- random_design * sqrt(prior_weights[rows])
+    design_rank <- qr(weighted_design, tol = 1e-10)$rank
+    if (design_rank < nrandom) {
+      score_diagnostics[[cluster_pos]] <- list(
+        solver = "chol", rank = design_rank, dimension = nrandom,
+        condition_number = Inf,
+        error = "The within-cluster random-effect design was rank-deficient."
+      )
+      next
+    }
+    information <- crossprod(weighted_design) / resid_var
+    score_rhs <- crossprod(
+      weighted_design, residual * sqrt(prior_weights[rows])
+    ) / resid_var
+    score <- repair_solve(
+      information, score_rhs,
+      method = "chol"
     )
-    scores[cluster_pos, ] <- score$score
-    err_cov[, , cluster_pos] <- score$covariance
-    score_diagnostics[[cluster_pos]] <- score$diagnostics
+    score_diagnostics[[cluster_pos]] <- score@diagnostics
+    if (!score@success) {
+      score_diagnostics[[cluster_pos]]$error <- score@message
+      next
+    }
+    scores[cluster_pos, ] <- as.vector(score@solution)
+    err_cov[, , cluster_pos] <- score@inverse
+  }
+  failed_clusters <- cluster_ids[vapply(
+    score_diagnostics, function(item) !is.null(item$error), logical(1)
+  )]
+  if (length(failed_clusters)) {
+    repair_warn(paste0(
+      "Likelihood-only scoring failed for {length(failed_clusters)} cluster(s); ",
+      "their scores and covariances are missing. See `diagnostics$clusters`."
+    ))
   }
   list(
+    success = !length(failed_clusters),
     group = group,
     levels = cluster_ids,
     estimates = scores,
-    # TODO: why both?
     err_cov = err_cov,
     score_cov = err_cov,
+    method = method,
     diagnostics = list(
       step = "ranef_like",
       solver = "chol",
+      failed_clusters = failed_clusters,
       clusters = stats::setNames(score_diagnostics, cluster_ids)
     )
   )
