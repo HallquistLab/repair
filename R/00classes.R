@@ -110,7 +110,6 @@ class_mat_solve <- S7::new_class(
   )
 )
 
-# Classes for stage 1 prediction
 class_mlm_elements <- S7::new_class(
   "class_mlm_elements",
   properties = list(
@@ -120,12 +119,16 @@ class_mlm_elements <- S7::new_class(
     fixed_design = S7::class_any,
     fixed_coefs = S7::class_numeric,
     response = S7::class_numeric,
+    offset = S7::class_any,
+    observation_weights = S7::class_any,
     random_design = S7::class_any,
     random_terms = S7::class_any,
     grouping = S7::class_any,
     group_levels = S7::class_any,
     group_rows = S7::class_any,
-    residual_blocks = S7::class_any,
+    group_ptr = S7::class_any,
+    random_covariance = S7::class_any,
+    residual_covariance = S7::class_any,
     diagnostics = S7::class_any
   )
 )
@@ -134,13 +137,17 @@ class_repair_ranef <- S7::new_class(
   "class_repair_ranef",
   properties = list(
     success = S7::class_logical,
-    message = S7::class_any,
-    type = S7::class_character,
-    term = S7::class_any,
+    predictions = S7::class_any,
+    error_covariance = S7::class_any,
+    method = S7::class_character,
     group = S7::class_any,
+    levels = S7::class_any,
+    terms = S7::class_any,
     include_fixed = S7::class_logical,
-    estimates = S7::class_any,
-    covariance = S7::class_any,
     diagnostics = S7::class_any
   )
 )
+
+# Classes from other packages
+class_merMod <- methods::getClassDef("merMod", package = "lme4")
+class_lme <- S7::new_S3_class("lme")

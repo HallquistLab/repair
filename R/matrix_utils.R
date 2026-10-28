@@ -1,16 +1,16 @@
 repair_solve <- function(
-    lhs,
-    rhs,
-    method = c("auto", "qr", "chol"),
-    tolerance = 1e-10,
-    fail_on_error = FALSE
+  lhs,
+  rhs,
+  method = c("auto", "qr", "chol"),
+  tolerance = 1e-10,
+  fail_on_error = FALSE
 ) {
   requested_method <- method[[1L]]
   method <- rlang::arg_match(method)
 
   if (!is.logical(fail_on_error) ||
-      length(fail_on_error) != 1L ||
-      is.na(fail_on_error)) {
+    length(fail_on_error) != 1L ||
+    is.na(fail_on_error)) {
     repair_error("`fail_on_error` must be a single TRUE or FALSE.")
   }
 
@@ -80,10 +80,15 @@ repair_solve <- function(
       LAPACK = FALSE
     )
     solution <- qr.coef(qr_lhs, rhs)
+    inverse <- qr.coef(
+      qr_lhs,
+      diag(ncol(lhs))
+    )
     list(
       success = TRUE,
       rank = qr_lhs$rank,
-      solution = solution
+      solution = solution,
+      inverse = inverse
     )
   }
 
@@ -194,7 +199,7 @@ repair_solve <- function(
   out@success <- TRUE
   out@message <- "The QR solve was successful."
   out@solution <- qr_result$solution
-  out@inverse <- NULL
+  out@inverse <- qr_result$inverse
   out@solver <- "qr"
   out@diagnostics <- diagnostics
 

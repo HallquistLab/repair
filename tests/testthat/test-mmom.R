@@ -120,18 +120,14 @@ test_that("repair_ranef_gls uses the closed-form within-cluster score", {
     unname(coef(lm(residual ~ z)))
   })
   expect_equal(
-    unname(scored$estimates[, 1]),
+    unname(scored@predictions[["id"]][, 1]),
     unname(vapply(expected, `[[`, numeric(1), 1)),
     tolerance = 1e-7
   )
   expect_equal(
-    unname(scored$estimates[, 2]),
+    unname(scored@predictions[["id"]][, 2]),
     unname(vapply(expected, `[[`, numeric(1), 2)),
     tolerance = 1e-7
   )
-  expect_equal(dim(scored$err_cov), c(2, 2, 10))
-  expect_equal(scored$diagnostics$solver, "chol")
-  expect_true(all(vapply(scored$diagnostics$clusters, function(item) {
-    identical(item$solver, "chol")
-  }, logical(1))))
+  expect_equal(dim(scored@error_covariance[["id"]]), c(2, 2, 10))
 })

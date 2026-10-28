@@ -1,0 +1,461 @@
+---
+title: "Target-Effect Residual Covariance for REPAIR"
+author: "REPAIR Development Memo (GPT 5.6 Luna)"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output:
+  pdf_document:
+    number_sections: true
+    toc: true
+geometry: margin=1in
+---
+
+# Purpose
+
+The original REPAIR formulation considers a two-level mixed model with independent residuals,
+
+\[
+\mathbf{y}_j =
+\mathbf{X}_j \boldsymbol{\beta}
++
+\mathbf{Z}_j \mathbf{b}_j
++
+\mathbf{e}_j,
+\qquad
+\mathbf{e}_j \sim
+N(\mathbf{0}, \mathbf{R}_j),
+\]
+
+where the usual special case is
+
+\[
+\mathbf{R}_j = \sigma^2 \mathbf{I}.
+\]
+
+For models with multiple random-effects levels, REPAIR must specify which random effect is the target and which random effects are treated as part of its prediction error. This memo formulates the corresponding target-specific covariance matrix.
+
+The central principle is:
+
+> A target random effect is predicted using generalized least squares, while all non-target random effects are incorporated into the residual covariance.
+
+# Partitioning the mixed model
+
+Suppose the fitted model contains several random-effects blocks. Partition them into one target block and one or more nuisance blocks:
+
+\[
+\mathbf{y}_j =
+\mathbf{X}_j \boldsymbol{\beta}
++
+\mathbf{Z}_{T,j}\mathbf{b}_{T,j}
++
+\sum_{g \ne T}
+\mathbf{Z}_{g,j}\mathbf{b}_{g,j}
++
+\mathbf{e}_j.
+\]
+
+Here:
+
+- \(j\) indexes the target cluster;
+- \(\mathbf{b}_{T,j}\) is the target random-effects vector;
+- \(\mathbf{Z}_{T,j}\) is its design matrix;
+- \(\mathbf{b}_{g,j}\) is a non-target random-effects vector;
+- \(\mathbf{Z}_{g,j}\) is its design matrix;
+- \(\mathbf{e}_j\) is the ordinary residual vector.
+
+Assume that
+
+\[
+\operatorname{Var}(\mathbf{b}_{g,j}) = \mathbf{G}_g,
+\qquad
+\operatorname{Var}(\mathbf{e}_j) = \mathbf{R}_{e,j}.
+\]
+
+The standard mixed-model assumption is that the target random effects, non-target random effects, and ordinary residuals are mutually independent.
+
+# Target and nuisance decomposition
+
+Define the nuisance component as
+
+\[
+\mathbf{u}_{T,j}
+=
+\sum_{g \ne T}
+\mathbf{Z}_{g,j}\mathbf{b}_{g,j}
++
+\mathbf{e}_j.
+\]
+
+The model can then be written as
+
+\[
+\mathbf{y}_j =
+\mathbf{X}_j \boldsymbol{\beta}
++
+\mathbf{Z}_{T,j}\mathbf{b}_{T,j}
++
+\mathbf{u}_{T,j}.
+\]
+
+The covariance of this nuisance component is
+
+\[
+\mathbf{R}_{T,j}
+=
+\operatorname{Var}(\mathbf{u}_{T,j}).
+\]
+
+Under independence across random-effects blocks,
+
+\[
+\boxed{
+\mathbf{R}_{T,j}
+=
+\mathbf{R}_{e,j}
++
+\sum_{g \ne T}
+\mathbf{Z}_{g,j}\mathbf{G}_g
+\mathbf{Z}_{g,j}^{\mathsf{T}}
+}
+\]
+
+This is the covariance matrix used for target-effect GLS prediction.
+
+The target random effect itself is not included in \(\mathbf{R}_{T,j}\). Including it would treat the quantity being predicted as part of its own measurement error.
+
+# Example: person and day effects
+
+Consider the three-level model:
+
+```r
+y ~ 1 + x + (1 + x | person) + (1 | person:day)
+```
+
+For person \(j\), write the model as
+
+\[
+\mathbf{y}_j =
+\mathbf{X}_j\boldsymbol{\beta}
++
+\mathbf{Z}_{P,j}\mathbf{b}_{P,j}
++
+\mathbf{Z}_{D,j}\mathbf{b}_{D,j}
++
+\mathbf{e}_j.
+\]
+
+Here:
+
+- \(\mathbf{b}_{P,j}\) contains the person-level random intercept and slope;
+- \(\mathbf{b}_{D,j}\) contains the day-level random effects;
+- \(\mathbf{e}_j\) is the ordinary residual.
+
+If the person effect is the target, the day effects are nuisance effects. The target-specific covariance is
+
+\[
+\boxed{
+\mathbf{R}_{P,j}
+=
+\mathbf{R}_{e,j}
++
+\mathbf{Z}_{D,j}\mathbf{G}_{D}
+\mathbf{Z}_{D,j}^{\mathsf{T}}
+}
+\]
+
+where \(\mathbf{G}_{D}\) is the covariance matrix of the day-level random effects.
+
+If the ordinary residuals are independent and homoskedastic,
+
+\[
+\mathbf{R}_{e,j}
+=
+\sigma^2 \mathbf{I}.
+\]
+
+If the residuals are heteroskedastic or correlated, \(\mathbf{R}_{e,j}\) is the fitted residual covariance matrix from the model.
+
+For a random-intercept day effect, \(\mathbf{Z}_{D,j}\) is an indicator matrix. Observations collected on the same day therefore receive a covariance contribution from the shared day effect.
+
+# Target-effect GLS prediction
+
+After estimating the fixed effects, define the fixed-effect-adjusted response:
+
+\[
+\mathbf{r}_j
+=
+\mathbf{y}_j
+-
+\mathbf{X}_j\widehat{\boldsymbol{\beta}}.
+\]
+
+If the model includes an offset \(\mathbf{o}_j\), use
+
+\[
+\mathbf{r}_j
+=
+\mathbf{y}_j
+-
+\mathbf{o}_j
+-
+\mathbf{X}_j\widehat{\boldsymbol{\beta}}.
+\]
+
+The target-effect likelihood-only GLS estimate is
+
+\[
+\boxed{
+\widetilde{\mathbf{b}}_{T,j}
+=
+\left(
+\mathbf{Z}_{T,j}^{\mathsf{T}}
+\mathbf{R}_{T,j}^{-1}
+\mathbf{Z}_{T,j}
+\right)^{-1}
+\mathbf{Z}_{T,j}^{\mathsf{T}}
+\mathbf{R}_{T,j}^{-1}
+\mathbf{r}_j
+}
+\]
+
+The corresponding prediction-error covariance is
+
+\[
+\boxed{
+\boldsymbol{\Psi}_{T,j}
+=
+\left(
+\mathbf{Z}_{T,j}^{\mathsf{T}}
+\mathbf{R}_{T,j}^{-1}
+\mathbf{Z}_{T,j}
+\right)^{-1}
+}
+\]
+
+Treating the fixed-effects and variance-component estimates as plug-in quantities gives the additive-error representation
+
+\[
+\widetilde{\mathbf{b}}_{T,j}
+=
+\mathbf{b}_{T,j}
++
+\boldsymbol{\varepsilon}_{T,j},
+\]
+
+with
+
+\[
+\operatorname{Var}(\boldsymbol{\varepsilon}_{T,j})
+=
+\boldsymbol{\Psi}_{T,j}.
+\]
+
+The matrices \(\boldsymbol{\Psi}_{T,j}\) are the measurement-error covariance matrices supplied to the second-stage M-MOM estimator.
+
+# Why the target block is excluded
+
+The full marginal covariance of the response is
+
+\[
+\mathbf{V}_j
+=
+\mathbf{R}_{e,j}
++
+\sum_g
+\mathbf{Z}_{g,j}\mathbf{G}_g
+\mathbf{Z}_{g,j}^{\mathsf{T}}.
+\]
+
+This includes the target contribution
+
+\[
+\mathbf{Z}_{T,j}\mathbf{G}_{T}
+\mathbf{Z}_{T,j}^{\mathsf{T}}.
+\]
+
+Using \(\mathbf{V}_j\) in the target GLS calculation would treat variation due to \(\mathbf{b}_{T,j}\) as measurement error rather than as the signal being estimated.
+
+Therefore, the covariance used for target prediction must exclude the target block:
+
+\[
+\mathbf{R}_{T,j}
+=
+\mathbf{V}_j
+-
+\mathbf{Z}_{T,j}\mathbf{G}_{T}
+\mathbf{Z}_{T,j}^{\mathsf{T}}.
+\]
+
+Equivalently,
+
+\[
+\mathbf{R}_{T,j}
+=
+\mathbf{R}_{e,j}
++
+\sum_{g \ne T}
+\mathbf{Z}_{g,j}\mathbf{G}_g
+\mathbf{Z}_{g,j}^{\mathsf{T}}.
+\]
+
+# Multiple non-target blocks
+
+If there are several non-target random-effects blocks, their covariance contributions are additive:
+
+\[
+\mathbf{R}_{T,j}
+=
+\mathbf{R}_{e,j}
++
+\mathbf{Z}_{1,j}\mathbf{G}_1
+\mathbf{Z}_{1,j}^{\mathsf{T}}
++
+\mathbf{Z}_{2,j}\mathbf{G}_2
+\mathbf{Z}_{2,j}^{\mathsf{T}}
++
+\cdots.
+\]
+
+In code, the construction is conceptually:
+
+```r
+R_target <- R_error
+
+for (group in nuisance_groups) {
+  Z_group <- random_design[[group]][rows, , drop = FALSE]
+  G_group <- random_covariance[[group]]
+
+  R_target <- R_target +
+    Z_group %*% G_group %*% t(Z_group)
+}
+```
+
+The target design is extracted separately:
+
+```r
+Z_target <- target_design[
+  rows,
+  target_columns,
+  drop = FALSE
+]
+```
+
+# Correlated target and nuisance effects
+
+The additive formula assumes that target and nuisance random effects are uncorrelated:
+
+\[
+\operatorname{Cov}
+\left(
+\mathbf{b}_{T,j},
+\mathbf{b}_{g,j}
+\right)
+=
+\mathbf{0}.
+\]
+
+If target and nuisance random effects are correlated, then the nuisance component is not independent of the target. In that case, the conditional mean and covariance require additional cross-covariance terms, and the simple additive-error representation may not hold without modification.
+
+The current REPAIR extension should therefore state the following working assumption:
+
+> Target and non-target random-effects blocks are mutually independent, consistent with the block-diagonal random-effects covariance structures used by the supported mixed-model backends.
+
+# Relation to two-level REPAIR
+
+The original two-level formulation is recovered when there are no non-target random-effects blocks:
+
+\[
+\sum_{g \ne T}
+\mathbf{Z}_{g,j}\mathbf{G}_g
+\mathbf{Z}_{g,j}^{\mathsf{T}}
+=
+\mathbf{0}.
+\]
+
+Then
+
+\[
+\mathbf{R}_{T,j}
+=
+\mathbf{R}_{e,j}.
+\]
+
+With independent homoskedastic residuals,
+
+\[
+\mathbf{R}_{T,j}
+=
+\sigma^2 \mathbf{I},
+\]
+
+and therefore
+
+\[
+\boldsymbol{\Psi}_{T,j}
+=
+\sigma^2
+\left(
+\mathbf{Z}_{T,j}^{\mathsf{T}}
+\mathbf{Z}_{T,j}
+\right)^{-1}.
+\]
+
+Thus, the original two-level equations are a special case of the target-specific formulation.
+
+# Implications for `lme4` and `nlme`
+
+The model-extraction layer should store:
+
+```text
+ordinary residual covariance
+all random-effects design matrices
+all random-effects covariance matrices
+grouping variables and row mappings
+```
+
+The scoring layer should construct the target-specific covariance after the target group is known:
+
+```text
+R_target =
+    R_error
+    + covariance contributions from all non-target random effects
+```
+
+For `lme4`, the ordinary residual covariance is typically
+
+\[
+\mathbf{R}_{e,j}
+=
+\operatorname{diag}
+\left(
+\frac{\widehat{\sigma}^{2}}{w_i}
+\right),
+\]
+
+where \(w_i\) are fitted prior weights.
+
+For `nlme`, \(\mathbf{R}_{e,j}\) may include:
+
+- the fitted residual scale;
+- correlation structures such as `corAR1`;
+- variance functions such as `varIdent` or `varPower`.
+
+Once these backend-specific components have been normalized, the target-specific GLS calculation is the same.
+
+# Scope and caveats
+
+This extension relies on the following working assumptions:
+
+1. The fixed-effects coefficients and variance components are treated as plug-in estimates.
+2. Target and non-target random-effects blocks are mutually independent.
+3. The target design matrix has sufficient within-cluster rank.
+4. The target-specific residual covariance is positive definite.
+5. Correlated target random-effect components are estimated jointly.
+6. Non-target random-effects design matrices are aligned with the observations in each target cluster.
+7. The fitted model and extracted covariance components correspond to the same effective observations.
+
+The final condition is especially important for nested structures. When targeting person effects, for example, day-level design matrices must be restricted to the observations belonging to each person before computing
+
+\[
+\mathbf{Z}_{D,j}\mathbf{G}_{D}
+\mathbf{Z}_{D,j}^{\mathsf{T}}.
+\]

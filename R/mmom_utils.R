@@ -20,7 +20,7 @@ mmom_control <- function(control, npredictors, label) {
   if (!correction %in% c("none", "minimum", "step_up", "custom")) {
     repair_error("{label}$correction must be one of `none`, `minimum`, `step_up`, or `custom`.")
   }
-  
+
   if (identical(correction, "none") || identical(correction, "step_up")) {
     alpha <- NULL
   } else if (identical(correction, "minimum")) {
@@ -28,7 +28,7 @@ mmom_control <- function(control, npredictors, label) {
   } else if (identical(correction, "custom")) {
     alpha <- control$alpha %||% (npredictors + 2L)
     if (!is.numeric(alpha) || length(alpha) != 1L ||
-        !is.finite(alpha) || alpha <= 0) {
+      !is.finite(alpha) || alpha <= 0) {
       repair_error("{label}$alpha must be a finite, positive scalar.")
     }
     if (alpha < npredictors + 2L) {
@@ -52,7 +52,7 @@ mmom_prepare <- function(
   nobs <- length(outcome)
   npredictors <- ncol(predictors)
   if (nrow(predictors) != nobs || is.null(npredictors) ||
-      npredictors < 1L) {
+    npredictors < 1L) {
     repair_error(
       "`data_list` must provide an nobs by npredictors predictor matrix."
     )
@@ -81,7 +81,7 @@ mmom_prepare <- function(
   err_y <- data$err_y
   if (is.null(err_y)) err_y <- rep(0, nobs)
   if (!is.numeric(err_y) || length(err_y) != nobs ||
-      any(!is.finite(err_y)) || any(err_y < 0)) {
+    any(!is.finite(err_y)) || any(err_y < 0)) {
     repair_error(
       "`err_y` must be a finite, nonnegative vector of length nobs."
     )
@@ -121,7 +121,7 @@ mmom_predictor_names <- function(npredictors) {
 mmom_coerce_data <- function(data_list) {
   if (!is.list(data_list)) repair_error("`data_list` must be a list.")
   if (!is.null(data_list$outcome) &&
-      !is.null(data_list$predictors)) {
+    !is.null(data_list$predictors)) {
     return(data_list)
   }
   if (!length(data_list) || !all(vapply(data_list, is.list, logical(1)))) {
@@ -192,9 +192,9 @@ mmom_normalize_err_x <- function(
     out[, , row_index] <- mmom_symmetrize(out[, , row_index])
     diagnostics <- mmom_matrix_diagnostics(out[, , row_index])
     if (!is.finite(diagnostics$min_eigen) ||
-        diagnostics$min_eigen < -tolerance * max(
-          1, abs(diagnostics$max_eigen)
-        )) {
+      diagnostics$min_eigen < -tolerance * max(
+        1, abs(diagnostics$max_eigen)
+      )) {
       repair_error(
         "`err_x` is not positive semidefinite for row {row_index}."
       )
@@ -378,9 +378,9 @@ mmom_validate_joint_cov <- function(
     )
     diagnostics <- mmom_matrix_diagnostics(joint)
     if (!is.finite(diagnostics$min_eigen) ||
-        diagnostics$min_eigen < -tolerance * max(
-          1, abs(diagnostics$max_eigen)
-        )) {
+      diagnostics$min_eigen < -tolerance * max(
+        1, abs(diagnostics$max_eigen)
+      )) {
       repair_error(
         "The joint measurement-error covariance is not PSD for row {row_index}.")
     }

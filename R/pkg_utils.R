@@ -4,7 +4,9 @@ set_caller_context <- function() {
   rlang::local_error_call(rlang::caller_env())
 }
 
-repair_warn <- function(msg, .class = "repair_warning", .call, .envir = rlang::caller_env()) {
+repair_warn <- function(..., .class = "repair_warning",
+                        .call, .envir = rlang::caller_env()) {
+  msg <- paste0(..., collapse = " ")
   if (missing(.call)) {
     cli::cli_warn(msg, class = .class, .envir = .envir)
   } else {
@@ -12,7 +14,9 @@ repair_warn <- function(msg, .class = "repair_warning", .call, .envir = rlang::c
   }
 }
 
-repair_error <- function(msg, .class = "repair_error", .call, .envir = rlang::caller_env()) {
+repair_error <- function(..., .class = "repair_error",
+                         .call, .envir = rlang::caller_env()) {
+  msg <- paste0(..., collapse = " ")
   if (missing(.call)) {
     cli::cli_abort(msg, class = .class, .envir = .envir)
   } else {
@@ -20,7 +24,9 @@ repair_error <- function(msg, .class = "repair_error", .call, .envir = rlang::ca
   }
 }
 
-repair_message <- function(msg, .class = "repair_message", .call, .envir = rlang::caller_env()) {
+repair_message <- function(..., .class = "repair_message",
+                           .call, .envir = rlang::caller_env()) {
+  msg <- paste0(..., collapse = " ")
   if (missing(.call)) {
     cli::cli_inform(msg, class = .class, .envir = .envir)
   } else {
