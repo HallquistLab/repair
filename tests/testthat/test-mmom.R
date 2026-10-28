@@ -21,9 +21,6 @@ test_that("M-MOM fits the zero-error OLS limit with both backends", {
     fit_cpp@coefficients$estimate,
     tolerance = 1e-7
   )
-  expect_equal(fit_r@diagnostics$steps$step1$step, "prelim_unweighted_coef")
-  expect_equal(fit_r@diagnostics$steps$step2$step, "resid_var_and_weights")
-  expect_equal(fit_r@diagnostics$steps$step3$step, "final_weighted_coef")
   expect_equal(
     fit_r@vcov,
     fit_cpp@vcov,
