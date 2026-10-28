@@ -102,7 +102,7 @@ test_that("class_repair_mod is an S7 object", {
   expect_true(inherits(class_repair_mod(list(), list()), "S7_object"))
 })
 
-test_that("ranef_like uses the closed-form within-cluster score", {
+test_that("repair_ranef_gls uses the closed-form within-cluster score", {
   skip_if_not_installed("lme4")
   set.seed(2)
   data <- do.call(rbind, lapply(seq_len(10), function(cluster) {
@@ -111,7 +111,7 @@ test_that("ranef_like uses the closed-form within-cluster score", {
       rnorm(1, sd = 0.5) + rnorm(length(z), sd = 0.2))
   }))
   fit <- lme4::lmer(y ~ z + (1 + z | id), data = data, REML = FALSE)
-  scored <- ranef_like(fit)
+  scored <- repair_ranef_gls(fit)
   fixed_residual <- data$y - as.numeric(
     lme4::getME(fit, "X") %*% lme4::fixef(fit)
   )
