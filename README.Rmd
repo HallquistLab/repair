@@ -77,9 +77,8 @@ analysis <- repair_data(
   models = list(growth = growth), data = people, id = "Subject"
 )
 analysis
-head(analysis@ids)
-head(analysis@predictors)
-analysis@diagnostics$excluded
+head(repair_scores(analysis))
+head(repair_score_covariance(analysis))
 ```
 
 IDs determine alignment; data-frame row order never determines a match. The
@@ -87,9 +86,21 @@ person-level data frame defines the requested cohort. Missing/nonfinite values,
 unmatched IDs, and failed scores stop by default. Use `na_action = "omit"` to
 explicitly exclude them with a warning and an ID/reason audit trail.
 
-`fit@analysis_data` retains the matched scores, error covariance, selected effect
-sources, and exclusions. `fit@struc_fit` retains M-MOM steps and numerical
-diagnostics. For custom score/error inputs, use the lower-level `fit_mmom()` API.
+Use public table extractors for reporting, joins, and export:
+
+```{r reporting}
+repair_coefficients(fit, conf.level = .95)
+head(repair_scores(fit))
+repair_diagnostics(fit, table = "excluded")
+```
+
+`repair_score_covariance(fit)` preserves the assembled within- and cross-model
+scoring-error covariance. It differs from `vcov(fit)`, which describes structural
+coefficient uncertainty. These ordinary data frames have explicit ID columns and
+the same schema for one or multiple measurement models. See the
+[extractor guide](vignettes/extracting-results.Rmd) for column contracts, cohort
+selection, covariance reconstruction, and safe joins. Internal S7 properties
+remain available for advanced inspection; custom estimation uses `fit_mmom()`.
 
 ## Connect two measurement processes
 

@@ -1,0 +1,216 @@
+---
+title: "Extracting tables for reporting and reuse"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Extracting tables for reporting and reuse}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+## Choose an extractor
+
+The public table extractors let you report results, inspect person-level scores,
+and join data without accessing internal S7 slots. All return ordinary data frames
+with documented column names, types, keys, and ordering. They introduce no new
+fitting choices and do not require a tidyverse or broom dependency.
+
+| Question | Interface |
+|---|---|
+| What are the structural estimates and intervals? | `repair_coefficients(fit)` |
+| What scores and sampling-error SDs were used? | `repair_scores(fit)` |
+| How do errors in different scores covary? | `repair_score_covariance(fit)` |
+| Which people were excluded? | `repair_diagnostics(fit, table = "excluded")` |
+| What are the analysis weights? | `repair_diagnostics(fit, table = "weights")` |
+| What is posterior reliability? | `repair_reliability(fit)` |
+| What is the covariance of structural coefficient estimates? | `vcov(fit)` |
+
+`coef()`, `vcov()`, `confint()`, `nobs()`, `summary()`, and the existing full
+`repair_diagnostics(fit)` list remain available. Score uncertainty, posterior
+uncertainty, and structural coefficient uncertainty have different meanings.
+
+## Fit an example
+
+The person-level category below is illustrative, not an actual sleepstudy variable.
+
+```{r fit}
+growth <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
+people <- data.frame(person = levels(lme4::sleepstudy$Subject),
+                     category = factor(rep(c("A", "B", "C"), 6)))
+models <- list(growth = growth)
+structural <- re("Days", "growth") ~ re("(Intercept)", "growth") + category
+fit <- repair(structural, models, people, id = "person")
+```
+
+## Report structural coefficients
+
+```{r coefficient-table}
+coefficients <- repair_coefficients(fit)
+knitr::kable(coefficients, digits = 3)
+repair_coefficients(fit, conf.level = .90)
+```
+
+The columns are `term`, `estimate`, `std.error`, `statistic`, `p.value`,
+`conf.low`, `conf.high`, and `conf.level`. `term` is character; the remaining
+columns are numeric. Rows follow `coef(fit)`, beginning with the structural
+intercept. Factor contrast columns retain their model-matrix names. Random-effect
+predictors retain model-qualified formula labels. Use these labels as identifiers;
+do not parse model or coefficient identity back out of printed text.
+
+Changing `conf.level` changes only the normal interval endpoints and reported
+level. Estimates remain on the input scale, and inference remains conditional on
+fitted measurement quantities and supplied error covariance. This table does not
+standardize coefficients or incorporate additional parameter uncertainty.
+
+## Inspect selected scores
+
+```{r scores}
+scores <- repair_scores(fit)
+head(scores)
+```
+
+The schema is `id`, `model`, `group`, `term`, `label`, `role`, `score`, `std.error`,
+`error.variance`, `cohort`, `analyzed`, `status`, and `reason`. Identities, roles,
+cohort, and status/reason are character; score and uncertainty columns are numeric;
+`analyzed` is logical. The unique key is `(model, group, term, id)`. The qualified
+`label` connects random-effect predictors to coefficient-table term labels.
+IDs are always character, including originally numeric grouping levels.
+
+Rows follow selected-effect order, then ID order within each effect. Default
+`cohort = "analyzed"` uses retained analysis IDs in their person-table order.
+`cohort = "measurement"` uses each model's saved effective grouping-level order:
+
+```{r cohorts}
+subset_fit <- repair(structural, models, people[3:18, ], "person")
+measurement_scores <- repair_scores(subset_fit, cohort = "measurement")
+measurement_scores[!measurement_scores$analyzed, c("id", "term", "score", "status")]
+```
+
+Only formula-selected effects are returned, even for the measurement cohort.
+An excluded person can have an `"ok"` score, for example if an observed structural
+predictor was missing. A failed score remains a row with status `"failed"` and a
+reason; its saved missing values stay missing. An ID absent from a measurement
+model has no score row. Inspect `repair_diagnostics(fit, "excluded")` to find
+those IDs and all exclusion reasons.
+
+Scores are **likelihood-only random deviations**. Their `std.error` is a
+conditional sampling-error SD, not a BLUP posterior SD, a structural coefficient
+SE, or the person's total fixed-plus-random coefficient.
+
+These same score interfaces work before structural fitting:
+
+```{r before-fitting}
+assembled <- repair_data(structural, models, people, "person")
+stopifnot(identical(repair_scores(assembled), scores))
+stopifnot(identical(repair_score_covariance(assembled), repair_score_covariance(fit)))
+```
+
+## Preserve covariance when reusing scores
+
+Score variances do not capture correlated errors. The covariance extractor reads
+the **assembled** error inputs, including the selected cross-model policy:
+
+```{r covariance}
+error_covariance <- repair_score_covariance(fit)
+head(error_covariance)
+```
+
+Columns are `id`, the two sets of identities `model1`, `group1`, `term1`, `label1`,
+`role1` and `model2`, `group2`, `term2`, `label2`, `role2`, followed by numeric
+`covariance` and character `source`. All other columns are character. Each pair
+appears once per person, including the diagonal. Pairs follow the lower triangle
+in selected-effect order: (1,1), (2,1), (2,2), and so on; IDs within a pair follow
+analysis order. The key is ID plus the two model/group/term identities.
+
+For multiple models, `source` distinguishes `"within_model"`,
+`"assumed_independent"`, and `"supplied"`. An explicitly supplied zero covariance
+retains source `"supplied"`. The table includes analyzed IDs only: externally
+supplied covariance need not cover excluded people, so there is no measurement-
+cohort option. Error-free observed columns are omitted, and their zero error
+assumption remains unchanged.
+
+Mirror off-diagonal rows to reconstruct a symmetric selected-effect covariance:
+
+```{r reconstruct}
+labels <- unique(scores$label)
+one <- error_covariance[error_covariance$id == people$person[1], ]
+S <- matrix(0, length(labels), length(labels), dimnames = list(labels, labels))
+for (i in seq_len(nrow(one))) {
+  S[one$label1[i], one$label2[i]] <- S[one$label2[i], one$label1[i]] <- one$covariance[i]
+}
+S
+```
+
+This is score-error covariance for one person. `vcov(fit)` instead returns the
+covariance of estimated structural regression coefficients. Exporting only scores
+and treating them as error-free in a later regression would discard REPAIR's
+correction. For deliberate custom estimation, see the `fit_mmom()` input contract.
+
+## Select diagnostic tables and join by identity
+
+```{r diagnostics}
+repair_diagnostics(fit, table = "cohort")
+repair_diagnostics(fit, table = "excluded")
+head(repair_diagnostics(fit, table = "weights"))
+repair_diagnostics(fit, table = "regularization")
+```
+
+The table name must match exactly; no partial matching occurs. Omitting `table`
+returns the original diagnostics list. Selecting a table other than reliability
+avoids calculating reliability. `cross_model_error` is policy metadata in that
+list, not a selectable data frame.
+
+| Table | Columns |
+|---|---|
+| `status` | converged, step, message |
+| `cohort` | n_requested, n_analyzed, n_excluded |
+| `excluded` | id, reason |
+| `measurement` | model, group, backend, singular, n_measurement, n_outside_requested, messages |
+| `score_failures` | model, group, id, analyzed, reason |
+| `error_variances` | id, term, role, variance |
+| `regularization` | step, policy, alpha, subtraction_multiplier, regularized |
+| `conditioning` | step, dimension, min_eigenvalue, max_eigenvalue, condition_number |
+| `weights` | id, weight, fraction |
+| `weight_summary` | n_people, max_fraction, weight_equivalent_n |
+| `reliability` | model, group, term, role, measure, cohort, n_people, n_defined, n_undefined, reliability, mean_defined, min, median, max, status, reason |
+
+All selected tables have automatic row names; IDs and effect names are explicit
+columns. Numerical structural failure leaves typed zero-row structural diagnostic
+tables, while status and measurement diagnostics remain available. Coefficient
+extraction stops on failure; scores and their covariance remain inspectable.
+
+Join scores with marginal posterior reliability using explicit identities and a
+matching cohort. Do not join on row number or on `term` alone across models:
+
+```{r join}
+reliability <- repair_reliability(fit, level = "person", type = "marginal")
+keys <- c("model", "group", "term", "id", "cohort")
+joined <- merge(scores, reliability[c(keys, "reliability")], by = keys,
+                all.x = TRUE, sort = FALSE)
+head(joined[, c("id", "model", "term", "score", "std.error", "reliability")])
+stopifnot(nrow(joined) == nrow(scores), !anyNA(joined$reliability))
+```
+
+A join may change row order; retain and use the identity columns.
+
+## Export ordinary data frames
+
+No S7-aware serialization or special table package is needed for extracted tables:
+
+```r
+write.csv(repair_coefficients(fit), "repair-coefficients.csv", row.names = FALSE)
+write.csv(repair_scores(fit), "repair-scores.csv", row.names = FALSE)
+saveRDS(list(scores = repair_scores(fit),
+             score_covariance = repair_score_covariance(fit),
+             coefficients = repair_coefficients(fit)), "repair-tables.rds")
+```
+
+When importing CSV, read IDs as character to preserve identifiers such as `"001"`.
+RDS preserves column types. Keep model specification, cohort choices, and the
+cross-model covariance policy with your analysis record. These extractors stabilize
+routine reporting and inspection; they do not promise that internal S7 slots will
+remain a permanent reporting API.

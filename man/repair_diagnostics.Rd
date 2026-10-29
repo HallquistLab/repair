@@ -4,13 +4,21 @@
 \alias{repair_diagnostics}
 \title{Inspect REPAIR sample, scoring, and numerical diagnostics}
 \usage{
-repair_diagnostics(object)
+repair_diagnostics(object, table = NULL)
 }
 \arguments{
 \item{object}{A fitted \code{\link[=repair]{repair()}} result, including a numerical failure.}
+
+\item{table}{Optional exact table name: \code{"status"}, \code{"cohort"}, \code{"excluded"},
+\code{"measurement"}, \code{"score_failures"}, \code{"error_variances"}, \code{"regularization"},
+\code{"conditioning"}, \code{"weights"}, \code{"weight_summary"}, or \code{"reliability"}.
+Default NULL returns the existing list. A table name returns a plain data
+frame with automatic row names, including typed zero-row tables on failure.
+Reliability is computed only for NULL or \code{"reliability"}. The cross-model
+covariance policy is metadata in the list, not a selectable table.}
 }
 \value{
-A list with data frames \code{status}, \code{cohort}, \code{excluded}, \code{measurement},
+With \code{table = NULL}, a list with data frames \code{status}, \code{cohort}, \code{excluded}, \code{measurement},
 \code{score_failures}, \code{error_variances}, \code{regularization}, \code{conditioning},
 \code{weights}, \code{weight_summary}, and \code{reliability}. Reliability uses the analyzed
 cohort and the definitions in \code{\link[=repair_reliability]{repair_reliability()}}. \code{cross_model_error}

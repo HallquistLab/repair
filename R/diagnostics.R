@@ -2,6 +2,13 @@
 #'
 #' Assemble readable tables without refitting or changing the estimator.
 #' @param object A fitted [repair()] result, including a numerical failure.
+#' @param table Optional exact table name: `"status"`, `"cohort"`, `"excluded"`,
+#'   `"measurement"`, `"score_failures"`, `"error_variances"`, `"regularization"`,
+#'   `"conditioning"`, `"weights"`, `"weight_summary"`, or `"reliability"`.
+#'   Default NULL returns the existing list. A table name returns a plain data
+#'   frame with automatic row names, including typed zero-row tables on failure.
+#'   Reliability is computed only for NULL or `"reliability"`. The cross-model
+#'   covariance policy is metadata in the list, not a selectable table.
 #' @details Error variances describe likelihood-only scores on the structural
 #'   input scale; they are not posterior variances. Observed variables have zero
 #'   error under the model's assumptions. Weight fractions are normalized inverse
@@ -20,14 +27,24 @@
 #'   their measurement model and inclusion status. Exclusions retain all reasons.
 #'   On numerical structural failure, measurement diagnostics remain available,
 #'   while unavailable structural tables have zero rows and `status` records why.
-#' @return A list with data frames `status`, `cohort`, `excluded`, `measurement`,
+#' @return With `table = NULL`, a list with data frames `status`, `cohort`, `excluded`, `measurement`,
 #'   `score_failures`, `error_variances`, `regularization`, `conditioning`,
 #'   `weights`, `weight_summary`, and `reliability`. Reliability uses the analyzed
 #'   cohort and the definitions in [repair_reliability()]. `cross_model_error`
 #'   records the covariance policy and original supplied blocks.
 #' @export
-repair_diagnostics <- function(object) {
+repair_diagnostics <- function(object, table = NULL) {
   repair_require_model(object)
+  tables <- c("status", "cohort", "excluded", "measurement", "score_failures",
+    "error_variances", "regularization", "conditioning", "weights", "weight_summary", "reliability")
+  if (!is.null(table) && (!is.character(table) || length(table) != 1L || is.na(table) || !table %in% tables)) {
+    repair_error("`table` must be NULL or one exact diagnostic table name: {.val {tables}}.")
+  }
+  if (identical(table, "reliability")) {
+    result <- as.data.frame(repair_reliability(object))
+    rownames(result) <- NULL
+    return(result)
+  }
   a <- object@analysis_data
   d <- a@diagnostics
   scores <- if (length(d$model) == 1L) stats::setNames(list(a@scores), d$model) else a@scores
@@ -55,13 +72,21 @@ repair_diagnostics <- function(object) {
     errors <- rbind(errors, data.frame(id = a@ids, term = colnames(a@predictors)[j],
       role = "predictor", variance = a@err_x[j, j, ], row.names = NULL))
   }
-  c(list(status = data.frame(converged = isTRUE(object@struc_fit@converged),
+  result <- c(list(status = data.frame(converged = isTRUE(object@struc_fit@converged),
        step = object@struc_fit@diagnostics$step %||% "complete", message = object@struc_fit@message),
     cohort = data.frame(n_requested = d$n_requested, n_analyzed = length(a@ids),
                         n_excluded = nrow(d$excluded)),
     excluded = d$excluded, measurement = measurement, score_failures = failures,
     error_variances = errors), repair_structural_diagnostics(object),
-    list(reliability = repair_reliability(object), cross_model_error = d$cross_model_error))
+    list(cross_model_error = d$cross_model_error))
+  if (is.null(table)) {
+    # Preserve the existing list's names, order, and reliability class.
+    return(c(result[setdiff(names(result), "cross_model_error")],
+      list(reliability = repair_reliability(object), cross_model_error = d$cross_model_error)))
+  }
+  result <- as.data.frame(result[[table]])
+  rownames(result) <- NULL
+  result
 }
 
 repair_structural_diagnostics <- function(object) {

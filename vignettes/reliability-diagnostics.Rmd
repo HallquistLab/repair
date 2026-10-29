@@ -171,6 +171,13 @@ partial estimates. These diagnostics do not propagate measurement-model or
 covariance-estimation uncertainty and do not establish nominal coverage for a
 particular dataset.
 
+For a single diagnostic table, use `repair_diagnostics(fit, table = "weights")`
+or another exact table name. The existing list interface above remains available.
+Use `repair_coefficients(fit)` for a structural reporting table, `repair_scores(fit)`
+for ID-keyed scores and sampling-error SDs, and `repair_score_covariance(fit)` for
+correlated scoring errors. See `vignette("extracting-results")` for safe joins
+between score and reliability tables.
+
 ## Reproducibility
 
 Frozen reliability fixtures were generated without loading `repair`, using the

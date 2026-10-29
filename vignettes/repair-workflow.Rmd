@@ -84,7 +84,13 @@ head(analysis@err_y)
 analysis@diagnostics$excluded
 ```
 
-The data frame's order is retained. The covariance contract is:
+For ordinary inspection, use `repair_scores(analysis)` and
+`repair_score_covariance(analysis)`. After fitting, `repair_coefficients(fit)`
+and `repair_diagnostics(fit, table = "excluded")` provide reporting tables.
+See `vignette("extracting-results")` for stable schemas, ordering, and joins.
+
+The data frame's order is retained. For advanced matrix-level inspection, the
+internal covariance contract is:
 
 | Property | Meaning and dimensions |
 |---|---|
