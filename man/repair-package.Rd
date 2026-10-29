@@ -3,17 +3,24 @@
 \docType{package}
 \name{repair-package}
 \alias{repair-package}
-\title{repair: Measurement-Error-Corrected Regression of Random Coefficients}
+\title{REPAIR: structural regression with estimated random coefficients}
 \description{
-Implements the REPAIR modified method-of-moments estimator for structural regressions involving random coefficients from Gaussian mixed models. Extracts likelihood-only scores and sampling-error covariances, aligns them with person-level data by identifier, and reports conditional model-based inference and analysis diagnostics.
+Discover effects with \code{\link[=repair_effects]{repair_effects()}}, inspect matched inputs with
+\code{\link[=repair_data]{repair_data()}}, fit with \code{\link[=repair]{repair()}}, and report results with
+\code{\link[=repair_coefficients]{repair_coefficients()}}. \link{repair_example} provides simulated teaching data.
+}
+\details{
+The supported workflow uses Gaussian single-group lmer or supported linear
+lme models. Standard errors are conditional on fitted measurement quantities.
+See \code{vignette("support-and-troubleshooting", package = "repair")} for the
+support matrix, inference boundaries, diagnostics, and saved-fit guidance.
+Run \code{citation("repair")} for software and manuscript references.
+}
+\seealso{
+\code{\link[=repair]{repair()}}, \link{repair_example}
 }
 \author{
-\strong{Maintainer}: Zach Vig \email{zachvig@rocketmail.com}
-
-Authors:
-\itemize{
-  \item Zach Vig \email{zachvig@rocketmail.com}
-}
-
+Zachary A. Vig and Michael N. Hallquist (co-maintainers).
+Zachary A. Vig is the primary R package maintainer contact.
 }
 \keyword{internal}

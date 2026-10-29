@@ -17,3 +17,8 @@ A bare model is named \code{measurement}. Terms are scalar coefficient names.
 \description{
 Inspect available random coefficients
 }
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+repair_effects(list(growth = growth))
+}

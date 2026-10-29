@@ -6,6 +6,10 @@
 #' @param term Random coefficient name; use `"(Intercept)"` for an intercept.
 #' @param model Name in the `models` list. May be omitted if unambiguous.
 #' @return A formula marker; calling it outside a structural formula is an error.
+#' @examples
+#' equation <- re("day", model = "growth") ~ practice
+#' equation
+#' # Use this formula with models = list(growth = your_fitted_model).
 #' @export
 re <- function(term, model = NULL) {
   repair_error("`re()` is a formula marker; use it inside `repair()` or `repair_data()`.")

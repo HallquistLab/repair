@@ -25,31 +25,31 @@ requires **R 4.3 or later** and a C++20 compiler with the R build toolchain
 ## Fit a first model
 
 Fit your measurement model as usual, then provide a separate table with one row
-per person. Here, `observed` is an invented predictor for demonstration.
+per person. The included data are entirely simulated; `practice` represents prior practice
+hours per week. See `?repair_example` for provenance and generating parameters.
 
 ```r
 library(repair)
 
-growth <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
-people <- data.frame(
-  Subject = levels(lme4::sleepstudy$Subject),
-  observed = seq_len(18)
-)
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+people <- repair_example$people
 
 fit <- repair(
-  re("Days", model = "growth") ~ observed,
+  re("day", model = "growth") ~ practice,
   models = list(growth = growth),
   data = people,
-  id = "Subject"
+  id = "person"
 )
 repair_coefficients(fit)
 ```
 
-`re("Days", model = "growth")` selects the random slope for `Days`, expressed as
+`re("day", model = "growth")` selects the random slope for `day`, expressed as
 a deviation from the fitted fixed slope. IDs align people across the measurement
 model and structural data; row order never determines a match. The
-[getting-started guide](articles/repair-workflow.html) executes this workflow and
-explains its output, omissions, regularization, and interpretation.
+[support guide](articles/support-and-troubleshooting.html) executes this example.
+The [getting-started guide](articles/repair-workflow.html) explains the broader
+workflow, omissions, regularization, and interpretation.
 
 ## Know what each step does
 
@@ -69,6 +69,7 @@ and executable examples. Familiar `summary()`, `coef()`, `vcov()`, `confint()`, 
 
 | If you want to… | Read… |
 |---|---|
+| Check supported models or diagnose a problem | [Supported analyses and troubleshooting](articles/support-and-troubleshooting.html) |
 | Run and understand a complete analysis | [A structural regression with REPAIR](articles/repair-workflow.html) |
 | Create reporting tables, join by ID, or export results | [Extracting tables for reporting and reuse](articles/extracting-results.html) |
 | Assess marginal and intercept-residualized reliability | [Reliability and analysis diagnostics](articles/reliability-diagnostics.html) |

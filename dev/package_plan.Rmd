@@ -17,6 +17,12 @@ This document supersedes the October 20 outline. It describes the implementation
 not an aspirational interface. The source is canonical; the obsolete outline PDF
 has been removed. The [audit](design-audit.md) records findings and decisions.
 
+For current model/inference limits and practical help, use the
+[support guide](../vignettes/support-and-troubleshooting.Rmd). The
+[release-hardening audit](release-hardening.md) records installed-help, teaching-data,
+citation, and persistence decisions; the [release checklist](release-checklist.md)
+separates preparation from publishing a versioned artifact.
+
 # Analyst workflow
 
 1. Fit and inspect a Gaussian `lmer()` or linear `lme()` model using its native interface.

@@ -39,6 +39,13 @@
 #'   `@scores` holds a score object for one referenced model, or a named list for
 #'   multiple models. `@diagnostics$measurement_models` always provides diagnostics
 #'   by model; `@diagnostics$cross_model_error` records the applied policy and blocks.
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' analysis <- repair_data(re("day") ~ practice, growth, repair_example$people, "person")
+#' analysis
+#' head(repair_scores(analysis))
+#' head(repair_score_covariance(analysis))
 #' @export
 repair_data <- function(formula, models, data, id, na_action = c("fail", "omit"),
                         cross_model_error = NULL) {
