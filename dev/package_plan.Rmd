@@ -158,7 +158,8 @@ contract (see `multimodel-validation.md`). Reliability and structural diagnostic
 interfaces are now implemented with explicit contrast, cohort, aggregation, and
 undefined-value contracts; see `reliability-validation.md`. Stable table extractors
 are implemented; see `extractor-contracts.md` for schema and compatibility rules.
-Next prioritize cross-platform automated checks. Bootstrap inference,
+Cross-platform automated checks are now configured; see `ci-checks.md` for the
+matrix, warning policy, artifacts, and local reproduction. Bootstrap inference,
 additional residual structures, and multi-group dependence validation require
 separate validation. Cross-person covariance support and formula extensions with
 derived error propagation require explicit statistical contracts.

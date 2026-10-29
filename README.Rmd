@@ -8,6 +8,8 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 # repair
 
+[![R-CMD-check](https://github.com/zacharyvig/repair/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/zacharyvig/repair/actions/workflows/R-CMD-check.yaml)
+
 `repair` implements REPAIR: structural regression involving random coefficients
 from a Gaussian mixed model, with a modified method-of-moments correction for
 sampling error in the estimated coefficients. It uses **likelihood-only scores**
@@ -175,6 +177,12 @@ to corrections and tests. The test suite includes frozen REPAIR simulation and
 independent algebra-audit fixtures for both R and C++ backends, plus three
 single-model nlme and two dual-process reproduction datasets; see
 [fixture provenance](tests/testthat/fixtures/README.md).
+
+Pull requests and pushes to main run package checks on Linux, macOS, and Windows,
+with additional Linux checks for previous, development, and minimum-supported R.
+Tests, examples, and all vignettes run with suggested dependencies installed;
+errors and warnings fail CI. See the [CI guide](dev/ci-checks.md) for the matrix,
+check artifacts, local reproduction, and the `Package checks` branch-protection target.
 
 ```r
 # From a source checkout:

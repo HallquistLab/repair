@@ -128,3 +128,12 @@ schemas and exact diagnostic-table selection. See
 ordering/failure contracts, and verification workflow. The executable
 [extractor guide](../vignettes/extracting-results.Rmd) demonstrates reporting,
 cohort inspection, covariance reconstruction, and joins without internal S7 access.
+
+
+## Automated package-check follow-up
+
+The former local-only verification workflow is extended with a cross-platform,
+multi-R-version GitHub Actions matrix. See [ci-checks.md](ci-checks.md) for the
+audit, dependency and warning policies, artifact collection, stable aggregate
+status, and local reproduction commands. Hosted results are recorded in the PR;
+existing local compiler warnings are not automatically waived in CI.
