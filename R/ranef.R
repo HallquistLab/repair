@@ -126,7 +126,7 @@ get_ranef_base_covariance <- function(elements, rows) {
       )
     }
     block <- operator$matrix(group = residual_group, level = level)
-    covariance[positions, positions, drop = FALSE] <-
+    covariance[positions, positions] <-
       block[local_rows, local_rows, drop = FALSE]
   }
 
@@ -323,9 +323,22 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
 #'   random-effect covariance is allowed when the target design is identifiable.
 #'   Standard errors condition on fitted measurement-model parameters.
 #'
-#'   Multi-group and nlme extraction are experimental. Per-cluster blocks do not
+#'   Single-group linear nlme fits must retain their data (`keep.data = TRUE`).
+#'   Supported correlations are independent, `corAR1`, and `corCAR1`; an AR(1)
+#'   represented internally as `corARMA(p = 1, q = 0)` is also accepted.
+#'   Supported residual variance structures are constant, `varIdent`, and
+#'   `varPower` (including fitted-value covariates). Correlation groups must
+#'   match the random-effects grouping factor. Other structures, nonlinear
+#'   nlme fits, and multilevel nlme fits are rejected explicitly.
+#'
+#'   nlme designs use stored effective observation IDs and fitted contrasts.
+#'   Residual covariance uses fitted residual SDs and correlation blocks;
+#'   `na.exclude` padding and re-evaluation of `subset` cannot add observations.
+#'   See `vignette("nlme-workflow", package = "repair")` for reproduction examples.
+#'
+#'   Multi-group lme4 scoring remains experimental. Per-cluster blocks do not
 #'   describe cross-cluster score errors from shared nuisance effects. The
-#'   structural [repair()] workflow therefore accepts single-group lmer models.
+#'   structural [repair()] workflow therefore requires one grouping factor.
 #' @return An S7 score object with group-keyed `@predictions` matrices (ID by
 #'   coefficient), `@error_covariance` arrays (coefficient by coefficient by ID),
 #'   `@levels`, `@terms`, and `@diagnostics`; `@success` is true only if all selected

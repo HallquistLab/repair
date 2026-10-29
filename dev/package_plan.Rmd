@@ -19,7 +19,7 @@ has been removed. The [audit](design-audit.md) records findings and decisions.
 
 # Analyst workflow
 
-1. Fit and inspect a Gaussian `lmer()` model using its native interface.
+1. Fit and inspect a Gaussian `lmer()` or linear `lme()` model using its native interface.
 2. Name the fit in `models = list(growth = growth_fit)`.
 3. Call `repair_effects(models)` to discover scalar coefficient names and groups.
 4. Specify one additive structural formula, such as
@@ -32,15 +32,17 @@ has been removed. The [audit](design-audit.md) records findings and decisions.
 
 # Supported scope
 
-One equation, one referenced Gaussian lmer measurement model, one grouping factor,
+One equation, one referenced Gaussian lmer or linear lme measurement model, one grouping factor,
 additive predictors, and an intercept. Random coefficients can appear on either
 side. Observed predictors can be numeric, logical, or factors; an observed
 outcome must be numeric. A named list can catalog several fits, but a single
 structural equation cannot yet combine scores from different fits.
 
-The existing lower-level scorer can compute target-specific scores from multiple
-groups and nlme fits. Those paths remain experimental. Structural fitting does
-not promote them to supported inference: shared nuisance groups may induce
+Single-group nlme scoring and structural fitting now support independent, AR(1),
+and continuous-time AR(1) correlation, with constant, varIdent, or varPower
+residual variance. Effective rows, fitted contrasts, and residual covariance are
+validated; see `nlme-validation.md`. Multilevel nlme extraction is rejected.
+Multi-group lme4 scoring remains experimental: shared nuisance groups may induce
 cross-person score-error covariance absent from the row-wise M-MOM contract.
 
 # Contracts and responsibilities
@@ -139,8 +141,9 @@ its downstream estimator must be specified before broadening structural support.
    integration tests, README/vignette execution, and a source-package check.
 7. Document any remaining check warnings and methodological limits in the PR.
 
-Future work should proceed in this order: backend/scoring validation (especially
-nlme effective-row ordering and multi-group dependence), cross-model/cross-person
+The single-group nlme effective-row and residual-covariance validation milestone
+is implemented (see `nlme-validation.md`). Future work should proceed in this order:
+multi-group dependence validation and additional residual structures, cross-model/cross-person
 covariance contracts, formula extensions with derived error propagation,
 measurement-fitting convenience wrappers, and reliability summaries with an
 explicit definition and aggregation rule. The first milestone is a trustworthy

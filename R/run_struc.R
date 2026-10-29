@@ -6,7 +6,8 @@
 #' @param formula An additive structural formula with at least one [re()] marker.
 #'   Observed predictors may be numeric, logical, or factors. The outcome must
 #'   be numeric or a random coefficient. An intercept is always included.
-#' @param models A fitted Gaussian `lme4::lmer()` model or named list. All effects
+#' @param models A fitted Gaussian `lme4::lmer()` or linear `nlme::lme()`
+#'   model, or named list. All effects
 #'   in an equation must come from one model with one grouping factor.
 #' @param data A data frame with one row per analysis ID, containing the observed
 #'   structural variables. Its ID values must match the model's grouping levels.
@@ -43,7 +44,8 @@ repair_data <- function(formula, models, data, id, na_action = c("fail", "omit")
   if (length(missing_vars)) repair_error("Observed variables missing from `data`: {.val {missing_vars}}.")
   if (id %in% parsed$observed) repair_error("The ID column cannot be a structural variable.")
   model <- models[[parsed$model]]
-  if (length(lme4::getME(model, "flist")) != 1L) {
+  groups <- if (inherits(model, "lmerMod")) lme4::getME(model, "flist") else model$groups
+  if (length(groups) != 1L) {
     repair_error(paste0("Structural fitting currently requires one grouping factor. ",
       "Multi-group scores can have cross-person errors that `fit_mmom()` cannot represent."))
   }
@@ -124,12 +126,11 @@ repair_data <- function(formula, models, data, id, na_action = c("fail", "omit")
     formula = formula, ids = ids[keep], outcome = y, predictors = x,
     err_x = err_x, err_y = err_y, err_xy = err_xy, effects = effects,
     scores = score,
-    diagnostics = list(n_requested = length(ids), n_analyzed = n,
+    diagnostics = c(list(n_requested = length(ids), n_analyzed = n,
       excluded = excluded, unused_score_ids = setdiff(score@levels[[group]], ids),
       id_column = id, group = group, model = parsed$model, na_action = na_action,
-      score_semantics = "deviations", conditional_on_stage1 = TRUE,
-      measurement_singular = lme4::isSingular(model),
-      measurement_messages = model@optinfo$conv$lme4$messages %||% character())
+      score_semantics = "deviations", conditional_on_stage1 = TRUE),
+      repair_measurement_diagnostics(model))
   )
 }
 

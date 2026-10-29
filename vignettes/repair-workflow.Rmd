@@ -20,7 +20,7 @@ sampling-error representation. REPAIR uses the score and its sampling-error
 covariance in a modified method-of-moments (M-MOM) regression. A BLUP's posterior
 covariance is not the sampling-error covariance required by this estimator.
 
-The high-level interface currently supports one Gaussian `lmer()` measurement
+The high-level interface currently supports one Gaussian `lmer()` or linear `lme()` measurement
 model with one grouping factor per structural equation. The structural model is
 additive and includes an intercept. Scores are deviations from the fitted fixed
 effects. The measurement model remains fixed while structural relationships are
@@ -197,10 +197,11 @@ stopifnot(isTRUE(all.equal(unname(coef(fit)), manual@coefficients$estimate)))
 
 The lower-level scorer `repair_ranef_gls()` returns group-keyed S7 properties
 `@predictions`, `@error_covariance`, `@levels`, `@terms`, and `@diagnostics`.
-Multi-group and `nlme` extraction remain experimental. In particular, shared
+Single-group `nlme` extraction supports the residual structures documented in
+`vignette("nlme-workflow")`. Multi-group lme4 scoring remains experimental; shared
 nuisance random effects can correlate scores across target people, which the
 row-wise M-MOM input contract cannot encode. The high-level workflow therefore
-requires a single-group Gaussian lmer fit.
+requires a single-group Gaussian lmer or supported linear lme fit.
 
 ## Deliberate boundaries
 

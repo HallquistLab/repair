@@ -10,11 +10,11 @@ error-free observed variables.
 
 This is a development package. The supported structural workflow is an
 additive regression with an intercept, using random coefficients from
-**one fitted `lme4::lmer()` model with one grouping factor**. Random
-coefficients may be predictors, the outcome, or both. Numeric, logical,
-and factor observed predictors are supported. See the [workflow
-guide](vignettes/repair-workflow.Rmd) for matching, omission,
-interpretation, and current limits.
+**one fitted `lme4::lmer()` or linear `nlme::lme()` model with one
+grouping factor**. Random coefficients may be predictors, the outcome,
+or both. Numeric, logical, and factor observed predictors are supported.
+See the [workflow guide](vignettes/repair-workflow.Rmd) for matching,
+omission, interpretation, and current limits.
 
 ## Install
 
@@ -29,8 +29,8 @@ for your R installation.
 
 ## Fit, inspect, and summarize
 
-Fit the measurement model using the usual `lmer()` interface. Its
-weights, offsets, contrasts, estimation choices, and effective
+Fit the measurement model using its usual `lmer()` or `lme()` interface.
+Its weights, offsets, contrasts, estimation choices, and effective
 observations remain under your control. Supply structural variables in a
 separate data frame containing one row per analysis ID.
 
@@ -58,6 +58,7 @@ summary(fit)
 #> REPAIR structural regression
 #> re("Days", model = "growth") ~ observed 
 #> People: 18 analyzed / 18 requested; 0 excluded
+#> Measurement backend: lme4
 #> Scores: likelihood-only random deviations
 #>   model   group term    role
 #>  growth Subject Days outcome
@@ -143,9 +144,14 @@ lower-level `fit_mmom()` API.
   coefficients, models without an intercept, joint multiple-equation
   fitting, and cross-model error covariances are not implemented.
   Unsupported formulas fail explicitly.
-- The lower-level scorer has experimental multi-group and `nlme`
-  support. Shared nuisance effects can create cross-person score errors;
-  those cases are not admitted by the structural workflow.
+- Single-group `nlme` models support independent/AR(1)/continuous-time
+  AR(1) correlation and constant/`varIdent`/`varPower` residual
+  variance. Keep the data in the fit (`keep.data = TRUE`). See the [nlme
+  reproduction guide](vignettes/nlme-workflow.Rmd).
+- Multi-group lme4 scoring remains experimental; multi-group structural
+  fits and multilevel nlme extraction are rejected. Shared nuisance
+  effects can create cross-person score errors that the structural
+  estimator cannot represent.
 
 ## Development and reproducibility
 
@@ -153,7 +159,8 @@ The [design plan](dev/package_plan.Rmd) describes the implemented
 contracts and extension sequence. The [audit and
 decisions](dev/design-audit.md) trace findings to corrections and tests.
 The test suite includes frozen REPAIR simulation and independent
-algebra-audit fixtures for both R and C++ backends; see [fixture
+algebra-audit fixtures for both R and C++ backends, plus three
+end-to-end nlme reproduction datasets; see [fixture
 provenance](tests/testthat/fixtures/README.md).
 
 ``` r

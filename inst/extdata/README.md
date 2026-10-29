@@ -1,0 +1,31 @@
+# End-to-end nlme REPAIR reference datasets
+
+`nlme-workflow-reference.rds` contains three synthetic repeated-observation
+and person-level datasets. It includes model specifications, expected
+likelihood-only scores, joint score-error covariances, and structural estimates,
+standard errors, confidence intervals, and covariance matrices.
+
+Expectations were generated WITHOUT loading repair, using production code in
+`blup_unshrinking` at commit `b1f09f430d2214d5c4c8815b1386b62cb4ae159e`:
+`R/blup_helpers.R`, `R/stage2_estimators.R`, and `R/fuller_mlm.R`. The independent
+algebra audit in `vig_hallquist_2026/analysis/fuller_algebra_audit_simulation.R`
+was required to agree. Source hashes, R/nlme versions, estimator controls, and
+scaling settings are embedded in `provenance`.
+
+These are exact per-dataset implementation checks, not the paper's published
+Monte Carlo table values or a new coverage study. Cases cover balanced predictor
+errors, unbalanced outcome errors, and correlated errors on both sides with
+AR(1) and heterogeneous residual variances. The last case is a same-model
+correlated-error extension, not a cross-model structural fit.
+
+The package reports coefficients on the input scale. The production comparison
+uses `skip_internal_scaling = TRUE`. The predictor case additionally records
+results multiplied by the generating population slope SD (0.8), matching the
+external reporting-scale convention in `vh_study2.R`. All reported estimates,
+SEs, and interval endpoints are scaled together. The other cases use scale 1.
+
+Regenerate intentionally with `dev/generate_nlme_fixtures.R`; never replace these
+expectations with package-generated outputs. Normal tests and the vignette read
+this bundled file and require no sibling repository. Tests refit measurement
+models from the raw data, with tolerance 1e-5 to accommodate optimizer/platform
+variation; same-fit analytical GLS tests use stricter numerical tolerances.

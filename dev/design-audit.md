@@ -88,3 +88,11 @@ a regression test checks dispatch from outside the package namespace.
 installation warning from R's header suppressing the unsupported Apple-clang
 warning group `-Wfixed-enum-extension`. This compiler-header warning also occurred
 before this design work. `git diff --check` passed. The fixture RDS is unchanged.
+
+## Follow-up: validated single-group nlme workflow
+
+The subsequent nlme milestone is documented in [nlme-validation.md](nlme-validation.md).
+It supersedes this audit's initial lmer-only support boundary: single-group linear
+lme models with the validated correlation/variance structures are now supported.
+The original decisions above remain a record of PR #2's scope. Multi-group
+structural dependence and cross-model covariance remain deferred.
