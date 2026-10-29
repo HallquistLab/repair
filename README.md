@@ -18,6 +18,12 @@ or both. Numeric, logical, and factor observed predictors are supported.
 See the [workflow guide](vignettes/repair-workflow.Rmd) for matching,
 omission, interpretation, and current limits.
 
+## Package website
+
+Browse the [package website](https://zacharyvig.github.io/repair/) for a guided
+introduction, searchable function reference, executable articles, and release
+notes. The site is rebuilt from `main`; it documents the development version.
+
 ## Install
 
 ``` r

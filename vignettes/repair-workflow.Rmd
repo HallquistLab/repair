@@ -48,8 +48,9 @@ prevent GLS scoring; a rank-deficient *within-person design* does.
 slope may expand into several coefficients: select each by its actual name.
 `"(Intercept)"` is canonical; `"1"` and `"Intercept"` are accepted aliases.
 Model names resolve ambiguous coefficient names when inspecting a list of fits.
-One equation cannot yet combine scores from separate fits because their joint
-sampling-error covariance has not been estimated.
+One equation can combine scores from separate fits when you explicitly specify
+their cross-model scoring-error covariance policy; see
+`vignette("multiple-models")` for the independence and supplied-covariance options.
 
 ## 2. Supply the analysis cohort
 

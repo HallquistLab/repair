@@ -137,3 +137,12 @@ multi-R-version GitHub Actions matrix. See [ci-checks.md](ci-checks.md) for the
 audit, dependency and warning policies, artifact collection, stable aggregate
 status, and local reproduction commands. Hosted results are recorded in the PR;
 existing local compiler warnings are not automatically waived in CI.
+
+
+## Package website follow-up
+
+The executable guides and help pages now have a pkgdown navigation structure,
+a focused home page, and a GitHub Pages build/deploy workflow. See
+[website.md](website.md) for the content audit, source ownership, local preview,
+link validation, PR artifacts, and one-time Pages configuration. The getting-started
+guide now consistently describes the implemented multiple-model capability.
