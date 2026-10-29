@@ -70,6 +70,8 @@ S7::method(summary, class_repair_mod) <- function(object, ...) {
     measurement_backend = data@diagnostics$measurement_backend,
     measurement_singular = data@diagnostics$measurement_singular,
     measurement_messages = data@diagnostics$measurement_messages,
+    measurement_models = data@diagnostics$measurement_models,
+    cross_model_error = data@diagnostics$cross_model_error,
     regularization = fit@diagnostics[c("preliminary_moment_control", "final_moment_control",
       "correction_prelim", "correction_final")],
     diagnostics = fit@diagnostics,
@@ -83,8 +85,18 @@ print.summary_repair <- function(x, ...) {
   cat(paste(deparse(x$formula), collapse = " "), "\n")
   cat("People:", x$n_analyzed, "analyzed /", x$n_requested, "requested;",
       nrow(x$excluded), "excluded\n")
-  if (length(x$unused_score_ids)) cat("Measurement-model IDs outside cohort:", length(x$unused_score_ids), "\n")
-  cat("Measurement backend: ", x$measurement_backend, "\n", sep = "")
+  for (name in names(x$measurement_models)) {
+    d <- x$measurement_models[[name]]
+    cat("Measurement model: ", name, " (", d$measurement_backend, "; group ", d$group,
+        "; ", length(d$unused_score_ids), " IDs outside cohort)\n", sep = "")
+    if (identical(d$measurement_backend, "nlme")) cat("nlme singularity is not assessed; inspect the measurement fit and its fitting warnings.\n")
+    if (isTRUE(d$measurement_singular)) cat("Measurement model: singular random-effect covariance.\n")
+    if (length(d$measurement_messages)) cat("Measurement-model messages:", paste(d$measurement_messages, collapse = "; "), "\n")
+  }
+  cat("Cross-model scoring errors: ", switch(x$cross_model_error$policy,
+      independent = "assumed independent (zero covariance)",
+      supplied = "user-supplied covariance blocks (conditional inference)",
+      not_applicable = "not applicable (one model)"), "\n", sep = "")
   cat("Scores: likelihood-only random deviations\n")
   print(x$effects[, c("model", "group", "term", "role"), drop = FALSE], row.names = FALSE)
   if (x$converged) {
@@ -102,9 +114,6 @@ print.summary_repair <- function(x, ...) {
   } else {
     cat("Structural fit FAILED:", x$message, "\n")
   }
-  if (identical(x$measurement_backend, "nlme")) cat("nlme singularity is not assessed; inspect the measurement fit and its fitting warnings.\n")
-  if (isTRUE(x$measurement_singular)) cat("Measurement model: singular random-effect covariance.\n")
-  if (length(x$measurement_messages)) cat("Measurement-model messages:", paste(x$measurement_messages, collapse = "; "), "\n")
   if (nrow(x$excluded)) cat("Excluded IDs and reasons: inspect summary(fit)$excluded.\n")
   cat(x$inference, "\n")
   invisible(x)

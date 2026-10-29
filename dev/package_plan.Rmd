@@ -32,11 +32,13 @@ has been removed. The [audit](design-audit.md) records findings and decisions.
 
 # Supported scope
 
-One equation, one referenced Gaussian lmer or linear lme measurement model, one grouping factor,
+One equation, Gaussian lmer or linear lme measurement models with one grouping factor each,
 additive predictors, and an intercept. Random coefficients can appear on either
 side. Observed predictors can be numeric, logical, or factors; an observed
-outcome must be numeric. A named list can catalog several fits, but a single
-structural equation cannot yet combine scores from different fits.
+outcome must be numeric. A named list can supply several fits to the equation.
+Multiple referenced models require explicit independent scoring errors or supplied
+per-ID covariance blocks for every model pair. Grouping names can differ; person
+identity must agree across fits. See `multimodel-validation.md`.
 
 Single-group nlme scoring and structural fitting now support independent, AR(1),
 and continuous-time AR(1) correlation, with constant, varIdent, or varPower
@@ -94,13 +96,17 @@ effect mapping, full score result, and diagnostics. Its validator checks aligned
 dimensions and unique IDs. M-MOM further validates finite values and positive
 semidefinite joint covariance. Every score selection/permutation is applied to
 both axes of its covariance block. Observed columns get zero error; within-model
-cross-covariance is preserved, including `err_xy`.
+cross-covariance is preserved, including `err_xy`. Cross-model blocks are aligned
+by model name, coefficient name, and ID, then checked jointly for positive
+semidefiniteness. Missing supplied blocks are errors, not omission candidates.
+Single-model `@scores` remains a score object; multiple-model `@scores` is a named
+list. Diagnostics always include `measurement_models` and `cross_model_error`.
 
 ## Estimation and output
 
 `repair()` delegates assembly to `repair_data()` and estimation to `fit_mmom()`.
 It returns the existing `class_repair_mod` extended with `analysis_data` and `call`.
-Only the referenced measurement model is retained. `struc_fit` remains the stable
+Only referenced measurement models are retained. `struc_fit` remains the stable
 M-MOM fit/failure class. Numerical failures warn and remain inspectable; standard
 coefficient/covariance accessors refuse failed fits.
 
@@ -142,9 +148,10 @@ its downstream estimator must be specified before broadening structural support.
 7. Document any remaining check warnings and methodological limits in the PR.
 
 The single-group nlme effective-row and residual-covariance validation milestone
-is implemented (see `nlme-validation.md`). Future work should proceed in this order:
-multi-group dependence validation and additional residual structures, cross-model/cross-person
-covariance contracts, formula extensions with derived error propagation,
-measurement-fitting convenience wrappers, and reliability summaries with an
-explicit definition and aggregation rule. The first milestone is a trustworthy
+is implemented (see `nlme-validation.md`), as is the multiple-model assembly
+contract (see `multimodel-validation.md`). Next prioritize reliability summaries
+with an explicit definition and aggregation rule, then multi-group dependence
+validation and additional residual structures. Cross-person covariance support,
+formula extensions with derived error propagation, and measurement-fitting
+convenience wrappers require separate statistical contracts. The first milestone is a trustworthy
 complete workflow, not the appearance of broad support through empty stubs.

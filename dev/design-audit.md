@@ -32,7 +32,8 @@ S7 result and scorer contracts, rather than inventing a parallel fit hierarchy.
 The assembly class adds explicit dimensions and identity; M-MOM validates the
 joint covariance numerically. The engine continues to use the paper's estimator.
 
-The structural workflow supports one referenced Gaussian lmer model, one grouping
+At the initial design milestone, the structural workflow supported one referenced
+Gaussian lmer model, one grouping
 factor, and one additive equation with an intercept. Scores may be on either or
 both sides; observed factor contrast columns are permitted and carry zero error.
 Multiple fits may be cataloged, but cross-model equations fail instead of
@@ -94,5 +95,16 @@ before this design work. `git diff --check` passed. The fixture RDS is unchanged
 The subsequent nlme milestone is documented in [nlme-validation.md](nlme-validation.md).
 It supersedes this audit's initial lmer-only support boundary: single-group linear
 lme models with the validated correlation/variance structures are now supported.
-The original decisions above remain a record of PR #2's scope. Multi-group
-structural dependence and cross-model covariance remain deferred.
+The original decisions above remain a record of PR #2's scope. At the nlme
+milestone, multi-group structural dependence and cross-model covariance remained
+deferred; the follow-up below changes the cross-model boundary.
+
+
+## Multiple-model follow-up
+
+The former single-model restriction is superseded by explicit covariance-aware
+assembly across models. The one-group-per-model and independent-person boundaries
+remain. See [the multiple-model audit](multimodel-validation.md) for findings,
+contract decisions, reproduction evidence, and the design workflow. The executable
+[multiple-model guide](../vignettes/multiple-models.Rmd) is the user-facing entry
+point. Earlier sections record the scope at their respective milestones.
