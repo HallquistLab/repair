@@ -159,7 +159,9 @@ interfaces are now implemented with explicit contrast, cohort, aggregation, and
 undefined-value contracts; see `reliability-validation.md`. Stable table extractors
 are implemented; see `extractor-contracts.md` for schema and compatibility rules.
 Cross-platform automated checks are now configured; see `ci-checks.md` for the
-matrix, warning policy, artifacts, and local reproduction. Bootstrap inference,
+matrix, warning policy, artifacts, and local reproduction. A pkgdown website now
+organizes the executable guides and reference, with PR validation and main-branch
+GitHub Pages deployment; see `website.md`. Bootstrap inference,
 additional residual structures, and multi-group dependence validation require
 separate validation. Cross-person covariance support and formula extensions with
 derived error propagation require explicit statistical contracts.

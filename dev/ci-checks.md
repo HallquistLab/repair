@@ -133,3 +133,11 @@ Implementation validation combines actionlint, the prerequisite/README scripts,
 a local source-package check, and the first hosted matrix run. Results and any
 platform findings are recorded in the PR. Independent numerical reference
 fixtures remain the acceptance evidence for scientific behavior.
+
+
+## Website checks
+
+The separate pkgdown workflow builds the package website on PRs and validates
+its generated pages, internal links, and assets. Main-branch builds deploy to
+GitHub Pages. See [website.md](website.md) for source editing, HTML previews,
+publishing prerequisites, and local verification.
