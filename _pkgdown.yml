@@ -25,6 +25,7 @@ articles:
   navbar: Start and report
   contents:
   - repair-workflow
+  - support-and-troubleshooting
   - extracting-results
   - reliability-diagnostics
 - title: Measurement models and reproduction
@@ -34,6 +35,9 @@ articles:
   - nlme-workflow
 
 reference:
+- title: Teaching data
+- contents:
+  - repair_example
 - title: Fit and inspect an analysis
   desc: Discover random coefficients, specify a structural equation, and inspect the analysis cohort before fitting.
 - contents:

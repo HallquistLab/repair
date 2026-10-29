@@ -1,5 +1,17 @@
 # repair 0.0.0.9000
 
+* Add a documented synthetic teaching dataset, `repair_example`, with repeated
+  observations, person-level predictors, and explicit generating provenance.
+* Complete executable examples for all exported objects and add a support and
+  troubleshooting guide covering model/inference boundaries and saved results.
+* Verify saved single- and multiple-model fits in fresh R sessions, including
+  standard generics, stable tables, supplied covariance, and diagnostics.
+* Add separate software and method citations, identify the C++20 requirement,
+  and index all installed reference datasets. Credit Michael N. Hallquist as an
+  author and co-maintainer, with Zachary A. Vig remaining primary maintainer.
+* Document the release-preparation workflow and outstanding publication checks;
+  the package remains a development version.
+
 * Add a pkgdown documentation website with a guided home page, task-oriented
   reference, all five executable guides, search, and release notes. Build and
   validate it on pull requests and deploy main to GitHub Pages.

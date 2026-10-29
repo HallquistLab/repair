@@ -68,6 +68,12 @@ repair_coefficients <- function(object, conf.level = 0.95) {
 #'   IDs are character and never stored only in row names. `label` is the qualified
 #'   formula label, and `role` is `"outcome"` or `"predictor"`. Successful rows have
 #'   status `"ok"` and an empty reason. The schema is identical for one or many models.
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+#' head(repair_scores(fit))
+#' head(repair_scores(fit, cohort = "measurement"))
 #' @export
 repair_scores <- function(object, cohort = c("analyzed", "measurement")) {
   a <- repair_analysis_object(object)
@@ -116,6 +122,12 @@ repair_scores <- function(object, cohort = c("analyzed", "measurement")) {
 #'   each pair follow analysis order. Mirror off-diagonal rows to reconstruct a
 #'   symmetric matrix. Source is `"within_model"`, `"assumed_independent"`, or
 #'   `"supplied"`. The key is ID plus the two model/group/term identities.
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+#' head(repair_score_covariance(fit))
+#' # vcov(fit) instead describes structural coefficient uncertainty.
 #' @export
 repair_score_covariance <- function(object) {
   a <- repair_analysis_object(object)

@@ -1,4 +1,23 @@
-# End-to-end nlme REPAIR reference datasets
+# Bundled reference data
+
+These RDS files are independent implementation references, not teaching data or
+published Monte Carlo tables. For a discoverable teaching dataset use
+`data(repair_example)` and its help page; that dataset is stored under `data/`.
+
+| File | Role | Generation script |
+|---|---|---|
+| `nlme-workflow-reference.rds` | Three observation-to-inference nlme cases | `dev/generate_nlme_fixtures.R` |
+| `multimodel-workflow-reference.rds` | Two paired-process cases with independent or supplied cross-model error covariance | `dev/generate_multimodel_fixtures.R` |
+| `reliability-reference.rds` | Posterior covariance, marginal and intercept-residualized reliability references | `dev/generate_reliability_fixtures.R` |
+
+Each reference contains provenance with source revisions/hashes and environment
+information. Generators use the companion research code rather than repair to
+produce expected values. Do not regenerate expectations from the implementation
+being tested. See `tests/testthat/fixtures/README.md` in the source repository for
+the complete reference inventory and maintenance policy. Normal installed
+examples/tests require no companion repository.
+
+## End-to-end nlme REPAIR reference datasets
 
 `nlme-workflow-reference.rds` contains three synthetic repeated-observation
 and person-level datasets. It includes model specifications, expected

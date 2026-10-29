@@ -41,3 +41,10 @@ Failed scores remain as rows, with missing estimates/uncertainty where saved,
 \code{status = "failed"}, and a reason. Absent measurement IDs have no score row;
 use \code{repair_diagnostics(fit, table = "excluded")} for their exclusion reasons.
 }
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+head(repair_scores(fit))
+head(repair_scores(fit, cohort = "measurement"))
+}

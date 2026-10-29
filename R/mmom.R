@@ -1,7 +1,8 @@
 #' Fit the M-MOM structural model from scores and error covariances.
 #'
-#' @param data_list A list. Each element should correspond to an observation and itself
-#'  be a list with fields `outcome`, `predictors`, `err_x`, `err_y`, and `err_xy`.
+#' @param data_list Either a list of per-person lists with fields `outcome`,
+#'   `predictors`, `err_x`, `err_y`, and `err_xy`, or a matrix-style list with
+#'   those same named fields. See Details for their dimensions.
 #' @param preliminary_moment_control Correction controls with `correction` and `alpha`.
 #' @param final_moment_control Correction controls with `correction` and `alpha`.
 #' @param backend Computation backend: `"auto"`, `"r"`, or `"rcpp"`.
@@ -21,6 +22,17 @@
 #'   normal-based 95% intervals. `correction = "none"` disables regularization,
 #'   not measurement-error subtraction. `step_up` is not implemented.
 #' @return An S7 `class_mmom_fit` object. Numerical failures use the same class.
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' analysis <- repair_data(re("day") ~ practice, growth, repair_example$people, "person")
+#' # Advanced interface: retain the entire joint error covariance.
+#' manual <- fit_mmom(list(
+#'   outcome = analysis@outcome, predictors = analysis@predictors,
+#'   err_x = analysis@err_x, err_y = analysis@err_y, err_xy = analysis@err_xy
+#' ), backend = "r")
+#' manual@converged
+#' manual@coefficients
 #' @export
 fit_mmom <- function(data_list,
                      preliminary_moment_control = list(

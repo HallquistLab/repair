@@ -1,0 +1,172 @@
+---
+title: "Supported analyses and troubleshooting"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Supported analyses and troubleshooting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+## Start with a complete teaching example
+
+`repair_example` contains **entirely synthetic** daily learning scores and prior
+practice hours for 60 people. It is not a real study or a reproduction of the
+paper's Monte Carlo results. Its help page describes the generating model and
+its known coefficients; those generating values are not inputs to the analysis.
+
+```{r example}
+data(repair_example)
+head(repair_example$repeated)
+head(repair_example$people)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+models <- list(growth = growth)
+repair_effects(models)
+
+analysis <- repair_data(
+  re("day", model = "growth") ~ practice,
+  models, repair_example$people, id = "person"
+)
+head(repair_scores(analysis))
+
+fit <- repair(
+  re("day", model = "growth") ~ practice,
+  models, repair_example$people, id = "person"
+)
+repair_coefficients(fit)
+repair_diagnostics(fit, table = "cohort")
+```
+
+The practice coefficient describes the association between one extra hour of
+prior practice and the random learning slope, in score units per day. `re("day")`
+selects a **deviation from the fitted fixed slope**, not the raw score or the
+fixed-plus-random slope. The generating association is 0.18; one simulated sample
+need not reproduce it exactly. This is an association, not evidence of causation.
+
+`repair_effects()` discovers usable names; `repair_data()` aligns and exposes
+inputs; `repair()` fits the structural model. For the full sequence, formula
+examples, and regularization choices, see `vignette("repair-workflow")`.
+
+## Support matrix
+
+This matrix is the current user-facing support boundary. Historical development
+audits describe the scope at the time they were written.
+
+| Component | Supported | Boundary or assumption |
+|---|---|---|
+| lme4 measurement model | Gaussian `lmer()` with one grouping factor, including separate random-effect blocks for that factor | GLMMs and multiple-group structural fits are rejected |
+| nlme measurement model | Linear `lme()` with one grouping factor and retained effective data (`keep.data = TRUE`) | Nonlinear or multilevel lme fits are rejected |
+| nlme residual correlation | Independent, `corAR1`, `corCAR1`; internal ARMA(1,0) representation of AR(1) | Correlation grouping must match random-effects grouping; other structures are unsupported |
+| nlme residual variance | Constant, `varIdent`, `varPower`, including supported fitted-value covariates | Other variance structures are rejected; see `vignette("nlme-workflow")` |
+| Structural equation | Additive regression with an intercept; random coefficients on either side | At least one predictor and one `re()` reference; no random-coefficient interactions, nonlinear transformations, offsets, `.`, or joint equations |
+| Observed structural variables | Numeric outcome; numeric/logical/factor predictors | Treated as measured without error; precompute observed transformations and explicitly convert character categories to factors |
+| Multiple measurement models | Named fits with model-qualified effects and ID matching | Explicit independent-error or supplied scoring-error covariance policy; separate fitting does not establish independence |
+| IDs and missingness | One structural row per person; character-value ID matching; explicit `na_action = "omit"` audit | Duplicate/missing/empty IDs always fail; default is to stop on incomplete inputs |
+| Estimation | Modified method of moments with `minimum`, `none`, or custom regularization, using R or Rcpp | `none` still subtracts measurement error; `step_up` is not implemented |
+| Structural inference | Conditional model-based SEs and normal intervals/tests | Does not propagate fitted measurement-parameter or estimated supplied-block uncertainty; no bootstrap or robust-sandwich option |
+| Reliability | Marginal posterior reliability; intercept-residualized slope reliability for two-coefficient intercept/slope models | Plug-in diagnostics with explicit undefined cases; no automatic adequacy cutoff or reliability CI |
+| Dependence between people | Independent structural analysis people | Experimental lower-level multi-group scoring does not supply the cross-person covariance needed by the structural estimator |
+
+For multiple models and covariance input formats, see `vignette("multiple-models")`.
+Keep the within-model joint covariance even when choosing cross-model independent
+errors. `repair_score_covariance(fit)` exposes what actually enters the estimator.
+
+## Three kinds of uncertainty
+
+| Quantity | Interface | Meaning |
+|---|---|---|
+| Likelihood-only sampling error | `repair_scores()`, `repair_score_covariance()` | Error in estimated person-specific random coefficients, conditional on fitted measurement quantities |
+| Posterior reliability | `repair_reliability()` | Reduction in uncertainty under the fitted measurement model relative to its prior random-effect variance |
+| Structural coefficient uncertainty | `vcov()`, `confint()`, `repair_coefficients()` | Conditional model-based uncertainty in the structural regression coefficients |
+
+A BLUP's posterior covariance cannot replace likelihood-only sampling-error
+covariance. Neither successful computation nor high reliability establishes
+nominal interval coverage. Small samples, weak information, and correlated effects
+require particular care and analysis-specific simulation; no universal diagnostic
+cutoff is imposed. Measurement-model adequacy must be assessed with the usual
+lme4/nlme tools before interpreting structural estimates.
+
+## Diagnose before changing an analysis
+
+```{r diagnostics}
+repair_diagnostics(fit, table = "status")
+repair_diagnostics(fit, table = "measurement")
+repair_diagnostics(fit, table = "conditioning")
+repair_diagnostics(fit, table = "weight_summary")
+repair_reliability(fit)[, c("term", "measure", "reliability", "n_defined")]
+```
+
+| Message or finding | Inspect | Appropriate next step |
+|---|---|---|
+| Unknown/ambiguous random-effect reference | `repair_effects(models)` | Use the exact scalar coefficient name and a model qualifier; factor slopes can expand to multiple coefficients |
+| Duplicate, missing, or empty structural IDs | The ID column in the person table | Correct identity/aggregation upstream; row order or automatic deduplication is not a matching strategy |
+| ID absent from a measurement model or missing structural value | Original IDs/variables; the exclusion table if omission was requested | Resolve the mismatch or make an explicit, substantively justified cohort decision |
+| Likelihood-only predictions failed | Measurement records and within-person design; `score_failures` when a fit/assembly exists | Check sufficient within-person predictor variation and design rank; do not substitute a BLUP or zero covariance |
+| Singular measurement-model fit | lme4 convergence/singularity diagnostics and substantive model specification | Singularity is different from a rank-deficient person design and does not automatically prevent direct scoring; assess whether the measurement model is defensible |
+| Missing nlme variance-parameter uncertainty information | nlme model messages and model adequacy | This message is not by itself a convergence test or evidence that all scores are invalid |
+| Structural design is rank-deficient | Redundant/constant predictors, factor expansion, and the selected cohort | Correct the intended specification; do not silently delete estimated terms |
+| Structural fit failed numerically | `repair_diagnostics(fit, "status")`, score error variances and available conditioning diagnostics | Investigate information and the model; failed fits remain inspectable, while coefficient/CI accessors refuse invalid estimates |
+| Concentrated weights or poorly conditioned corrected moments | `weights`, `weight_summary`, `conditioning`, and variable units | Examine influential information patterns and design adequacy; weight-equivalent count is not an inferential sample size |
+| Undefined reliability | `status`, `reason`, `n_defined`, and `n_undefined` in reliability output | Distinguish zero/degenerate variance from missing information; do not reinterpret undefined reliability as zero |
+| Multiple models without a covariance policy | The substantive measurement-error design | Supply justified covariance blocks or explicitly justify independent scoring errors; do not choose independence merely to remove an error |
+
+If input validation stops before an analysis object exists, inspect the original
+data and measurement fits. A diagnostics extractor cannot recover an object that
+was never created. When a numerical structural fit fails after assembly,
+measurement/cohort diagnostics remain available; unavailable structural tables
+are empty and the status table identifies the failure.
+
+## Make omissions explicit
+
+```{r omissions}
+people <- repair_example$people
+people$practice[2] <- NA_real_
+# The default would stop. Here we deliberately request and inspect the omission.
+complete <- repair(re("day") ~ practice, growth, people, "person", na_action = "omit")
+repair_diagnostics(complete, table = "excluded")
+nobs(complete)
+```
+
+The warning and exclusion audit document an analysis choice. Omitting incomplete
+people is not a correction for informative missingness. Do not repeatedly discard
+people or alter error covariance until a desirable coefficient appears.
+
+## Save results and record the environment
+
+```{r save-fit}
+path <- tempfile(fileext = ".rds")
+saveRDS(fit, path)
+restored <- readRDS(path)
+repair_coefficients(restored)
+unlink(path)
+```
+
+In a new R session, load `library(repair)` before using a restored object. The
+package tests saved single- and multiple-model fits in a fresh R process with the
+same installed package/dependency versions. This is not a guarantee of S7 object
+compatibility across future package versions. Keep the analysis code, original
+data, `packageVersion("repair")`, and `sessionInfo()` with a saved analysis.
+For long-term reporting, also export the plain tables shown in
+`vignette("extracting-results")`; retain covariance when exporting scores for reuse.
+
+## Interface stability and reporting
+
+The high-level fit/assembly functions, standard generics, and documented table
+schemas are the supported routine workflow. `fit_mmom()` and `repair_ranef_gls()`
+are advanced interfaces requiring correct error inputs and assumptions. The
+exported `class_repair_mod` is available for type checks/advanced integration;
+its internal properties are not a substitute for the stable table interfaces.
+Construct ordinary fits through `repair()`.
+
+Reports should identify the measurement specifications, structural equation,
+cohort and omissions, cross-model covariance policy, regularization settings,
+coefficient units, and conditional nature of inference. Record the software
+version and use `citation("repair")` to distinguish software and method citations.
+Zachary A. Vig and Michael N. Hallquist are package authors and co-maintainers;
+Zach is the primary R package maintainer contact. Report reproducible problems at
+<https://github.com/zacharyvig/repair/issues>, with a small synthetic example and
+session information rather than identifiable participant data.

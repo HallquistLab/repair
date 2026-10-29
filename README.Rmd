@@ -48,25 +48,21 @@ one row per analysis ID.
 
 ```{r example}
 library(repair)
-growth <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
-
-# Illustrative person-level predictor, not an actual sleepstudy measurement.
-people <- data.frame(
-  Subject = levels(lme4::sleepstudy$Subject),
-  observed = seq_len(18)
-)
+data(repair_example)  # Entirely simulated teaching data; see ?repair_example
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+people <- repair_example$people
 
 repair_effects(list(growth = growth))
 fit <- repair(
-  re("Days", model = "growth") ~ observed,
+  re("day", model = "growth") ~ practice,
   models = list(growth = growth),
   data = people,
-  id = "Subject"
+  id = "person"
 )
 summary(fit)
 ```
 
-The marker `re("Days", model = "growth")` selects the random slope for `Days`.
+The marker `re("day", model = "growth")` selects the random slope for `day`.
 It represents a deviation from the fitted fixed slope. Use
 `re("(Intercept)", model = "growth")` for the random intercept. When there is
 only one matching effect, `model` may be omitted.
@@ -81,8 +77,8 @@ nobs(fit)  # people, not repeated observations
 
 ```{r inspection}
 analysis <- repair_data(
-  re("Days", model = "growth") ~ observed,
-  models = list(growth = growth), data = people, id = "Subject"
+  re("day", model = "growth") ~ practice,
+  models = list(growth = growth), data = people, id = "person"
 )
 analysis
 head(repair_scores(analysis))
@@ -155,6 +151,18 @@ denominators; diagnostics do not impose automatic adequacy cutoffs. See the
 [reliability and diagnostics guide](vignettes/reliability-diagnostics.Rmd) for
 marginal versus intercept-residualized reliability, cohort selection, and
 interpretation of numerical and weight diagnostics.
+
+## Support, troubleshooting, and citation
+
+The [support guide](vignettes/support-and-troubleshooting.Rmd) consolidates the
+supported model/inference matrix, a complete `repair_example` analysis, common
+diagnostic messages, and saved-fit guidance. The teaching data include both
+repeated observations and meaningful synthetic person-level variables.
+
+Run `citation("repair")` for separate software and method references. Zachary A.
+Vig and Michael N. Hallquist are authors and co-maintainers; Zach is the primary
+R package maintainer contact. This remains a development version, with no tagged
+release claimed by these instructions.
 
 ## Interpretation and limits
 

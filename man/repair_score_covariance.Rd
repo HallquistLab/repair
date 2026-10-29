@@ -34,3 +34,10 @@ from scoring; cross-model entries reflect the explicit policy or supplied blocks
 Values are conditional on fitted measurement quantities and are not posterior
 covariances. Extraction does not change inputs or assume new zero covariances.
 }
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+head(repair_score_covariance(fit))
+# vcov(fit) instead describes structural coefficient uncertainty.
+}

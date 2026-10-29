@@ -19,3 +19,8 @@ Use only inside the structural formula passed to \code{\link[=repair]{repair()}}
 \code{\link[=repair_data]{repair_data()}}. Each reference selects one scalar coefficient, not a
 multi-column formula term. Inspect available names with \code{\link[=repair_effects]{repair_effects()}}.
 }
+\examples{
+equation <- re("day", model = "growth") ~ practice
+equation
+# Use this formula with models = list(growth = your_fitted_model).
+}

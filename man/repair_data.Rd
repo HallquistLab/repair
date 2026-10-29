@@ -65,3 +65,11 @@ uncertainty in their estimation is not propagated. Independent errors do not
 imply independent latent processes. The package does not estimate cross-model
 covariance from separate fits. See \code{vignette("multiple-models", package = "repair")}.
 }
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+analysis <- repair_data(re("day") ~ practice, growth, repair_example$people, "person")
+analysis
+head(repair_scores(analysis))
+head(repair_score_covariance(analysis))
+}

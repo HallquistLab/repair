@@ -12,8 +12,9 @@ fit_mmom(
 )
 }
 \arguments{
-\item{data_list}{A list. Each element should correspond to an observation and itself
-be a list with fields \code{outcome}, \code{predictors}, \code{err_x}, \code{err_y}, and \code{err_xy}.}
+\item{data_list}{Either a list of per-person lists with fields \code{outcome},
+\code{predictors}, \code{err_x}, \code{err_y}, and \code{err_xy}, or a matrix-style list with
+those same named fields. See Details for their dimensions.}
 
 \item{preliminary_moment_control}{Correction controls with \code{correction} and \code{alpha}.}
 
@@ -43,4 +44,16 @@ covariance and conditions on fitted first-stage quantities. Measurement-
 model parameter uncertainty is not propagated. Reported intervals are
 normal-based 95\% intervals. \code{correction = "none"} disables regularization,
 not measurement-error subtraction. \code{step_up} is not implemented.
+}
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+analysis <- repair_data(re("day") ~ practice, growth, repair_example$people, "person")
+# Advanced interface: retain the entire joint error covariance.
+manual <- fit_mmom(list(
+  outcome = analysis@outcome, predictors = analysis@predictors,
+  err_x = analysis@err_x, err_y = analysis@err_y, err_xy = analysis@err_xy
+), backend = "r")
+manual@converged
+manual@coefficients
 }

@@ -32,6 +32,13 @@
 #'   `weights`, `weight_summary`, and `reliability`. Reliability uses the analyzed
 #'   cohort and the definitions in [repair_reliability()]. `cross_model_error`
 #'   records the covariance policy and original supplied blocks.
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+#' repair_diagnostics(fit, table = "cohort")
+#' repair_diagnostics(fit, table = "weight_summary")
+#' repair_diagnostics(fit, table = "excluded")
 #' @export
 repair_diagnostics <- function(object, table = NULL) {
   repair_require_model(object)

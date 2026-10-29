@@ -20,9 +20,10 @@ omission, interpretation, and current limits.
 
 ## Package website
 
-Browse the [package website](https://zacharyvig.github.io/repair/) for a guided
-introduction, searchable function reference, executable articles, and release
-notes. The site is rebuilt from `main`; it documents the development version.
+Browse the [package website](https://zacharyvig.github.io/repair/) for a
+guided introduction, searchable function reference, executable articles,
+and release notes. The site is rebuilt from `main`; it documents the
+development version.
 
 ## Install
 
@@ -44,109 +45,105 @@ separate data frame containing one row per analysis ID.
 
 ``` r
 library(repair)
-growth <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
-
-# Illustrative person-level predictor, not an actual sleepstudy measurement.
-people <- data.frame(
-  Subject = levels(lme4::sleepstudy$Subject),
-  observed = seq_len(18)
-)
+data(repair_example)  # Entirely simulated teaching data; see ?repair_example
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+people <- repair_example$people
 
 repair_effects(list(growth = growth))
-#>    model   group        term n_levels
-#> 1 growth Subject (Intercept)       18
-#> 2 growth Subject        Days       18
+#>    model  group        term n_levels
+#> 1 growth person (Intercept)       60
+#> 2 growth person         day       60
 fit <- repair(
-  re("Days", model = "growth") ~ observed,
+  re("day", model = "growth") ~ practice,
   models = list(growth = growth),
   data = people,
-  id = "Subject"
+  id = "person"
 )
 summary(fit)
 #> REPAIR structural regression
-#> re("Days", model = "growth") ~ observed
-#> People: 18 analyzed / 18 requested; 0 excluded
-#> Measurement model: growth (lme4; group Subject; 0 IDs outside cohort)
+#> re("day", model = "growth") ~ practice
+#> People: 60 analyzed / 60 requested; 0 excluded
+#> Measurement model: growth (lme4; group person; 0 IDs outside cohort)
 #> Cross-model scoring errors: not applicable (one model)
 #> Scores: likelihood-only random deviations
-#>   model   group term    role
-#>  growth Subject Days outcome
+#>   model  group term    role
+#>  growth person  day outcome
 #>
 #> Posterior reliability (analyzed cohort; equal person weights):
 #>   model term    role      measure reliability n_people n_defined
-#>  growth Days outcome     marginal       0.849       18        18
-#>  growth Days outcome residualized       0.828       18        18
+#>  growth  day outcome     marginal       0.943       60        60
+#>  growth  day outcome residualized       0.897       60        60
 #>
-#>             estimate    se   zstat   pval  ci_low ci_high
-#> (Intercept)  -2.9721 3.215 -0.9245 0.3552 -9.2729  3.3287
-#> observed      0.3129 0.297  1.0534 0.2922 -0.2692  0.8949
+#>             estimate      se  zstat      pval  ci_low ci_high
+#> (Intercept)  -0.7895 0.11473 -6.882 5.905e-12 -1.0144 -0.5647
+#> practice      0.1755 0.02142  8.193 2.548e-16  0.1335  0.2175
 #>
 #> Regularization (preliminary / final): minimum / minimum
-#> Error-moment subtraction multipliers: 0.8333 / 0.8333
-#> Largest analysis-weight fraction: 0.0556 ; weight-equivalent count: 18
+#> Error-moment subtraction multipliers: 0.95 / 0.95
+#> Largest analysis-weight fraction: 0.0179 ; weight-equivalent count: 59.8
 #> Moment conditioning and individual weights: repair_diagnostics(fit).
 #> Conditional on fitted measurement-model parameters; model-based normal SEs and intervals.
 ```
 
-The marker `re("Days", model = "growth")` selects the random slope for
-`Days`. It represents a deviation from the fitted fixed slope. Use
+The marker `re("day", model = "growth")` selects the random slope for
+`day`. It represents a deviation from the fitted fixed slope. Use
 `re("(Intercept)", model = "growth")` for the random intercept. When
 there is only one matching effect, `model` may be omitted.
 
 ``` r
 coef(fit)
-#> (Intercept)    observed
-#>  -2.9721078   0.3128535
+#> (Intercept)    practice
+#>  -0.7895289   0.1754854
 confint(fit)
-#>                 2.5 %    97.5 %
-#> (Intercept) -9.272872 3.3286569
-#> observed    -0.269238 0.8949449
+#>                  2.5 %     97.5 %
+#> (Intercept) -1.0143862 -0.5646716
+#> practice     0.1335049  0.2174659
 nobs(fit)  # people, not repeated observations
-#> [1] 18
+#> [1] 60
 ```
 
 ## Inspect what enters the estimator
 
 ``` r
 analysis <- repair_data(
-  re("Days", model = "growth") ~ observed,
-  models = list(growth = growth), data = people, id = "Subject"
+  re("day", model = "growth") ~ practice,
+  models = list(growth = growth), data = people, id = "person"
 )
 analysis
-#> REPAIR analysis data: 18 people, 1 predictor columns
-#> Excluded: 0 of 18 requested IDs
-#>   model   group term                        label    role
-#>  growth Subject Days re("Days", model = "growth") outcome
+#> REPAIR analysis data: 60 people, 1 predictor columns
+#> Excluded: 0 of 60 requested IDs
+#>   model  group term                       label    role
+#>  growth person  day re("day", model = "growth") outcome
 head(repair_scores(analysis))
-#>    id  model   group term                        label    role      score
-#> 1 308 growth Subject Days re("Days", model = "growth") outcome 11.2974165
-#> 2 309 growth Subject Days re("Days", model = "growth") outcome -8.2055005
-#> 3 310 growth Subject Days re("Days", model = "growth") outcome -4.3523872
-#> 4 330 growth Subject Days re("Days", model = "growth") outcome -7.4592132
-#> 5 331 growth Subject Days re("Days", model = "growth") outcome -5.2012672
-#> 6 332 growth Subject Days re("Days", model = "growth") outcome -0.9005181
+#>     id  model  group term                       label    role      score
+#> 1 P001 growth person  day re("day", model = "growth") outcome  0.4451909
+#> 2 P002 growth person  day re("day", model = "growth") outcome  0.4105728
+#> 3 P003 growth person  day re("day", model = "growth") outcome -0.4013259
+#> 4 P004 growth person  day re("day", model = "growth") outcome  0.6289102
+#> 5 P005 growth person  day re("day", model = "growth") outcome  0.6052267
+#> 6 P006 growth person  day re("day", model = "growth") outcome -1.2120879
 #>   std.error error.variance   cohort analyzed status reason
-#> 1  2.817564       7.938667 analyzed     TRUE     ok
-#> 2  2.817564       7.938667 analyzed     TRUE     ok
-#> 3  2.817564       7.938667 analyzed     TRUE     ok
-#> 4  2.817564       7.938667 analyzed     TRUE     ok
-#> 5  2.817564       7.938667 analyzed     TRUE     ok
-#> 6  2.817564       7.938667 analyzed     TRUE     ok
+#> 1 0.1401763     0.01964941 analyzed     TRUE     ok
+#> 2 0.1401763     0.01964941 analyzed     TRUE     ok
+#> 3 0.2268540     0.05146273 analyzed     TRUE     ok
+#> 4 0.1618617     0.02619921 analyzed     TRUE     ok
+#> 5 0.1401763     0.01964941 analyzed     TRUE     ok
+#> 6 0.2268540     0.05146273 analyzed     TRUE     ok
 head(repair_score_covariance(analysis))
-#>    id model1  group1 term1                       label1   role1 model2  group2
-#> 1 308 growth Subject  Days re("Days", model = "growth") outcome growth Subject
-#> 2 309 growth Subject  Days re("Days", model = "growth") outcome growth Subject
-#> 3 310 growth Subject  Days re("Days", model = "growth") outcome growth Subject
-#> 4 330 growth Subject  Days re("Days", model = "growth") outcome growth Subject
-#> 5 331 growth Subject  Days re("Days", model = "growth") outcome growth Subject
-#> 6 332 growth Subject  Days re("Days", model = "growth") outcome growth Subject
-#>   term2                       label2   role2 covariance       source
-#> 1  Days re("Days", model = "growth") outcome   7.938667 within_model
-#> 2  Days re("Days", model = "growth") outcome   7.938667 within_model
-#> 3  Days re("Days", model = "growth") outcome   7.938667 within_model
-#> 4  Days re("Days", model = "growth") outcome   7.938667 within_model
-#> 5  Days re("Days", model = "growth") outcome   7.938667 within_model
-#> 6  Days re("Days", model = "growth") outcome   7.938667 within_model
+#>     id model1 group1 term1                      label1   role1 model2 group2
+#> 1 P001 growth person   day re("day", model = "growth") outcome growth person
+#> 2 P002 growth person   day re("day", model = "growth") outcome growth person
+#> 3 P003 growth person   day re("day", model = "growth") outcome growth person
+#> 4 P004 growth person   day re("day", model = "growth") outcome growth person
+#> 5 P005 growth person   day re("day", model = "growth") outcome growth person
+#> 6 P006 growth person   day re("day", model = "growth") outcome growth person
+#>   term2                      label2   role2 covariance       source
+#> 1   day re("day", model = "growth") outcome 0.01964941 within_model
+#> 2   day re("day", model = "growth") outcome 0.01964941 within_model
+#> 3   day re("day", model = "growth") outcome 0.05146273 within_model
+#> 4   day re("day", model = "growth") outcome 0.02619921 within_model
+#> 5   day re("day", model = "growth") outcome 0.01964941 within_model
+#> 6   day re("day", model = "growth") outcome 0.05146273 within_model
 ```
 
 IDs determine alignment; data-frame row order never determines a match.
@@ -159,27 +156,27 @@ Use public table extractors for reporting, joins, and export:
 
 ``` r
 repair_coefficients(fit, conf.level = .95)
-#>          term   estimate std.error  statistic   p.value  conf.low conf.high
-#> 1 (Intercept) -2.9721078 3.2147349 -0.9245266 0.3552122 -9.272872 3.3286569
-#> 2    observed  0.3128535 0.2969909  1.0534109 0.2921527 -0.269238 0.8949449
+#>          term   estimate std.error statistic      p.value   conf.low  conf.high
+#> 1 (Intercept) -0.7895289 0.1147252 -6.881913 5.905407e-12 -1.0143862 -0.5646716
+#> 2    practice  0.1754854 0.0214190  8.192979 2.548385e-16  0.1335049  0.2174659
 #>   conf.level
 #> 1       0.95
 #> 2       0.95
 head(repair_scores(fit))
-#>    id  model   group term                        label    role      score
-#> 1 308 growth Subject Days re("Days", model = "growth") outcome 11.2974165
-#> 2 309 growth Subject Days re("Days", model = "growth") outcome -8.2055005
-#> 3 310 growth Subject Days re("Days", model = "growth") outcome -4.3523872
-#> 4 330 growth Subject Days re("Days", model = "growth") outcome -7.4592132
-#> 5 331 growth Subject Days re("Days", model = "growth") outcome -5.2012672
-#> 6 332 growth Subject Days re("Days", model = "growth") outcome -0.9005181
+#>     id  model  group term                       label    role      score
+#> 1 P001 growth person  day re("day", model = "growth") outcome  0.4451909
+#> 2 P002 growth person  day re("day", model = "growth") outcome  0.4105728
+#> 3 P003 growth person  day re("day", model = "growth") outcome -0.4013259
+#> 4 P004 growth person  day re("day", model = "growth") outcome  0.6289102
+#> 5 P005 growth person  day re("day", model = "growth") outcome  0.6052267
+#> 6 P006 growth person  day re("day", model = "growth") outcome -1.2120879
 #>   std.error error.variance   cohort analyzed status reason
-#> 1  2.817564       7.938667 analyzed     TRUE     ok
-#> 2  2.817564       7.938667 analyzed     TRUE     ok
-#> 3  2.817564       7.938667 analyzed     TRUE     ok
-#> 4  2.817564       7.938667 analyzed     TRUE     ok
-#> 5  2.817564       7.938667 analyzed     TRUE     ok
-#> 6  2.817564       7.938667 analyzed     TRUE     ok
+#> 1 0.1401763     0.01964941 analyzed     TRUE     ok
+#> 2 0.1401763     0.01964941 analyzed     TRUE     ok
+#> 3 0.2268540     0.05146273 analyzed     TRUE     ok
+#> 4 0.1618617     0.02619921 analyzed     TRUE     ok
+#> 5 0.1401763     0.01964941 analyzed     TRUE     ok
+#> 6 0.2268540     0.05146273 analyzed     TRUE     ok
 repair_diagnostics(fit, table = "excluded")
 #> [1] id     reason
 #> <0 rows> (or 0-length row.names)
@@ -226,16 +223,16 @@ weights:
 ``` r
 repair_reliability(fit)[, c("term", "role", "measure", "reliability", "n_people", "n_defined")]
 #>   term    role      measure reliability n_people n_defined
-#> 1 Days outcome     marginal   0.8485308       18        18
-#> 2 Days outcome residualized   0.8275788       18        18
+#> 1  day outcome     marginal   0.9433813       60        60
+#> 2  day outcome residualized   0.8967932       60        60
 diagnostics <- repair_diagnostics(fit)
 diagnostics$weight_summary
 #>   n_people max_fraction weight_equivalent_n
-#> 1       18   0.05555556                  18
+#> 1       60   0.01788085            59.82168
 diagnostics$conditioning
 #>          step dimension min_eigenvalue max_eigenvalue condition_number
-#> 1 preliminary         2     4.10807536     2122.89192         516.7607
-#> 2       final         2     0.09612987       49.67614         516.7607
+#> 1 preliminary         2       17.52838       1747.322         99.68531
+#> 2       final         2       74.13875       7551.600        101.85768
 ```
 
 ``` r
@@ -251,6 +248,20 @@ cutoffs. See the [reliability and diagnostics
 guide](vignettes/reliability-diagnostics.Rmd) for marginal versus
 intercept-residualized reliability, cohort selection, and interpretation
 of numerical and weight diagnostics.
+
+## Support, troubleshooting, and citation
+
+The [support guide](vignettes/support-and-troubleshooting.Rmd)
+consolidates the supported model/inference matrix, a complete
+`repair_example` analysis, common diagnostic messages, and saved-fit
+guidance. The teaching data include both repeated observations and
+meaningful synthetic person-level variables.
+
+Run `citation("repair")` for separate software and method references.
+Zachary A. Vig and Michael N. Hallquist are authors and co-maintainers;
+Zach is the primary R package maintainer contact. This remains a
+development version, with no tagged release claimed by these
+instructions.
 
 ## Interpretation and limits
 
@@ -287,11 +298,12 @@ algebra-audit fixtures for both R and C++ backends, plus three
 single-model nlme and two dual-process reproduction datasets; see
 [fixture provenance](tests/testthat/fixtures/README.md).
 
-Pull requests and pushes to main run package checks on Linux, macOS, and Windows,
-with additional Linux checks for previous, development, and minimum-supported R.
-Tests, examples, and all vignettes run with suggested dependencies installed;
-errors and warnings fail CI. See the [CI guide](dev/ci-checks.md) for the matrix,
-check artifacts, local reproduction, and the `Package checks` branch-protection target.
+Pull requests and pushes to main run package checks on Linux, macOS, and
+Windows, with additional Linux checks for previous, development, and
+minimum-supported R. Tests, examples, and all vignettes run with
+suggested dependencies installed; errors and warnings fail CI. See the
+[CI guide](dev/ci-checks.md) for the matrix, check artifacts, local
+reproduction, and the `Package checks` branch-protection target.
 
 ``` r
 # From a source checkout:

@@ -47,3 +47,11 @@ their measurement model and inclusion status. Exclusions retain all reasons.
 On numerical structural failure, measurement diagnostics remain available,
 while unavailable structural tables have zero rows and \code{status} records why.
 }
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+repair_diagnostics(fit, table = "cohort")
+repair_diagnostics(fit, table = "weight_summary")
+repair_diagnostics(fit, table = "excluded")
+}

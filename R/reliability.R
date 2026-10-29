@@ -59,6 +59,12 @@ repair_require_model <- function(object) {
 #'   posterior variance, and a reason for undefined results. Summary rows include
 #'   `n_people`, `n_defined`, `n_undefined`, `mean_defined`, and distribution summaries.
 #' @seealso [repair_diagnostics()], [plot.repair_reliability()]
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+#' repair_reliability(fit)
+#' head(repair_reliability(fit, level = "person"))
 #' @export
 repair_reliability <- function(object, level = c("summary", "person"),
                                cohort = c("analyzed", "measurement"),

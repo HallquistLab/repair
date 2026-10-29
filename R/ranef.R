@@ -344,6 +344,12 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
 #'   `@levels`, `@terms`, and `@diagnostics`; `@success` is true only if all selected
 #'   clusters scored successfully. These are sampling-error covariances, not
 #'   posterior BLUP covariances.
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' scores <- repair_ranef_gls(growth, target_group = "person")
+#' head(scores@predictions$person)
+#' scores@error_covariance$person[, , 1]
 #' @export
 repair_ranef_gls <- function(mlm, target_group = NULL, include_fixed = FALSE) {
   if (!is.null(target_group) &&

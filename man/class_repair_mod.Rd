@@ -20,6 +20,25 @@ class_repair_mod(
 
 \item{call}{The original call.}
 }
+\value{
+An S7 object containing measurement fits, the structural fit,
+assembled analysis data, and the original call. Manually supplying these
+properties does not perform the statistical validation done by \code{\link[=repair]{repair()}}.
+}
 \description{
 Combined first-stage and structural repair model.
+}
+\details{
+An advanced S7 class used by \code{\link[=repair]{repair()}}. Obtain validated fitted
+objects through \code{\link[=repair]{repair()}} rather than constructing them manually. The
+exported class remains available for type checks and advanced integration;
+its property layout is not the stable reporting interface. Use the public
+generics and table extractors for routine analysis.
+}
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
+S7::S7_inherits(fit, class_repair_mod)
+coef(fit)
 }

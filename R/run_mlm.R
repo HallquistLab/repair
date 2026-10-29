@@ -18,6 +18,10 @@ normalize_repair_models <- function(models) {
 #'   model, or a named list of models.
 #' @return A data frame with `model`, `group`, `term`, and `n_levels` columns.
 #'   A bare model is named `measurement`. Terms are scalar coefficient names.
+#' @examples
+#' data(repair_example)
+#' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+#' repair_effects(list(growth = growth))
 #' @export
 repair_effects <- function(models) {
   models <- normalize_repair_models(models)

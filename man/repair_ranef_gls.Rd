@@ -50,3 +50,10 @@ Multi-group lme4 scoring remains experimental. Per-cluster blocks do not
 describe cross-cluster score errors from shared nuisance effects. The
 structural \code{\link[=repair]{repair()}} workflow therefore requires one grouping factor.
 }
+\examples{
+data(repair_example)
+growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+scores <- repair_ranef_gls(growth, target_group = "person")
+head(scores@predictions$person)
+scores@error_covariance$person[, , 1]
+}

@@ -12,6 +12,9 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(repair)
 ```
 
+For a consolidated capability matrix, a fully synthetic teaching example, and
+help with common messages, see `vignette("support-and-troubleshooting")`.
+
 ## What is being estimated?
 
 REPAIR estimates a linear structural regression involving latent random
