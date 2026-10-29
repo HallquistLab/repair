@@ -2,11 +2,10 @@
 % Please edit documentation in R/repair-package.R
 \docType{package}
 \name{repair-package}
-\alias{repair}
 \alias{repair-package}
-\title{repair: What the Package Does (One Line, Title Case)}
+\title{repair: Measurement-Error-Corrected Regression of Random Coefficients}
 \description{
-What the package does (one paragraph).
+Implements the REPAIR modified method-of-moments estimator for structural regressions involving random coefficients from Gaussian mixed models. Extracts likelihood-only scores and sampling-error covariances, aligns them with person-level data by identifier, and reports conditional model-based inference and analysis diagnostics.
 }
 \author{
 \strong{Maintainer}: Zach Vig \email{zachvig@rocketmail.com}

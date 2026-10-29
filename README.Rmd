@@ -2,56 +2,121 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
 # repair
 
-<!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![CRAN status](https://www.r-pkg.org/badges/version/repair)](https://CRAN.R-project.org/package=repair)
-<!-- badges: end -->
+`repair` implements REPAIR: structural regression involving random coefficients
+from a Gaussian mixed model, with a modified method-of-moments correction for
+sampling error in the estimated coefficients. It uses **likelihood-only scores**
+and their sampling-error covariance, rather than treating shrunken BLUPs as
+error-free observed variables.
 
-The goal of repair is to ...
+This is a development package. The supported structural workflow is an additive
+regression with an intercept, using random coefficients from **one fitted
+`lme4::lmer()` model with one grouping factor**. Random coefficients may be
+predictors, the outcome, or both. Numeric, logical, and factor observed predictors
+are supported. See the [workflow guide](vignettes/repair-workflow.Rmd) for matching,
+omission, interpretation, and current limits.
 
-## Installation
+## Install
 
-You can install the development version of repair from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("pak")
-pak::pak("zacharyvig/repair")
+```r
+# install.packages("remotes")
+remotes::install_github("zacharyvig/repair")
 ```
 
-## Example
+Installation from source requires R >= 4.3 and a C++20 compiler with the R build
+toolchain. On Windows, use the Rtools version appropriate for your R installation.
 
-This is a basic example which shows you how to solve a common problem:
+## Fit, inspect, and summarize
+
+Fit the measurement model using the usual `lmer()` interface. Its weights,
+offsets, contrasts, estimation choices, and effective observations remain under
+your control. Supply structural variables in a separate data frame containing
+one row per analysis ID.
 
 ```{r example}
 library(repair)
-## basic example code
+growth <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
+
+# Illustrative person-level predictor, not an actual sleepstudy measurement.
+people <- data.frame(
+  Subject = levels(lme4::sleepstudy$Subject),
+  observed = seq_len(18)
+)
+
+repair_effects(list(growth = growth))
+fit <- repair(
+  re("Days", model = "growth") ~ observed,
+  models = list(growth = growth),
+  data = people,
+  id = "Subject"
+)
+summary(fit)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+The marker `re("Days", model = "growth")` selects the random slope for `Days`.
+It represents a deviation from the fitted fixed slope. Use
+`re("(Intercept)", model = "growth")` for the random intercept. When there is
+only one matching effect, `model` may be omitted.
 
-```{r cars}
-summary(cars)
+```{r accessors}
+coef(fit)
+confint(fit)
+nobs(fit)  # people, not repeated observations
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+## Inspect what enters the estimator
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r inspection}
+analysis <- repair_data(
+  re("Days", model = "growth") ~ observed,
+  models = list(growth = growth), data = people, id = "Subject"
+)
+analysis
+head(analysis@ids)
+head(analysis@predictors)
+analysis@diagnostics$excluded
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+IDs determine alignment; data-frame row order never determines a match. The
+person-level data frame defines the requested cohort. Missing/nonfinite values,
+unmatched IDs, and failed scores stop by default. Use `na_action = "omit"` to
+explicitly exclude them with a warning and an ID/reason audit trail.
+
+`fit@analysis_data` retains the matched scores, error covariance, selected effect
+sources, and exclusions. `fit@struc_fit` retains M-MOM steps and numerical
+diagnostics. For custom score/error inputs, use the lower-level `fit_mmom()` API.
+
+## Interpretation and limits
+
+- Standard errors are model-based and conditional on estimated measurement-model
+  quantities. They use the modified final predictor moment, consistent with the
+  manuscript and primary simulation estimator. Measurement-model parameter
+  uncertainty is not propagated; intervals and tests use a normal reference.
+- `regularization = "minimum"` is the default. `"none"` disables stabilization
+  but **still corrects for measurement error**. Custom settings require `alpha`.
+- Observed structural variables are assumed measured without error. The complete
+  error covariance is preserved when random coefficients appear on both sides.
+- Interactions or nonlinear transformations involving random coefficients,
+  models without an intercept, joint multiple-equation fitting, and cross-model
+  error covariances are not implemented. Unsupported formulas fail explicitly.
+- The lower-level scorer has experimental multi-group and `nlme` support. Shared
+  nuisance effects can create cross-person score errors; those cases are not
+  admitted by the structural workflow.
+
+## Development and reproducibility
+
+The [design plan](dev/package_plan.Rmd) describes the implemented contracts and
+extension sequence. The [audit and decisions](dev/design-audit.md) trace findings
+to corrections and tests. The test suite includes frozen REPAIR simulation and
+independent algebra-audit fixtures for both R and C++ backends; see
+[fixture provenance](tests/testthat/fixtures/README.md).
+
+```r
+# From a source checkout:
+testthat::test_local()
+```

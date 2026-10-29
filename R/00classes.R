@@ -3,18 +3,43 @@
 #' Combined first-stage and structural repair model.
 #' @param mlm_fit The first-stage multilevel-model fit.
 #' @param struc_fit The structural M-MOM fit.
+#' @param analysis_data Matched structural data from [repair_data()].
+#' @param call The original call.
 #' @export
 class_repair_mod <- S7::new_class(
   "class_repair_mod",
   properties = list(
     mlm_fit = S7::class_any,
-    struc_fit = S7::class_any
+    struc_fit = S7::class_any,
+    analysis_data = S7::class_any,
+    call = S7::class_any
   )
 )
 
-repair_model <- function(mlm_fit, struc_fit) {
-  class_repair_mod(mlm_fit = mlm_fit, struc_fit = struc_fit)
-}
+# The assembly boundary has explicit dimensions and IDs, including when inspected
+# or modified by a developer. Matrix/covariance contents are validated by M-MOM.
+class_repair_data <- S7::new_class(
+  "class_repair_data",
+  properties = list(
+    formula = S7::class_any, ids = S7::class_character,
+    outcome = S7::class_numeric, predictors = S7::class_any,
+    err_x = S7::class_any, err_y = S7::class_numeric, err_xy = S7::class_any,
+    effects = S7::class_data.frame, scores = S7::class_any,
+    diagnostics = S7::class_list
+  ),
+  validator = function(self) {
+    n <- length(self@ids)
+    q <- ncol(self@predictors)
+    if (anyNA(self@ids) || anyDuplicated(self@ids)) return("IDs must be nonmissing and unique.")
+    if (!is.matrix(self@predictors) || is.null(q) || q < 1L ||
+        nrow(self@predictors) != n || length(self@outcome) != n ||
+        length(self@err_y) != n || !identical(dim(self@err_x), c(q, q, n)) ||
+        !identical(dim(self@err_xy), c(n, q))) {
+      return("Outcome, predictor, covariance, and ID dimensions must agree.")
+    }
+    NULL
+  }
+)
 
 # A fit and a numerical failure share one stable return type.
 class_mmom_fit <- S7::new_class(

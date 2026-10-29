@@ -4,12 +4,21 @@
 \alias{class_repair_mod}
 \title{Combined first-stage and structural repair model.}
 \usage{
-class_repair_mod(mlm_fit = NULL, struc_fit = NULL)
+class_repair_mod(
+  mlm_fit = NULL,
+  struc_fit = NULL,
+  analysis_data = NULL,
+  call = NULL
+)
 }
 \arguments{
 \item{mlm_fit}{The first-stage multilevel-model fit.}
 
 \item{struc_fit}{The structural M-MOM fit.}
+
+\item{analysis_data}{Matched structural data from \code{\link[=repair_data]{repair_data()}}.}
+
+\item{call}{The original call.}
 }
 \description{
 Combined first-stage and structural repair model.

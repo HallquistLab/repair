@@ -1,142 +1,3 @@
-# Centralized function for computing predictions from a mixed-model fit.
-# repair_ranef <- S7::new_generic(
-#   name = "repair_ranef",
-#   dispatch_args = "model"
-# )
-
-# S7::method(repair_ranef, class_merMod) <- function(model, term, type = c("blup", "gls", "unshrink"), include_fixed = FALSE) {}
-# S7::method(repair_ranef, class_lme) <- function(model, term, type = c("blup", "gls", "unshrink"), include_fixed = FALSE) {}
-
-
-#' Extract likelihood-only random-effect scores.
-#'
-#' The direct method computes the closed-form GLS score for each cluster.
-#' Currently only works for single term/simple residuals.
-#'
-#' @param model An `lme4` mixed-model fit.
-#' @param term The term for which to extract random-effect scores.
-#' @return A list containing cluster-level scores and covariance blocks.
-#' @export
-repair_ranef_gls <- function(mlm, method = c("direct", "unshrink")) {
-  method <- match.arg(method)
-  if (identical(method, "unshrink")) {
-    repair_error("`method = \"unshrink\"` is not implemented yet.")
-  }
-  if (!requireNamespace("lme4", quietly = TRUE)) {
-    repair_error("The `lme4` package is required for direct scoring.")
-  }
-  if (!inherits(mlm, "lmerMod")) {
-    repair_error("`mlm` must be a Gaussian lme4::lmer() fit.")
-  }
-  if (length(lme4::getME(mlm, "flist")) != 1L) {
-    repair_error("Direct scoring currently requires exactly one grouping factor.")
-  }
-
-  # Extract fixed effects, random-effect designs, and cluster membership.
-  random_effects <- lme4::ranef(mlm)
-  group <- names(random_effects)[[1L]]
-  grouping <- as.character(lme4::getME(mlm, "flist")[[group]])
-  cluster_ids <- rownames(random_effects[[group]])
-  cluster_rows <- split(seq_along(grouping), grouping, drop = TRUE)[cluster_ids]
-  z_terms <- lme4::getME(mlm, "Ztlist")
-  fixed_design <- lme4::getME(mlm, "X")
-  fixed_coefs <- lme4::fixef(mlm)
-  model_frame <- stats::model.frame(mlm)
-  response <- stats::model.response(model_frame)
-  offset <- stats::model.offset(model_frame) %||% rep(0, length(response))
-  prior_weights <- stats::model.weights(model_frame) %||% rep(1, length(response))
-  if (any(!is.finite(prior_weights)) || any(prior_weights <= 0)) {
-    repair_error("Direct scoring requires finite, positive prior weights.")
-  }
-  resid_var <- stats::sigma(mlm)^2
-
-  if (!is.finite(resid_var) || resid_var <= 0) {
-    repair_error(
-      "Direct scoring requires a finite, positive residual variance."
-    )
-  }
-
-  random_names <- colnames(random_effects[[group]])
-  nrandom <- length(random_names)
-
-  scores <- matrix(
-    NA_real_,
-    length(cluster_ids),
-    nrandom,
-    dimnames = list(cluster_ids, random_names)
-  )
-  err_cov <- array(
-    NA_real_,
-    c(nrandom, nrandom, length(cluster_ids)),
-    dimnames = list(random_names, random_names, cluster_ids)
-  )
-  score_diagnostics <- vector("list", length(cluster_ids))
-
-  # Apply the closed-form GLS score independently within each cluster.
-  for (cluster_pos in seq_along(cluster_ids)) {
-    rows <- cluster_rows[[cluster_ids[[cluster_pos]]]]
-    random_design <- do.call(
-      cbind,
-      lapply(z_terms, function(term) {
-        as.numeric(term[cluster_pos, rows, drop = TRUE])
-      })
-    )
-    residual <- response[rows] - offset[rows] - as.vector(
-      fixed_design[rows, , drop = FALSE] %*% fixed_coefs
-    )
-    weighted_design <- random_design * sqrt(prior_weights[rows])
-    design_rank <- qr(weighted_design, tol = 1e-10)$rank
-    if (design_rank < nrandom) {
-      score_diagnostics[[cluster_pos]] <- list(
-        solver = "chol", rank = design_rank, dimension = nrandom,
-        condition_number = Inf,
-        error = "The within-cluster random-effect design was rank-deficient."
-      )
-      next
-    }
-    information <- crossprod(weighted_design) / resid_var
-    score_rhs <- crossprod(
-      weighted_design, residual * sqrt(prior_weights[rows])
-    ) / resid_var
-    score <- repair_solve(
-      information, score_rhs,
-      method = "chol"
-    )
-    score_diagnostics[[cluster_pos]] <- score@diagnostics
-    if (!score@success) {
-      score_diagnostics[[cluster_pos]]$error <- score@message
-      next
-    }
-    scores[cluster_pos, ] <- as.vector(score@solution)
-    err_cov[, , cluster_pos] <- score@inverse
-  }
-  failed_clusters <- cluster_ids[vapply(
-    score_diagnostics, function(item) !is.null(item$error), logical(1)
-  )]
-  if (length(failed_clusters)) {
-    repair_warn(paste0(
-      "Likelihood-only scoring failed for {length(failed_clusters)} cluster(s); ",
-      "their scores and covariances are missing. See `diagnostics$clusters`."
-    ))
-  }
-  list(
-    success = !length(failed_clusters),
-    group = group,
-    levels = cluster_ids,
-    estimates = scores,
-    err_cov = err_cov,
-    score_cov = err_cov,
-    method = method,
-    diagnostics = list(
-      step = "ranef_like",
-      solver = "chol",
-      failed_clusters = failed_clusters,
-      clusters = stats::setNames(score_diagnostics, cluster_ids)
-    )
-  )
-}
-
-
 get_ranef_design <- function(elements, group, rows, level = NULL) {
   design <- elements@random_design[[group]]
   terms <- elements@random_terms[[group]]
@@ -402,6 +263,9 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
       terms,
       names(elements@fixed_coefs)
     )
+    if (anyNA(fixed_indices)) {
+      repair_error("`include_fixed = TRUE` requires matching fixed coefficients for every random coefficient.")
+    }
     available <- !is.na(fixed_indices)
 
     if (any(available)) {
@@ -444,6 +308,30 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
   )
 }
 
+#' Extract likelihood-only random-coefficient scores
+#'
+#' Compute target-specific GLS scores after subtracting fitted fixed effects
+#' and offsets. The target covariance excludes the target random effects and
+#' includes residual and nuisance-group covariance contributions.
+#' @param mlm A Gaussian `lme4::lmer()` or `nlme::lme()` fit.
+#' @param target_group Grouping factor to score; NULL scores all groups.
+#' @param include_fixed Add matching fixed coefficients to the scores. Default
+#'   FALSE gives deviations. TRUE requires a fixed coefficient for every random
+#'   coefficient; it does not reconstruct covariate-dependent individual effects.
+#' @details Failed clusters have missing predictions and covariance blocks, issue
+#'   a warning, and appear in `@diagnostics[[group]]$failed_levels`. A singular
+#'   random-effect covariance is allowed when the target design is identifiable.
+#'   Standard errors condition on fitted measurement-model parameters.
+#'
+#'   Multi-group and nlme extraction are experimental. Per-cluster blocks do not
+#'   describe cross-cluster score errors from shared nuisance effects. The
+#'   structural [repair()] workflow therefore accepts single-group lmer models.
+#' @return An S7 score object with group-keyed `@predictions` matrices (ID by
+#'   coefficient), `@error_covariance` arrays (coefficient by coefficient by ID),
+#'   `@levels`, `@terms`, and `@diagnostics`; `@success` is true only if all selected
+#'   clusters scored successfully. These are sampling-error covariances, not
+#'   posterior BLUP covariances.
+#' @export
 repair_ranef_gls <- function(mlm, target_group = NULL, include_fixed = FALSE) {
   if (!is.null(target_group) &&
     (!is.character(target_group) ||
@@ -458,6 +346,9 @@ repair_ranef_gls <- function(mlm, target_group = NULL, include_fixed = FALSE) {
     repair_error("`include_fixed` must be TRUE or FALSE.")
   }
 
+  if (!inherits(mlm, "lmerMod") && !inherits(mlm, "lme")) {
+    repair_error("`mlm` must be a Gaussian lmer or lme fit; GLMMs are not supported.")
+  }
   elements <- repair_get_mlm_elements(mlm)
   group_names <- names(elements@random_terms)
 

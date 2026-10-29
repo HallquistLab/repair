@@ -81,18 +81,20 @@ S7::method(repair_get_mlm_elements, class_merMod) <- function(model) {
 
   # Random-effects components
   ranef_object <- lme4::ranef(model, condVar = FALSE)
-  random_terms <- lme4::getME(model, "cnms")
+  block_terms <- lme4::getME(model, "cnms")
   grouping <- lme4::getME(model, "flist")
-  group_names <- names(random_terms)
+  group_names <- names(grouping)
+  # lme4 can represent one grouping factor with several independent blocks
+  # (for example, (Days || Subject)). Merge these in level-major order.
+  random_terms <- stats::setNames(lapply(group_names, function(group) {
+    unlist(block_terms[names(block_terms) == group], use.names = FALSE)
+  }), group_names)
   if (!length(group_names)) {
     repair_error(
       "The fitted model has no random-effects grouping factors."
     )
   }
-  if (!identical(
-    group_names,
-    names(grouping)
-  )) {
+  if (!setequal(names(block_terms), group_names)) {
     repair_error(
       "The random-effects terms and grouping factors have",
       "inconsistent names."
@@ -128,7 +130,7 @@ S7::method(repair_get_mlm_elements, class_merMod) <- function(model) {
     )
   }
   group_ptr <- lme4::getME(model, "Gp")
-  if (length(group_ptr) != length(group_names) + 1L) {
+  if (length(group_ptr) != length(block_terms) + 1L) {
     repair_error(
       "The random-effects column pointers have an invalid length."
     )
@@ -154,19 +156,23 @@ S7::method(repair_get_mlm_elements, class_merMod) <- function(model) {
       )
     }
 
-    # Gp contains zero-based column offsets into Z.
-    start <- group_ptr[[group_index]] + 1L
-    end <- group_ptr[[group_index + 1L]]
-    expected_columns <- nterms * nlevels
-    if ((end - start + 1L) != expected_columns) {
-      repair_error(
-        paste(
-          "The random-effects design for grouping factor",
-          "{.val {group_name}} has an unexpected number of columns."
-        )
-      )
+    if (anyDuplicated(terms)) {
+      repair_error("Random coefficient names must be unique within each grouping factor for likelihood-only scoring.")
     }
-    group_columns <- start:end
+    blocks <- which(names(block_terms) == group_name)
+    # Gp contains zero-based offsets for blocks, not distinct grouping factors.
+    for (block in blocks) {
+      if (group_ptr[block + 1L] - group_ptr[block] !=
+          length(block_terms[[block]]) * nlevels) {
+        repair_error("A random-effects block has incompatible dimensions.")
+      }
+    }
+    group_columns <- unlist(lapply(seq_len(nlevels), function(level) {
+      unlist(lapply(blocks, function(block) {
+        width <- length(block_terms[[block]])
+        group_ptr[block] + (level - 1L) * width + seq_len(width)
+      }), use.names = FALSE)
+    }), use.names = FALSE)
     group_design <- random_design_full[
       ,
       group_columns,
@@ -182,20 +188,18 @@ S7::method(repair_get_mlm_elements, class_merMod) <- function(model) {
     colnames(group_design) <- design_names
     random_design[[group_name]] <- group_design
 
-    # VarCorr() supplies the covariance matrix for one grouping level.
-    group_covariance <- as.matrix(
-      variance_components[[group_name]]
-    )
-    if (!identical(
-      dim(group_covariance),
-      c(nterms, nterms)
-    )) {
-      repair_error(
-        paste(
-          "The random-effects covariance for grouping factor",
-          "{.val {group_name}} does not match its random-effect terms."
-        )
-      )
+    # Independent blocks have zero cross-block covariance in the fitted model.
+    group_covariance <- matrix(0, nterms, nterms)
+    term_offset <- 0L
+    for (block in blocks) {
+      width <- length(block_terms[[block]])
+      indices <- term_offset + seq_len(width)
+      covariance <- as.matrix(variance_components[[block]])
+      if (!identical(dim(covariance), c(width, width))) {
+        repair_error("A random-effects covariance block has incompatible dimensions.")
+      }
+      group_covariance[indices, indices] <- covariance
+      term_offset <- term_offset + width
     }
     expanded_covariance <- kronecker(
       diag(nlevels),

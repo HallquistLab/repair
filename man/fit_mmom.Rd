@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmom.R
 \name{fit_mmom}
 \alias{fit_mmom}
-\title{Internal fitting function for the M-MOM structural model.}
+\title{Fit the M-MOM structural model from scores and error covariances.}
 \usage{
 fit_mmom(
   data_list,
@@ -25,5 +25,22 @@ be a list with fields \code{outcome}, \code{predictors}, \code{err_x}, \code{err
 An S7 \code{class_mmom_fit} object. Numerical failures use the same class.
 }
 \description{
-Internal fitting function for the M-MOM structural model.
+Fit the M-MOM structural model from scores and error covariances.
+}
+\details{
+Inputs must be likelihood-only scores with additive sampling-error
+covariances, not BLUPs with posterior covariances. Observed error-free
+variables have zero error variance and covariance. Matrix-style inputs
+may instead supply an outcome vector, predictor matrix, an error array
+(predictor by predictor by observation), an outcome-error variance vector,
+and an outcome/predictor-error covariance matrix.
+
+Standard errors use the final modified predictor moment on both sides of
+the covariance expression, matching the manuscript and primary simulation.
+The covariance meat uses preliminary coefficients and squared inverse
+case-variance weights. Inference assumes the model-based normal-error
+covariance and conditions on fitted first-stage quantities. Measurement-
+model parameter uncertainty is not propagated. Reported intervals are
+normal-based 95\% intervals. \code{correction = "none"} disables regularization,
+not measurement-error subtraction. \code{step_up} is not implemented.
 }
