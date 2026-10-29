@@ -108,3 +108,13 @@ remain. See [the multiple-model audit](multimodel-validation.md) for findings,
 contract decisions, reproduction evidence, and the design workflow. The executable
 [multiple-model guide](../vignettes/multiple-models.Rmd) is the user-facing entry
 point. Earlier sections record the scope at their respective milestones.
+
+
+## Reliability and diagnostics follow-up
+
+The former reliability deferral is superseded by the definitions and validation
+in [reliability-validation.md](reliability-validation.md). This increment adds
+manuscript-defined posterior reliability, explicit cohort/undefined-value handling,
+structural diagnostic tables, summary integration, and person-level plots. Earlier
+sections retain their historical scope. See the executable
+[reliability guide](../vignettes/reliability-diagnostics.Rmd) for user-facing examples.

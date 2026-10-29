@@ -1,0 +1,183 @@
+---
+title: "Reliability and analysis diagnostics"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Reliability and analysis diagnostics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>", fig.width = 9, fig.height = 6)
+library(repair)
+stopifnot(requireNamespace("nlme", quietly = TRUE))
+```
+
+## Assess the information behind an analysis
+
+REPAIR now reports posterior reliability for the random coefficients selected by
+the structural formula and provides tables of sample, score, and numerical
+diagnostics. These are descriptive checks, not automatic tests of whether an
+analysis is adequate. Numerical convergence alone does not establish strong
+information or reliable inference.
+
+This executable example uses a synthetic reproduction dataset with unequal
+observation counts, AR(1) residual correlation, and phase-specific residual SDs.
+An ordinary analysis supplies its own measurement models and person-level table.
+
+```{r fit}
+case <- readRDS(system.file("extdata", "nlme-workflow-reference.rds",
+                           package = "repair"))$cases$both_ar1_ident
+measurement <- nlme::lme(y ~ z, random = ~ z | id, data = case$data,
+  correlation = nlme::corAR1(form = ~ time | id),
+  weights = nlme::varIdent(form = ~ 1 | phase),
+  control = nlme::lmeControl(msMaxIter = 300))
+fit <- repair(re("z", "growth") ~ re("(Intercept)", "growth"),
+  list(growth = measurement), case$people, "id")
+summary(fit)
+```
+
+The summary labels effect roles so the predictor-side reliability emphasized in
+the paper is easy to identify. Reliability does not modify scores, covariances,
+regularization, coefficients, or standard errors.
+
+## Two distinct uncertainty calculations
+
+For a selected random coefficient k, marginal posterior reliability for person i is
+
+\[
+\rho_{ik}=1-\frac{V_{i,kk}}{G_{kk}}, \qquad
+V_i=G-GZ_i^\top(R_i+Z_iGZ_i^\top)^{-1}Z_iG.
+\]
+
+Here G is the fitted random-effect covariance, Z_i is the effective random-effect
+design, and R_i is the fitted residual covariance. This calculation uses all
+random coefficients within that measurement model. It supports a singular G
+without inverting it. It conditions on fitted parameters.
+
+V_i is a **posterior covariance**. REPAIR's structural estimator instead uses
+likelihood-only scores and their **sampling-error covariance**. These are different
+quantities. Do not replace the estimator's error inputs with posterior variances.
+A cluster with an unidentifiable likelihood-only slope can still have a defined
+posterior reliability because its posterior also uses G; that does not rescue its
+failed likelihood-only score for structural analysis.
+
+For an intercept/slope model, the slope component residualized on the intercept is
+\(u_1-G_{01}u_0/G_{00}\). With \(a=(-G_{01}/G_{00},1)^\top\), its reliability is
+\(1-a^\top V_i a/(a^\top G a)\). This is the manuscript's residualized diagnostic;
+it uses off-diagonal covariance and does not condition on other structural
+predictors or on another measurement process. It is available only for selected
+slopes in two-coefficient random-intercept/random-slope models in this release.
+
+```{r reliability}
+r <- repair_reliability(fit)
+r[, c("model", "term", "role", "measure", "reliability", "n_people", "n_defined")]
+person <- repair_reliability(fit, level = "person")
+head(person[, c("id", "term", "measure", "n_observations", "prior_variance",
+               "posterior_variance", "reliability")])
+```
+
+The default `type = "both"` reports marginal reliability for every selected
+effect and residualized reliability where applicable. `type = "marginal"` selects
+only marginal values. With `type = "residualized"`, an inapplicable selected
+effect receives an explicit status and reason instead of disappearing.
+
+## Cohorts and undefined values
+
+By default the cohort consists of the **analyzed people**, equally weighted.
+The aggregate is the arithmetic mean of their person-specific reliabilities,
+matching the manuscript's empirical formula. It is not weighted by observation
+count or by the structural estimator's inverse-variance weights.
+
+```{r cohorts}
+# Compare the same measurement fit across different structural cohorts.
+subset_fit <- repair(re("z", "growth") ~ re("(Intercept)", "growth"),
+  list(growth = measurement), case$people[1:40, ], "id")
+repair_reliability(subset_fit)[, c("term", "measure", "cohort", "n_people", "reliability")]
+repair_reliability(subset_fit, cohort = "measurement")[,
+  c("term", "measure", "cohort", "n_people", "reliability")]
+```
+
+`cohort = "measurement"` includes all effective grouping levels, separately for
+each referenced model. It can include people excluded from structural analysis.
+In multiple-model analyses, analyzed-cohort summaries use the same people for all
+models; measurement-cohort denominators may differ. Reliability is computed within
+each measurement model and does not borrow information across models or infer
+anything from the cross-model scoring-error policy.
+
+A zero or numerically degenerate prior contrast variance makes the reliability
+ratio undefined. Singularity of G alone does not make every marginal ratio
+undefined. Rows record `status` and `reason`; no undefined ratio is converted to
+zero reliability. If any requested reliability is undefined, the overall
+`reliability` is NA. `mean_defined` is a separately labeled mean over defined
+values, with `n_defined` and `n_undefined` exposing its denominator. Person-level
+rows retain posterior computation failures. Tiny excursions beyond zero or one
+within 1e-8 are rounded to the boundary; larger excursions remain undefined with
+a reason. No substantive reliability cutoff is imposed.
+
+## Plot heterogeneity
+
+```{r reliability-distribution}
+plot(person)
+```
+
+```{r reliability-observations}
+plot(person, type = "observations", pch = 19)
+```
+
+Panels identify model, coefficient, and measure. Subtitles identify the cohort
+and defined/total counts. These plots do not imply that observation count alone
+determines reliability: time design, residual structure, and variance components
+also matter. Undefined rows are not drawn and remain visible in the counts.
+
+## Inspect structural diagnostics
+
+```{r diagnostics}
+d <- repair_diagnostics(fit)
+d$cohort
+d$measurement
+d$excluded
+d$score_failures
+d$regularization
+d$conditioning
+d$weight_summary
+head(d$weights)
+head(d$error_variances)
+```
+
+- `cohort` and `excluded` explain which people entered the structural fit.
+  `score_failures` identifies the model, ID, reason, and inclusion status, including
+  failed scores outside the analyzed cohort.
+- `error_variances` lists the input-scale likelihood-only error variances for
+  structural outcomes and predictor columns. Observed variables have zero error
+  under the model's assumptions. Full covariances remain in `fit@analysis_data`.
+- `regularization` shows policy, alpha, and the error-subtraction multiplier for
+  each moment step. A multiplier of one means full error subtraction. Disabling
+  regularization does not disable measurement-error correction.
+- `conditioning` describes the preliminary and final corrected predictor moments,
+  including the structural intercept. Condition numbers depend on predictor units;
+  these raw values are not invariant adequacy scores. A nonpositive minimum
+  eigenvalue gives an infinite condition number.
+- `weights` contains analyzed IDs, inverse case-variance weights, and their fractions.
+  `weight_equivalent_n = 1 / sum(fraction^2)` describes weight concentration;
+  it is neither an inferential sample size nor degrees of freedom.
+- `reliability` contains the analyzed-cohort reliability table, and
+  `cross_model_error` preserves the policy and supplied blocks.
+
+On numerical structural failure, `status` reports the failed step and message.
+Measurement and cohort diagnostics remain usable. Structural diagnostic tables
+whose intermediate state is unavailable have zero rows; they do not fabricate
+partial estimates. These diagnostics do not propagate measurement-model or
+covariance-estimation uncertainty and do not establish nominal coverage for a
+particular dataset.
+
+## Reproducibility
+
+Frozen reliability fixtures were generated without loading `repair`, using the
+companion simulation's posterior covariance, marginal reliability, contrast
+reliability, and residualized slope helpers. Tests refit balanced, unbalanced,
+and AR(1)/heteroskedastic measurement models, and also check lmer posterior
+variances against `ranef(condVar = TRUE)`. Separate tests cover singular priors,
+rank-deficient clusters, cohort selection, multiple models, failed structural
+fits, and reconstruction of structural moment diagnostics. Existing REPAIR
+coefficient/SE reference tests remain unchanged.

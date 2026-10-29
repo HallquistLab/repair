@@ -27,8 +27,9 @@ has been removed. The [audit](design-audit.md) records findings and decisions.
 5. Supply one structural-data row per ID and an explicit ID column name.
 6. Optionally call `repair_data()` to inspect cohort matching and error inputs.
 7. Call `repair()`; use `summary()`, `coef()`, `vcov()`, `confint()`, and `nobs()`.
-8. Inspect `fit@analysis_data@diagnostics` for exclusions and measurement messages,
-   and `fit@struc_fit` for estimator diagnostics.
+8. Inspect `repair_reliability(fit)` and `repair_diagnostics(fit)` for reliability,
+   cohort accounting, measurement messages, and numerical diagnostics. Plot
+   person-level reliability to inspect heterogeneity.
 
 # Supported scope
 
@@ -117,7 +118,8 @@ set the two controls independently through `fit_mmom()`.
 
 Summaries show effect sources, requested/analyzed/excluded people, coefficient
 inference, regularization and actual subtraction multipliers, measurement-model
-messages and singularity, and the conditional normal-inference convention.
+messages and singularity, selected-effect posterior reliability, weight
+concentration, and the conditional normal-inference convention.
 `nobs()` means analyzed people. `confint()` can change the confidence level.
 
 # Methodological boundaries
@@ -149,9 +151,10 @@ its downstream estimator must be specified before broadening structural support.
 
 The single-group nlme effective-row and residual-covariance validation milestone
 is implemented (see `nlme-validation.md`), as is the multiple-model assembly
-contract (see `multimodel-validation.md`). Next prioritize reliability summaries
-with an explicit definition and aggregation rule, then multi-group dependence
-validation and additional residual structures. Cross-person covariance support,
-formula extensions with derived error propagation, and measurement-fitting
-convenience wrappers require separate statistical contracts. The first milestone is a trustworthy
-complete workflow, not the appearance of broad support through empty stubs.
+contract (see `multimodel-validation.md`). Reliability and structural diagnostic
+interfaces are now implemented with explicit contrast, cohort, aggregation, and
+undefined-value contracts; see `reliability-validation.md`. Next prioritize stable
+broader result extractors and cross-platform automated checks. Bootstrap inference,
+additional residual structures, and multi-group dependence validation require
+separate validation. Cross-person covariance support and formula extensions with
+derived error propagation require explicit statistical contracts.
