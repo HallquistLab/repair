@@ -1,0 +1,217 @@
+---
+title: "A structural regression with REPAIR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A structural regression with REPAIR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+## What is being estimated?
+
+REPAIR estimates a linear structural regression involving latent random
+coefficients from a measurement model. A likelihood-only score has an additive
+sampling-error representation. REPAIR uses the score and its sampling-error
+covariance in a modified method-of-moments (M-MOM) regression. A BLUP's posterior
+covariance is not the sampling-error covariance required by this estimator.
+
+The high-level interface currently supports one Gaussian `lmer()` measurement
+model with one grouping factor per structural equation. The structural model is
+additive and includes an intercept. Scores are deviations from the fitted fixed
+effects. The measurement model remains fixed while structural relationships are
+explored; `repair()` does not refit it.
+
+## 1. Fit and check the measurement model
+
+```{r measurement}
+growth <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
+models <- list(growth = growth)
+repair_effects(models)
+```
+
+Independent random-effect blocks for the same grouping factor (such as
+`(Days || Subject)`) are also supported; they are aligned by level and scalar
+coefficient before scoring.
+
+Inspect convergence and the substantive adequacy of this model with the normal
+`lme4` tools. REPAIR retains optimizer messages and singularity status in the
+structural summary. A singular random-effect covariance does not by itself
+prevent GLS scoring; a rank-deficient *within-person design* does.
+
+`repair_effects()` gives scalar coefficient names. For example, a factor random
+slope may expand into several coefficients: select each by its actual name.
+`"(Intercept)"` is canonical; `"1"` and `"Intercept"` are accepted aliases.
+Model names resolve ambiguous coefficient names when inspecting a list of fits.
+One equation cannot yet combine scores from separate fits because their joint
+sampling-error covariance has not been estimated.
+
+## 2. Supply the analysis cohort
+
+```{r people}
+people <- data.frame(
+  person = levels(lme4::sleepstudy$Subject),
+  observed = seq_len(18),
+  category = factor(rep(c("A", "B", "C"), 6))
+)
+```
+
+These structural variables are invented for demonstration. The `id` argument
+names the ID column in this table, which may differ from the measurement-model
+grouping name (`Subject`). Values must identify the same people. IDs are matched
+as character values; preserve distinctions such as `"001"` versus `"1"`.
+
+Each row requests one analysis person. Duplicate, missing, or empty IDs always
+fail. Repeated-observation data must first be reduced to a deliberate person-level
+table; REPAIR does not choose an aggregation rule. Extra measurement-model IDs
+outside the requested cohort are recorded as `unused_score_ids`.
+
+## 3. Inspect matched scores and covariances
+
+```{r assembly}
+structural <- re("Days", model = "growth") ~ observed
+analysis <- repair_data(structural, models, people, id = "person")
+analysis
+head(analysis@ids)
+head(analysis@outcome)
+head(analysis@predictors)
+head(analysis@err_y)
+analysis@diagnostics$excluded
+```
+
+The data frame's order is retained. The covariance contract is:
+
+| Property | Meaning and dimensions |
+|---|---|
+| `ids` | Analysis IDs, length n |
+| `outcome` | Outcome scores or observed values, length n |
+| `predictors` | Predictor matrix, n by q, excluding the intercept |
+| `err_x` | Predictor-error covariance, q by q by n |
+| `err_y` | Outcome-error variance, length n |
+| `err_xy` | Outcome/predictor-error covariance, n by q |
+| `effects` | Model, grouping factor, coefficient, and structural role |
+| `scores` | Full scorer result and per-cluster diagnostics |
+| `diagnostics` | Cohort counts, exclusions, unused IDs, and model messages |
+
+All observed variables, including factor contrast columns, have zero measurement
+error. Covariances are indexed and subset together with scores. No zero
+cross-covariance assumption is made for two coefficients from the same model.
+
+## 4. Fit and interpret
+
+```{r fit}
+fit <- repair(structural, models, people, id = "person")
+summary(fit)
+coef(fit)
+vcov(fit)
+confint(fit, parm = "observed", level = 0.90)
+nobs(fit)
+```
+
+`nobs()` counts people. `summary()` returns an inspectable list and prints effect
+sources, sample counts, coefficient estimates, standard errors, normal z tests,
+95% intervals, and regularization settings. `fit@analysis_data` contains the same
+assembly information described above. Numerical M-MOM failures issue a warning
+and return `@struc_fit@converged = FALSE`; the summary prints the reason, and
+`coef()`, `vcov()`, and `confint()` refuse to return failed estimates.
+
+Inference conditions on fitted measurement-model parameters, including variance
+components and fixed coefficients. The covariance calculation uses the modified
+final predictor moment for both sides of its sandwich expression, preliminary
+slopes in the extra error-covariance term, and squared inverse case-variance
+weights in that term. It assumes the model-based normal-error covariance and
+independent analysis people. It is not a robust sandwich estimator and does not
+include uncertainty from estimating the measurement model.
+
+## Random coefficients on either side
+
+An observed outcome can be regressed on a random coefficient:
+
+```{r predictor}
+predictor_fit <- repair(
+  observed ~ re("Days", model = "growth") + category,
+  models, people, id = "person"
+)
+coef(predictor_fit)
+```
+
+Both sides may contain random coefficients from the same measurement model:
+
+```{r both}
+both <- repair(
+  re("Days", model = "growth") ~ re("(Intercept)", model = "growth") + observed,
+  models, people, id = "person"
+)
+both@analysis_data@err_xy[1:3, , drop = FALSE]
+```
+
+The nonzero outcome/predictor-error covariance is retained. Adding a constant
+fixed coefficient changes the intercept interpretation; it does not turn a
+random deviation into a general person-specific effect when fixed interactions
+or person-varying covariates contribute. The structural workflow consistently
+uses deviations. The low-level scorer's `include_fixed` option adds only matching
+fixed coefficients and errors if any coefficient lacks a match.
+
+## Missingness is a decision
+
+```{r omissions}
+incomplete <- people
+incomplete$observed[2] <- NA_real_
+incomplete$person[1] <- "not-in-measurement-model"
+# Default na_action = "fail" would stop and identify these rows.
+kept <- repair_data(structural, models, incomplete, id = "person", na_action = "omit")
+kept@diagnostics$excluded
+```
+
+The omission option covers unmatched IDs, missing/nonfinite observed variables,
+and failed scoring blocks. It warns and records all reasons per excluded ID.
+It never permits duplicate/missing IDs. At least `max(8, q + 2)` complete people
+are required, where q counts predictor columns after factor expansion. A
+rank-deficient structural design fails with a message before fitting M-MOM.
+
+## Regularization and lower-level use
+
+`regularization = "minimum"` uses q + 2 as the regularization constant at both
+moment steps. `"none"` sets the error-moment subtraction multiplier to one: it
+disables stabilization but still corrects measurement error. `"custom"` requires
+`alpha >= q + 2`. The summary reports the resulting subtraction multipliers;
+these need not equal the input regularization constant.
+
+To choose different controls at the two moment steps, or to supply validated
+sampling-error inputs from another source, use `fit_mmom()`:
+
+```{r lower-level}
+manual <- fit_mmom(list(
+  outcome = analysis@outcome,
+  predictors = analysis@predictors,
+  err_x = analysis@err_x,
+  err_y = analysis@err_y,
+  err_xy = analysis@err_xy
+), backend = "r")
+stopifnot(isTRUE(all.equal(unname(coef(fit)), manual@coefficients$estimate)))
+```
+
+The lower-level scorer `repair_ranef_gls()` returns group-keyed S7 properties
+`@predictions`, `@error_covariance`, `@levels`, `@terms`, and `@diagnostics`.
+Multi-group and `nlme` extraction remain experimental. In particular, shared
+nuisance random effects can correlate scores across target people, which the
+row-wise M-MOM input contract cannot encode. The high-level workflow therefore
+requires a single-group Gaussian lmer fit.
+
+## Deliberate boundaries
+
+The formula grammar accepts an observed variable or `re()` as outcome, and an
+additive sum of observed variables and `re()` references as predictors. `1 +` is
+optional. Interactions, nonlinear score transformations, offsets, `.`, omitted
+intercepts, intercept-only models, and multiple equations are rejected. You may
+precompute transformations of *observed* variables in `data` and refer to their
+column names. Character predictors must be explicitly converted to factors.
+
+Automatic measurement-model fitting, cross-model covariance estimation,
+reliability summaries, and additional structural grammars are future work, not
+silent fallback behavior. See the source repository's design plan and audit for
+extension requirements and reproducibility tests.

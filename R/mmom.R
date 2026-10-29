@@ -1,10 +1,25 @@
-#' Internal fitting function for the M-MOM structural model.
+#' Fit the M-MOM structural model from scores and error covariances.
 #'
 #' @param data_list A list. Each element should correspond to an observation and itself
 #'  be a list with fields `outcome`, `predictors`, `err_x`, `err_y`, and `err_xy`.
 #' @param preliminary_moment_control Correction controls with `correction` and `alpha`.
 #' @param final_moment_control Correction controls with `correction` and `alpha`.
 #' @param backend Computation backend: `"auto"`, `"r"`, or `"rcpp"`.
+#' @details Inputs must be likelihood-only scores with additive sampling-error
+#'   covariances, not BLUPs with posterior covariances. Observed error-free
+#'   variables have zero error variance and covariance. Matrix-style inputs
+#'   may instead supply an outcome vector, predictor matrix, an error array
+#'   (predictor by predictor by observation), an outcome-error variance vector,
+#'   and an outcome/predictor-error covariance matrix.
+#'
+#'   Standard errors use the final modified predictor moment on both sides of
+#'   the covariance expression, matching the manuscript and primary simulation.
+#'   The covariance meat uses preliminary coefficients and squared inverse
+#'   case-variance weights. Inference assumes the model-based normal-error
+#'   covariance and conditions on fitted first-stage quantities. Measurement-
+#'   model parameter uncertainty is not propagated. Reported intervals are
+#'   normal-based 95% intervals. `correction = "none"` disables regularization,
+#'   not measurement-error subtraction. `step_up` is not implemented.
 #' @return An S7 `class_mmom_fit` object. Numerical failures use the same class.
 #' @export
 fit_mmom <- function(data_list,
@@ -255,6 +270,7 @@ mmom_step3 <- function(inputs, case_weight) {
 
 # Compute the conditional model-based coefficient covariance.
 mmom_step_se <- function(inputs, step1, step2, step3) {
+  # Use the same regularized moment as the final coefficient equation.
   bread <- step3@coef_moment
   bread_inverse_solve <- repair_solve(
     bread / inputs$nobs, diag(inputs$ncoef),
@@ -296,6 +312,8 @@ mmom_step_se <- function(inputs, step1, step2, step3) {
     coef_vcov = coef_vcov,
     diagnostics = list(
       bread_solver = bread_diagnostics$solver,
+      variance_bread = "modified",
+      conditional_on_stage1 = TRUE,
       covariance_dimension = nrow(coef_vcov)
     )
   )
@@ -311,7 +329,7 @@ construct_mmom_fit <- function(inputs, step1, step2, step3, step_se, alpha = 0.0
     estimate = unname(step3@coef),
     se = unname(step_se@standard_error),
     zstat = unname(step3@coef / step_se@standard_error),
-    pval = 2 * (1 - pnorm(abs(unname(step3@coef / step_se@standard_error)))),
+    pval = 2 * stats::pnorm(-abs(unname(step3@coef / step_se@standard_error))),
     ci_low = unname(step3@coef - stats::qnorm(1 - alpha / 2) * step_se@standard_error),
     ci_high = unname(step3@coef + stats::qnorm(1 - alpha / 2) * step_se@standard_error),
     row.names = NULL,
@@ -341,6 +359,8 @@ construct_mmom_fit <- function(inputs, step1, step2, step3, step_se, alpha = 0.0
       correction_prelim = step1@correction_prelim,
       correction_final = step3@correction_final,
       resid_var = step2@resid_var,
+      variance_bread = "modified",
+      conditional_on_stage1 = TRUE,
       preliminary_moment_control = inputs$preliminary_moment_control,
       final_moment_control = inputs$final_moment_control
     )

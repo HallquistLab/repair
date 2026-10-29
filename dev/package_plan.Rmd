@@ -1,55 +1,147 @@
 ---
-title: '`repair` Package Outline'
-author: "Zach Vig"
-date: "2026-10-20"
-output: pdf_document
+title: '`repair`: Public Workflow and Implementation Contracts'
+author: 'REPAIR development team'
+date: '2026-10-29'
+output: html_document
 ---
 
-# Package Plan
+# Design objective
 
-The `repair` package will fit regression models among random effect predictions using the 
-REPAIR method (Vig & Hallquist, in prep). It is intended to be "one size fits all"
-in that both level 1 (MLM) and level 2 (regression) models can be specified and 
-fit in a single function call. Summary and print methods will provide appropriate
-information formatted similarly to `lm()`, `lmer()`, and `lavaan()` outputs.
+Make the paper's REPAIR estimator usable without asking an analyst to assemble
+error arrays manually. Keep the measurement model fixed while the structural
+model changes, and make each analysis person's scores, covariance, and inclusion
+status inspectable. Use **measurement model** and **structural model**, since
+“level 1/level 2” is ambiguous for a multilevel measurement model.
 
+This document supersedes the October 20 outline. It describes the implementation,
+not an aspirational interface. The source is canonical; the obsolete outline PDF
+has been removed. The [audit](design-audit.md) records findings and decisions.
 
-# Formula Approach
+# Analyst workflow
 
-Both MLM and structural models will be fit using native R formulas. MLM formulas
-will follow the regular `lme4` syntax:
+1. Fit and inspect a Gaussian `lmer()` model using its native interface.
+2. Name the fit in `models = list(growth = growth_fit)`.
+3. Call `repair_effects(models)` to discover scalar coefficient names and groups.
+4. Specify one additive structural formula, such as
+   `outcome ~ re("time", model = "growth") + age`.
+5. Supply one structural-data row per ID and an explicit ID column name.
+6. Optionally call `repair_data()` to inspect cohort matching and error inputs.
+7. Call `repair()`; use `summary()`, `coef()`, `vcov()`, `confint()`, and `nobs()`.
+8. Inspect `fit@analysis_data@diagnostics` for exclusions and measurement messages,
+   and `fit@struc_fit` for estimator diagnostics.
 
-```
-mlm <- y ~ 1 + x + (1 + x|id)
-```
-Structural models will introduce a new, but simple, syntax via the `re()` helper (for
-random effect). This small wrapper will specify the random effect from the first 
-model the user wishes to use as a variable, e.g.:
-```
-struc <- w ~ 1 + re("x")
-```
-where `re("x")` is the random slope from `mlm`, grouped by `id`. Random intercepts
-will be specified using `re("1")`, or `re("Intercept")`.
+# Supported scope
 
-# Main `repair` Function
+One equation, one referenced Gaussian lmer measurement model, one grouping factor,
+additive predictors, and an intercept. Random coefficients can appear on either
+side. Observed predictors can be numeric, logical, or factors; an observed
+outcome must be numeric. A named list can catalog several fits, but a single
+structural equation cannot yet combine scores from different fits.
 
-The workhorse function of the package will simply be `repair()`. It will take arguments
-specifying one (or more) level 1 formulas, a level 2 formula (possibly more), and data
-for each level. Multiple formulas and datasets will be provided as lists and can be named.
-The output of the function will be of class `repair`.
+The existing lower-level scorer can compute target-specific scores from multiple
+groups and nlme fits. Those paths remain experimental. Structural fitting does
+not promote them to supported inference: shared nuisance groups may induce
+cross-person score-error covariance absent from the row-wise M-MOM contract.
 
-## Steps
+# Contracts and responsibilities
 
-The rough internal steps of the function will be:
+## Effect identity and formula parsing
 
-1. Validate input types
-2. Parse formulas
-3. Compare formulas to data and ensure all variables are present/not duplicated
-4. Run level 1 models via `lmer` or `lme`
-5. Run M-MOM for structural models
-6. Gather estimates and diagnostics
-7. Create `repair` class object and return
+Identity is `(model, group, scalar coefficient)`. `re()` accepts literal strings;
+model qualification is optional only when unambiguous. `(Intercept)` is canonical;
+`1` and `Intercept` are input aliases. Generated columns use reserved `.repair_`
+names so observed columns cannot mask scores. Output labels retain model identity.
 
+The parser validates a small grammar without evaluating marker arguments.
+Interactions, nonlinear score transformations, offsets, `.`, no-intercept models,
+and multiple equations fail explicitly. Outcome/predictor identity is checked.
+Observed transformations must be precomputed in the person-level data frame.
 
+## Measurement extraction and scoring
 
+`class_mlm_elements` is the backend normalization contract. The existing scorer
+returns `class_repair_ranef`, with lists keyed by group:
 
+- `predictions`: ID by coefficient matrix;
+- `error_covariance`: coefficient by coefficient by ID array;
+- `levels`, `terms`, and per-group/per-cluster diagnostics.
+
+Independent lme4 blocks for one group (including `||`) are normalized into
+level-major design columns and block-diagonal random covariance. Repeated
+coefficient names within a group are rejected as ambiguous for scoring.
+
+The structural workflow always requests deviations (`include_fixed = FALSE`).
+Likelihood-only scoring subtracts fixed effects and offsets and uses the fitted
+residual covariance (including prior weights). Failed score blocks remain
+missing, with diagnostic reasons. They are not silently replaced by BLUPs.
+
+## Assembly and validation
+
+`repair_data()` is the sole assembly boundary. The supplied data frame defines
+the cohort and order. IDs match model grouping levels as strings, never by row
+position. Duplicate/missing/empty IDs always fail. All needed observed variables
+must exist. Long data are not implicitly aggregated.
+
+Default missingness policy is failure. Explicit `na_action = "omit"` warns and
+records ID/reason rows for absent measurement IDs, nonfinite/missing observed
+values, or failed scoring. Extra measurement IDs are recorded separately. The
+analysis matrix is checked for adequate sample size and full column rank.
+
+`class_repair_data` holds IDs, formula, outcome, predictor matrix, error arrays,
+effect mapping, full score result, and diagnostics. Its validator checks aligned
+dimensions and unique IDs. M-MOM further validates finite values and positive
+semidefinite joint covariance. Every score selection/permutation is applied to
+both axes of its covariance block. Observed columns get zero error; within-model
+cross-covariance is preserved, including `err_xy`.
+
+## Estimation and output
+
+`repair()` delegates assembly to `repair_data()` and estimation to `fit_mmom()`.
+It returns the existing `class_repair_mod` extended with `analysis_data` and `call`.
+Only the referenced measurement model is retained. `struc_fit` remains the stable
+M-MOM fit/failure class. Numerical failures warn and remain inspectable; standard
+coefficient/covariance accessors refuse failed fits.
+
+The public `regularization` setting applies to both moment steps. Minimum uses
+q + 2; custom requires an explicit constant at least q + 2; none disables
+stabilization while retaining measurement-error subtraction. Advanced users can
+set the two controls independently through `fit_mmom()`.
+
+Summaries show effect sources, requested/analyzed/excluded people, coefficient
+inference, regularization and actual subtraction multipliers, measurement-model
+messages and singularity, and the conditional normal-inference convention.
+`nobs()` means analyzed people. `confint()` can change the confidence level.
+
+# Methodological boundaries
+
+The covariance uses the final modified moment for its bread, preliminary slopes
+for the extra error term, and squared inverse case-variance weights in that term.
+It conditions on estimated measurement-model parameters and assumes the
+model-based normal-error covariance and independent analysis people. It is not
+robust inference and does not account for measurement-model parameter estimation.
+
+`dev/target_grouping_vars.Rmd` describes a target-specific *within-cluster*
+covariance. That is necessary but insufficient to justify independent structural
+rows when target clusters share nuisance levels. Cross-cluster covariance and
+its downstream estimator must be specified before broadening structural support.
+
+# Development workflow and acceptance gates
+
+1. Define the effect identities, statistical estimand, and error-covariance
+   contract before adding syntax or a backend.
+2. Implement normalization/scoring and verify against independently calculated
+   scores and covariance, including effective observation order and missingness.
+3. Extend assembly with explicit matching and failure policies; test covariance
+   permutations and selected outcome/predictor cross-terms.
+4. Connect the estimator without changing its scientific target implicitly.
+5. Add executable examples, help, a capability boundary, and diagnostic output.
+6. Run the existing manuscript/simulation fixtures for R and C++ backends, new
+   integration tests, README/vignette execution, and a source-package check.
+7. Document any remaining check warnings and methodological limits in the PR.
+
+Future work should proceed in this order: backend/scoring validation (especially
+nlme effective-row ordering and multi-group dependence), cross-model/cross-person
+covariance contracts, formula extensions with derived error propagation,
+measurement-fitting convenience wrappers, and reliability summaries with an
+explicit definition and aggregation rule. The first milestone is a trustworthy
+complete workflow, not the appearance of broad support through empty stubs.

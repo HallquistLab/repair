@@ -1,21 +1,29 @@
 Package: repair
-Title: What the Package Does (One Line, Title Case)
+Title: Measurement-Error-Corrected Regression of Random Coefficients
 Version: 0.0.0.9000
 Authors@R: 
     person("Zach", "Vig", , "zachvig@rocketmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Implements the REPAIR modified method-of-moments estimator for
+    structural regressions involving random coefficients from Gaussian mixed
+    models. Extracts likelihood-only scores and sampling-error covariances,
+    aligns them with person-level data by identifier, and reports conditional
+    model-based inference and analysis diagnostics.
 License: MIT + file LICENSE
+Depends:
+    R (>= 4.3.0)
 Imports:
     geigen,
     Rcpp,
     S7,
+    lme4,
     cli,
     rlang
 LinkingTo:
     Rcpp,
     RcppArmadillo
 Suggests: 
-    lme4,
+    knitr,
+    rmarkdown,
     nlme,
     reformulas,
     testthat (>= 3.0.0)
@@ -23,3 +31,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.1.0
+VignetteBuilder: knitr

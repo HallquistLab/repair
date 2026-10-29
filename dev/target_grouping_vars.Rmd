@@ -459,3 +459,26 @@ The final condition is especially important for nested structures. When targetin
 \mathbf{Z}_{D,j}\mathbf{G}_{D}
 \mathbf{Z}_{D,j}^{\mathsf{T}}.
 \]
+
+# Structural-inference boundary (2026-10-29 audit)
+
+The target-specific block above describes error covariance **within** target
+cluster j. If two target clusters j and k share nuisance random effects, then
+their score errors can also be correlated. Writing the GLS scoring operator as
+A_j, the omitted cross-cluster term is
+
+\[
+\operatorname{Cov}(\varepsilon_{T,j},\varepsilon_{T,k})
+= A_j\left(\sum_{g\ne T} Z_{g,j}G_g Z_{g,k}^{\mathsf T}\right)A_k^{\mathsf T},
+\]
+
+with an additional residual cross-block term if residual errors are correlated
+across target clusters. Mutually independent *random-effect blocks* do not imply
+independent *target-cluster score errors* when nuisance levels are shared.
+
+Consequently, within-cluster GLS scores alone are insufficient to justify the
+current row-wise structural M-MOM estimator for arbitrary nested or crossed
+models. The high-level structural workflow is restricted to single-group Gaussian
+lmer models. Lower-level multi-group scoring remains experimental until its
+cross-cluster covariance and downstream inference contract are validated. See
+`package_plan.Rmd` and `design-audit.md` for implementation boundaries.
