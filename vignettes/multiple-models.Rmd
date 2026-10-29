@@ -1,0 +1,173 @@
+---
+title: "REPAIR across multiple measurement models"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{REPAIR across multiple measurement models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+stopifnot(requireNamespace("nlme", quietly = TRUE))
+```
+
+## Fit a relationship between two processes
+
+Each measurement model estimates a person's random coefficients from repeated
+observations. REPAIR fits a structural regression using their likelihood-only
+scores and sampling-error covariance. For example, one process's slope can
+predict another process's slope, adjusting for the first process's intercept.
+The two measurement models may use different occasions and grouping column names.
+Their ID values must identify the same people; REPAIR cannot infer an ID crosswalk.
+
+This example uses packaged synthetic observations and frozen reference results
+from the paper's simulation functions. It reproduces the dual-process computation,
+not the published Monte Carlo tables. Ordinary use supplies your own fitted
+models and person-level data; no fixture is needed.
+
+```{r models}
+reference <- readRDS(system.file("extdata", "multimodel-workflow-reference.rds",
+                               package = "repair"))
+case <- reference$cases$independent
+models <- list(
+  growth = nlme::lme(y ~ z, random = ~ z | id, data = case$a),
+  response = nlme::lme(q ~ w, random = ~ w | subject, data = case$b)
+)
+repair_effects(models)
+structural <- re("w", "response") ~
+  re("(Intercept)", "growth") + re("z", "growth")
+fit <- repair(structural, models, case$people, id = "person",
+              cross_model_error = "independent")
+summary(fit)
+```
+
+`re("z", "growth")` selects the growth model's random slope for `z`; it is a
+deviation from its fixed slope. `repair_effects()` lists available scalar names.
+`repair_data()` performs the same assembly as `repair()` without fitting the
+structural regression, allowing you to inspect scores and error inputs first.
+
+## Choose a scoring-error assumption
+
+The `cross_model_error` argument is required when the formula references multiple
+models. It is not required merely because an unused model is in the supplied list.
+
+- `"independent"` sets all **between-model scoring-error covariances** to zero.
+  It retains all within-model covariances, including intercept/slope covariance.
+- A list of named covariance blocks supplies the between-model covariances.
+  Every unordered pair of referenced models must have a block, even if it is zero.
+- `NULL`, the default, is accepted only for a single referenced model.
+
+Correlated latent slopes do not necessarily have correlated scoring errors.
+Conversely, separate measurement fits do not establish independent errors.
+Shared occasion-level disturbances or overlapping measurements can correlate the
+errors. Choose the policy from the measurement design and a defensible covariance
+model. The package cannot estimate that covariance from separate fitted models.
+
+All models still need one grouping factor. Multiple models do not relax the
+independent-person assumption: shared nuisance groups can induce cross-person
+error covariance, which this estimator cannot represent. Models may mix supported
+`lmer()` and `lme()` backends. Their extraction restrictions remain unchanged.
+
+## Supply nonzero cross-model covariance
+
+Each block has `models = c("a", "b")` and a numeric `covariance` array with
+three dimensions: selected coefficient names from a, selected coefficient names
+from b, and person IDs. All dimensions must be named. These are covariances in
+**score units**, not correlations, BLUP posterior covariances, or raw residual
+covariances. Names come from `repair_effects()` and the person-level ID column.
+
+For linear scoring operators L_a and L_b, an externally justified residual
+cross-covariance R_ab gives score covariance L_a R_ab L_b-transpose. Deriving
+R_ab and matching the repeated observations is an analyst responsibility. This
+fixture uses a known residual correlation of 0.25 and fitted marginal residual
+scales; its generator performs that propagation independently of this package.
+
+```{r supplied}
+correlated <- reference$cases$supplied
+models2 <- list(
+  growth = nlme::lme(y ~ z, random = ~ z | id, data = correlated$a),
+  response = nlme::lme(q ~ w, random = ~ w | subject, data = correlated$b)
+)
+# Prepared externally by the fixture generator, not inferred from the two fits.
+score_cross_covariance <- correlated$cross_model_error[[1]]$covariance
+dim(score_cross_covariance)  # 2 growth coefficients x 1 response coefficient x 70 IDs
+dimnames(score_cross_covariance)[1:2]
+blocks <- list(list(models = c("growth", "response"),
+                    covariance = score_cross_covariance))
+fit2 <- repair(structural, models2, correlated$people, "person",
+               cross_model_error = blocks)
+head(fit2@analysis_data@err_xy)
+summary(fit2)$cross_model_error$policy
+```
+
+Term names must exactly cover the coefficients selected by the formula, not
+necessarily every coefficient in the fitted model. Every retained person must
+have a block entry; extra IDs are permitted. Row, column, ID, model-list, and
+block ordering do not matter. Reversing a pair requires transposing its first
+two array dimensions. Supply a pair only once; REPAIR supplies its transpose.
+Within-model error blocks are computed by the scorer and cannot be overridden.
+The complete assembled covariance must be positive semidefinite for each person;
+checking pairs separately would be insufficient for three or more models.
+
+The policy and original supplied blocks remain in
+`fit@analysis_data@diagnostics$cross_model_error` and `summary(fit)$cross_model_error`.
+The estimator's final aligned inputs are `@err_x`, `@err_y`, and `@err_xy`.
+Standard errors condition on the measurement fits and supplied covariance; they
+do not propagate uncertainty in estimating either.
+
+## Check matching and exclusions
+
+The person-level data frame defines the cohort and output order. Each model's
+scores are matched to it by ID. By default an absent ID, failed score, or
+missing/nonfinite observed structural variable stops assembly. With
+`na_action = "omit"`, REPAIR warns and records the ID and all applicable reasons,
+including the responsible model names. It never matches by row position.
+Invalid covariance specifications are errors even with omission enabled.
+
+```{r diagnostics}
+a <- fit@analysis_data
+a@diagnostics$excluded
+lapply(a@diagnostics$measurement_models, function(x) x$unused_score_ids)
+names(a@scores)  # named by model for multiple-model analyses
+head(a@scores$growth@predictions$id)
+```
+
+For single-model analyses, `@scores` remains the original score object.
+`@diagnostics$measurement_models` is always a named list, giving a consistent
+way to inspect grouping names, backend, unused IDs, singularity, and fit messages.
+
+## Reproduce coefficients, standard errors, and intervals
+
+The frozen expectations were produced without loading `repair`, using the paper's
+production scoring helper, full M-MOM implementation, primary dual-process
+estimator, and independent algebra audit. Tests refit both measurement models
+from observations and compare both R and C++ computation backends.
+
+```{r reproduce}
+stopifnot(isTRUE(all.equal(unname(coef(fit)), case$coefficients$estimate,
+                          tolerance = 1e-5)))
+stopifnot(isTRUE(all.equal(unname(vcov(fit)), unname(case$vcov),
+                          tolerance = 1e-5)))
+stopifnot(isTRUE(all.equal(unname(confint(fit)),
+  unname(as.matrix(case$coefficients[, c("ci_low", "ci_high")])), tolerance = 1e-5)))
+# The simulation reports a standardized focal slope using a population SD ratio.
+# This known generating ratio is NOT the SD ratio of noisy estimated scores.
+focal <- tail(fit@struc_fit@coefficients, 1)[, c("estimate", "se", "ci_low", "ci_high")]
+rownames(focal) <- NULL
+reported <- focal * case$reporting_scale
+reported
+stopifnot(isTRUE(all.equal(reported, case$reported_focal, tolerance = 1e-5)))
+```
+
+The package estimates on the input scale. The paper's dual-process reporting
+scale is population predictor-slope SD divided by population outcome-slope SD.
+Apply the same positive factor to the focal estimate, SE, and interval endpoints.
+For empirical analyses, choose and disclose a justified reporting scale;
+estimated scale uncertainty is not included by multiplying the output.
+
+Fixture provenance records source commit and hashes, R/nlme versions, and the
+modified preliminary moment and final covariance bread. The source repository's
+`dev/generate_multimodel_fixtures.R` and `dev/multimodel-validation.md` document
+the generation and validation workflow.

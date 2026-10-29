@@ -2,7 +2,7 @@
 % Please edit documentation in R/repair.R
 \name{repair}
 \alias{repair}
-\title{Fit a REPAIR structural regression from a measurement model}
+\title{Fit a REPAIR structural regression from measurement models}
 \usage{
 repair(
   formula,
@@ -12,7 +12,8 @@ repair(
   na_action = c("fail", "omit"),
   regularization = c("minimum", "none", "custom"),
   alpha = NULL,
-  backend = c("auto", "r", "rcpp")
+  backend = c("auto", "r", "rcpp"),
+  cross_model_error = NULL
 )
 }
 \arguments{
@@ -21,8 +22,8 @@ Observed predictors may be numeric, logical, or factors. The outcome must
 be numeric or a random coefficient. An intercept is always included.}
 
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, or named list. All effects
-in an equation must come from one model with one grouping factor.}
+model, or named list. Each referenced model must have one grouping factor.
+Grouping column names may differ, but their values must identify the same people.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
 structural variables. Its ID values must match the model's grouping levels.}
@@ -41,6 +42,19 @@ stabilization. The same setting is used for preliminary and final moments.}
 predictor columns plus two. Required for \code{regularization = "custom"}.}
 
 \item{backend}{M-MOM computation backend: \code{"auto"}, \code{"r"}, or \code{"rcpp"}.}
+
+\item{cross_model_error}{Cross-model score-error covariance policy. Default
+\code{NULL} is valid only when the formula references one model. For multiple
+models, use \code{"independent"} to explicitly assume zero cross-model scoring
+error covariance, or a list of blocks, one for every unordered model pair.
+Each block is \code{list(models = c("a", "b"), covariance = array(...))}.
+The numeric array must have three named dimensions: coefficient names from
+model a, coefficient names from model b, and person IDs. Term names must
+exactly cover the effects selected from those models. Every retained ID
+must be present; extra IDs are allowed. Order does not matter. Values are
+covariances of likelihood-only scoring errors, not latent coefficients or
+raw observations. The assembled covariance must be positive semidefinite.
+Missing/invalid supplied blocks are errors even with \code{na_action = "omit"}.}
 }
 \value{
 An S7 \code{class_repair_mod} with \verb{@mlm_fit}, \verb{@struc_fit}, and
@@ -54,8 +68,10 @@ models are fitted beforehand so that their fitting choices remain explicit.
 }
 \details{
 The supported structural grammar is additive with an intercept.
-Effects on either side must come from one Gaussian lmer or linear lme model with one
-grouping factor. Full within-person score-error covariance is retained.
+Effects may come from multiple Gaussian lmer or linear lme models, each with
+one grouping factor. Full within-person score-error covariance is retained.
+Multiple models require an explicit \code{cross_model_error} policy; separate
+fits do not establish independent scoring errors. See \code{\link[=repair_data]{repair_data()}}.
 Observed variables are treated as measured without error. Scores are random
 deviations, not fixed-plus-random individual coefficients. For nlme fits,
 supported residual structures and stored-data requirements are described

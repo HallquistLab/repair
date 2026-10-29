@@ -1,4 +1,4 @@
-#' Fit a REPAIR structural regression from a measurement model
+#' Fit a REPAIR structural regression from measurement models
 #'
 #' Select random coefficients with [re()], match them to person-level data by
 #' ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
@@ -11,8 +11,10 @@
 #'   predictor columns plus two. Required for `regularization = "custom"`.
 #' @param backend M-MOM computation backend: `"auto"`, `"r"`, or `"rcpp"`.
 #' @details The supported structural grammar is additive with an intercept.
-#'   Effects on either side must come from one Gaussian lmer or linear lme model with one
-#'   grouping factor. Full within-person score-error covariance is retained.
+#'   Effects may come from multiple Gaussian lmer or linear lme models, each with
+#'   one grouping factor. Full within-person score-error covariance is retained.
+#'   Multiple models require an explicit `cross_model_error` policy; separate
+#'   fits do not establish independent scoring errors. See [repair_data()].
 #'   Observed variables are treated as measured without error. Scores are random
 #'   deviations, not fixed-plus-random individual coefficients. For nlme fits,
 #'   supported residual structures and stored-data requirements are described
@@ -39,12 +41,14 @@
 #' @export
 repair <- function(formula, models, data, id, na_action = c("fail", "omit"),
                    regularization = c("minimum", "none", "custom"),
-                   alpha = NULL, backend = c("auto", "r", "rcpp")) {
+                   alpha = NULL, backend = c("auto", "r", "rcpp"),
+                   cross_model_error = NULL) {
   regularization <- match.arg(regularization)
   if (regularization == "custom" && is.null(alpha)) repair_error("Supply `alpha` for custom regularization.")
   if (regularization != "custom" && !is.null(alpha)) repair_error("`alpha` is used only with custom regularization.")
   models <- normalize_repair_models(models)
-  analysis_data <- repair_data(formula, models, data, id, na_action)
+  analysis_data <- repair_data(formula, models, data, id, na_action,
+                              cross_model_error = cross_model_error)
   struc_fit <- run_struc(analysis_data, regularization, alpha, backend)
   if (!isTRUE(struc_fit@converged)) repair_warn("Structural fit failed: {struc_fit@message}")
   class_repair_mod(mlm_fit = models[analysis_data@diagnostics$model],

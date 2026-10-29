@@ -76,9 +76,6 @@ parse_struc_formula <- function(formula, catalog) {
   if (as.character(lhs) %in% all.vars(rhs)) repair_error("The outcome cannot also be a predictor.")
   if (!length(effects)) repair_error("The structural formula must contain at least one `re()` reference.")
   used_models <- unique(vapply(effects, `[[`, character(1), "model"))
-  if (length(used_models) != 1L) {
-    repair_error("One measurement model per structural equation is supported. Cross-model score-error covariances are not available.")
-  }
   list(formula = parsed, original = formula, effects = effects, observed = observed,
-       model = used_models[[1L]], outcome = as.character(lhs))
+       model = used_models, outcome = as.character(lhs))
 }

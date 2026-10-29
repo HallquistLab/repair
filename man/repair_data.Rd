@@ -4,7 +4,14 @@
 \alias{repair_data}
 \title{Assemble and inspect structural analysis inputs}
 \usage{
-repair_data(formula, models, data, id, na_action = c("fail", "omit"))
+repair_data(
+  formula,
+  models,
+  data,
+  id,
+  na_action = c("fail", "omit"),
+  cross_model_error = NULL
+)
 }
 \arguments{
 \item{formula}{An additive structural formula with at least one \code{\link[=re]{re()}} marker.
@@ -12,8 +19,8 @@ Observed predictors may be numeric, logical, or factors. The outcome must
 be numeric or a random coefficient. An intercept is always included.}
 
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, or named list. All effects
-in an equation must come from one model with one grouping factor.}
+model, or named list. Each referenced model must have one grouping factor.
+Grouping column names may differ, but their values must identify the same people.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
 structural variables. Its ID values must match the model's grouping levels.}
@@ -23,15 +30,38 @@ structural variables. Its ID values must match the model's grouping levels.}
 \item{na_action}{\code{"fail"} (default) or \code{"omit"}. Omission covers missing or
 nonfinite observed values, unmatched IDs, and failed score blocks; it warns
 and records every excluded ID and reason.}
+
+\item{cross_model_error}{Cross-model score-error covariance policy. Default
+\code{NULL} is valid only when the formula references one model. For multiple
+models, use \code{"independent"} to explicitly assume zero cross-model scoring
+error covariance, or a list of blocks, one for every unordered model pair.
+Each block is \code{list(models = c("a", "b"), covariance = array(...))}.
+The numeric array must have three named dimensions: coefficient names from
+model a, coefficient names from model b, and person IDs. Term names must
+exactly cover the effects selected from those models. Every retained ID
+must be present; extra IDs are allowed. Order does not matter. Values are
+covariances of likelihood-only scoring errors, not latent coefficients or
+raw observations. The assembled covariance must be positive semidefinite.
+Missing/invalid supplied blocks are errors even with \code{na_action = "omit"}.}
 }
 \value{
 An S7 analysis-data object. Use \verb{@ids}, \verb{@outcome}, \verb{@predictors},
 \verb{@err_x}, \verb{@err_y}, \verb{@err_xy}, \verb{@effects}, and \verb{@diagnostics} to inspect it.
 Error arrays are ordered predictor by predictor by ID. Observed variables
 have zero sampling error. Scores are deviations from fitted fixed effects.
+\verb{@scores} holds a score object for one referenced model, or a named list for
+multiple models. \verb{@diagnostics$measurement_models} always provides diagnostics
+by model; \verb{@diagnostics$cross_model_error} records the applied policy and blocks.
 }
 \description{
 Match likelihood-only scores and their full within-person error covariance
 to a person-level data frame by ID. The data frame defines the analysis cohort
 and its order. No aggregation, row-order matching, or silent omission occurs.
+}
+\details{
+Within-model covariance always comes from the scorer and cannot be
+overridden. Supplied blocks are conditional on the fitted measurement models;
+uncertainty in their estimation is not propagated. Independent errors do not
+imply independent latent processes. The package does not estimate cross-model
+covariance from separate fits. See \code{vignette("multiple-models", package = "repair")}.
 }

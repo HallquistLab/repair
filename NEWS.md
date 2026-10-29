@@ -1,5 +1,17 @@
 # repair 0.0.0.9000
 
+* Support structural regressions using coefficients from multiple fitted Gaussian
+  lmer or linear lme measurement models, each with one grouping factor.
+* Require an explicit cross-model scoring-error policy: independent errors or
+  named per-ID covariance blocks for every model pair. Validate complete model,
+  coefficient, and ID coverage and joint positive semidefiniteness.
+* Preserve within-model covariance, align each model to the requested cohort,
+  and report model-specific exclusions and measurement diagnostics. Record the
+  covariance policy and supplied blocks in analysis diagnostics and summaries.
+* Add two independently generated dual-process reproduction fixtures, tests for
+  both computation backends, and an executable multiple-model vignette covering
+  covariance assumptions and the simulation's population-SD reporting scale.
+
 * Add validated single-group linear `nlme::lme()` support to scoring, effect
   discovery, structural-data assembly, and fitting. Support independent/AR(1)/
   continuous-time AR(1) correlation with constant/varIdent/varPower residual

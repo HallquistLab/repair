@@ -10,7 +10,7 @@ error-free observed variables.
 
 This is a development package. The supported structural workflow is an
 additive regression with an intercept, using random coefficients from
-**one fitted `lme4::lmer()` or linear `nlme::lme()` model with one
+**fitted `lme4::lmer()` or linear `nlme::lme()` models, each with one
 grouping factor**. Random coefficients may be predictors, the outcome,
 or both. Numeric, logical, and factor observed predictors are supported.
 See the [workflow guide](vignettes/repair-workflow.Rmd) for matching,
@@ -58,7 +58,8 @@ summary(fit)
 #> REPAIR structural regression
 #> re("Days", model = "growth") ~ observed 
 #> People: 18 analyzed / 18 requested; 0 excluded
-#> Measurement backend: lme4
+#> Measurement model: growth (lme4; group Subject; 0 IDs outside cohort)
+#> Cross-model scoring errors: not applicable (one model)
 #> Scores: likelihood-only random deviations
 #>   model   group term    role
 #>  growth Subject Days outcome
@@ -127,6 +128,28 @@ selected effect sources, and exclusions. `fit@struc_fit` retains M-MOM
 steps and numerical diagnostics. For custom score/error inputs, use the
 lower-level `fit_mmom()` API.
 
+## Connect two measurement processes
+
+Use model-qualified references when an equation draws on multiple fits:
+
+``` r
+fit <- repair(
+  re("time", model = "symptoms") ~ re("time", model = "stress") + age,
+  models = list(symptoms = symptoms_fit, stress = stress_fit),
+  data = people, id = "person",
+  cross_model_error = "independent"
+)
+```
+
+This explicitly assumes zero **cross-model scoring-error covariance**;
+latent processes can still be correlated. Separate model fits alone do
+not justify the assumption. If the scoring errors are correlated, supply
+per-person covariance blocks instead. Omitting the policy is an error
+for multiple referenced models. Within-model covariance is always
+retained. See the executable [multiple-model
+guide](vignettes/multiple-models.Rmd) for both policies, ID matching,
+and a dual-process reproduction against the paper’s simulation code.
+
 ## Interpretation and limits
 
 - Standard errors are model-based and conditional on estimated
@@ -141,9 +164,8 @@ lower-level `fit_mmom()` API.
   complete error covariance is preserved when random coefficients appear
   on both sides.
 - Interactions or nonlinear transformations involving random
-  coefficients, models without an intercept, joint multiple-equation
-  fitting, and cross-model error covariances are not implemented.
-  Unsupported formulas fail explicitly.
+  coefficients, models without an intercept, and joint multiple-equation
+  fitting are not implemented. Unsupported formulas fail explicitly.
 - Single-group `nlme` models support independent/AR(1)/continuous-time
   AR(1) correlation and constant/`varIdent`/`varPower` residual
   variance. Keep the data in the fit (`keep.data = TRUE`). See the [nlme
@@ -160,8 +182,8 @@ contracts and extension sequence. The [audit and
 decisions](dev/design-audit.md) trace findings to corrections and tests.
 The test suite includes frozen REPAIR simulation and independent
 algebra-audit fixtures for both R and C++ backends, plus three
-end-to-end nlme reproduction datasets; see [fixture
-provenance](tests/testthat/fixtures/README.md).
+single-model nlme and two dual-process reproduction datasets; see
+[fixture provenance](tests/testthat/fixtures/README.md).
 
 ``` r
 # From a source checkout:

@@ -84,8 +84,9 @@ without any sibling-repository dependency.
 
 These fixtures establish per-dataset agreement, not reproduction of every
 published Monte Carlo table or new inference coverage. First-stage parameter
-uncertainty remains unpropagated. Structural fitting still requires one model
-and one grouping factor. Shared nuisance groups, cross-model covariance, other
+uncertainty remains unpropagated. At this milestone structural fitting required one model
+and one grouping factor; the later [multiple-model milestone](multimodel-validation.md)
+relaxes the model count while retaining one grouping factor per model. At that stage, shared nuisance groups, cross-model covariance, other
 residual families, and arbitrary nonlinear score transformations require separate
 statistical and extraction validation before their interfaces can be enabled.
 
