@@ -109,19 +109,36 @@ analysis
 #> Excluded: 0 of 18 requested IDs
 #>   model   group term                        label    role
 #>  growth Subject Days re("Days", model = "growth") outcome
-head(analysis@ids)
-#> [1] "308" "309" "310" "330" "331" "332"
-head(analysis@predictors)
-#>     observed
-#> 308        1
-#> 309        2
-#> 310        3
-#> 330        4
-#> 331        5
-#> 332        6
-analysis@diagnostics$excluded
-#> [1] id     reason
-#> <0 rows> (or 0-length row.names)
+head(repair_scores(analysis))
+#>    id  model   group term                        label    role      score
+#> 1 308 growth Subject Days re("Days", model = "growth") outcome 11.2974165
+#> 2 309 growth Subject Days re("Days", model = "growth") outcome -8.2055005
+#> 3 310 growth Subject Days re("Days", model = "growth") outcome -4.3523872
+#> 4 330 growth Subject Days re("Days", model = "growth") outcome -7.4592132
+#> 5 331 growth Subject Days re("Days", model = "growth") outcome -5.2012672
+#> 6 332 growth Subject Days re("Days", model = "growth") outcome -0.9005181
+#>   std.error error.variance   cohort analyzed status reason
+#> 1  2.817564       7.938667 analyzed     TRUE     ok
+#> 2  2.817564       7.938667 analyzed     TRUE     ok
+#> 3  2.817564       7.938667 analyzed     TRUE     ok
+#> 4  2.817564       7.938667 analyzed     TRUE     ok
+#> 5  2.817564       7.938667 analyzed     TRUE     ok
+#> 6  2.817564       7.938667 analyzed     TRUE     ok
+head(repair_score_covariance(analysis))
+#>    id model1  group1 term1                       label1   role1 model2  group2
+#> 1 308 growth Subject  Days re("Days", model = "growth") outcome growth Subject
+#> 2 309 growth Subject  Days re("Days", model = "growth") outcome growth Subject
+#> 3 310 growth Subject  Days re("Days", model = "growth") outcome growth Subject
+#> 4 330 growth Subject  Days re("Days", model = "growth") outcome growth Subject
+#> 5 331 growth Subject  Days re("Days", model = "growth") outcome growth Subject
+#> 6 332 growth Subject  Days re("Days", model = "growth") outcome growth Subject
+#>   term2                       label2   role2 covariance       source
+#> 1  Days re("Days", model = "growth") outcome   7.938667 within_model
+#> 2  Days re("Days", model = "growth") outcome   7.938667 within_model
+#> 3  Days re("Days", model = "growth") outcome   7.938667 within_model
+#> 4  Days re("Days", model = "growth") outcome   7.938667 within_model
+#> 5  Days re("Days", model = "growth") outcome   7.938667 within_model
+#> 6  Days re("Days", model = "growth") outcome   7.938667 within_model
 ```
 
 IDs determine alignment; data-frame row order never determines a match.
@@ -130,10 +147,45 @@ Missing/nonfinite values, unmatched IDs, and failed scores stop by
 default. Use `na_action = "omit"` to explicitly exclude them with a
 warning and an ID/reason audit trail.
 
-`fit@analysis_data` retains the matched scores, error covariance,
-selected effect sources, and exclusions. `fit@struc_fit` retains M-MOM
-steps and numerical diagnostics. For custom score/error inputs, use the
-lower-level `fit_mmom()` API.
+Use public table extractors for reporting, joins, and export:
+
+``` r
+repair_coefficients(fit, conf.level = .95)
+#>          term   estimate std.error  statistic   p.value  conf.low conf.high
+#> 1 (Intercept) -2.9721078 3.2147349 -0.9245266 0.3552122 -9.272872 3.3286569
+#> 2    observed  0.3128535 0.2969909  1.0534109 0.2921527 -0.269238 0.8949449
+#>   conf.level
+#> 1       0.95
+#> 2       0.95
+head(repair_scores(fit))
+#>    id  model   group term                        label    role      score
+#> 1 308 growth Subject Days re("Days", model = "growth") outcome 11.2974165
+#> 2 309 growth Subject Days re("Days", model = "growth") outcome -8.2055005
+#> 3 310 growth Subject Days re("Days", model = "growth") outcome -4.3523872
+#> 4 330 growth Subject Days re("Days", model = "growth") outcome -7.4592132
+#> 5 331 growth Subject Days re("Days", model = "growth") outcome -5.2012672
+#> 6 332 growth Subject Days re("Days", model = "growth") outcome -0.9005181
+#>   std.error error.variance   cohort analyzed status reason
+#> 1  2.817564       7.938667 analyzed     TRUE     ok
+#> 2  2.817564       7.938667 analyzed     TRUE     ok
+#> 3  2.817564       7.938667 analyzed     TRUE     ok
+#> 4  2.817564       7.938667 analyzed     TRUE     ok
+#> 5  2.817564       7.938667 analyzed     TRUE     ok
+#> 6  2.817564       7.938667 analyzed     TRUE     ok
+repair_diagnostics(fit, table = "excluded")
+#> [1] id     reason
+#> <0 rows> (or 0-length row.names)
+```
+
+`repair_score_covariance(fit)` preserves the assembled within- and
+cross-model scoring-error covariance. It differs from `vcov(fit)`, which
+describes structural coefficient uncertainty. These ordinary data frames
+have explicit ID columns and the same schema for one or multiple
+measurement models. See the [extractor
+guide](vignettes/extracting-results.Rmd) for column contracts, cohort
+selection, covariance reconstruction, and safe joins. Internal S7
+properties remain available for advanced inspection; custom estimation
+uses `fit_mmom()`.
 
 ## Connect two measurement processes
 

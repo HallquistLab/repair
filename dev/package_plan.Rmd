@@ -27,8 +27,11 @@ has been removed. The [audit](design-audit.md) records findings and decisions.
 5. Supply one structural-data row per ID and an explicit ID column name.
 6. Optionally call `repair_data()` to inspect cohort matching and error inputs.
 7. Call `repair()`; use `summary()`, `coef()`, `vcov()`, `confint()`, and `nobs()`.
+   For reporting and joins, use `repair_coefficients()`, `repair_scores()`, and
+   `repair_score_covariance()` with their documented table identities.
 8. Inspect `repair_reliability(fit)` and `repair_diagnostics(fit)` for reliability,
-   cohort accounting, measurement messages, and numerical diagnostics. Plot
+   cohort accounting, measurement messages, and numerical diagnostics. Select
+   individual diagnostic tables with `table = "name"`. Plot
    person-level reliability to inspect heterogeneity.
 
 # Supported scope
@@ -153,8 +156,9 @@ The single-group nlme effective-row and residual-covariance validation milestone
 is implemented (see `nlme-validation.md`), as is the multiple-model assembly
 contract (see `multimodel-validation.md`). Reliability and structural diagnostic
 interfaces are now implemented with explicit contrast, cohort, aggregation, and
-undefined-value contracts; see `reliability-validation.md`. Next prioritize stable
-broader result extractors and cross-platform automated checks. Bootstrap inference,
+undefined-value contracts; see `reliability-validation.md`. Stable table extractors
+are implemented; see `extractor-contracts.md` for schema and compatibility rules.
+Next prioritize cross-platform automated checks. Bootstrap inference,
 additional residual structures, and multi-group dependence validation require
 separate validation. Cross-person covariance support and formula extensions with
 derived error propagation require explicit statistical contracts.

@@ -5,6 +5,8 @@
 #' regularization, measurement-model messages, posterior reliability, weight
 #' concentration, and the inference convention. See [repair_reliability()] and
 #' [repair_diagnostics()] for definitions and individual diagnostic tables.
+#' Use [repair_coefficients()] for a plain coefficient table with a chosen
+#' confidence level, and [repair_scores()] for ID-keyed measurement scores.
 #' `nobs()` counts analyzed people, not repeated observations. `confint()` uses
 #' normal quantiles and supports named or integer coefficient selection.
 #' Failed numerical fits remain inspectable with `summary()`; coefficient and

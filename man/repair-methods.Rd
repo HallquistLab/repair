@@ -22,6 +22,8 @@ a list containing a coefficient table, effect sources, sample accounting,
 regularization, measurement-model messages, posterior reliability, weight
 concentration, and the inference convention. See \code{\link[=repair_reliability]{repair_reliability()}} and
 \code{\link[=repair_diagnostics]{repair_diagnostics()}} for definitions and individual diagnostic tables.
+Use \code{\link[=repair_coefficients]{repair_coefficients()}} for a plain coefficient table with a chosen
+confidence level, and \code{\link[=repair_scores]{repair_scores()}} for ID-keyed measurement scores.
 \code{nobs()} counts analyzed people, not repeated observations. \code{confint()} uses
 normal quantiles and supports named or integer coefficient selection.
 Failed numerical fits remain inspectable with \code{summary()}; coefficient and

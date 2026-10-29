@@ -118,3 +118,13 @@ manuscript-defined posterior reliability, explicit cohort/undefined-value handli
 structural diagnostic tables, summary integration, and person-level plots. Earlier
 sections retain their historical scope. See the executable
 [reliability guide](../vignettes/reliability-diagnostics.Rmd) for user-facing examples.
+
+
+## Stable table extractor follow-up
+
+The reporting interfaces now expose coefficient, score, and score-covariance
+schemas and exact diagnostic-table selection. See
+[extractor-contracts.md](extractor-contracts.md) for the audit findings, identity/
+ordering/failure contracts, and verification workflow. The executable
+[extractor guide](../vignettes/extracting-results.Rmd) demonstrates reporting,
+cohort inspection, covariance reconstruction, and joins without internal S7 access.

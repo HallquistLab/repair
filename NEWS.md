@@ -1,5 +1,15 @@
 # repair 0.0.0.9000
 
+* Add `repair_coefficients()` for plain structural coefficient tables with
+  documented columns and configurable normal confidence intervals.
+* Add `repair_scores()` for ID-keyed likelihood-only score tables and
+  `repair_score_covariance()` for assembled within- and cross-model error
+  covariance. Both work on fitted results and pre-fit `repair_data()` assemblies.
+* Add exact named-table selection to `repair_diagnostics()`, preserving the
+  existing list interface and avoiding unrequested reliability computation.
+* Document table schemas, types, keys, ordering, cohorts, failure behavior, and
+  reporting/join/export workflows; test the interfaces against existing references.
+
 * Add `repair_reliability()` with manuscript-defined marginal and intercept-
   residualized posterior reliability, person-level results, explicit cohort
   selection, equally weighted summaries, and reasons for undefined values.
