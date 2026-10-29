@@ -8,6 +8,8 @@ Description: Implements the REPAIR modified method-of-moments estimator for
     models. Extracts likelihood-only scores and sampling-error covariances,
     aligns them with person-level data by identifier, and reports conditional
     model-based inference and analysis diagnostics.
+URL: https://zacharyvig.github.io/repair/, https://github.com/zacharyvig/repair
+BugReports: https://github.com/zacharyvig/repair/issues
 License: MIT + file LICENSE
 Depends:
     R (>= 4.3.0)

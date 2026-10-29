@@ -1,5 +1,9 @@
 # repair 0.0.0.9000
 
+* Add a pkgdown documentation website with a guided home page, task-oriented
+  reference, all five executable guides, search, and release notes. Build and
+  validate it on pull requests and deploy main to GitHub Pages.
+
 * Add automated source-package checks on Linux, macOS, and Windows, with Linux
   coverage for previous, development, and minimum-supported R. Include full
   dependencies, tests, examples, vignettes, and a checked-package README run.

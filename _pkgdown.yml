@@ -1,0 +1,62 @@
+url: https://zacharyvig.github.io/repair/
+
+template:
+  bootstrap: 5
+  light-switch: true
+
+home:
+  title: Measurement-error-corrected regression of random coefficients in R
+  description: >
+    Fit REPAIR structural regressions using random coefficients from lme4 or
+    nlme models. Inspect scores, preserve their error covariance, report
+    coefficients, and assess reliability with executable guides.
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, github, lightswitch]
+  components:
+    intro:
+      text: Get started
+      href: articles/repair-workflow.html
+
+articles:
+- title: Start and report an analysis
+  navbar: Start and report
+  contents:
+  - repair-workflow
+  - extracting-results
+  - reliability-diagnostics
+- title: Measurement models and reproduction
+  navbar: Measurement models
+  contents:
+  - multiple-models
+  - nlme-workflow
+
+reference:
+- title: Fit and inspect an analysis
+  desc: Discover random coefficients, specify a structural equation, and inspect the analysis cohort before fitting.
+- contents:
+  - repair
+  - re
+  - repair_effects
+  - repair_data
+- title: Extract results for reporting and reuse
+  desc: Use stable data frames for reports and joins, or familiar R generics for fitted models.
+- contents:
+  - repair_coefficients
+  - repair_scores
+  - repair_score_covariance
+  - repair-methods
+- title: Assess reliability and diagnostics
+- contents:
+  - repair_reliability
+  - plot.repair_reliability
+  - repair_diagnostics
+- title: Advanced estimation and object structure
+  desc: Lower-level interfaces for validated score inputs and custom estimation workflows.
+- contents:
+  - repair_ranef_gls
+  - fit_mmom
+  - class_repair_mod
+  - repair-package

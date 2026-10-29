@@ -10,3 +10,4 @@ src/*.dylib
 src/symbols.rds
 
 /check/
+/docs/
