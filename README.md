@@ -56,20 +56,27 @@ fit <- repair(
 )
 summary(fit)
 #> REPAIR structural regression
-#> re("Days", model = "growth") ~ observed 
+#> re("Days", model = "growth") ~ observed
 #> People: 18 analyzed / 18 requested; 0 excluded
 #> Measurement model: growth (lme4; group Subject; 0 IDs outside cohort)
 #> Cross-model scoring errors: not applicable (one model)
 #> Scores: likelihood-only random deviations
 #>   model   group term    role
 #>  growth Subject Days outcome
-#> 
+#>
+#> Posterior reliability (analyzed cohort; equal person weights):
+#>   model term    role      measure reliability n_people n_defined
+#>  growth Days outcome     marginal       0.849       18        18
+#>  growth Days outcome residualized       0.828       18        18
+#>
 #>             estimate    se   zstat   pval  ci_low ci_high
 #> (Intercept)  -2.9721 3.215 -0.9245 0.3552 -9.2729  3.3287
 #> observed      0.3129 0.297  1.0534 0.2922 -0.2692  0.8949
-#> 
-#> Regularization (preliminary / final): minimum / minimum 
-#> Error-moment subtraction multipliers: 0.8333 / 0.8333 
+#>
+#> Regularization (preliminary / final): minimum / minimum
+#> Error-moment subtraction multipliers: 0.8333 / 0.8333
+#> Largest analysis-weight fraction: 0.0556 ; weight-equivalent count: 18
+#> Moment conditioning and individual weights: repair_diagnostics(fit).
 #> Conditional on fitted measurement-model parameters; model-based normal SEs and intervals.
 ```
 
@@ -80,7 +87,7 @@ there is only one matching effect, `model` may be omitted.
 
 ``` r
 coef(fit)
-#> (Intercept)    observed 
+#> (Intercept)    observed
 #>  -2.9721078   0.3128535
 confint(fit)
 #>                 2.5 %    97.5 %
@@ -149,6 +156,41 @@ for multiple referenced models. Within-model covariance is always
 retained. See the executable [multiple-model
 guide](vignettes/multiple-models.Rmd) for both policies, ID matching,
 and a dual-process reproduction against the paper’s simulation code.
+
+## Reliability and diagnostics
+
+Assess the selected random coefficients using the manuscript’s posterior
+reliability definitions. The default uses analyzed people with equal
+weights:
+
+``` r
+repair_reliability(fit)[, c("term", "role", "measure", "reliability", "n_people", "n_defined")]
+#>   term    role      measure reliability n_people n_defined
+#> 1 Days outcome     marginal   0.8485308       18        18
+#> 2 Days outcome residualized   0.8275788       18        18
+diagnostics <- repair_diagnostics(fit)
+diagnostics$weight_summary
+#>   n_people max_fraction weight_equivalent_n
+#> 1       18   0.05555556                  18
+diagnostics$conditioning
+#>          step dimension min_eigenvalue max_eigenvalue condition_number
+#> 1 preliminary         2     4.10807536     2122.89192         516.7607
+#> 2       final         2     0.09612987       49.67614         516.7607
+```
+
+``` r
+person_reliability <- repair_reliability(fit, level = "person")
+plot(person_reliability)
+plot(person_reliability, type = "observations")
+```
+
+Posterior reliability is distinct from the likelihood-only scoring-error
+covariance used by the estimator. Undefined values retain reasons and
+explicit denominators; diagnostics do not impose automatic adequacy
+cutoffs. See the [reliability and diagnostics
+guide](vignettes/reliability-diagnostics.Rmd) for marginal versus
+intercept-residualized reliability, cohort selection, and interpretation
+of numerical and weight diagnostics.
 
 ## Interpretation and limits
 

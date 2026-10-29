@@ -1,2 +1,2 @@
-# Reliability summaries are deferred pending a definition of marginal versus
-# conditional reliability and its aggregation across people. See dev/design-audit.md.
+# Reliability and structural diagnostic interfaces are defined in
+# reliability.R and diagnostics.R; see dev/reliability-validation.md.

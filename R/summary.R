@@ -2,7 +2,9 @@
 #'
 #' Standard extraction methods operate on [repair()] results. `summary()` returns
 #' a list containing a coefficient table, effect sources, sample accounting,
-#' regularization, measurement-model messages, and the inference convention.
+#' regularization, measurement-model messages, posterior reliability, weight
+#' concentration, and the inference convention. See [repair_reliability()] and
+#' [repair_diagnostics()] for definitions and individual diagnostic tables.
 #' `nobs()` counts analyzed people, not repeated observations. `confint()` uses
 #' normal quantiles and supports named or integer coefficient selection.
 #' Failed numerical fits remain inspectable with `summary()`; coefficient and
@@ -75,6 +77,8 @@ S7::method(summary, class_repair_mod) <- function(object, ...) {
     regularization = fit@diagnostics[c("preliminary_moment_control", "final_moment_control",
       "correction_prelim", "correction_final")],
     diagnostics = fit@diagnostics,
+    reliability = repair_reliability(object),
+    structural_diagnostics = repair_structural_diagnostics(object),
     inference = "Conditional on fitted measurement-model parameters; model-based normal SEs and intervals."),
     class = "summary_repair")
 }
@@ -99,6 +103,10 @@ print.summary_repair <- function(x, ...) {
       not_applicable = "not applicable (one model)"), "\n", sep = "")
   cat("Scores: likelihood-only random deviations\n")
   print(x$effects[, c("model", "group", "term", "role"), drop = FALSE], row.names = FALSE)
+  cat("\nPosterior reliability (analyzed cohort; equal person weights):\n")
+  print(as.data.frame(x$reliability)[, c("model", "term", "role", "measure", "reliability",
+    "n_people", "n_defined"), drop = FALSE], row.names = FALSE, digits = 3)
+  if (any(x$reliability$n_undefined > 0)) cat("Undefined reliability: inspect repair_reliability(fit) for reasons.\n")
   if (x$converged) {
     cat("\n")
     table <- x$coefficients
@@ -111,6 +119,10 @@ print.summary_repair <- function(x, ...) {
     cat("Error-moment subtraction multipliers:",
       format(x$regularization$correction_prelim, digits = 4), "/",
       format(x$regularization$correction_final, digits = 4), "\n")
+    weight <- x$structural_diagnostics$weight_summary
+    cat("Largest analysis-weight fraction:", format(weight$max_fraction, digits = 3),
+        "; weight-equivalent count:", format(weight$weight_equivalent_n, digits = 3), "\n")
+    cat("Moment conditioning and individual weights: repair_diagnostics(fit).\n")
   } else {
     cat("Structural fit FAILED:", x$message, "\n")
   }

@@ -112,6 +112,31 @@ Within-model covariance is always retained. See the executable
 [multiple-model guide](vignettes/multiple-models.Rmd) for both policies, ID
 matching, and a dual-process reproduction against the paper's simulation code.
 
+## Reliability and diagnostics
+
+Assess the selected random coefficients using the manuscript's posterior
+reliability definitions. The default uses analyzed people with equal weights:
+
+```{r diagnostics}
+repair_reliability(fit)[, c("term", "role", "measure", "reliability", "n_people", "n_defined")]
+diagnostics <- repair_diagnostics(fit)
+diagnostics$weight_summary
+diagnostics$conditioning
+```
+
+```r
+person_reliability <- repair_reliability(fit, level = "person")
+plot(person_reliability)
+plot(person_reliability, type = "observations")
+```
+
+Posterior reliability is distinct from the likelihood-only scoring-error
+covariance used by the estimator. Undefined values retain reasons and explicit
+denominators; diagnostics do not impose automatic adequacy cutoffs. See the
+[reliability and diagnostics guide](vignettes/reliability-diagnostics.Rmd) for
+marginal versus intercept-residualized reliability, cohort selection, and
+interpretation of numerical and weight diagnostics.
+
 ## Interpretation and limits
 
 - Standard errors are model-based and conditional on estimated measurement-model

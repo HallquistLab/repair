@@ -214,6 +214,17 @@ precompute transformations of *observed* variables in `data` and refer to their
 column names. Character predictors must be explicitly converted to factors.
 
 Automatic measurement-model fitting, cross-model covariance estimation,
-reliability summaries, and additional structural grammars are future work, not
+additional structural grammars are future work, not
 silent fallback behavior. See the source repository's design plan and audit for
 extension requirements and reproducibility tests.
+
+
+## Reliability and diagnostic tables
+
+Use `repair_reliability(fit)` for the manuscript's marginal and, where applicable,
+intercept-residualized posterior reliability. `repair_diagnostics(fit)` collects
+sample accounting, scoring failures, input error variances, regularization,
+corrected-moment conditioning, and weight concentration in tables. The summary
+now includes compact reliability and weight information. See
+`vignette("reliability-diagnostics")` for cohort definitions, undefined values,
+plots, and the distinction between posterior uncertainty and scoring error.

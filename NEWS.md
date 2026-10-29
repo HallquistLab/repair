@@ -1,5 +1,17 @@
 # repair 0.0.0.9000
 
+* Add `repair_reliability()` with manuscript-defined marginal and intercept-
+  residualized posterior reliability, person-level results, explicit cohort
+  selection, equally weighted summaries, and reasons for undefined values.
+* Add `repair_diagnostics()` tables for sample accounting, scoring failures,
+  input error variances, regularization, corrected-moment conditioning, and
+  analysis-weight concentration. Preserve useful diagnostics on structural failure.
+* Include compact reliability and weight summaries in `summary(fit)`; add plots
+  of person-specific reliability distributions and observation-count relationships.
+* Add independent simulation-derived reliability fixtures, boundary/diagnostic
+  tests, and an executable reliability guide distinguishing posterior uncertainty
+  from the likelihood-only score-error covariance used by REPAIR.
+
 * Support structural regressions using coefficients from multiple fitted Gaussian
   lmer or linear lme measurement models, each with one grouping factor.
 * Require an explicit cross-model scoring-error policy: independent errors or
