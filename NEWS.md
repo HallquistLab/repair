@@ -1,5 +1,11 @@
 # repair 0.0.0.9000
 
+* Add automated source-package checks on Linux, macOS, and Windows, with Linux
+  coverage for previous, development, and minimum-supported R. Include full
+  dependencies, tests, examples, vignettes, and a checked-package README run.
+* Preserve check artifacts and a stable `Package checks` aggregate status; document
+  local reproduction, warning policy, and troubleshooting.
+
 * Add `repair_coefficients()` for plain structural coefficient tables with
   documented columns and configurable normal confidence intervals.
 * Add `repair_scores()` for ID-keyed likelihood-only score tables and
