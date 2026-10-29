@@ -11,10 +11,12 @@
 #'   predictor columns plus two. Required for `regularization = "custom"`.
 #' @param backend M-MOM computation backend: `"auto"`, `"r"`, or `"rcpp"`.
 #' @details The supported structural grammar is additive with an intercept.
-#'   Effects on either side must come from one Gaussian lmer model with one
+#'   Effects on either side must come from one Gaussian lmer or linear lme model with one
 #'   grouping factor. Full within-person score-error covariance is retained.
 #'   Observed variables are treated as measured without error. Scores are random
-#'   deviations, not fixed-plus-random individual coefficients.
+#'   deviations, not fixed-plus-random individual coefficients. For nlme fits,
+#'   supported residual structures and stored-data requirements are described
+#'   in [repair_ranef_gls()].
 #'
 #'   Standard errors condition on fitted measurement-model quantities and use
 #'   the modified final predictor moment (the manuscript M-MOM calculation).

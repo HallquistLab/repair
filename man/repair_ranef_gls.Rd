@@ -33,7 +33,20 @@ a warning, and appear in \verb{@diagnostics[[group]]$failed_levels}. A singular
 random-effect covariance is allowed when the target design is identifiable.
 Standard errors condition on fitted measurement-model parameters.
 
-Multi-group and nlme extraction are experimental. Per-cluster blocks do not
+Single-group linear nlme fits must retain their data (\code{keep.data = TRUE}).
+Supported correlations are independent, \code{corAR1}, and \code{corCAR1}; an AR(1)
+represented internally as \code{corARMA(p = 1, q = 0)} is also accepted.
+Supported residual variance structures are constant, \code{varIdent}, and
+\code{varPower} (including fitted-value covariates). Correlation groups must
+match the random-effects grouping factor. Other structures, nonlinear
+nlme fits, and multilevel nlme fits are rejected explicitly.
+
+nlme designs use stored effective observation IDs and fitted contrasts.
+Residual covariance uses fitted residual SDs and correlation blocks;
+\code{na.exclude} padding and re-evaluation of \code{subset} cannot add observations.
+See \code{vignette("nlme-workflow", package = "repair")} for reproduction examples.
+
+Multi-group lme4 scoring remains experimental. Per-cluster blocks do not
 describe cross-cluster score errors from shared nuisance effects. The
-structural \code{\link[=repair]{repair()}} workflow therefore accepts single-group lmer models.
+structural \code{\link[=repair]{repair()}} workflow therefore requires one grouping factor.
 }

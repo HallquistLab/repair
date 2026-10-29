@@ -1,0 +1,167 @@
+---
+title: "Validated nlme scoring and end-to-end REPAIR reproduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Validated nlme scoring and end-to-end REPAIR reproduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+stopifnot(requireNamespace("nlme", quietly = TRUE))
+```
+
+## Fit an nlme measurement model
+
+The paper uses `nlme` for its primary measurement models. The public REPAIR
+workflow now accepts a fitted, single-group linear `nlme::lme()` model:
+
+```{r quick-start}
+growth <- nlme::lme(
+  Reaction ~ Days, random = ~ Days | Subject,
+  data = lme4::sleepstudy, keep.data = TRUE
+)
+people <- data.frame(Subject = levels(lme4::sleepstudy$Subject),
+                     observed = seq_len(18))  # illustrative predictor
+repair_effects(list(growth = growth))
+fit <- repair(re("Days", "growth") ~ observed,
+              list(growth = growth), people, id = "Subject")
+summary(fit)
+```
+
+`repair_effects()` lists scalar random coefficients; `repair_data()` computes
+and aligns their likelihood-only scores and error covariance by person ID;
+`repair()` performs that assembly and fits M-MOM. These functions have the same
+interface for lmer and lme inputs. Scores remain deviations from fixed effects,
+and observed structural variables are treated as error-free.
+
+The summary identifies the measurement backend. For nlme, singularity is not
+assessed using lme4's criterion. Inspect the measurement fit and warnings issued
+when fitting it. An available nlme `apVar` failure message is retained as a
+variance-parameter uncertainty diagnostic; its absence is not a convergence test.
+
+## Supported covariance structures
+
+| Component | Supported |
+|---|---|
+| Measurement model | Linear Gaussian lme, one grouping factor |
+| Residual correlation | Independent, `corAR1`, `corCAR1` |
+| Residual variance | Constant, `varIdent`, `varPower` |
+| Combined structures | Supported correlation plus supported variance function |
+| Retained data | Explicit data frame, `keep.data = TRUE` (the lme default) |
+
+AR(1) objects that nlme converts to `corARMA(p = 1, q = 0)` for irregular integer
+times are supported. This does not admit arbitrary ARMA orders. Correlation
+groups must match the random-effect group; finer subgroup correlations,
+multilevel lme fits, nonlinear nlme fits, and other variance/correlation classes
+fail explicitly. `varComb` and other combinations of variance functions have
+not yet been admitted. Multi-group lme4 scoring remains experimental.
+
+The fitted covariance includes the residual scale and variance-function weights.
+In particular, `varPower(~ fitted(.))` uses the weights retained by the fitted
+model; recomputing them from final fitted values can differ at convergence.
+The covariance is residual covariance, not posterior BLUP covariance and not the
+full marginal covariance including the target random effects.
+
+## Why observation alignment matters
+
+An lme object's source data, effective fitting rows, and public response extractor
+need not have the same length when `subset` or `na.exclude` is used. REPAIR uses
+the effective observation IDs saved in the fitted object's grouping information,
+then aligns its retained data, fixed/random designs, response, and covariance.
+It preserves fitted contrasts even if session contrast options change. It also
+checks that the reconstructed designs reproduce the saved fitted values.
+
+Do not remove or edit the model's retained data. If it was fitted with
+`keep.data = FALSE`, refit with retained data. The extractor does not re-evaluate
+the original data expression or subset in the current workspace. Structural
+omission is still a separate decision: `na_action = "omit"` refers to people in
+the structural cohort and retains their exclusion reasons.
+
+## Reproduce reference results from repeated observations
+
+The package bundles three deterministic synthetic datasets. Expected results
+come from the paper's production scoring and M-MOM functions, cross-checked
+against an independent algebra implementation. No repair functions were used to
+generate these expectations. These are per-dataset agreement checks, not the
+paper's published simulation tables or evidence of Monte Carlo coverage.
+
+```{r references}
+reference <- readRDS(system.file(
+  "extdata", "nlme-workflow-reference.rds", package = "repair"
+))
+reference$provenance[c("source_commit", "nlme_version",
+                     "preliminary_moment", "variance_bread")]
+names(reference$cases)
+```
+
+The balanced predictor case starts with raw repeated observations, fits the
+measurement model, and predicts an observed distal outcome from its intercept
+and slope scores:
+
+```{r reproduce}
+case <- reference$cases$predictor_balanced
+growth <- nlme::lme(y ~ z, random = ~ z | id, data = case$data,
+                    control = nlme::lmeControl(msMaxIter = 300))
+fit <- repair(
+  distal ~ re("(Intercept)", "growth") + re("z", "growth"),
+  models = list(growth = growth), data = case$people, id = "id"
+)
+actual <- tail(fit@struc_fit@coefficients, 1)[,
+  c("estimate", "se", "ci_low", "ci_high")]
+rownames(actual) <- NULL
+rbind(package = actual, production_reference = case$focal)
+stopifnot(isTRUE(all.equal(actual, case$focal, tolerance = 1e-5)))
+```
+
+For a same-model outcome/predictor-error example with heterogeneous AR(1)
+residuals:
+
+```{r correlated}
+case_cor <- reference$cases$both_ar1_ident
+growth_cor <- nlme::lme(
+  y ~ z, random = ~ z | id, data = case_cor$data,
+  correlation = nlme::corAR1(form = ~ time | id),
+  weights = nlme::varIdent(form = ~ 1 | phase),
+  control = nlme::lmeControl(msMaxIter = 300)
+)
+fit_cor <- repair(re("z", "growth") ~ re("(Intercept)", "growth"),
+                  list(growth = growth_cor), case_cor$people, id = "id")
+head(fit_cor@analysis_data@err_xy)  # retained cross-error covariance
+stopifnot(isTRUE(all.equal(unname(coef(fit_cor)),
+  case_cor$coefficients$estimate, tolerance = 1e-5)))
+```
+
+The test suite also refits the unbalanced outcome-error case and compares
+coefficients, covariance, SEs, and confidence intervals on both R and C++
+backends. Separate tests construct GLS and residual covariance analytically for
+shuffled/missing/subset observations and the supported residual structures.
+
+## Match the reporting scale
+
+`repair()` returns estimates on the supplied input scale. The frozen production
+comparisons use the primary modified-moment estimator with
+`skip_internal_scaling = TRUE`. They do not invoke the simulation's alternative
+internal latent-SD standardization or alpha-search variants.
+
+The simulation's `vh_study2.R` applies the generating population slope SD after
+estimation. For the bundled predictor case that known SD is 0.8:
+
+```{r scale}
+reported <- actual * case$reporting_scale
+rbind(package = reported, population_SD_reference = case$reported_focal)
+stopifnot(isTRUE(all.equal(reported, case$reported_focal, tolerance = 1e-5)))
+```
+
+Estimates, SEs, and both CI endpoints must be scaled together. An empirical
+application does not have a known generating population SD; do not substitute
+the SD of noisy scores without defining the intended estimand. The package
+performs no automatic standardization.
+
+All inference here remains conditional on fitted measurement-model parameters,
+uses the model-based normal-error covariance, and assumes independent analysis
+people. Adding nlme support does not change those assumptions or propagate
+first-stage parameter uncertainty. Provenance and regeneration instructions are
+in the bundled `extdata/README.md` and the repository's `dev/nlme-validation.md`.

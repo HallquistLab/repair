@@ -479,6 +479,6 @@ independent *target-cluster score errors* when nuisance levels are shared.
 Consequently, within-cluster GLS scores alone are insufficient to justify the
 current row-wise structural M-MOM estimator for arbitrary nested or crossed
 models. The high-level structural workflow is restricted to single-group Gaussian
-lmer models. Lower-level multi-group scoring remains experimental until its
+lmer or supported linear lme models. Lower-level multi-group scoring remains experimental until its
 cross-cluster covariance and downstream inference contract are validated. See
 `package_plan.Rmd` and `design-audit.md` for implementation boundaries.

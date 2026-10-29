@@ -20,7 +20,8 @@ repair(
 Observed predictors may be numeric, logical, or factors. The outcome must
 be numeric or a random coefficient. An intercept is always included.}
 
-\item{models}{A fitted Gaussian \code{lme4::lmer()} model or named list. All effects
+\item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
+model, or named list. All effects
 in an equation must come from one model with one grouping factor.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
@@ -53,10 +54,12 @@ models are fitted beforehand so that their fitting choices remain explicit.
 }
 \details{
 The supported structural grammar is additive with an intercept.
-Effects on either side must come from one Gaussian lmer model with one
+Effects on either side must come from one Gaussian lmer or linear lme model with one
 grouping factor. Full within-person score-error covariance is retained.
 Observed variables are treated as measured without error. Scores are random
-deviations, not fixed-plus-random individual coefficients.
+deviations, not fixed-plus-random individual coefficients. For nlme fits,
+supported residual structures and stored-data requirements are described
+in \code{\link[=repair_ranef_gls]{repair_ranef_gls()}}.
 
 Standard errors condition on fitted measurement-model quantities and use
 the modified final predictor moment (the manuscript M-MOM calculation).

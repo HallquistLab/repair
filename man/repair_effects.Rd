@@ -7,7 +7,8 @@
 repair_effects(models)
 }
 \arguments{
-\item{models}{A fitted Gaussian \code{lme4::lmer()} model or named list of models.}
+\item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
+model, or a named list of models.}
 }
 \value{
 A data frame with \code{model}, \code{group}, \code{term}, and \code{n_levels} columns.

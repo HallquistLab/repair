@@ -11,7 +11,8 @@ repair_data(formula, models, data, id, na_action = c("fail", "omit"))
 Observed predictors may be numeric, logical, or factors. The outcome must
 be numeric or a random coefficient. An intercept is always included.}
 
-\item{models}{A fitted Gaussian \code{lme4::lmer()} model or named list. All effects
+\item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
+model, or named list. All effects
 in an equation must come from one model with one grouping factor.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
