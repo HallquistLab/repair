@@ -104,6 +104,7 @@ mmom_prepare <- function(
     design_index = seq_len(npredictors + 1L) + 1L,
     predictor_index = seq.int(2L, npredictors + 1L),
     nobs = nobs,
+    case_frequency = rep(1, nobs),
     npredictors = npredictors,
     ncoef = npredictors + 1L,
     backend = backend,

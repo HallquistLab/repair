@@ -76,14 +76,15 @@ fit_mmom <- function(data_list,
 
 # Step 1: estimate preliminary coefficients, residual variance, and weights.
 mmom_step1 <- function(inputs) {
+  frequency <- inputs$case_frequency
   # Build the unweighted measurement-error moment.
   err_x_sum <- mmom_weighted_err_cov_sum(
-    inputs$err_x, rep(1, inputs$nobs), inputs$backend
+    inputs$err_x, frequency, inputs$backend
   )
   err_moment <- mmom_error_moment(
-    err_x_sum, sum(inputs$err_y), colSums(cbind(0, inputs$err_xy))
+    err_x_sum, sum(frequency * inputs$err_y), colSums(cbind(0, inputs$err_xy) * frequency)
   )
-  observed_moment <- crossprod(cbind(inputs$outcome, inputs$design))
+  observed_moment <- crossprod(cbind(inputs$outcome, inputs$design) * sqrt(frequency))
   lambda_prelim <- mmom_smallest_det_root(observed_moment, err_moment)
   correction_prelim <- if (
     identical(inputs$preliminary_moment_control$correction, "none") ||
@@ -97,10 +98,10 @@ mmom_step1 <- function(inputs) {
   # Solve the preliminary corrected coefficient equation.
   err_cov_design <- matrix(0, inputs$ncoef, inputs$ncoef)
   err_cov_design[inputs$predictor_index, inputs$predictor_index] <- err_x_sum
-  coef_moment <- crossprod(inputs$design) - correction_prelim * err_cov_design
+  coef_moment <- crossprod(inputs$design * sqrt(frequency)) - correction_prelim * err_cov_design
   outcome_moment <- as.vector(
-    crossprod(inputs$design, inputs$outcome) -
-      correction_prelim * colSums(cbind(0, inputs$err_xy))
+    crossprod(inputs$design, frequency * inputs$outcome) -
+      correction_prelim * colSums(cbind(0, inputs$err_xy) * frequency)
   )
   coef0_solve <- repair_solve(
     coef_moment,
@@ -155,8 +156,8 @@ mmom_step2 <- function(inputs, coef0, predictor_idx, lambda_prelim) {
   } else {
     max(
       0,
-      sum(residual^2) / max(1, inputs$nobs - inputs$ncoef) -
-        mean(err_resid_var)
+      sum(inputs$case_frequency * residual^2) / max(1, inputs$nobs - inputs$ncoef) -
+        sum(inputs$case_frequency * err_resid_var) / inputs$nobs
     )
   }
   if (!is.finite(resid_var)) {
@@ -197,6 +198,7 @@ mmom_step2 <- function(inputs, coef0, predictor_idx, lambda_prelim) {
 
 # Step 3: apply feasible case weights and solve the final corrected moment.
 mmom_step3 <- function(inputs, case_weight) {
+  case_weight <- case_weight * inputs$case_frequency
   # Recompute moments using the inverse case-variance weights.
   weighted_design <- inputs$design * sqrt(case_weight)
   weighted_outcome <- inputs$outcome * sqrt(case_weight)

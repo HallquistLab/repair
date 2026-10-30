@@ -272,6 +272,40 @@ coverage gains and persistent small/short-panel undercoverage. See the
 results](https://github.com/HallquistLab/repair/blob/2dda7622ae7dceb24d726ff2c3aeb56db390083f/dev/robust-refit-audit.md)
 and `vignette("person-bootstrap")` for scope, usage and limitations.
 
+## Experimental influence-function inference
+
+`repair_sandwich(fit)` provides a separate, local influence-function
+calculation for one Gaussian lmer measurement model. It propagates
+uncertainty through measurement scoring/error covariance, preliminary
+estimates, case weights and moment regularization, including covariance
+between stages. The original `coef(fit)`, `vcov(fit)` and conditional
+coefficient table stay unchanged.
+
+``` r
+inf <- repair_sandwich(fit)
+summary(inf)
+#> REPAIR person influence-function sandwich (experimental)
+#> People: 60
+#>          term   estimate  std.error   conf.low  conf.high conf.level component
+#> 1 (Intercept) -0.7895289 0.11699409 -1.0188331 -0.5602247       0.95      full
+#> 2    practice  0.1754854 0.01991633  0.1364501  0.2145207       0.95      full
+#>                                                                            inference
+#> 1 Experimental person influence-function sandwich; local asymptotic normal inference
+#> 2 Experimental person influence-function sandwich; local asymptotic normal inference
+#> Local linearization; unchanged original estimates; coverage is not guaranteed.
+```
+
+When available, use `repair_sandwich_coefficients(inf)` or `vcov(inf)`
+for full inference. `vcov(inf, component = "stage2")` gives the distinct
+empirical frozen-measurement influence calculation. Full inference is
+explicitly unavailable at singular/weakly identified measurement fits or
+unstable local derivatives; `summary()` reports the reason without
+silently switching methods. These are experimental normal intervals
+computed with validated numerical sensitivities, not a guarantee of
+nominal coverage or a bias correction. See
+`vignette("influence-inference")` for the covariance decomposition and
+boundaries.
+
 ## Connect two measurement processes
 
 Use model-qualified references when an equation draws on multiple fits:
