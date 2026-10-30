@@ -161,6 +161,10 @@ repair_sandwich_compute <- function(object, step, tolerance, context = NULL, mea
 #' @param tolerance Positive derivative-agreement tolerance; default .03.
 #' @details Supports a single Gaussian lmer with independent target people and
 #'   contained nuisance groups, prior weights, offsets and stored factor coding.
+#'   Measurement transformations and weight/offset recipes must be supported
+#'   pointwise expressions or explicit columns. Recomputed sample-wide scaling,
+#'   data-adaptive bases and position-specific literal vectors are rejected;
+#'   their additional sampling derivatives are not implemented.
 #'   Analyzed and measurement cohorts must coincide. nlme and multiple-model
 #'   derivatives are not implemented. Unsupported scope errors explicitly.
 #'

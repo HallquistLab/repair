@@ -6,6 +6,21 @@ repair_if_context <- function(object) {
     repair_error("Influence inference currently supports one Gaussian lmer model; nlme and multiple-model derivatives are not implemented.")
   model <- object@mlm_fit[[1L]]; target <- unique(a@effects$group)
   if (length(target) != 1L) repair_error("Select one target grouping factor.")
+  # Stored X/Z are sufficient only for pointwise transformations. A callback
+  # that recomputes scale(), sd(), sample knots, etc. changes those designs under
+  # case resampling and needs additional derivatives that are not implemented.
+  tryCatch(repair_replay_formula(stats::formula(model), all.vars(stats::formula(model))),
+    error = function(e) repair_error("Influence inference requires supported pointwise measurement formulas; precompute transformations or implement their sampling derivatives."))
+  for (field in c("weights", "offset")) {
+    expression <- stats::getCall(model)[[field]]
+    if (is.null(expression)) next
+    variables <- all.vars(expression)
+    dummy <- as.data.frame(stats::setNames(rep(list(rep(1, 2)), length(variables)), variables))
+    value <- tryCatch(repair_replay_eval(expression, dummy), error = function(e) NULL)
+    if (is.null(value) || !is.numeric(value) ||
+        (!length(variables) && length(value) > 1L && length(unique(value)) > 1L))
+      repair_error("Influence inference requires pointwise {.val {field}} columns or expressions; sample-dependent or position-specific vector recipes are not supported.")
+  }
   repair_validate_target(model, target, names(object@mlm_fit))
   e <- repair_get_mlm_elements(model)
   if (!setequal(e@group_levels[[target]], a@ids))

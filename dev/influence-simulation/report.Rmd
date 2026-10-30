@@ -1,0 +1,292 @@
+---
+title: "REPAIR: full influence functions, person bootstrap, and legacy stacked SEs"
+date: "2026-10-30"
+output:
+  html_document:
+    self_contained: true
+    toc: true
+    toc_depth: 2
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE,warning=FALSE,message=FALSE)
+root <- if (dir.exists('results/summary')) 'results/summary' else '.'
+s <- readRDS(file.path(root,'summary.rds'))
+p <- s$performance
+tab <- function(x,digits=3) knitr::kable(x,digits=digits,row.names=FALSE)
+primary <- c('Conditional M-MOM Wald','Stage2 influence Wald','Full influence Wald',
+             'Full person percentile','Legacy OLS stacked HC0 (t)','Legacy OLS stacked HC3 (t)')
+compact <- function(arm,effect) {
+ x <- p[p$arm==arm & p$gamma==effect & p$method%in%primary,]
+ x <- x[order(match(x$profile,s$profiles$profile),match(x$method,primary)),]
+ x <- x[,c('profile','method','available','coverage','rejection','median_width')]
+ names(x) <- c('Profile','Method','Intervals / 100','Coverage','Zero exclusion','Median width')
+ x
+}
+```
+
+## Findings and practical implications
+
+The full influence calculation now follows the actual REPAIR M-MOM estimator,
+including estimated measurement parameters, structural weights, corrections and
+the signed cross-stage covariance. Its implementation passes independent
+likelihood, frequency-perturbation, reoptimization and OLS special-case checks.
+**Correct variance propagation alone does not fix the difficult finite-sample
+inference in this screen.** Keep the method experimental; the results support
+retaining person-level bootstrap inference as the practical alternative in these
+settings, while reporting its remaining failures and bias limitations.
+
+- Full influence inference returned **1,351 / 2,400** structural analyses.
+  There were 1,048 refusals at singular measurement covariances and one unstable
+  parameter derivative. Stage2 influence inference returned all 2,400.
+- For the nonzero noisy-predictor effect, low-information full-influence coverage
+  ranged from **73.2% to 83.3%** among 37–66 available intervals per profile.
+  Bootstrap coverage ranged from **79.4% to 95.8%** among 95–98 intervals.
+  Availability differs, so the report also supplies matched-eligible contrasts.
+  In three profiles these favor bootstrap coverage by about 11–17 percentage
+  points, with paired Monte Carlo intervals excluding zero; this exploratory
+  screen is not an adjusted multiple-comparison or confirmatory study.
+- In the high-reliability noisy-predictor control all methods returned 100
+  intervals; full influence coverage was 92%, bootstrap 91%, conditional 94%.
+  A coverage near 95% has Monte Carlo SE about 2.2 percentage points at Nsim=100.
+  These differences do not establish superiority.
+- In balanced random-slope-outcome analyses, the focal full and stage2 variance
+  reduce to OLS HC0. Across 1,000 balanced legacy comparisons, point estimates
+  agreed within 5.6e-16 and stage2/legacy HC0 variances within 6.1e-8. The old
+  helper's HC corrections and t reference are distinct finite-sample choices;
+  their performance must not be attributed to cross-stage propagation.
+- The small/short noisy-predictor profile still had point bias about −.207 at
+  truth .40, and bootstrap coverage only 79.4%. None of these SE methods removes
+  that bias. Bootstrap availability or smaller analytic SEs do not establish
+  calibrated inference.
+
+## Design, estimands, and comparability
+
+This is a **paired exploratory extension of the existing robust-refit screen**,
+reusing 600 measurement datasets: six profiles × 100 outer replications. Each
+dataset supplies two structural designs (arms A/B), each with truths 0 and .40.
+These are 2,400 structural analyses, not 2,400 independent measurement datasets.
+Streams and native fitting decisions are shared across the comparisons. Main
+bootstrap B=499; the fixed first three datasets/profile extend to B=1,999.
+Excluded development/timing data use replication 801. The protocol in design.md
+was frozen before inspecting full-grid influence performance.
+
+```{r profiles}
+tab(s$profiles)
+```
+
+The Gaussian measurement model is
+Y=.5*time+b0+b1*time+eps. Within-person time is centered and sample-SD
+standardized; SD(b0)=SD(b1)=.9 and their correlation is +.5 or −.5. Residual SD
+calibrates full-posterior slope reliability (.25 except .8 in the control).
+Unequal information allocates half the people to 3 and half to 17 observations,
+independently of latent effects/errors. The additional stratified comparator
+preserves these counts; it is a study comparator, not a new package strata API.
+
+**Arm A: noisy predictors.** Keep the previous structural outcome
+Z=1.5+.4*b0+(gamma/.9)*b1+eta with Var(Z)=1 and Gaussian homoskedastic eta.
+Fit both recovered intercept and slope as noisy predictors. Report the focal
+slope coefficient/SE/endpoints multiplied by the population SD .9. The old
+OLS-outcome stacked helper does not implement this estimator and is deliberately
+absent from arm A.
+
+**Arm B: random-slope outcome.** Extract the shared independent standard-normal
+z from the original null structural outcome and construct
+x_gamma=gamma*b1/.9+sqrt(1-gamma^2)*z. Joint normality gives
+E[b1|x_gamma]=.9*gamma*x_gamma. Fit re(time)~x_gamma and divide the focal
+coefficient/SE/endpoints by .9. The old stacked helper is evaluated unchanged,
+using an ML measurement fit and OLS structural regression, HC0–HC3 and its
+original t_(N−2) reference. REPAIR retains REML and uses normal Wald intervals
+for its influence calculations. In balanced schedules common fixed-slope
+centering cancels and M-MOM's weights are constant, yielding an exact OLS slope
+anchor. Under unequal schedules M-MOM estimates precision weights whereas the
+old helper uses unweighted OLS: the same population target, different estimators.
+Its HC1 scaling uses the total stacked parameter count, as in the original code.
+The legacy helper returns finite results even at some singular native fits; its
+original behavior is preserved, rather than applying the new IF boundary gate.
+
+The legacy helper is sourced from the research repository's
+R/stacked_sandwich_helpers.R and R/derivative_backends.R. It is a simulation
+comparator, not a new exported package inference method. The research code is
+not copied into the MIT package. Its analytic backend computes an observed
+score Hessian; a misleading expected-information label does not change the
+executed comparator. Source hashes and fitting criteria are archived.
+
+## What the new covariance estimates
+
+For fixed total person frequency N, T(f,psi) denotes the canonical finite-sample
+structural estimator. U_i=N*dT/df along the centered person-frequency direction.
+The measurement influence is H^-1*S_i*, with H minus the average score Jacobian
+and S_i* the centered frequency derivative of the native fitting score. D=dT/dpsi.
+The full person influence is U_i+D*IF_psi,i. Its empirical outer product divided
+by N^2 includes stage2, measurement and both signed cross-stage terms.
+
+Measurement scores are analytic Gaussian scores; their Jacobian and the entire
+structural sensitivity are numerically differentiated, with central/half-step,
+one-sided and active-branch checks. For REML both the global fixed-design
+information determinant and its person-frequency derivative are retained.
+ML scores at a REML fit would propagate a different procedure. There are no
+hidden HC corrections, pseudoinverses or ridges. All original point estimates
+and ordinary conditional SEs remain unchanged.
+
+Stage2 differentiates the full structural estimator with measurement quantities
+fixed. It still re-estimates structural variance, weights and corrections and
+therefore differs from the ordinary model-based conditional M-MOM SE. Stable
+local regularization/floor branches are allowed and reported; neither numerical
+stability nor a local derivative establishes uniform validity near a boundary.
+Many noisy-predictor analyses occupy the forced-zero residual-variance branch.
+The bootstrap can cross branches and captures a different finite-sample shape;
+the poor local Wald coverage here cannot be resolved merely by adding a positive
+measurement variance term or assuming that every full SE should increase.
+
+## Availability
+
+```{r availability, out.width='100%'}
+knitr::include_graphics(file.path(root,'availability.png'))
+```
+
+```{r reasons}
+x <- as.data.frame(with(s$diagnostics,table(measurement_singular,full)))
+tab(x[x$Freq>0,])
+```
+
+All 1,048 singular-model refusals are intentional. The one other refusal is
+arm B, low_larger, replication 68, gamma=.40: an unstable/branch-sensitive
+measurement-parameter derivative at coordinate 6 (log residual SD). The original
+stage2 result remains available. There were no driver, replay-reconstruction or
+public-API errors. We retained the prespecified step/tolerance rather than tuning
+them to maximize availability after viewing coverage.
+
+Coverage and zero exclusion use **only available intervals**. The CSVs also
+report interval-and-cover/detect per all 100 planned datasets. Missing intervals
+are not valid non-rejections. Conditioning on availability selects a subset and
+can change the apparent distribution; compare common eligible datasets too.
+
+## Arm A: noisy predictors
+
+```{r aplot, out.width='100%'}
+knitr::include_graphics(file.path(root,'predictor_coverage.png'))
+```
+
+Nonzero effect: zero exclusion is detection, not a type-I error rate.
+
+```{r aalt}
+tab(compact('predictor',.4))
+```
+
+Null focal effect, conditional on the other noisy random coefficient:
+
+```{r anull}
+tab(compact('predictor',0))
+```
+
+Full influence versus full bootstrap, **coverage on common available datasets**:
+
+```{r paired}
+x <- subset(s$paired,arm=='predictor' & gamma==.4 & method_a=='Full influence Wald' &
+            method_b=='Full person percentile' & metric=='covers')
+tab(x[,c('profile','n','difference','mc_low','mc_high','a_only','b_only')])
+```
+
+Differences are IF minus bootstrap; bounds are normal paired Monte Carlo bounds,
+based on per-dataset decision differences. Zero discordance yields no asserted
+equivalence interval. All pairwise tables, including full vs conditional and
+stage2, are retained. Per-method point bias, empirical SD, eligible bias/SD and
+SE calibration appear in performance.csv. Conditional coverage can look high
+because intervals are wide; the methods share the same original point estimates.
+
+## Arm B: recovered random-slope outcome
+
+```{r bplot, out.width='100%'}
+knitr::include_graphics(file.path(root,'outcome_coverage.png'))
+```
+
+```{r balt}
+tab(compact('outcome',.4))
+```
+
+```{r bnull}
+tab(compact('outcome',0))
+```
+
+HC3/t coverage was 95–97% across these nonzero-effect profiles and all 100 legacy
+intervals/profile were finite. That is useful exploratory finite-sample evidence
+for this **OLS-outcome** comparator; it is not validation for noisy-predictor
+M-MOM and does not justify replacing REPAIR's SE with the old helper. The
+unequal-design legacy width is larger partly because the point estimator is
+unweighted OLS. Separately archived normal-critical legacy diagnostics isolate
+the t reference from covariance changes. No claim of general HC3 superiority
+follows from 100 reused replications/profile.
+
+## Covariance decomposition and numerical sensitivity
+
+Medians over available full results, pooling the two truths:
+
+```{r decomposition}
+tab(aggregate(cbind(full_to_stage2,measurement_fraction,cross_fraction)~profile+arm,
+              s$components,median),digits=5)
+```
+
+In balanced arm B the focal measurement sensitivity cancels numerically; full
+and stage2 are the same HC0 variance. In arm A the full/stage2 variance ratio
+ranges roughly .79–3.62 across available analyses, so propagation can increase
+or decrease uncertainty. The signed cross term is essential even when median
+changes are modest. Per-dataset contributions, not just medians, are archived.
+
+On the fixed first three datasets/profile (72 arm/effect checks), halving the
+derivative step changed no availability decisions. Maximum matched relative
+covariance changes were 1.35e-7 (full) and 1.19e-7 (stage2). This subset does not
+establish stability of every refused full-grid derivative.
+
+Across the 156 fixed-subset bootstrap comparisons (arms, truths and methods),
+all B499 and B1999 intervals were available; one coverage decision changed from
+uncovered to covered, none in the reverse direction. Full-person median sums of
+absolute lower/upper endpoint changes were .0293 in arm A and .0421 in arm B.
+The B499 arrays are exact prefixes of the B1999 arrays. This small tail check is
+not a high-precision coverage study.
+
+## Bootstrap reuse and validation
+
+Arm A retains the exact previous robust native-refit bootstrap intervals and
+draw maps. Arm B reuses those actual native optimizations, their convergence
+decisions, person draws and refitted residual SDs. Every structural estimator is
+recomputed per draw. Common measurement fixed-effect centering cancels from the
+focal slope in this design, allowing cached focal computation; **intercept
+bootstrap inference is not reconstructed or claimed**. Both full and frozen
+measurement comparisons use the original complete-vector/failure gate, with no
+deletion, replacement or silent acceptance of failed draws.
+
+The first two datasets/profile, both arm-B outcomes, were checked against 24
+complete public repair_bootstrap() calls at B99 (2,376 attempts). Draws,
+complete-vector eligibility and focal estimates agreed, maximum focal error
+6.66e-16. Identity repair_refit() checks also passed. Additional independent
+validation recomputes coverage and zero exclusion from all 17,200 endpoints,
+checks centering/ID alignment and covariance sums, OLS anchors, B prefixes and
+frozen source/library/reference hashes.
+
+```{r validation, results='asis'}
+cat('```text\n',paste(readLines(file.path(root,'validation.txt')),collapse='\n'),'\n```\n',sep='')
+```
+
+## Reproduction and limits
+
+The frozen numerical baseline is repair commit
+558bdcead1c15cedd1e332aed6f01e86d49f3721, built on robust-refit head 7770874.
+Later scope guards reject sample-wide formula/weight recipes; this study's
+pointwise time models are unchanged. Final package checks separately validate
+that guarded implementation against a fixed subset of recorded results.
+The full study archive is local to blup_unshrinking under
+vig_hallquist_2026/analysis/repair_bootstrap_pilot/influence_comparison; README.md
+records commands, libraries, source dependencies and retained checkpoints.
+The PR's dev/influence-simulation bundle permits endpoint-based verification
+without a simulation rerun or private research code. It does not claim to
+contain all native bootstrap histories.
+
+This screen covers Gaussian iid errors, six fixed schedules/reliabilities and
+two particular structural designs. It does not validate general heteroskedastic
+measurement models, informative missingness, shared nuisance effects, nlme,
+multiple measurement models, arbitrary adaptive transformations or nominal
+coverage under all boundary sequences. The full sandwich is a coherent new
+inference tool and diagnostic; these results argue against presenting it as a
+universal replacement for bootstrap or ordinary conditional inference.

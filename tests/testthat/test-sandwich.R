@@ -141,3 +141,13 @@ test_that("full noisy-predictor influences match complete frequency perturbation
   numerical <- (solve_all(epsilon) - solve_all(-epsilon)) / (2 * epsilon)
   expect_equal(unname(out$influence$full[person, ] / n), unname(numerical), tolerance = 5e-4)
 })
+
+test_that("sample-dependent measurement recipes are not silently held fixed", {
+  d <- repair_example
+  m <- lme4::lmer(score ~ scale(day) + (scale(day) | person), d$repeated)
+  f <- repair(re("scale(day)") ~ practice, m, d$people, "person")
+  expect_error(repair_sandwich(f), "pointwise")
+  m <- lme4::lmer(score ~ day + (day | person), d$repeated, weights = (score * 0 + 1) / sd(score)^2)
+  f <- repair(re("day") ~ practice, m, d$people, "person")
+  expect_error(repair_sandwich(f), "pointwise")
+})
