@@ -175,7 +175,9 @@ for callbacks with external state or changing global options.
 Save the bootstrap object with `saveRDS()` and reload with `readRDS()` after loading
 `repair`. Extraction needs no original data bindings. The result stores original
 estimates, the conditional comparison table, draws, attempts, reference audit,
-streams, and versions. It retains neither every fitted replicate model nor copied
+streams, and versions. `boot$specification` records formula text, selected effects,
+ID column, observable measurement settings, structural backend, and regularization
+controls without formula environments or raw datasets. It retains neither every fitted replicate model nor copied
 raw datasets. Retain original inputs, fitting code, and `sessionInfo()` separately
 to rerun the analysis. Optimizer/dependency changes can affect numerical results;
 cross-version bitwise equivalence is not promised.

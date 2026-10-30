@@ -15,6 +15,11 @@ test_that("bootstrap draws and full refits agree with an independent manual loop
   expect_identical(RNGkind(), kind)
   expect_s3_class(boot, "repair_bootstrap")
   expect_identical(coef(boot), coef(ex$fit))
+  expect_identical(boot$specification$backend, "r")
+  expect_identical(boot$specification$structural_formula, 're("day") ~ practice')
+  expect_identical(boot$specification$effects, ex$fit@analysis_data@effects)
+  expect_identical(boot$specification$regularization,
+    ex$fit@struc_fit@diagnostics[c("preliminary_moment_control", "final_moment_control")])
   expect_identical(nobs(boot), nrow(ex$people))
   expect_identical(before, list(coef = coef(ex$fit), vcov = vcov(ex$fit), scores = repair_scores(ex$fit)))
   expect_true(all(repair_bootstrap_diagnostics(boot)$usable))
@@ -284,7 +289,7 @@ test_that("saved bootstrap results dispatch and retain absent RNG state in a fre
     b <- readRDS(path)
     # No reference model/data/global bindings are needed for saved extraction.
     a <- list(coef = stats::coef(b), vcov = stats::vcov(b), intervals = stats::confint(b),
-      table = repair::repair_bootstrap_coefficients(b), summary = summary(b),
+      table = repair::repair_bootstrap_coefficients(b), summary = summary(b), specification = b$specification,
       draws = repair::repair_bootstrap_diagnostics(b, "draws"),
       printed = capture.output(print(b)))
     d <- repair::repair_example
@@ -302,6 +307,7 @@ test_that("saved bootstrap results dispatch and retain absent RNG state in a fre
   expect_identical(outputs$intervals, confint(boot))
   expect_identical(outputs$table, repair_bootstrap_coefficients(boot))
   expect_identical(outputs$summary, summary(boot))
+  expect_identical(outputs$specification, boot$specification)
   expect_identical(outputs$draws, repair_bootstrap_diagnostics(boot, "draws"))
   expect_identical(outputs$printed, capture.output(print(boot)))
   expect_true(outputs$absent_seed)

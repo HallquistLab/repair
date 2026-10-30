@@ -76,7 +76,9 @@ repair_bootstrap_metadata <- function(value, object, method) {
 #' @return A separate S3 `repair_bootstrap` result containing the original estimate
 #'   and conditional coefficient table, a B-by-p coefficient matrix (failed rows
 #'   are all NA), replicate diagnostics, source-ID draw indices/cohort, reference
-#'   audit, seed streams, and software versions. Replicate fitted models and copied
+#'   audit, static `specification` (formula text, effects, ID, measurement settings,
+#'   structural backend and regularization controls), seed streams, and software
+#'   versions. Replicate fitted models and copied
 #'   raw datasets are not retained. The original fit is unchanged. Use
 #'   [repair_bootstrap_coefficients()] and [repair_bootstrap_diagnostics()] for
 #'   stable tables; `coef()`, `vcov()`, `confint()`, `nobs()`, `summary()` and
@@ -179,6 +181,13 @@ repair_bootstrap <- function(object, measurement_data, data, id = NULL,
   reference$spec <- NULL
   answer <- structure(list(estimate = estimate, conditional = repair_coefficients(object),
     replicates = coefficients, diagnostics = diagnostics, draws = draws, cohort = cohort,
+    specification = list(structural_formula = paste(deparse(a@formula), collapse = " "),
+      measurement_model = names(object@mlm_fit),
+      measurement_formula = paste(deparse(stats::formula(object@mlm_fit[[1L]])), collapse = " "),
+      id_column = id, effects = a@effects,
+      measurement = repair_refit_configuration(object@mlm_fit[[1L]]),
+      backend = object@struc_fit@diagnostics$backend,
+      regularization = object@struc_fit@diagnostics[c("preliminary_moment_control", "final_moment_control")]),
     reference = reference, rng = list(seed = seed, kind = c("L'Ecuyer-CMRG", "Inversion", "Rejection"),
       preflight = streams[[1L]], replicates = streams[-1L]), versions = reference$versions,
     call = match.call()), class = "repair_bootstrap")
@@ -318,7 +327,8 @@ summary.repair_bootstrap <- function(object, ..., level = .95, allow_failed = FA
     inference_available = available, reason = if (available) "" else conditionMessage(table),
     coefficients = if (available) table else NULL, level = level,
     conditional_on_success = any(!object$diagnostics$usable) && allow_failed,
-    reference = object$reference, inference = "Experimental person-level cases bootstrap; marginal percentile intervals; coverage not yet validated."),
+    reference = object$reference, specification = object$specification,
+    inference = "Experimental person-level cases bootstrap; marginal percentile intervals; coverage not yet validated."),
     class = "summary_repair_bootstrap")
 }
 
@@ -326,6 +336,7 @@ summary.repair_bootstrap <- function(object, ..., level = .95, allow_failed = FA
 #' @exportS3Method base::print
 print.summary_repair_bootstrap <- function(x, ...) {
   cat("REPAIR person bootstrap (experimental)\n")
+  cat(x$specification$structural_formula, "\n")
   cat("People:", x$n_people, "; attempts:", x$attempted, "; usable:", x$usable, "; failed:", x$failed, "\n")
   if (x$inference_available) print(x$coefficients, row.names = FALSE) else cat(x$reason, "\n")
   cat(x$inference, "\n")

@@ -47,7 +47,9 @@ default 1e-6. Identity/schema/cohort checks are exact.}
 A separate S3 \code{repair_bootstrap} result containing the original estimate
 and conditional coefficient table, a B-by-p coefficient matrix (failed rows
 are all NA), replicate diagnostics, source-ID draw indices/cohort, reference
-audit, seed streams, and software versions. Replicate fitted models and copied
+audit, static \code{specification} (formula text, effects, ID, measurement settings,
+structural backend and regularization controls), seed streams, and software
+versions. Replicate fitted models and copied
 raw datasets are not retained. The original fit is unchanged. Use
 \code{\link[=repair_bootstrap_coefficients]{repair_bootstrap_coefficients()}} and \code{\link[=repair_bootstrap_diagnostics]{repair_bootstrap_diagnostics()}} for
 stable tables; \code{coef()}, \code{vcov()}, \code{confint()}, \code{nobs()}, \code{summary()} and

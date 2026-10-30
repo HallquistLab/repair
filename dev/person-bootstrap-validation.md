@@ -41,7 +41,9 @@ This is a numerical minimum, not adequate precision or a validity guarantee.
 
 The result retains original estimates/conditional comparison, the B-by-p matrix
 (failed rows all NA), integer source-draw indices, character source cohort,
-attempt diagnostics, reference audit, seed streams, versions and call. It retains
+attempt diagnostics, reference audit, seed streams, versions and call. A static
+specification records formula text, effects, IDs, observable measurement settings,
+structural backend and regularization controls, without formula environments. It retains
 neither every replicate fit nor copied raw datasets. Saved extraction needs no
 original fitting bindings; source maps are derived without parsing generated IDs.
 
