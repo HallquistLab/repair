@@ -26,6 +26,7 @@ articles:
   navbar: Start and report
   contents:
   - repair-workflow
+  - refitting
   - support-and-troubleshooting
   - extracting-results
   - reliability-diagnostics
@@ -44,6 +45,7 @@ reference:
   desc: Discover random coefficients, specify a structural equation, and inspect the analysis cohort before fitting.
 - contents:
   - repair
+  - repair_refit
   - re
   - repair_effects
   - repair_data

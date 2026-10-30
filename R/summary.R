@@ -7,6 +7,7 @@
 #' [repair_diagnostics()] for definitions and individual diagnostic tables.
 #' Use [repair_coefficients()] for a plain coefficient table with a chosen
 #' confidence level, and [repair_scores()] for ID-keyed measurement scores.
+#' Results from [repair_refit()] also expose the replay audit in `summary(fit)$refit`.
 #' `nobs()` counts analyzed people, not repeated observations. `confint()` uses
 #' normal quantiles and supports named or integer coefficient selection.
 #' Failed numerical fits remain inspectable with `summary()`; coefficient and
@@ -81,6 +82,7 @@ S7::method(summary, class_repair_mod) <- function(object, ...) {
     diagnostics = fit@diagnostics,
     reliability = repair_reliability(object),
     structural_diagnostics = repair_structural_diagnostics(object),
+    refit = data@diagnostics$refit[setdiff(names(data@diagnostics$refit), "spec")],
     inference = "Conditional on fitted measurement-model parameters; model-based normal SEs and intervals."),
     class = "summary_repair")
 }
@@ -107,6 +109,11 @@ print.summary_repair <- function(x, ...) {
       independent = "assumed independent (zero covariance)",
       supplied = "user-supplied covariance blocks (conditional inference)",
       not_applicable = "not applicable (one model)"), "\n", sep = "")
+  if (!is.null(x$refit)) {
+    cat("Refit: original-data replay verified; ", x$refit$mode,
+      " (", x$refit$adapter, ")\n", sep = "")
+    if (length(unlist(x$refit$warnings))) cat("Refit warnings recorded: inspect summary(fit)$refit$warnings.\n")
+  }
   cat("Scores: likelihood-only random deviations\n")
   print(x$effects[, c("model", "group", "term", "role"), drop = FALSE], row.names = FALSE)
   cat("\nPosterior reliability (analyzed cohort; equal person weights):\n")

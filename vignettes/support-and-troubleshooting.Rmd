@@ -154,6 +154,14 @@ data, `packageVersion("repair")`, and `sessionInfo()` with a saved analysis.
 For long-term reporting, also export the plain tables shown in
 `vignette("extracting-results")`; retain covariance when exporting scores for reuse.
 
+## Verify a changed analysis
+
+For one supported measurement model, `repair_refit()` verifies the original data
+and fitting recipe before accepting replacements or deterministic person draws.
+It checks identities, coding and outputs, captures warnings, and rejects implicit
+replacement-row omission. See `vignette("refitting")`. Refitting is groundwork for
+future bootstrap inference; its current coefficient SEs remain conditional.
+
 ## Interface stability and reporting
 
 The high-level fit/assembly functions, standard generics, and documented table

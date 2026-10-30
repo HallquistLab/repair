@@ -1,0 +1,202 @@
+---
+title: "Validated refitting and deterministic person draws"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Validated refitting and deterministic person draws}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+`repair_refit()` rebuilds a measurement model, recomputes scores and their error
+covariance, and fits the structural regression again. It first replays the
+reference analysis and verifies agreement with the supplied fit. This supports
+reproducible sensitivity analyses and provides groundwork for a future person
+bootstrap. It currently supports **one measurement model**.
+
+## Verify the reference analysis
+
+Keep the original repeated-observation and person-level data explicitly. The
+reference data arguments always describe the original fit, including its
+requested cohort and structural exclusions.
+
+```{r reference}
+data(repair_example)
+repeated <- repair_example$repeated
+people <- repair_example$people
+measurement <- lme4::lmer(
+  score ~ day + (day | person), repeated,
+  control = lme4::lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+)
+fit <- repair(re("day", "growth") ~ practice,
+  list(growth = measurement), people, "person", backend = "r")
+
+replay <- repair_refit(
+  fit, measurement_data = list(growth = repeated), data = people
+)
+repair_coefficients(replay)
+summary(replay)$refit$checks
+```
+
+With no replacement arguments, the returned object is the actual refitted
+reference analysis. Identity checks cover effective observations, IDs/grouping,
+fixed/random designs, weights and offsets, residual/nuisance and random-effect
+covariance, selected scores, assembled structural inputs, coefficients, and their
+covariance. Numerical comparisons use `tolerance = 1e-6`; identity, coding, and
+schema checks are exact. A mismatch stops before any replacement fit.
+
+Reference measurement data must retain the fitted observation row names. The
+adapter selects the original effective rows by these identities; it does not
+re-evaluate old `subset`, `data`, or global-environment expressions. Rows excluded
+from the original measurement fit are listed in
+`summary(replay)$refit$reference_excluded_rows`. Structural exclusion reasons remain
+in `repair_diagnostics(replay, "excluded")`.
+
+## Fit explicitly changed data or a revised cohort
+
+Use the separate `new_measurement_data` and `new_data` arguments for replacements.
+Omitting either replacement argument retains its reference inputs. For example,
+restrict both measurement fitting and structural analysis to 50 people:
+
+```{r replacement}
+revised_people <- people[1:50, ]
+revised_repeated <- repeated[repeated$person %in% revised_people$person, ]
+revised <- repair_refit(
+  fit, measurement_data = repeated, data = people,
+  new_measurement_data = revised_repeated, new_data = revised_people
+)
+repair_coefficients(revised)
+summary(revised)$refit$checks
+```
+
+This estimates the complete procedure on the revised cohort. Keeping all original
+measurement people while changing only `new_data` defines a different analysis;
+choose the intended measurement cohort explicitly.
+
+Every supplied replacement measurement row must be used in its original order.
+Missing used values, implicit callback subsetting, or omission cause an error.
+Replacement structural data use the strict `na_action = "fail"` policy. Prepare a
+complete, substantively chosen cohort before refitting. The original structural
+formula, computation backend, and regularization policy/custom alpha are retained;
+sample-dependent moments and weights are recomputed.
+
+Fixed factor coding is frozen from the reference fit. Missing or new levels and
+changed coefficient schemas fail explicitly rather than silently changing what a
+coefficient means. Newly created fits record structural factor matrices for this
+purpose. For older saved fits without that metadata, reference replay must first
+establish the original coding from the supplied reference data.
+
+## What the native adapters preserve
+
+| Component | Behavior |
+|---|---|
+| Measurement backend | Gaussian lmer or supported single-group linear lme |
+| Formula and target | Same fixed/random coefficient schema and target grouping; contained lmer nuisance groups remain supported |
+| ML/REML | Recorded method retained and checked |
+| Weights/offsets | Data-only expressions rebuilt on the supplied rows; global vectors require an explicit recipe |
+| Contrasts | Recorded fixed-factor matrices and levels retained; incompatible levels fail |
+| lmer optimizer | Recorded optimizer and optimizer controls checked |
+| Literal control recipes | Reconstructed with supported constructors; recorded recipes compared |
+| nlme covariance | Supported AR(1)/CAR(1), varIdent/varPower, random covariance classes and fixed constraints checked |
+| Shared nuisance groups | Rejected by the ordinary structural validator |
+
+Native expressions use explicit columns and a small deterministic grammar.
+Ordinary arithmetic, `I`, `offset`, basic log/square-root transforms, and grouping
+operators are supported. Sample-dependent `scale`/`poly`, arbitrary functions,
+symbolic controls, and other external dependencies require an explicit fitting
+function. Precompute transformed columns when possible. Random-only categorical
+slopes and transformed factor coding also require an explicit recipe.
+
+The native adapter preserves recorded choices; fitted objects cannot recover
+every historical global default or an external control object's earlier value.
+The audit's `controls` column distinguishes `recorded_recipe`,
+`recorded_optimizer` (lmer's retained optimizer settings), and
+`callback_declared` (unrecoverable nlme controls declared by the caller's recipe).
+Identity agreement verifies the reference calculation, not unrecorded settings.
+
+## Supply an explicit fitting recipe when needed
+
+`refitter` is a deterministic function accepting **one effective measurement data
+frame** and returning its fitted model. It runs for both reference and replacement
+inputs and is checked for method, rows, specification, and coefficient identities.
+The caller must supply the original fitting choices that the backend did not
+retain. In particular, do not use a callback to hide convergence failures.
+
+```{r callback}
+recipe <- function(data) {
+  lme4::lmer(score ~ day + (day | person), data,
+    control = lme4::lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+}
+explicit <- repair_refit(fit, repeated, people, refitter = recipe)
+summary(explicit)$refit$checks
+```
+
+Measurement failures stop with the reference/replacement stage identified.
+A singular random-effect covariance can be retained when convergence, scoring,
+and structural estimation remain usable. Warnings and messages are recorded in
+`summary(result)$refit$warnings` and `$messages`; informational warnings are not
+blanket failures. Available optimizer failure codes and convergence warnings are
+fatal. Inspect recorded warnings before interpreting a refitted analysis.
+
+## Replay a deterministic list of whole people
+
+`draw` accepts source IDs with repeats. It makes **no random sample** and does not
+produce bootstrap SEs or intervals. This example omits the first source person
+and includes the second twice:
+
+```{r draw}
+sources <- c(people$person[-1], people$person[2])
+copied <- repair_refit(fit, repeated, people, draw = sources)
+head(summary(copied)$refit$draw)
+summary(copied)$refit$checks
+```
+
+Every occurrence gets a new target identity. All of that source person's
+effective observations and its structural row are copied together. Character
+source IDs such as `"001"` are preserved in a separate mapping rather than parsed
+from generated names. `draw` requires identical measurement and analyzed cohorts;
+measurement-only people, including those omitted structurally despite having
+measurement data, require an explicitly revised reference fit before using this
+convenience interface. It cannot be combined
+with replacement data.
+
+For nested nuisance effects, `person:day` is recomputed from each fresh person ID,
+while standalone nuisance ID columns are also re-keyed. Merely copying records
+without new IDs could merge two occurrences into one cluster or introduce shared
+nuisance effects. The convenience interface requires a bare target ID column and
+nuisance groups expressed as bare ID columns or expressions containing the target.
+IDs also used as substantive covariates cannot be re-keyed automatically; supply
+explicit replacement data for unsupported mappings.
+
+```{r nested-draw}
+reference <- readRDS(system.file("extdata", "nested-workflow-reference.rds", package = "repair"))
+example <- reference$cases$nested_intercept
+model <- lme4::lmer(y ~ x + offset(off) + (x | person) + (1 | person:day),
+  example$data, weights = prior, na.action = na.exclude,
+  control = lme4::lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+nested <- repair(
+  re("x", "growth", "person") ~ re("(Intercept)", "growth", "person") + practice,
+  list(growth = model), example$people, "person"
+)
+ids <- c(example$people$person[-1], example$people$person[2])
+refitted <- repair_refit(nested, example$data, example$people, draw = ids)
+repair_coefficients(refitted)
+```
+
+## Current boundary and reproducibility
+
+Results are ordinary REPAIR fits: use the existing generics and table extractors.
+The original fit remains the reference. Refitted models retain explicit fitting
+data in their model/formula environment; the audit records versions, counts,
+warnings and any deterministic source-ID mapping. Save analysis code, inputs,
+`sessionInfo()`, and result tables along with serialized objects.
+
+Multiple measurement models and supplied cross-model covariance replay remain
+outside this increment. Random bootstrap sampling, replicate management,
+bootstrap uncertainty, parallel execution, and coverage validation are future
+work. A refitted object's standard errors remain the conditional model-based
+standard errors of that fit.

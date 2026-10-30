@@ -62,6 +62,11 @@
 #' @export
 repair_data <- function(formula, models, data, id, na_action = c("fail", "omit"),
                         cross_model_error = NULL) {
+  repair_assemble(formula, models, data, id, na_action, cross_model_error)
+}
+
+repair_assemble <- function(formula, models, data, id, na_action = c("fail", "omit"),
+                            cross_model_error = NULL, structural_contrasts = NULL) {
   na_action <- match.arg(na_action)
   models <- normalize_repair_models(models)
   parsed <- parse_struc_formula(formula, repair_effects(models))
@@ -140,7 +145,7 @@ repair_data <- function(formula, models, data, id, na_action = c("fail", "omit")
                           drop.unused.levels = TRUE)
   y <- stats::model.response(mf)
   if (!is.numeric(y) || !is.null(dim(y))) repair_error("The structural outcome must be numeric.")
-  design <- stats::model.matrix(parsed$formula, data = mf)
+  design <- stats::model.matrix(parsed$formula, data = mf, contrasts.arg = structural_contrasts)
   x <- design[, colnames(design) != "(Intercept)", drop = FALSE]
   n <- nrow(x)
   q <- ncol(x)
@@ -180,6 +185,7 @@ repair_data <- function(formula, models, data, id, na_action = c("fail", "omit")
       excluded = excluded,
       unused_score_ids = if (length(scores) == 1L) model_diagnostics[[1L]]$unused_score_ids else
         lapply(model_diagnostics, `[[`, "unused_score_ids"),
+      structural_factors = repair_refit_factors(mf[intersect(parsed$observed, names(mf))], attr(design, "contrasts"), strict = FALSE),
       id_column = id, group = if (length(scores) == 1L) model_diagnostics[[1L]]$group else
         vapply(model_diagnostics, `[[`, character(1), "group"),
       model = parsed$model, na_action = na_action, measurement_models = model_diagnostics,

@@ -21,6 +21,7 @@ optional nuisance groups contained within targets, or supported single-group
 linear lme models. Standard errors are conditional on fitted measurement quantities.
 See \code{vignette("support-and-troubleshooting", package = "repair")} for the
 support matrix, inference boundaries, diagnostics, and saved-fit guidance.
+Use \code{\link[=repair_refit]{repair_refit()}} for verified single-model replay.
 Run \code{citation("repair")} for software and manuscript references.
 }
 \seealso{

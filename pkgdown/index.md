@@ -99,6 +99,7 @@ and executable examples. Familiar `summary()`, `coef()`, `vcov()`, `confint()`, 
 | If you want to… | Read… |
 |---|---|
 | Check supported models or diagnose a problem | [Supported analyses and troubleshooting](articles/support-and-troubleshooting.html) |
+| Refit or revise an analysis with reference verification | [Validated refitting](articles/refitting.html) |
 | Run and understand a complete analysis | [A structural regression with REPAIR](articles/repair-workflow.html) |
 | Create reporting tables, join by ID, or export results | [Extracting tables for reporting and reuse](articles/extracting-results.html) |
 | Assess marginal and intercept-residualized reliability | [Reliability and analysis diagnostics](articles/reliability-diagnostics.html) |
