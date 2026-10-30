@@ -1,5 +1,6 @@
 
 # repair
+# repair <a href="https://hallquistlab.github.io/repair/"><img src="man/figures/logo.png" align="right" height="139" alt="repair website" /></a></a>
 
 [![R-CMD-check](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml)
 

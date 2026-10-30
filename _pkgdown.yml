@@ -3,6 +3,12 @@ url: https://hallquistlab.github.io/repair/
 template:
   bootstrap: 5
   light-switch: true
+  bslib:
+    fg: "#323232"
+    bg: "white"
+    primary: "#719FC6"
+    navbar-light-bg: "#719FC6"
+    navbar-dark-bg: "#719FC6"
 
 home:
   title: Measurement-error-corrected regression of random coefficients in R
@@ -20,6 +26,8 @@ navbar:
     intro:
       text: Get started
       href: articles/repair-workflow.html
+  bg: "#719FC6"
+  type: light
 
 articles:
 - title: Start and report an analysis
