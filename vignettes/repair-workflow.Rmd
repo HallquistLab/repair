@@ -222,7 +222,8 @@ the row-wise M-MOM contract. Multilevel nlme fits remain unsupported.
 `repair_refit()` verifies the original calculation before rebuilding one supported
 measurement model on replacement data. It retains structural controls and reports
 a replay audit; see `vignette("refitting")` for inputs, coding and deterministic
-draw restrictions. This interface does not yet provide bootstrap inference.
+draw restrictions. For experimental person-level sampling and percentile intervals,
+use `repair_bootstrap()` separately; see `vignette("person-bootstrap")`.
 
 ## Deliberate boundaries
 
