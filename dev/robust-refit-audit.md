@@ -13,7 +13,10 @@ not structural moment failures or primarily exhausted evaluation budgets.
 
 Development used the first 20 failures/profile, in fixed replication/mode/draw
 order. Cold BOBYQA resolved 119/120 but sometimes gave worse likelihoods.
-Tighter nloptwrap left all 120 unresolved. BOBYQA initialized at the nloptwrap
+Explicit nloptwrap 1e-8 stopping tolerances with maxeval=200000 left all
+120 unresolved. In installed lme4 2.0.6 those tolerances already equal the
+defaults (maxeval defaults to 100000); only the budget increased. This did not
+test tighter-than-default nloptwrap stopping tolerances. BOBYQA initialized at the nloptwrap
 theta resolved 119/120 and matched/improved the original objective in all cases.
 The remaining case had a near-unidentifiable Hessian. These are diagnostic
 results on selected failures, not estimated full-grid recovery probabilities.
