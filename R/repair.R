@@ -20,7 +20,8 @@
 #'   Observed variables are treated as measured without error. Scores are random
 #'   deviations, not fixed-plus-random individual coefficients. For nlme fits,
 #'   supported residual structures and stored-data requirements are described
-#'   in [repair_ranef_gls()].
+#'   in [repair_ranef_gls()]. Use [repair_refit()] to verify and replay one
+#'   measurement model with explicit reference/replacement data.
 #'
 #'   Standard errors condition on fitted measurement-model quantities and use
 #'   the modified final predictor moment (the manuscript M-MOM calculation).

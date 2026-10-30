@@ -177,3 +177,16 @@ GitHub Pages deployment; see `website.md`. Bootstrap inference,
 additional residual structures, and shared-group dependence validation require
 separate validation. Cross-person covariance support and formula extensions with
 derived error propagation require explicit statistical contracts.
+
+
+# Verified refitting (2026-10-30)
+
+`repair_refit()` implements single-model identity replay before explicit
+replacement fitting. Original measurement/person data are required; `new_*`
+arguments supply replacements. Native data-only lmer/lme recipes and explicit
+callbacks preserve observable specifications, effective rows and coefficient
+schemas. Structural factor matrices are recorded; refit summaries expose audited
+counts, controls, warnings and versions. Deterministic whole-person draws assign
+fresh target/nuisance IDs with an explicit source map. No random sampling or
+bootstrap inference is added. See `refitting-validation.md` and the executable
+refitting guide for the contract, tests and restrictions.

@@ -9,6 +9,7 @@
 #' linear lme models. Standard errors are conditional on fitted measurement quantities.
 #' See `vignette("support-and-troubleshooting", package = "repair")` for the
 #' support matrix, inference boundaries, diagnostics, and saved-fit guidance.
+#' Use [repair_refit()] for verified single-model replay.
 #' Run `citation("repair")` for software and manuscript references.
 #' @author Zachary A. Vig and Michael N. Hallquist (co-maintainers).
 #'   Zachary A. Vig is the primary R package maintainer contact.

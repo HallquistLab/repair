@@ -217,6 +217,13 @@ target person are supported; see `vignette("nested-nuisance")`. Shared nuisance
 random effects remain rejected: their cross-person scoring errors cannot enter
 the row-wise M-MOM contract. Multilevel nlme fits remain unsupported.
 
+## Refit an explicitly revised analysis
+
+`repair_refit()` verifies the original calculation before rebuilding one supported
+measurement model on replacement data. It retains structural controls and reports
+a replay audit; see `vignette("refitting")` for inputs, coding and deterministic
+draw restrictions. This interface does not yet provide bootstrap inference.
+
 ## Deliberate boundaries
 
 The formula grammar accepts an observed variable or `re()` as outcome, and an

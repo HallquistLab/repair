@@ -207,6 +207,28 @@ executable [nested-nuisance guide](vignettes/nested-nuisance.Rmd) for
 discovery, fitting, multiple nuisance groups, and independent numerical
 references.
 
+## Verify and refit an analysis
+
+`repair_refit()` first replays an analysis using explicit reference
+measurement and person-level data. Separate `new_measurement_data` and
+`new_data` arguments supply changes only after the reference checks
+pass. One supported lmer or lme measurement model can be rebuilt,
+retaining the structural equation and controls:
+
+``` r
+replayed <- repair_refit(fit, measurement_data = list(growth = repair_example$repeated),
+  data = people)
+summary(replayed)$refit$checks
+#>       stage n_measurement n_requested n_analyzed           controls verified
+#> 1 reference           586          60         60 recorded_optimizer     TRUE
+```
+
+The [refitting guide](vignettes/refitting.Rmd) covers native fitting
+recipes, callbacks, factor-schema checks, revised cohorts, and
+deterministic whole-person draws with fresh target/nuisance IDs. This
+provides replay machinery for a future bootstrap; current SEs remain
+conditional model-based SEs.
+
 ## Connect two measurement processes
 
 Use model-qualified references when an equation draws on multiple fits:

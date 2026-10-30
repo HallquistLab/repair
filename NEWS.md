@@ -1,5 +1,15 @@
 # repair 0.0.0.9000
 
+* Add `repair_refit()` for identity-verified replay of one supported lmer/lme
+  measurement model and its structural analysis, with explicit reference and
+  replacement inputs, factor/row/schema checks, and recorded fitting recipes.
+* Add deterministic whole-person draws with fresh target/nuisance identities,
+  audited warnings and controls, and explicit cohort restrictions. This is
+  refitting groundwork; bootstrap inference is not yet implemented.
+* Record structural factor coding for reproducible replay and add a refit audit
+  to summaries. Add tests against manual refits and fresh-process replay, and an
+  executable refitting guide.
+
 * Support Gaussian lmer nuisance groups contained within each selected target
   person, including nested random slopes and multiple nuisance groups. Verify
   containment on all effective fitted rows; retain rejection of shared levels.

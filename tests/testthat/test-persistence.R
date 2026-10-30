@@ -86,3 +86,13 @@ test_that("a saved nested-nuisance fit retains group identities and reliability 
   expect_setequal(restored$summary$measurement_models$growth$nuisance_groups,
     c("person:day", "person:block"))
 })
+
+test_that("a completed refit retains its public audit and tables in a new session", {
+  example <- repair_example
+  model <- lme4::lmer(score ~ day + (day | person), example$repeated)
+  fit <- repair(re("day") ~ practice, model, example$people, "person")
+  replay <- repair_refit(fit, example$repeated, example$people)
+  restored <- expect_fresh_session_roundtrip(replay)
+  expect_identical(restored$summary$refit$mode, "identity")
+  expect_true(restored$summary$refit$checks$verified)
+})

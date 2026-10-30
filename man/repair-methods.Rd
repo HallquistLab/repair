@@ -24,6 +24,7 @@ concentration, and the inference convention. See \code{\link[=repair_reliability
 \code{\link[=repair_diagnostics]{repair_diagnostics()}} for definitions and individual diagnostic tables.
 Use \code{\link[=repair_coefficients]{repair_coefficients()}} for a plain coefficient table with a chosen
 confidence level, and \code{\link[=repair_scores]{repair_scores()}} for ID-keyed measurement scores.
+Results from \code{\link[=repair_refit]{repair_refit()}} also expose the replay audit in \code{summary(fit)$refit}.
 \code{nobs()} counts analyzed people, not repeated observations. \code{confint()} uses
 normal quantiles and supports named or integer coefficient selection.
 Failed numerical fits remain inspectable with \code{summary()}; coefficient and

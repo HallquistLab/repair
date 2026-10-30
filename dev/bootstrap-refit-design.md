@@ -329,3 +329,17 @@ release that accurately reports conditional inference.
   especially its discussion of stabilization, coverage, and full cluster bootstrap.
   The package's existing fixture provenance identifies the frozen numerical
   reference revision; future coverage work needs its own versioned design/results.
+
+
+## Refitting foundation implemented (2026-10-30)
+
+The initial single-model replay foundation is now implemented as `repair_refit()`.
+Its concrete API distinguishes explicit reference `measurement_data`/`data` from
+`new_measurement_data`/`new_data`. It verifies original-data agreement first,
+checks effective rows and schemas, supports data-only native lmer/lme recipes and
+explicit fitting callbacks, and audits warnings and preserved control settings.
+Deterministic source-ID draws can duplicate whole people with fresh target and
+eligible nested nuisance identities, without making random draws or computing
+bootstrap inference. See `refitting-validation.md` for current limits and the
+implemented workflow. The illustrative bootstrap API and scientific validation
+plan above remain future work.
