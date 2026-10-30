@@ -1,5 +1,12 @@
 # repair 0.0.0.9000
 
+* Add opt-in `repair_lmer_refitter()` for deterministic, likelihood-checked
+  nloptwrap-initialized BOBYQA fitting and bounded retries. Retain every attempt,
+  convergence warning, likelihood and singularity diagnostic. Persist the recipe
+  for automatic original/reference/replacement replay and saved-result auditing.
+  Do not disable convergence checks or change the bootstrap failed-attempt gate.
+
+
 * Add experimental `repair_bootstrap()` for serial whole-person sampling through
   `repair_refit()`, with separate saved RNG streams, complete attempt accounting,
   fresh target/nuisance IDs, and unchanged original conditional inference.

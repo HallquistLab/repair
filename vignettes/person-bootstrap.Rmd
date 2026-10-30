@@ -25,6 +25,32 @@ misspecification, informative missingness, or weak identification.
 
 ## Fit, sample, and report
 
+When repeated measurement refits produce convergence warnings, select a fitting
+strategy before running the bootstrap. `repair_lmer_refitter()` uses a
+deterministic nloptwrap starting fit followed by likelihood-checked BOBYQA and,
+when needed, bounded retries. Use it to fit the **original** measurement model:
+
+```{r robust-recipe, eval=FALSE}
+fitter <- repair_lmer_refitter(score ~ day + (day | person))
+model <- fitter(repair_example$repeated)
+fit <- repair(re("day") ~ practice, model, repair_example$people, "person")
+boot <- repair_bootstrap(fit, repair_example$repeated,
+                         repair_example$people, B = 1999, seed = 214)
+repair_bootstrap_diagnostics(boot)$optimization[[1]]
+attr(model, "repair_lmer_optimization")
+```
+
+The model retains its recipe, so reference and resampled fits use it automatically,
+including after saving/loading. Do not add a different optimizer strategy only
+to failed bootstrap draws from an existing analysis: rebuild the original fit
+with the chosen recipe first. Every optimizer attempt is retained in the audit;
+an unresolved convergence or likelihood check still withholds default inference.
+Retries do not add bootstrap draws, change the measurement model or structural
+regularization, or consume random numbers. Singular fits alone are not failures.
+This improves numerical fitting; it does not establish coverage, remove estimator
+bias, or justify dropping failed attempts. The robust helper currently covers
+Gaussian lmer models; nlme replay remains unchanged.
+
 ```{r fit}
 data(repair_example)
 repeated <- repair_example$repeated

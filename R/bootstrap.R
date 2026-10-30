@@ -173,6 +173,7 @@ repair_bootstrap <- function(object, measurement_data, data, id = NULL,
       n_analyzed = n_analyzed, measurement_singular = singular, controls = controls,
       preliminary_multiplier = preliminary, final_multiplier = final,
       elapsed = proc.time()[[3L]] - started,
+      optimization = I(list(if (ok) audit$optimization$replacement else result$repair_optimization)),
       warnings = I(list(as.character(warnings))), messages = I(list(as.character(messages))),
       stringsAsFactors = FALSE)
   }
