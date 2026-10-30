@@ -1,3 +1,10 @@
+# repair 0.5.0
+
+* Introduce Random-Effect Prediction Adjustment for Inference in Regression
+  (REPAIR) by its full name in the landing page, workflow guide, and method
+  reference documentation. Explain the applied motivation, shrinkage, and
+  sampling error before introducing the technical workflow.
+
 # repair 0.0.0.9000
 
 * Support Gaussian lmer nuisance groups contained within each selected target

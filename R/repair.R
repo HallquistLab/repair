@@ -1,5 +1,9 @@
 #' Fit a REPAIR structural regression from measurement models
 #'
+#' Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
+#' accounts for sampling error when estimated random coefficients are used as
+#' predictors, the outcome, or both in a second-stage regression.
+#'
 #' Select random coefficients with [re()], match them to person-level data by
 #' ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
 #' models are fitted beforehand so that their fitting choices remain explicit.

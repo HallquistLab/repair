@@ -15,7 +15,8 @@ stopifnot(requireNamespace("nlme", quietly = TRUE))
 
 ## Assess the information behind an analysis
 
-REPAIR now reports posterior reliability for the random coefficients selected by
+Random-Effect Prediction Adjustment for Inference in Regression
+(REPAIR) reports posterior reliability for the random coefficients selected by
 the structural formula and provides tables of sample, score, and numerical
 diagnostics. These are descriptive checks, not automatic tests of whether an
 analysis is adequate. Numerical convergence alone does not establish strong

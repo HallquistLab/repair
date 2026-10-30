@@ -15,6 +15,23 @@ library(repair)
 For a consolidated capability matrix, a fully synthetic teaching example, and
 help with common messages, see `vignette("support-and-troubleshooting")`.
 
+## Why use REPAIR?
+
+**Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)**
+addresses questions about relationships involving person-specific processes.
+For example, researchers may ask whether a person's rate of improvement predicts
+a later outcome, or whether their responses in two tasks are related. Mixed
+models estimate these processes using random intercepts and slopes, but their
+predictions contain sampling error and may be shrunken toward the population
+mean. Using those predictions as ordinary observed variables in a second
+regression can distort coefficients and uncertainty.
+
+REPAIR obtains likelihood-only scores that remove shrinkage, retains their
+person-specific sampling-error covariances, and accounts for that error in the
+second-stage regression. Removing shrinkage alone does not remove sampling
+error. This approach is useful for studying relationships among underlying
+processes while retaining separately fitted measurement models.
+
 ## What is being estimated?
 
 REPAIR estimates a linear structural regression involving latent random
