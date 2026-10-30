@@ -5,6 +5,11 @@
   convergence warning, likelihood and singularity diagnostic. Persist the recipe
   for automatic original/reference/replacement replay and saved-result auditing.
   Do not disable convergence checks or change the bootstrap failed-attempt gate.
+* Document a paired six-profile simulation screen: default ordinary-bootstrap
+  interval availability improved from 1--53% to 95--100%, with condition-dependent
+  coverage and persistent small/short-panel bias. Include compact evidence and
+  an independent interval-summary verifier under `dev/`; broader validation
+  remains outstanding.
 
 
 * Add experimental `repair_bootstrap()` for serial whole-person sampling through

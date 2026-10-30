@@ -19,7 +19,8 @@ structural moments, corrections, and weights are re-estimated for each attempt.
 The original fit and its conditional inference remain available for comparison.
 
 This functionality is **experimental**: software replay tests verify the
-calculation, while simulation studies of interval coverage remain outstanding.
+calculation, while targeted simulation screens show condition-dependent coverage.
+Broader independent coverage validation remains outstanding.
 It assumes independent people. It does not remedy dependence across people,
 misspecification, informative missingness, or weak identification.
 
@@ -122,8 +123,10 @@ for exact replay, row/coding rules, supported lmer/lme settings, and explicit
 A lost factor level, unusable score, measurement nonconvergence, or structural
 failure invalidates the whole coefficient vector. The attempt stays in the result
 with its source-ID map, stage, reason, warnings/messages when available, and an
-all-NA coefficient row. There are no replacement samples, retries, trimming, or
-within-attempt omission to rescue a fit. Singular lmer fits are retained when
+all-NA coefficient row. There are no replacement bootstrap samples, trimming, or
+within-attempt omission to rescue a fit. A recorded robust measurement recipe can
+retry numerical optimization within the same sample and records every internal
+fit in the `optimization` list-column. Singular lmer fits are retained when
 convergence, scoring, and structural estimation remain usable; lme singularity is
 not assessed. Warnings alone do not automatically invalidate an attempt.
 
@@ -180,7 +183,7 @@ than fixed-plus-random totals, and re-estimated fixed effects can change centeri
 No stratification, higher-level cluster sampling, multiple-model bootstrap,
 cross-model covariance replay, parallel execution, checkpoints/resume, BCa,
 studentized, or simultaneous intervals are included. The next scientific gate is
-a prespecified coverage study across reliability, sample size, design imbalance,
+a larger independent coverage study across reliability, sample size, design imbalance,
 variance boundaries, and weak corrected moments.
 
 ## Reproducibility and saved results
