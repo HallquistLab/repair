@@ -164,7 +164,7 @@ test_that("Gaussian and independent-group boundaries are enforced", {
   d <- lme4::sleepstudy
   d$site <- factor(rep(1:3, length.out = nrow(d)))
   multi <- suppressMessages(lme4::lmer(Reaction ~ Days + (Days | Subject) + (1 | site), d))
-  expect_error(repair_data(re("Days") ~ x, multi, workflow_example()$data, "person"), "one grouping factor")
+  expect_error(repair_data(re("Days") ~ x, multi, workflow_example()$data, "person"), "shared across target")
   binomial <- suppressMessages(lme4::glmer(cbind(incidence, size - incidence) ~ period + (1 | herd),
     family = binomial, data = lme4::cbpp))
   expect_error(repair_ranef_gls(binomial), "GLMMs are not supported")

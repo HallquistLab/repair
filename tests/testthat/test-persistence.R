@@ -77,3 +77,12 @@ test_that("a saved multi-model fit retains supplied cross-error covariance in a 
   expect_equal(restored$coefficient_table$std.error, ex$case$coefficients$se,
     tolerance = 1e-5)
 })
+
+test_that("a saved nested-nuisance fit retains group identities and reliability in a new R session", {
+  ex <- nested_example("nested_slope")
+  fit <- repair(ex$formula, list(growth = ex$model), ex$case$people, "person")
+  restored <- expect_fresh_session_roundtrip(fit)
+  expect_identical(unique(restored$scores$group), "person")
+  expect_setequal(restored$summary$measurement_models$growth$nuisance_groups,
+    c("person:day", "person:block"))
+})

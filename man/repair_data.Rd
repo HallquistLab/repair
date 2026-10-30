@@ -19,7 +19,9 @@ Observed predictors may be numeric, logical, or factors. The outcome must
 be numeric or a random coefficient. An intercept is always included.}
 
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, or named list. Each referenced model must have one grouping factor.
+model, or named list. Select one target grouping factor per model. Gaussian
+lmer models may also contain nuisance groups whose every fitted level belongs
+to exactly one target level; nlme models must have one grouping factor.
 Grouping column names may differ, but their values must identify the same people.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
@@ -51,7 +53,8 @@ Error arrays are ordered predictor by predictor by ID. Observed variables
 have zero sampling error. Scores are deviations from fitted fixed effects.
 \verb{@scores} holds a score object for one referenced model, or a named list for
 multiple models. \verb{@diagnostics$measurement_models} always provides diagnostics
-by model; \verb{@diagnostics$cross_model_error} records the applied policy and blocks.
+by model, including the verified \code{nuisance_groups};
+\verb{@diagnostics$cross_model_error} records the applied policy and blocks.
 }
 \description{
 Match likelihood-only scores and their full within-person error covariance
@@ -59,6 +62,16 @@ to a person-level data frame by ID. The data frame defines the analysis cohort
 and its order. No aggregation, row-order matching, or silent omission occurs.
 }
 \details{
+Use \code{re("term", model = "name", group = "person")} to resolve
+coefficients shared by several groups. All references to one model must
+select the same target group. Nesting is checked on all effective fitted
+observations before structural omission; shared nuisance levels are rejected
+even when only one of their target people is requested. Group names alone
+do not establish nesting. Nested random intercepts/slopes and multiple
+nuisance groups are allowed, provided every nuisance group passes the check.
+Target-specific scoring-error covariance includes every nuisance contribution.
+See \code{vignette("nested-nuisance", package = "repair")} for a complete example.
+
 Within-model covariance always comes from the scorer and cannot be
 overridden. Supplied blocks are conditional on the fitted measurement models;
 uncertainty in their estimation is not propagated. Independent errors do not

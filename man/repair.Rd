@@ -22,7 +22,9 @@ Observed predictors may be numeric, logical, or factors. The outcome must
 be numeric or a random coefficient. An intercept is always included.}
 
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, or named list. Each referenced model must have one grouping factor.
+model, or named list. Select one target grouping factor per model. Gaussian
+lmer models may also contain nuisance groups whose every fitted level belongs
+to exactly one target level; nlme models must have one grouping factor.
 Grouping column names may differ, but their values must identify the same people.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
@@ -69,7 +71,9 @@ models are fitted beforehand so that their fitting choices remain explicit.
 \details{
 The supported structural grammar is additive with an intercept.
 Effects may come from multiple Gaussian lmer or linear lme models, each with
-one grouping factor. Full within-person score-error covariance is retained.
+one target grouping factor. Gaussian lmer models may have nuisance groups
+entirely contained within targets; shared nuisance levels are rejected.
+Full within-person score-error covariance is retained.
 Multiple models require an explicit \code{cross_model_error} policy; separate
 fits do not establish independent scoring errors. See \code{\link[=repair_data]{repair_data()}}.
 Observed variables are treated as measured without error. Scores are random

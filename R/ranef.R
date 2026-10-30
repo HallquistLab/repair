@@ -133,6 +133,21 @@ get_ranef_base_covariance <- function(elements, rows) {
   covariance
 }
 
+# The same target-specific nuisance covariance is used for likelihood scoring
+# and posterior reliability. The target random-effect variance is excluded.
+get_ranef_target_covariance <- function(elements, group, rows) {
+  covariance <- get_ranef_base_covariance(elements, rows)
+  for (nuisance in setdiff(names(elements@random_design), group)) {
+    z <- get_ranef_design(elements, nuisance, rows)
+    g <- elements@random_covariance[[nuisance]]
+    if (ncol(z) != nrow(g)) {
+      repair_error("The random-effects design and covariance dimensions do not match for grouping factor {.val {nuisance}}.")
+    }
+    covariance <- covariance + z %*% g %*% t(z)
+  }
+  covariance
+}
+
 get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
   # group-level information
   terms <- elements@random_terms[[group]]
@@ -159,11 +174,6 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
     vector("list", length(levels)),
     levels
   )
-  nuisance_groups <- setdiff(
-    names(elements@random_design),
-    group
-  )
-
   for (level_index in seq_along(levels)) {
     level <- levels[[level_index]]
     rows <- rows_by_level[[level]]
@@ -173,31 +183,7 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
       rows = rows,
       level = level
     )
-    target_covariance <- get_ranef_base_covariance(
-      elements = elements,
-      rows = rows
-    )
-
-    for (nuisance_group in nuisance_groups) {
-      nuisance_design <- get_ranef_design(
-        elements = elements,
-        group = nuisance_group,
-        rows = rows
-      )
-      nuisance_covariance <- elements@random_covariance[[nuisance_group]]
-
-      if (ncol(nuisance_design) != nrow(nuisance_covariance)) {
-        repair_error(
-          "The random-effects design and covariance dimensions do not ",
-          "match for grouping factor {.val {nuisance_group}}."
-        )
-      }
-
-      target_covariance <- target_covariance +
-        nuisance_design %*%
-          nuisance_covariance %*%
-          t(nuisance_design)
-    }
+    target_covariance <- get_ranef_target_covariance(elements, group, rows)
 
     residual <- elements@response[rows]
     if (length(elements@offset)) {
@@ -336,9 +322,11 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
 #'   `na.exclude` padding and re-evaluation of `subset` cannot add observations.
 #'   See `vignette("nlme-workflow", package = "repair")` for reproduction examples.
 #'
-#'   Multi-group lme4 scoring remains experimental. Per-cluster blocks do not
-#'   describe cross-cluster score errors from shared nuisance effects. The
-#'   structural [repair()] workflow therefore requires one grouping factor.
+#'   The structural [repair()] workflow accepts lmer nuisance groups only when
+#'   every fitted nuisance level belongs to one target level. It rejects shared
+#'   nuisance levels: per-cluster blocks do not describe their cross-cluster
+#'   score errors. Lower-level scoring of such shared structures remains
+#'   experimental; computing scores alone does not validate structural inference.
 #' @return An S7 score object with group-keyed `@predictions` matrices (ID by
 #'   coefficient), `@error_covariance` arrays (coefficient by coefficient by ID),
 #'   `@levels`, `@terms`, and `@diagnostics`; `@success` is true only if all selected

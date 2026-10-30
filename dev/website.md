@@ -1,6 +1,6 @@
 # Package website
 
-The pkgdown site at <https://zacharyvig.github.io/repair/> documents the current
+The pkgdown site at <https://hallquistlab.github.io/repair/> documents the current
 `main` development version. It includes a short orientation/installation page,
 a complete executable getting-started guide, all five articles, task-oriented
 function reference, search, and NEWS. No generated HTML is committed.
@@ -90,12 +90,12 @@ No personal publishing token, generated-content branch, or custom domain is used
 
 A repository administrator/maintainer or a user with permission to manage Pages
 must select **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-The equivalent API setup is `POST /repos/zacharyvig/repair/pages` with
+The equivalent API setup is `POST /repos/HallquistLab/repair/pages` with
 `{"build_type":"workflow"}` when no site exists. Review any `github-pages`
 environment rules so that deployments from `main` are allowed. Enabling this
 setting does not publish a site by itself: the workflow must first reach `main`
 and complete successfully. The public URL is
-<https://zacharyvig.github.io/repair/>.
+<https://hallquistlab.github.io/repair/>.
 
 After merging, verify both **Build documentation** and **Deploy documentation**
 in the pkgdown workflow, then open the public URL. If deployment fails before

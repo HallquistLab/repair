@@ -46,9 +46,11 @@ Residual covariance uses fitted residual SDs and correlation blocks;
 \code{na.exclude} padding and re-evaluation of \code{subset} cannot add observations.
 See \code{vignette("nlme-workflow", package = "repair")} for reproduction examples.
 
-Multi-group lme4 scoring remains experimental. Per-cluster blocks do not
-describe cross-cluster score errors from shared nuisance effects. The
-structural \code{\link[=repair]{repair()}} workflow therefore requires one grouping factor.
+The structural \code{\link[=repair]{repair()}} workflow accepts lmer nuisance groups only when
+every fitted nuisance level belongs to one target level. It rejects shared
+nuisance levels: per-cluster blocks do not describe their cross-cluster
+score errors. Lower-level scoring of such shared structures remains
+experimental; computing scores alone does not validate structural inference.
 }
 \examples{
 data(repair_example)

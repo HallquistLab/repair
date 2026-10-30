@@ -1,7 +1,7 @@
 
 # repair
 
-[![R-CMD-check](https://github.com/zacharyvig/repair/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/zacharyvig/repair/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml)
 
 `repair` implements REPAIR: structural regression involving random
 coefficients from a Gaussian mixed model, with a modified
@@ -12,24 +12,26 @@ error-free observed variables.
 
 This is a development package. The supported structural workflow is an
 additive regression with an intercept, using random coefficients from
-**fitted `lme4::lmer()` or linear `nlme::lme()` models, each with one
-grouping factor**. Random coefficients may be predictors, the outcome,
-or both. Numeric, logical, and factor observed predictors are supported.
-See the [workflow guide](vignettes/repair-workflow.Rmd) for matching,
-omission, interpretation, and current limits.
+**fitted `lme4::lmer()` or linear `nlme::lme()` models**. Select one
+target grouping factor per model; lmer models can also have nuisance
+groups contained within each target person. Random coefficients may be
+predictors, the outcome, or both. Numeric, logical, and factor observed
+predictors are supported. See the [workflow
+guide](vignettes/repair-workflow.Rmd) for matching, omission,
+interpretation, and current limits.
 
 ## Package website
 
-Browse the [package website](https://zacharyvig.github.io/repair/) for a
-guided introduction, searchable function reference, executable articles,
-and release notes. The site is rebuilt from `main`; it documents the
-development version.
+Browse the [package website](https://hallquistlab.github.io/repair/) for
+a guided introduction, searchable function reference, executable
+articles, and release notes. The site is rebuilt from `main`; it
+documents the development version.
 
 ## Install
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("zacharyvig/repair")
+remotes::install_github("HallquistLab/repair")
 ```
 
 Installation from source requires R \>= 4.3 and a C++20 compiler with
@@ -192,6 +194,19 @@ selection, covariance reconstruction, and safe joins. Internal S7
 properties remain available for advanced inspection; custom estimation
 uses `fit_mmom()`.
 
+## Include occasions nested within people
+
+A measurement model such as
+`y ~ x + (1 + x | person) + (1 | person:day)` can supply person
+coefficients to REPAIR. Use `group = "person"` in `re()` when names such
+as `(Intercept)` occur in both groups. Scoring and posterior reliability
+include all nested nuisance covariance. Every fitted nuisance level must
+belong to one target person; shared school, item, or calendar-day
+effects remain rejected, even after structural omissions. See the
+executable [nested-nuisance guide](vignettes/nested-nuisance.Rmd) for
+discovery, fitting, multiple nuisance groups, and independent numerical
+references.
+
 ## Connect two measurement processes
 
 Use model-qualified references when an equation draws on multiple fits:
@@ -283,10 +298,11 @@ instructions.
   AR(1) correlation and constant/`varIdent`/`varPower` residual
   variance. Keep the data in the fit (`keep.data = TRUE`). See the [nlme
   reproduction guide](vignettes/nlme-workflow.Rmd).
-- Multi-group lme4 scoring remains experimental; multi-group structural
-  fits and multilevel nlme extraction are rejected. Shared nuisance
-  effects can create cross-person score errors that the structural
-  estimator cannot represent.
+- lmer nuisance groups must be contained within the selected target
+  group on all effective fitted rows. Shared nuisance effects remain
+  rejected because their cross-person score errors cannot enter this
+  structural estimator. Lower-level scoring of shared structures remains
+  experimental. Multilevel nlme fits are rejected.
 
 ## Development and reproducibility
 

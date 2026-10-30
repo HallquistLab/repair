@@ -31,7 +31,9 @@ repair_require_model <- function(object) {
 #'   marginal reliability of coefficient k is `1 - V_i[k,k] / G[k,k]`.
 #'   Posterior covariance is computed as
 #'   `G - G Z_i' (R_i + Z_i G Z_i')^-1 Z_i G` using fitted effective observations
-#'   and residual covariance. This supports singular G without inverting G.
+#'   and target-specific residual covariance. For nested lmer models, R_i includes
+#'   every nuisance-group covariance contribution, as in likelihood scoring.
+#'   This supports singular G without inverting G.
 #'
 #'   For a slope residualized on the intercept, the contrast is
 #'   `a = c(-G[1,2] / G[1,1], 1)` in intercept/slope order and reliability is
@@ -85,7 +87,7 @@ repair_reliability <- function(object, level = c("summary", "person"),
     posterior <- lapply(ids, function(id) {
       obs <- elements@group_rows[[group]][[id]]
       tryCatch(list(v = repair_posterior_covariance(g,
-        get_ranef_design(elements, group, obs, id), get_ranef_base_covariance(elements, obs)),
+        get_ranef_design(elements, group, obs, id), get_ranef_target_covariance(elements, group, obs)),
         n = length(obs), reason = ""),
         error = function(e) list(v = NULL, n = length(obs), reason = conditionMessage(e)))
     })

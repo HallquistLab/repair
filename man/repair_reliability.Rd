@@ -42,7 +42,9 @@ For fitted random-effect covariance G and posterior covariance V_i,
 marginal reliability of coefficient k is \code{1 - V_i[k,k] / G[k,k]}.
 Posterior covariance is computed as
 \verb{G - G Z_i' (R_i + Z_i G Z_i')^-1 Z_i G} using fitted effective observations
-and residual covariance. This supports singular G without inverting G.
+and target-specific residual covariance. For nested lmer models, R_i includes
+every nuisance-group covariance contribution, as in likelihood scoring.
+This supports singular G without inverting G.
 
 For a slope residualized on the intercept, the contrast is
 \code{a = c(-G[1,2] / G[1,1], 1)} in intercept/slope order and reliability is
