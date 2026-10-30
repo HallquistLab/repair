@@ -9,7 +9,8 @@ Description: Implements the REPAIR modified method-of-moments estimator for
     structural regressions involving random coefficients from Gaussian mixed
     models. Extracts likelihood-only scores and sampling-error covariances,
     aligns them with person-level data by identifier, and reports conditional
-    model-based inference and analysis diagnostics.
+    model-based inference and analysis diagnostics, with experimental whole-person
+    bootstrap sampling and percentile intervals for complete refitted analyses.
 URL: https://hallquistlab.github.io/repair/, https://github.com/HallquistLab/repair
 BugReports: https://github.com/HallquistLab/repair/issues
 License: MIT + file LICENSE
@@ -18,6 +19,7 @@ LazyData: true
 Depends:
     R (>= 4.3.0)
 Imports:
+    parallel,
     geigen,
     Rcpp,
     S7,

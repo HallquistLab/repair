@@ -26,6 +26,7 @@ articles:
   contents:
   - repair-workflow
   - refitting
+  - person-bootstrap
   - support-and-troubleshooting
   - extracting-results
   - reliability-diagnostics
@@ -45,6 +46,7 @@ reference:
 - contents:
   - repair
   - repair_refit
+  - repair_bootstrap
   - re
   - repair_effects
   - repair_data
@@ -52,6 +54,9 @@ reference:
   desc: Use stable data frames for reports and joins, or familiar R generics for fitted models.
 - contents:
   - repair_coefficients
+  - repair_bootstrap_coefficients
+  - repair_bootstrap_diagnostics
+  - repair-bootstrap-methods
   - repair_scores
   - repair_score_covariance
   - repair-methods

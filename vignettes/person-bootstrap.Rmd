@@ -1,0 +1,188 @@
+---
+title: "Experimental person-level bootstrap intervals"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Experimental person-level bootstrap intervals}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+`repair_bootstrap()` samples **whole people with replacement** and calls
+`repair_refit()` to rebuild the complete analysis. Each selected occurrence gets
+fresh person and nuisance IDs. Measurement models, scores, score-error covariance,
+structural moments, corrections, and weights are re-estimated for each attempt.
+The original fit and its conditional inference remain available for comparison.
+
+This functionality is **experimental**: software replay tests verify the
+calculation, while simulation studies of interval coverage remain outstanding.
+It assumes independent people. It does not remedy dependence across people,
+misspecification, informative missingness, or weak identification.
+
+## Fit, sample, and report
+
+```{r fit}
+data(repair_example)
+repeated <- repair_example$repeated
+people <- repair_example$people
+model <- lme4::lmer(score ~ day + (day | person), repeated,
+  control = lme4::lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
+fit <- repair(re("day") ~ practice, model, people, "person")
+
+# Nine attempts make this guide quick to run; they are not adequate for inference.
+boot <- repair_bootstrap(fit, repeated, people, B = 9, seed = 41)
+summary(boot)
+```
+
+The default is `B = 1999`, counting **attempts**, with reproducible `seed = 1`.
+Real analyses need sufficient tail resolution and checks of stability over larger
+B and different seeds. Neither a large B nor a high success rate establishes
+coverage. A run rebuilds the measurement model repeatedly, so it can take much
+longer than the original structural analysis.
+
+```{r inference}
+coef(boot)                           # original-data estimates
+vcov(boot)                           # empirical bootstrap covariance
+confint(boot, level = .90)            # marginal percentile intervals
+repair_bootstrap_coefficients(boot, conf.level = .90)
+repair_coefficients(fit, conf.level = .90)  # original conditional Wald comparison
+```
+
+Bootstrap SEs are SDs of complete usable coefficient vectors. Percentile endpoints
+are their empirical quantiles using R's `quantile(type = 7)`. The same vectors
+are used for all coefficients and the joint covariance. Bootstrap variance is
+**not added** to conditional variance. These are marginal intervals, not a
+simultaneous confidence region. There are no bootstrap p-values or bootstrap
+Wald z-statistics in the table.
+
+## Examine attempts and reproduce a sampled analysis
+
+```{r attempts}
+attempts <- repair_bootstrap_diagnostics(boot)
+attempts[, c("replicate", "usable", "stage", "n_people", "n_measurement",
+  "measurement_singular", "preliminary_multiplier", "final_multiplier")]
+
+mapping <- repair_bootstrap_diagnostics(boot, "draws")
+head(mapping)
+```
+
+Each mapping row identifies `(replicate, draw, source_id, refit_id)`. Repeated
+source IDs within a replicate correspond to distinct people in that refit.
+Generated IDs are reused between independently fitted replicates, so always keep
+the replicate key. Character source IDs, including leading zeros, stay intact.
+
+For example, replay the first recorded sample without generating another one:
+
+```{r reproduce}
+first_ids <- mapping$source_id[mapping$replicate == 1L]
+first <- repair_refit(fit, repeated, people, draw = first_ids)
+stopifnot(isTRUE(all.equal(unname(coef(first)), unname(boot$replicates[1, ]),
+  tolerance = 1e-6)))
+```
+
+All effective observations for a sampled person are copied in their original
+order, including unequal observation counts and schedules. There is no resampling
+of observations within people. Contained nuisance groups such as `person:day`
+remain separate for duplicate people. See the [refitting guide](refitting.html)
+for exact replay, row/coding rules, supported lmer/lme settings, and explicit
+`refitter(data)` callbacks. Each attempt uses that same reference validation.
+
+## Failures are part of the result
+
+A lost factor level, unusable score, measurement nonconvergence, or structural
+failure invalidates the whole coefficient vector. The attempt stays in the result
+with its source-ID map, stage, reason, warnings/messages when available, and an
+all-NA coefficient row. There are no replacement samples, retries, trimming, or
+within-attempt omission to rescue a fit. Singular lmer fits are retained when
+convergence, scoring, and structural estimation remain usable; lme singularity is
+not assessed. Warnings alone do not automatically invalidate an attempt.
+
+This deliberately sparse factor demonstrates why successful samples can be a
+selected distribution:
+
+```{r failed-attempts}
+sparse_people <- people
+sparse_people$rare <- factor(seq_len(nrow(people)) == 1L)
+sparse_fit <- repair(re("day") ~ practice + rare, model, sparse_people, "person")
+sparse_boot <- repair_bootstrap(sparse_fit, repeated, sparse_people, B = 10, seed = 41)
+summary(sparse_boot)  # remains inspectable; intervals are withheld
+failed <- repair_bootstrap_diagnostics(sparse_boot)
+failed[!failed$usable, c("replicate", "stage", "reason")]
+```
+
+If any attempt fails, `vcov()`, `confint()`, and the bootstrap coefficient
+extractor stop by default. Investigate the reasons and the original model first.
+Explicitly requesting `allow_failed = TRUE` gives a summary **conditional on
+successful replicates**; it does not recover the distribution of all attempts:
+
+```{r conditional-on-success}
+repair_bootstrap_coefficients(sparse_boot, allow_failed = TRUE)
+```
+
+Counts and the changed interpretation appear in the table and summary. Covariance
+and interval matrices carry counts, method, conditional-on-success status, and
+an experimental label as attributes. At least two complete vectors are required
+even after opt-in. This is only a numerical minimum, not a precision or validity
+criterion. `B = 1` and runs with no usable vectors remain useful for diagnostics.
+
+## Cohort and inference boundaries
+
+The first implementation supports **one referenced measurement model**: Gaussian
+lmer, including contained nuisance groups, or supported single-group linear lme.
+The measurement and analyzed person cohorts must coincide. Measurement-only people
+or people omitted structurally despite having measurement data require an
+explicitly revised reference fit before sampling. The source order is the original
+analysis order. Sampling conditions on the chosen cohort, selection rule, and
+observed missingness pattern; it does not generate new within-person histories.
+
+Structural and measurement IDs may use different column names. The target must
+be a bare measurement ID; IDs used as substantive covariates and unsupported
+nuisance mappings cannot be automatically re-keyed. Shared nuisance effects
+remain rejected. Factor coding and coefficient identities remain fixed;
+losing a level invalidates an attempt rather than changing the estimand.
+
+Regularization policy/custom alpha, ML/REML, optimizer and covariance recipes,
+formula, and computation backend follow the reference fit. Data-dependent
+regularization multipliers and weights are recomputed; transitions in those
+quantities can affect the distribution. Scores remain random deviations rather
+than fixed-plus-random totals, and re-estimated fixed effects can change centering.
+
+No stratification, higher-level cluster sampling, multiple-model bootstrap,
+cross-model covariance replay, parallel execution, checkpoints/resume, BCa,
+studentized, or simultaneous intervals are included. The next scientific gate is
+a prespecified coverage study across reliability, sample size, design imbalance,
+variance boundaries, and weak corrected moments.
+
+## Reproducibility and saved results
+
+The serial engine assigns one L'Ecuyer-CMRG stream to preflight and a separate
+stream to each attempt, using Inversion normals and Rejection sampling. A fitting
+failure or RNG use in one attempt cannot change subsequent samples. Extending B
+with the same seed/data/recipe preserves the initial attempts in the same numerical
+environment. `boot$rng` stores those streams; `boot$replicates` is the B-by-p
+coefficient matrix. These are documented result fields, including all failed rows.
+
+The caller's RNG kind and `.Random.seed` (including its absence) are restored on
+success or error. Box-Muller and user-supplied caller RNGs are rejected before
+changing state: their hidden state cannot be restored from `.Random.seed`.
+Callbacks remain deterministic, explicit fitting recipes; no guarantee is made
+for callbacks with external state or changing global options.
+
+Save the bootstrap object with `saveRDS()` and reload with `readRDS()` after loading
+`repair`. Extraction needs no original data bindings. The result stores original
+estimates, the conditional comparison table, draws, attempts, reference audit,
+streams, and versions. It retains neither every fitted replicate model nor copied
+raw datasets. Retain original inputs, fitting code, and `sessionInfo()` separately
+to rerun the analysis. Optimizer/dependency changes can affect numerical results;
+cross-version bitwise equivalence is not promised.
+
+The [R RNG-stream documentation](https://stat.ethz.ch/R-manual/R-devel/library/parallel/html/RngStream.html)
+describes the stream mechanism, and the
+[R quantile documentation](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/quantile.html)
+specifies the percentile endpoint calculation. Neither establishes scientific
+coverage for REPAIR; see the developer bootstrap design and implementation audit
+in the repository for the outstanding validation plan.

@@ -1,5 +1,15 @@
 # repair 0.0.0.9000
 
+* Add experimental `repair_bootstrap()` for serial whole-person sampling through
+  `repair_refit()`, with separate saved RNG streams, complete attempt accounting,
+  fresh target/nuisance IDs, and unchanged original conditional inference.
+* Add a separate bootstrap result class, coefficient and attempt/draw table
+  extractors, empirical covariance and percentile intervals. Withhold inference
+  after failed attempts unless explicitly requested conditional on success.
+* Add independent manual-loop, RNG, failure, nested/nlme and saved-result tests,
+  structured refit failure stages, an executable user guide, and a design audit.
+  Scientific coverage validation and multiple-model sampling remain future work.
+
 * Add `repair_refit()` for identity-verified replay of one supported lmer/lme
   measurement model and its structural analysis, with explicit reference and
   replacement inputs, factor/row/schema checks, and recorded fitting recipes.

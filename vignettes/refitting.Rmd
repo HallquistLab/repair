@@ -196,7 +196,8 @@ warnings and any deterministic source-ID mapping. Save analysis code, inputs,
 `sessionInfo()`, and result tables along with serialized objects.
 
 Multiple measurement models and supplied cross-model covariance replay remain
-outside this increment. Random bootstrap sampling, replicate management,
-bootstrap uncertainty, parallel execution, and coverage validation are future
-work. A refitted object's standard errors remain the conditional model-based
+outside this interface. [Person-level bootstrap sampling](person-bootstrap.html)
+now provides experimental serial attempts, failure accounting, and percentile
+intervals using this refitter. Parallel execution and scientific coverage
+validation remain future work. A refitted object's standard errors remain the conditional model-based
 standard errors of that fit.

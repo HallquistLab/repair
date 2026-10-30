@@ -7,6 +7,12 @@ output: html_document
 
 # Design objective
 
+Implementation update (2026-10-30): experimental serial whole-person bootstrap
+sampling and marginal percentile intervals now use the validated single-model
+refitter. Failed attempts are retained; inference is withheld by default after
+failures. See [the bootstrap audit](person-bootstrap-validation.md) for actual
+API, stable tables, seed policy, workflow and outstanding coverage studies.
+
 Make the paper's REPAIR estimator usable without asking an analyst to assemble
 error arrays manually. Keep the measurement model fixed while the structural
 model changes, and make each analysis person's scores, covariance, and inclusion

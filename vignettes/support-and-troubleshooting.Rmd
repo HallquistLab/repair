@@ -67,7 +67,8 @@ audits describe the scope at the time they were written.
 | Multiple measurement models | Named fits with model-qualified effects and ID matching | Explicit independent-error or supplied scoring-error covariance policy; separate fitting does not establish independence |
 | IDs and missingness | One structural row per person; character-value ID matching; explicit `na_action = "omit"` audit | Duplicate/missing/empty IDs always fail; default is to stop on incomplete inputs |
 | Estimation | Modified method of moments with `minimum`, `none`, or custom regularization, using R or Rcpp | `none` still subtracts measurement error; `step_up` is not implemented |
-| Structural inference | Conditional model-based SEs and normal intervals/tests | Does not propagate fitted measurement-parameter or estimated supplied-block uncertainty; no bootstrap or robust-sandwich option |
+| Structural inference | Conditional model-based SEs and normal intervals/tests | Does not propagate fitted measurement-parameter or estimated supplied-block uncertainty; no robust-sandwich option |
+| Experimental bootstrap | Whole-person sampling, empirical covariance and marginal percentile intervals through `repair_refit()` | One model, coinciding cohorts; failures retained and inference withheld by default; coverage validation outstanding |
 | Reliability | Marginal posterior reliability; intercept-residualized slope reliability for two-coefficient intercept/slope models | Plug-in diagnostics with explicit undefined cases; no automatic adequacy cutoff or reliability CI |
 | Dependence between people | Independent structural analysis people | Contained nuisance levels preserve conditional independence; shared nuisance levels remain rejected because their cross-person error covariance cannot enter the estimator |
 
@@ -159,8 +160,10 @@ For long-term reporting, also export the plain tables shown in
 For one supported measurement model, `repair_refit()` verifies the original data
 and fitting recipe before accepting replacements or deterministic person draws.
 It checks identities, coding and outputs, captures warnings, and rejects implicit
-replacement-row omission. See `vignette("refitting")`. Refitting is groundwork for
-future bootstrap inference; its current coefficient SEs remain conditional.
+replacement-row omission. See `vignette("refitting")`. Its current coefficient SEs
+remain conditional. `repair_bootstrap()` adds separate experimental person-level
+sampling and percentile intervals; see `vignette("person-bootstrap")` for the
+failure policy, seed contract, cohort restrictions, and inferential limits.
 
 ## Interface stability and reporting
 

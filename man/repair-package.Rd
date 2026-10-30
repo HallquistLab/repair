@@ -12,10 +12,12 @@ Discover effects with \code{\link[=repair_effects]{repair_effects()}}, inspect m
 \details{
 The supported workflow uses Gaussian lmer models with one target group and
 optional nuisance groups contained within targets, or supported single-group
-linear lme models. Standard errors are conditional on fitted measurement quantities.
+linear lme models. Default fit SEs are conditional on fitted measurement quantities.
 See \code{vignette("support-and-troubleshooting", package = "repair")} for the
 support matrix, inference boundaries, diagnostics, and saved-fit guidance.
 Use \code{\link[=repair_refit]{repair_refit()}} for verified single-model replay.
+Experimental whole-person resampling and percentile intervals are available
+separately through \code{\link[=repair_bootstrap]{repair_bootstrap()}}.
 Run \code{citation("repair")} for software and manuscript references.
 }
 \seealso{
