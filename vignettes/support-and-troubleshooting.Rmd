@@ -58,7 +58,7 @@ audits describe the scope at the time they were written.
 
 | Component | Supported | Boundary or assumption |
 |---|---|---|
-| lme4 measurement model | Gaussian `lmer()` with one grouping factor, including separate random-effect blocks for that factor | GLMMs and multiple-group structural fits are rejected |
+| lme4 measurement model | Gaussian `lmer()` with one target grouping factor, including independent target blocks and nuisance groups contained within targets | GLMMs and nuisance levels shared across targets are rejected; see `vignette("nested-nuisance")` |
 | nlme measurement model | Linear `lme()` with one grouping factor and retained effective data (`keep.data = TRUE`) | Nonlinear or multilevel lme fits are rejected |
 | nlme residual correlation | Independent, `corAR1`, `corCAR1`; internal ARMA(1,0) representation of AR(1) | Correlation grouping must match random-effects grouping; other structures are unsupported |
 | nlme residual variance | Constant, `varIdent`, `varPower`, including supported fitted-value covariates | Other variance structures are rejected; see `vignette("nlme-workflow")` |
@@ -69,7 +69,7 @@ audits describe the scope at the time they were written.
 | Estimation | Modified method of moments with `minimum`, `none`, or custom regularization, using R or Rcpp | `none` still subtracts measurement error; `step_up` is not implemented |
 | Structural inference | Conditional model-based SEs and normal intervals/tests | Does not propagate fitted measurement-parameter or estimated supplied-block uncertainty; no bootstrap or robust-sandwich option |
 | Reliability | Marginal posterior reliability; intercept-residualized slope reliability for two-coefficient intercept/slope models | Plug-in diagnostics with explicit undefined cases; no automatic adequacy cutoff or reliability CI |
-| Dependence between people | Independent structural analysis people | Experimental lower-level multi-group scoring does not supply the cross-person covariance needed by the structural estimator |
+| Dependence between people | Independent structural analysis people | Contained nuisance levels preserve conditional independence; shared nuisance levels remain rejected because their cross-person error covariance cannot enter the estimator |
 
 For multiple models and covariance input formats, see `vignette("multiple-models")`.
 Keep the within-model joint covariance even when choosing cross-model independent
@@ -102,7 +102,8 @@ repair_reliability(fit)[, c("term", "measure", "reliability", "n_defined")]
 
 | Message or finding | Inspect | Appropriate next step |
 |---|---|---|
-| Unknown/ambiguous random-effect reference | `repair_effects(models)` | Use the exact scalar coefficient name and a model qualifier; factor slopes can expand to multiple coefficients |
+| Unknown/ambiguous random-effect reference | `repair_effects(models)` | Use the exact scalar coefficient name, model qualifier, and target `group` if needed; factor slopes can expand to multiple coefficients |
+| Shared nuisance levels across target people | Measurement grouping membership on all effective fitted rows | Correct genuinely local occasion IDs if appropriate to the design; structural omission cannot waive this restriction, and truly shared effects require a different analysis |
 | Duplicate, missing, or empty structural IDs | The ID column in the person table | Correct identity/aggregation upstream; row order or automatic deduplication is not a matching strategy |
 | ID absent from a measurement model or missing structural value | Original IDs/variables; the exclusion table if omission was requested | Resolve the mismatch or make an explicit, substantively justified cohort decision |
 | Likelihood-only predictions failed | Measurement records and within-person design; `score_failures` when a fit/assembly exists | Check sufficient within-person predictor variation and design rank; do not substitute a BLUP or zero covariance |
@@ -168,5 +169,5 @@ coefficient units, and conditional nature of inference. Record the software
 version and use `citation("repair")` to distinguish software and method citations.
 Zachary A. Vig and Michael N. Hallquist are package authors and co-maintainers;
 Zach is the primary R package maintainer contact. Report reproducible problems at
-<https://github.com/zacharyvig/repair/issues>, with a small synthetic example and
+<https://github.com/HallquistLab/repair/issues>, with a small synthetic example and
 session information rather than identifiable participant data.

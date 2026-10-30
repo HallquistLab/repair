@@ -482,3 +482,24 @@ models. The high-level structural workflow is restricted to single-group Gaussia
 lmer or supported linear lme models. Lower-level multi-group scoring remains experimental until its
 cross-cluster covariance and downstream inference contract are validated. See
 `package_plan.Rmd` and `design-audit.md` for implementation boundaries.
+
+
+# Contained nuisance groups implemented (2026-10-30)
+
+The high-level lmer workflow now permits the restricted case where every nuisance
+level belongs to exactly one target level on all effective fitted observations.
+For example, person targets with `person:day` nuisance effects qualify. In this
+case nuisance levels are not shared across people, so the cross-person covariance
+above is zero under the fitted model and conditional plug-in assumptions.
+
+`re("term", model = "growth", group = "person")` selects one target group per
+model. All selected effects from that model must use that group. The membership
+check precedes structural cohort selection and omission; zero estimated nuisance
+variance does not waive it. Nuisance slopes and multiple nuisance groups may be
+used when each group qualifies. Target-specific covariance is shared by GLS
+scoring and posterior reliability.
+
+Shared school, item, calendar-day, or other nuisance levels remain rejected.
+Multilevel nlme remains unsupported. See `nested-nuisance-validation.md` for the
+implementation audit and independent references, and the executable
+`vignette("nested-nuisance", package = "repair")` for the user workflow.

@@ -57,7 +57,8 @@ times are supported. This does not admit arbitrary ARMA orders. Correlation
 groups must match the random-effect group; finer subgroup correlations,
 multilevel lme fits, nonlinear nlme fits, and other variance/correlation classes
 fail explicitly. `varComb` and other combinations of variance functions have
-not yet been admitted. Multi-group lme4 scoring remains experimental.
+not yet been admitted. Contained lmer nuisance groups are supported separately;
+see `vignette("nested-nuisance")`. Shared nuisance levels remain rejected.
 
 The fitted covariance includes the residual scale and variance-function weights.
 In particular, `varPower(~ fitted(.))` uses the weights retained by the fitted

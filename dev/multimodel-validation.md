@@ -100,3 +100,11 @@ Apple-clang warning group `-Wfixed-enum-extension`. Network-restricted dependenc
 index lookups logged connectivity messages but dependency checks passed with
 installed packages. `git diff --check` passed. No estimator or existing reference
 fixture was modified.
+
+
+## Nested nuisance follow-up (2026-10-30)
+
+The original one-group-per-fit restriction above is now relaxed for lmer nuisance
+levels verified to be contained within the selected target group. The cross-model
+covariance contract is unchanged; shared nuisance levels remain rejected. See
+[nested-nuisance-validation.md](nested-nuisance-validation.md).

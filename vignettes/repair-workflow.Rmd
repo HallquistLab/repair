@@ -24,7 +24,8 @@ covariance in a modified method-of-moments (M-MOM) regression. A BLUP's posterio
 covariance is not the sampling-error covariance required by this estimator.
 
 The high-level interface supports Gaussian `lmer()` or linear `lme()` measurement
-models, each with one grouping factor. Multiple referenced models require an
+models, each with one target grouping factor. lmer models may include nuisance
+groups contained within targets; see `vignette("nested-nuisance")`. Multiple referenced models require an
 explicit cross-model scoring-error policy; see `vignette("multiple-models")`. The structural model is
 additive and includes an intercept. Scores are deviations from the fitted fixed
 effects. The measurement model remains fixed while structural relationships are
@@ -50,7 +51,9 @@ prevent GLS scoring; a rank-deficient *within-person design* does.
 `repair_effects()` gives scalar coefficient names. For example, a factor random
 slope may expand into several coefficients: select each by its actual name.
 `"(Intercept)"` is canonical; `"1"` and `"Intercept"` are accepted aliases.
-Model names resolve ambiguous coefficient names when inspecting a list of fits.
+Model names resolve ambiguous coefficient names across fits. The optional
+`group` argument resolves coefficient names shared by several groups within a
+model; select one target group per model.
 One equation can combine scores from separate fits when you explicitly specify
 their cross-model scoring-error covariance policy; see
 `vignette("multiple-models")` for the independence and supplied-covariance options.
@@ -209,10 +212,10 @@ stopifnot(isTRUE(all.equal(unname(coef(fit)), manual@coefficients$estimate)))
 The lower-level scorer `repair_ranef_gls()` returns group-keyed S7 properties
 `@predictions`, `@error_covariance`, `@levels`, `@terms`, and `@diagnostics`.
 Single-group `nlme` extraction supports the residual structures documented in
-`vignette("nlme-workflow")`. Multi-group lme4 scoring remains experimental; shared
-nuisance random effects can correlate scores across target people, which the
-row-wise M-MOM input contract cannot encode. The high-level workflow therefore
-requires a single-group Gaussian lmer or supported linear lme fit for each referenced model.
+`vignette("nlme-workflow")`. lmer nuisance effects entirely contained within each
+target person are supported; see `vignette("nested-nuisance")`. Shared nuisance
+random effects remain rejected: their cross-person scoring errors cannot enter
+the row-wise M-MOM contract. Multilevel nlme fits remain unsupported.
 
 ## Deliberate boundaries
 

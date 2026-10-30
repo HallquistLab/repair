@@ -146,3 +146,12 @@ a focused home page, and a GitHub Pages build/deploy workflow. See
 [website.md](website.md) for the content audit, source ownership, local preview,
 link validation, PR artifacts, and one-time Pages configuration. The getting-started
 guide now consistently describes the implemented multiple-model capability.
+
+
+## Nested nuisance follow-up (2026-10-30)
+
+The earlier blanket structural multi-group rejection is now narrowed to shared
+nuisance levels. Verified contained lmer nuisance groups, explicit group-qualified
+references, and consistent nuisance covariance in reliability are documented in
+[nested-nuisance-validation.md](nested-nuisance-validation.md). The shared-level
+rejection and the row-wise structural covariance contract remain in force.

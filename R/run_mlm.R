@@ -18,6 +18,8 @@ normalize_repair_models <- function(models) {
 #'   model, or a named list of models.
 #' @return A data frame with `model`, `group`, `term`, and `n_levels` columns.
 #'   A bare model is named `measurement`. Terms are scalar coefficient names.
+#'   The catalog includes nuisance groups; discovery does not establish eligibility
+#'   for structural fitting. Select the target with the `group` argument of [re()].
 #' @examples
 #' data(repair_example)
 #' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
@@ -50,4 +52,27 @@ repair_measurement_diagnostics <- function(model) {
   list(measurement_backend = "nlme", measurement_singular = NA,
     measurement_messages = if (is.character(model$apVar))
       paste("nlme variance-parameter uncertainty:", model$apVar) else character())
+}
+
+# Qualification uses all effective fitted rows, before structural cohort selection.
+# A name such as person:day is neither required nor sufficient: actual level
+# membership determines whether any nuisance effect is shared between targets.
+repair_validate_target <- function(model, group, name) {
+  groups <- if (inherits(model, "lmerMod")) lme4::getME(model, "flist") else model$groups
+  if (inherits(model, "lme") && length(groups) != 1L) {
+    repair_error("nlme structural fitting requires exactly one grouping factor.")
+  }
+  nuisance <- setdiff(names(groups), group)
+  target <- as.character(groups[[group]])
+  for (other in nuisance) {
+    owners <- split(target, as.character(groups[[other]]), drop = TRUE)
+    shared <- names(owners)[vapply(owners, function(x) length(unique(x)) > 1L, logical(1))]
+    if (length(shared)) {
+      examples <- paste(utils::head(shared, 3L), collapse = ", ")
+      repair_error(paste0("Model {.val {name}} has nuisance group {.val {other}} with levels ",
+        "shared across target group {.val {group}} (e.g. {examples}). ",
+        "Cross-person scoring-error covariance is not supported, even with `na_action = \"omit\"`."))
+    }
+  }
+  nuisance
 }
