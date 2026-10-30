@@ -16,7 +16,9 @@
 #' @param backend M-MOM computation backend: `"auto"`, `"r"`, or `"rcpp"`.
 #' @details The supported structural grammar is additive with an intercept.
 #'   Effects may come from multiple Gaussian lmer or linear lme models, each with
-#'   one grouping factor. Full within-person score-error covariance is retained.
+#'   one target grouping factor. Gaussian lmer models may have nuisance groups
+#'   entirely contained within targets; shared nuisance levels are rejected.
+#'   Full within-person score-error covariance is retained.
 #'   Multiple models require an explicit `cross_model_error` policy; separate
 #'   fits do not establish independent scoring errors. See [repair_data()].
 #'   Observed variables are treated as measured without error. Scores are random

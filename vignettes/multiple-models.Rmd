@@ -66,10 +66,11 @@ Shared occasion-level disturbances or overlapping measurements can correlate the
 errors. Choose the policy from the measurement design and a defensible covariance
 model. The package cannot estimate that covariance from separate fitted models.
 
-All models still need one grouping factor. Multiple models do not relax the
-independent-person assumption: shared nuisance groups can induce cross-person
-error covariance, which this estimator cannot represent. Models may mix supported
-`lmer()` and `lme()` backends. Their extraction restrictions remain unchanged.
+Each model must select one target grouping factor. lmer models can also have
+nuisance groups contained within each target person; see `vignette("nested-nuisance")`.
+Multiple models do not relax the independent-person assumption: shared nuisance
+groups remain rejected because their cross-person error covariance cannot enter
+this estimator. Models may mix supported lmer and single-group lme backends.
 
 ## Supply nonzero cross-model covariance
 

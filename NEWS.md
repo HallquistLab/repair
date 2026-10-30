@@ -7,6 +7,17 @@
 
 # repair 0.0.0.9000
 
+* Support Gaussian lmer nuisance groups contained within each selected target
+  person, including nested random slopes and multiple nuisance groups. Verify
+  containment on all effective fitted rows; retain rejection of shared levels.
+* Add optional `group` qualification to `re()` for ambiguous random coefficient
+  names. Each referenced model selects one target group; existing single-group
+  labels and stable table schemas are preserved.
+* Include nuisance covariance in both scoring and posterior reliability; report
+  verified nuisance groups in structural summaries and measurement metadata.
+* Add independent nested GLS, posterior, and production/algebra structural
+  references, integration/rejection/persistence tests, and an executable guide.
+
 * Add a documented synthetic teaching dataset, `repair_example`, with repeated
   observations, person-level predictors, and explicit generating provenance.
 * Complete executable examples for all exported objects and add a support and

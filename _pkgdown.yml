@@ -1,4 +1,4 @@
-url: https://zacharyvig.github.io/repair/
+url: https://hallquistlab.github.io/repair/
 
 template:
   bootstrap: 5
@@ -32,6 +32,7 @@ articles:
 - title: Measurement models and reproduction
   navbar: Measurement models
   contents:
+  - nested-nuisance
   - multiple-models
   - nlme-workflow
 

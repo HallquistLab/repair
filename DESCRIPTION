@@ -12,8 +12,8 @@ Description: Implements Random-Effect Prediction Adjustment for Inference in
     estimated random coefficients. Extracts likelihood-only scores and sampling-error
     covariances, aligns them with person-level data by identifier, and reports conditional
     model-based inference and analysis diagnostics.
-URL: https://zacharyvig.github.io/repair/, https://github.com/zacharyvig/repair
-BugReports: https://github.com/zacharyvig/repair/issues
+URL: https://hallquistlab.github.io/repair/, https://github.com/HallquistLab/repair
+BugReports: https://github.com/HallquistLab/repair/issues
 License: MIT + file LICENSE
 SystemRequirements: C++20
 LazyData: true

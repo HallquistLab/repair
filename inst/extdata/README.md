@@ -6,6 +6,7 @@ published Monte Carlo tables. For a discoverable teaching dataset use
 
 | File | Role | Generation script |
 |---|---|---|
+| `nested-workflow-reference.rds` | Two contained-nuisance lmer observation-to-inference cases, including posterior covariance | `dev/generate_nested_fixtures.R` |
 | `nlme-workflow-reference.rds` | Three observation-to-inference nlme cases | `dev/generate_nlme_fixtures.R` |
 | `multimodel-workflow-reference.rds` | Two paired-process cases with independent or supplied cross-model error covariance | `dev/generate_multimodel_fixtures.R` |
 | `reliability-reference.rds` | Posterior covariance, marginal and intercept-residualized reliability references | `dev/generate_reliability_fixtures.R` |

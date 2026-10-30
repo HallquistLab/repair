@@ -1,0 +1,170 @@
+---
+title: "Nested nuisance effects within people"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Nested nuisance effects within people}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+A measurement model can include person-level random intercepts/slopes and
+additional random effects for occasions within each person. REPAIR can target
+the person coefficients while incorporating these **nuisance effects** into
+their scoring-error covariance. This extension currently applies to Gaussian
+`lme4::lmer()` fits.
+
+## Fit a person and day model
+
+The bundled reference contains synthetic data for 48 people, each with multiple
+days and repeated observations within each day. Practice is a simulated
+person-level predictor. Day numbers are local to each person. These are
+implementation reference datasets, not real participant data or the paper's
+published simulation results.
+
+```{r measurement}
+reference <- readRDS(system.file("extdata", "nested-workflow-reference.rds", package = "repair"))
+example <- reference$cases$nested_intercept
+head(example$data[c("person", "day", "x", "y")])
+head(example$people)
+
+growth <- lme4::lmer(
+  y ~ x + offset(off) + (1 + x | person) + (1 | person:day),
+  data = example$data, weights = prior, na.action = na.exclude,
+  control = lme4::lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+)
+models <- list(growth = growth)
+repair_effects(models)
+```
+
+`person` is the target grouping factor; `person:day` is a nuisance grouping factor.
+The fitted model's weights, offsets, fixed effects, and effective observations
+are retained. Check measurement-model adequacy and optimizer messages with the
+usual lme4 tools before structural analysis.
+
+## Select one target group per model
+
+Both groups have an `(Intercept)`, so a model name alone cannot identify the
+person intercept. Use `group = "person"` in `re()`. Names must match the
+`repair_effects()` catalog; the person table's ID column can have a different name.
+A unique term can still be selected without a group qualifier.
+
+```{r fit}
+equation <- re("x", model = "growth", group = "person") ~
+  re("(Intercept)", model = "growth", group = "person") + practice
+analysis <- repair_data(equation, models, example$people, id = "person")
+head(repair_scores(analysis))
+head(repair_score_covariance(analysis))
+
+fit <- repair(equation, models, example$people, id = "person")
+repair_coefficients(fit)
+summary(fit)$measurement_models$growth
+```
+
+This regresses the latent person slope deviation on the person intercept
+deviation and practice. Scores remain deviations from fitted fixed effects.
+The selected intercept/slope scoring-error covariance is retained. Nuisance
+coefficients do not become structural predictors or outcomes: all references to
+one measurement model must select the same target group.
+
+Reported effect labels include the group for models with multiple groups. The
+stable tables retain their existing schemas and explicit model/group/term/ID
+keys. The structural summary identifies the verified nuisance groups; their
+names are also in `summary(fit)$measurement_models$growth$nuisance_groups`.
+
+## What enters scoring and reliability?
+
+For person j, the target-specific covariance is
+
+\[
+R_{T,j} = R_{e,j} + \sum_{g\ne T} Z_{g,j}G_gZ_{g,j}^{\mathsf T}.
+\]
+
+Ordinary residual covariance includes the fitted residual scale and prior
+weights. The nuisance contributions include all day effects for that person.
+Person random effects are excluded from this covariance because they are the
+target signal. GLS supplies a joint score and error covariance
+`(Z_T' R_T^-1 Z_T)^-1`. Adding only a day variance to the diagonal would lose the
+covariance between observations sharing a day.
+
+Posterior reliability uses the same `R_T`, with the fitted target prior
+covariance G added for the posterior calculation. Ignoring nuisance variance in
+reliability would overstate available information.
+
+```{r reliability}
+repair_reliability(fit)[, c("term", "measure", "reliability", "n_people")]
+repair_diagnostics(fit, table = "cohort")
+repair_diagnostics(fit, table = "measurement")
+```
+
+The fitted lmer model supplies mutually independent random-effect blocks and
+independent ordinary residuals, conditional on fitted parameters. The structural
+SEs remain conditional on those fitted quantities; they do not propagate
+measurement-parameter estimation uncertainty or provide bootstrap inference.
+The original diagnostics, omission policy, and normal-interval interpretation
+continue to apply.
+
+## More than one nuisance group, including slopes
+
+Every nuisance group must satisfy the same containment rule. For example, both
+day and block can be contained within people even if day and block cross within
+a person. Nuisance coefficients within a block can be correlated.
+
+```{r multiple-nuisance}
+complex <- reference$cases$nested_slope
+growth2 <- lme4::lmer(
+  y ~ x + offset(off) + (1 + x | person) +
+    (1 + within | person:day) + (1 | person:block),
+  data = complex$data, weights = prior, na.action = na.exclude,
+  control = lme4::lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000))
+)
+fit2 <- repair(equation, list(growth = growth2), complex$people, "person")
+repair_coefficients(fit2)
+```
+
+Separate random-effect blocks for the target, such as `(x || person)`, are also
+supported. Several measurement models can each have eligible nuisance groups;
+combining them still requires the explicit cross-model error policy in
+`vignette("multiple-models")`.
+
+## Shared effects remain rejected
+
+Containment is verified from **all effective fitted observations**: each nuisance
+level must occur in exactly one target person. This is a membership check, not a
+check of whether a name contains a colon. Globally unique visit IDs can qualify
+without a colon. The check precedes structural cohort selection, so omission or
+requesting just one person per school cannot bypass it. An estimated zero
+nuisance variance does not waive the membership rule.
+
+`(1 | day)` means a shared day effect if the same day number occurs for several
+people. `(1 | person:day)` represents distinct effects for each person's days.
+Choose the grouping specification from the scientific design: do not split a
+truly shared school, item, or calendar-day effect merely to pass validation.
+
+If people j and k share a nuisance effect, their scoring errors can have
+nonzero cross-person covariance. The current structural estimator accepts
+within-person blocks and cannot account for that dependence. Shared nuisance
+levels therefore produce an explicit error, even with `na_action = "omit"`.
+Targeting days while treating their shared person effect as nuisance also fails
+this rule. Lower-level scoring of shared structures remains experimental and
+is not an alternative route to validated structural inference.
+
+Multilevel nlme fits remain unsupported. For current model and inference limits,
+see `vignette("support-and-troubleshooting")`.
+
+## Validation and reproducibility
+
+The tests refit both models from observations and compare scores, complete
+within-person covariance, posterior reliability, structural estimates, SEs,
+coefficient covariance, and normal intervals with independent frozen references.
+Both R and C++ estimation backends are checked. Reference GLS/posterior matrices
+are calculated directly from fitted measurement quantities without loading
+repair; the structural estimates are cross-checked against the companion
+production estimator and algebra audit. The generator and source provenance are
+in `dev/generate_nested_fixtures.R` and the bundled reference's `provenance`.
+These comparisons establish per-dataset implementation agreement, not nominal
+coverage across all nested designs.

@@ -7,7 +7,9 @@
 #'   Observed predictors may be numeric, logical, or factors. The outcome must
 #'   be numeric or a random coefficient. An intercept is always included.
 #' @param models A fitted Gaussian `lme4::lmer()` or linear `nlme::lme()`
-#'   model, or named list. Each referenced model must have one grouping factor.
+#'   model, or named list. Select one target grouping factor per model. Gaussian
+#'   lmer models may also contain nuisance groups whose every fitted level belongs
+#'   to exactly one target level; nlme models must have one grouping factor.
 #'   Grouping column names may differ, but their values must identify the same people.
 #' @param data A data frame with one row per analysis ID, containing the observed
 #'   structural variables. Its ID values must match the model's grouping levels.
@@ -27,7 +29,17 @@
 #'   covariances of likelihood-only scoring errors, not latent coefficients or
 #'   raw observations. The assembled covariance must be positive semidefinite.
 #'   Missing/invalid supplied blocks are errors even with `na_action = "omit"`.
-#' @details Within-model covariance always comes from the scorer and cannot be
+#' @details Use `re("term", model = "name", group = "person")` to resolve
+#'   coefficients shared by several groups. All references to one model must
+#'   select the same target group. Nesting is checked on all effective fitted
+#'   observations before structural omission; shared nuisance levels are rejected
+#'   even when only one of their target people is requested. Group names alone
+#'   do not establish nesting. Nested random intercepts/slopes and multiple
+#'   nuisance groups are allowed, provided every nuisance group passes the check.
+#'   Target-specific scoring-error covariance includes every nuisance contribution.
+#'   See `vignette("nested-nuisance", package = "repair")` for a complete example.
+#'
+#'   Within-model covariance always comes from the scorer and cannot be
 #'   overridden. Supplied blocks are conditional on the fitted measurement models;
 #'   uncertainty in their estimation is not propagated. Independent errors do not
 #'   imply independent latent processes. The package does not estimate cross-model
@@ -38,7 +50,8 @@
 #'   have zero sampling error. Scores are deviations from fitted fixed effects.
 #'   `@scores` holds a score object for one referenced model, or a named list for
 #'   multiple models. `@diagnostics$measurement_models` always provides diagnostics
-#'   by model; `@diagnostics$cross_model_error` records the applied policy and blocks.
+#'   by model, including the verified `nuisance_groups`;
+#'   `@diagnostics$cross_model_error` records the applied policy and blocks.
 #' @examples
 #' data(repair_example)
 #' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
@@ -90,13 +103,10 @@ repair_data <- function(formula, models, data, id, na_action = c("fail", "omit")
   effect_models <- vapply(parsed$effects, `[[`, character(1), "model")
   for (name in parsed$model) {
     model <- models[[name]]
-    groups <- if (inherits(model, "lmerMod")) lme4::getME(model, "flist") else model$groups
-    if (length(groups) != 1L) {
-      repair_error("Model {.val {name}} requires one grouping factor. Multi-group scores can have cross-person errors that `fit_mmom()` cannot represent.")
-    }
     selected <- which(effect_models == name)
     effects <- parsed$effects[selected]
     group <- effects[[1L]]$group
+    nuisance <- repair_validate_target(model, group, name)
     score <- repair_ranef_gls(model, target_group = group)
     scores[[name]] <- score
     positions <- match(ids, score@levels[[group]])
@@ -112,7 +122,7 @@ repair_data <- function(formula, models, data, id, na_action = c("fail", "omit")
         all(vapply(effects, function(e) is.finite(work[[e$column]][i]), logical(1)))
     }, logical(1))
     add_reason(bad & !is.na(positions), paste("likelihood-only scoring failed in model", name))
-    model_diagnostics[[name]] <- c(list(group = group,
+    model_diagnostics[[name]] <- c(list(group = group, nuisance_groups = nuisance,
       unused_score_ids = setdiff(score@levels[[group]], ids)), repair_measurement_diagnostics(model))
   }
   keep <- !nzchar(reason)

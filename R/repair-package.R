@@ -11,8 +11,9 @@
 #' [repair_data()], fit with [repair()], and report results with
 #' [repair_coefficients()]. [repair_example] provides simulated teaching data.
 #'
-#' The supported workflow uses Gaussian single-group lmer or supported linear
-#' lme models. Standard errors are conditional on fitted measurement quantities.
+#' The supported workflow uses Gaussian lmer models with one target group and
+#' optional nuisance groups contained within targets, or supported single-group
+#' linear lme models. Standard errors are conditional on fitted measurement quantities.
 #' See `vignette("support-and-troubleshooting", package = "repair")` for the
 #' support matrix, inference boundaries, diagnostics, and saved-fit guidance.
 #' Run `citation("repair")` for software and manuscript references.

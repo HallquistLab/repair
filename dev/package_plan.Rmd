@@ -42,7 +42,7 @@ separates preparation from publishing a versioned artifact.
 
 # Supported scope
 
-One equation, Gaussian lmer or linear lme measurement models with one grouping factor each,
+One equation, Gaussian lmer or linear lme measurement models with one target grouping factor each,
 additive predictors, and an intercept. Random coefficients can appear on either
 side. Observed predictors can be numeric, logical, or factors; an observed
 outcome must be numeric. A named list can supply several fits to the equation.
@@ -54,15 +54,20 @@ Single-group nlme scoring and structural fitting now support independent, AR(1),
 and continuous-time AR(1) correlation, with constant, varIdent, or varPower
 residual variance. Effective rows, fitted contrasts, and residual covariance are
 validated; see `nlme-validation.md`. Multilevel nlme extraction is rejected.
-Multi-group lme4 scoring remains experimental: shared nuisance groups may induce
-cross-person score-error covariance absent from the row-wise M-MOM contract.
+lmer nuisance groups may be contained within targets: every fitted nuisance
+level must belong to one target level on all effective rows. The same covariance
+enters scoring and posterior reliability; see `nested-nuisance-validation.md`.
+Shared nuisance groups remain rejected because their cross-person score-error
+covariance cannot enter the row-wise M-MOM contract. Multilevel nlme remains unsupported.
 
 # Contracts and responsibilities
 
 ## Effect identity and formula parsing
 
 Identity is `(model, group, scalar coefficient)`. `re()` accepts literal strings;
-model qualification is optional only when unambiguous. `(Intercept)` is canonical;
+model and target-group qualification are optional only when unambiguous. Each
+model selects exactly one target group. Existing single-group labels are preserved;
+labels from multi-group models include the group. `(Intercept)` is canonical;
 `1` and `Intercept` are input aliases. Generated columns use reserved `.repair_`
 names so observed columns cannot mask scores. Output labels retain model identity.
 
@@ -141,8 +146,9 @@ robust inference and does not account for measurement-model parameter estimation
 
 `dev/target_grouping_vars.Rmd` describes a target-specific *within-cluster*
 covariance. That is necessary but insufficient to justify independent structural
-rows when target clusters share nuisance levels. Cross-cluster covariance and
-its downstream estimator must be specified before broadening structural support.
+rows when target clusters share nuisance levels. Containment now supplies the supported special case where these cross-cluster
+blocks are zero under the fitted model. Cross-cluster covariance and its downstream
+estimator must be specified before admitting shared nuisance levels.
 
 # Development workflow and acceptance gates
 
@@ -168,6 +174,6 @@ Cross-platform automated checks are now configured; see `ci-checks.md` for the
 matrix, warning policy, artifacts, and local reproduction. A pkgdown website now
 organizes the executable guides and reference, with PR validation and main-branch
 GitHub Pages deployment; see `website.md`. Bootstrap inference,
-additional residual structures, and multi-group dependence validation require
+additional residual structures, and shared-group dependence validation require
 separate validation. Cross-person covariance support and formula extensions with
 derived error propagation require explicit statistical contracts.

@@ -54,3 +54,22 @@ version. Tests compare person-specific values and equally weighted summaries.
 These are plug-in posterior reliability references, not structural score-error
 covariances or reliability confidence intervals. Existing numerical fixtures
 remain unchanged.
+
+
+## Nested nuisance references
+
+`inst/extdata/nested-workflow-reference.rds` contains two synthetic lmer datasets
+with 48 target people each. Cases cover day intercepts and multiple nuisance
+groups including correlated day intercept/slope effects. They include prior
+weights, offsets, unequal cluster sizes, shuffled observations, an excluded
+response, and unused factor levels. Expectations include joint likelihood-only
+scores/covariance, within-person nuisance covariance, target posterior covariance,
+and structural coefficients/SEs/intervals/full covariance.
+
+`dev/generate_nested_fixtures.R` never loads repair. It builds independent GLS
+and posterior matrices directly from the fitted model quantities, then checks
+Fuller M-MOM inference against the companion production code and algebra audit.
+Source commit/hashes, generator hash, R/lme4 versions, and settings are embedded
+in `provenance`. Refit comparisons use tolerance 1e-5 for optimizer/platform
+variation; frozen expectations are never generated from repair. These are
+per-dataset implementation references, not a coverage simulation.

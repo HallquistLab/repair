@@ -4,12 +4,16 @@
 \alias{re}
 \title{Refer to a measurement-model random coefficient}
 \usage{
-re(term, model = NULL)
+re(term, model = NULL, group = NULL)
 }
 \arguments{
 \item{term}{Random coefficient name; use \code{"(Intercept)"} for an intercept.}
 
 \item{model}{Name in the \code{models} list. May be omitted if unambiguous.}
+
+\item{group}{Target grouping-factor name from \code{\link[=repair_effects]{repair_effects()}}. May be
+omitted if the coefficient is unambiguous. Select one target group per model;
+other lmer groups must have every fitted level contained within that target.}
 }
 \value{
 A formula marker; calling it outside a structural formula is an error.

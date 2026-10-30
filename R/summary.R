@@ -95,6 +95,10 @@ print.summary_repair <- function(x, ...) {
     d <- x$measurement_models[[name]]
     cat("Measurement model: ", name, " (", d$measurement_backend, "; group ", d$group,
         "; ", length(d$unused_score_ids), " IDs outside cohort)\n", sep = "")
+    if (length(d$nuisance_groups)) {
+      cat("Nested nuisance groups: ", paste(d$nuisance_groups, collapse = ", "),
+        " (each fitted level contained within ", d$group, ")\n", sep = "")
+    }
     if (identical(d$measurement_backend, "nlme")) cat("nlme singularity is not assessed; inspect the measurement fit and its fitting warnings.\n")
     if (isTRUE(d$measurement_singular)) cat("Measurement model: singular random-effect covariance.\n")
     if (length(d$measurement_messages)) cat("Measurement-model messages:", paste(d$measurement_messages, collapse = "; "), "\n")

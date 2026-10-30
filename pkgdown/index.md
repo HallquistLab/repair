@@ -44,7 +44,7 @@ Vig and Hallquist's *Regression among random effects* manuscript; run
 
 ```r
 # install.packages("remotes")
-remotes::install_github("zacharyvig/repair")
+remotes::install_github("HallquistLab/repair")
 ```
 
 Version 0.5.0 is currently distributed through GitHub. Installation
@@ -103,14 +103,16 @@ and executable examples. Familiar `summary()`, `coef()`, `vcov()`, `confint()`, 
 | Create reporting tables, join by ID, or export results | [Extracting tables for reporting and reuse](articles/extracting-results.html) |
 | Assess marginal and intercept-residualized reliability | [Reliability and analysis diagnostics](articles/reliability-diagnostics.html) |
 | Relate random coefficients from separate measurement models | [REPAIR across multiple measurement models](articles/multiple-models.html) |
+| Include day or occasion effects nested within each person | [Nested nuisance effects within people](articles/nested-nuisance.html) |
 | Use correlated or heterogeneous residuals in nlme | [Validated nlme scoring and reproduction](articles/nlme-workflow.html) |
 
 ## Interpret the correction carefully
 
 - Structural equations are additive, include an intercept, and can use random
   coefficients as predictors, the outcome, or both. Each measurement model must
-  have one grouping factor. Observed structural variables are treated as
-  measured without error.
+  select one target grouping factor. lmer nuisance groups may be contained within
+  target people; shared nuisance levels remain rejected. Observed structural
+  variables are treated as measured without error.
 - Standard errors condition on estimated measurement-model quantities. They do
   not propagate measurement-model parameter uncertainty; tests and intervals
   use a normal reference.
@@ -124,5 +126,5 @@ and executable examples. Familiar `summary()`, `coef()`, `vcov()`, `confint()`, 
 The [workflow guide](articles/repair-workflow.html) documents supported formulas
 and model structures. The [changelog](news/index.html) records implementation
 changes. For reproducibility and design decisions, see the repository's
-[design audit](https://github.com/zacharyvig/repair/blob/main/dev/design-audit.md)
-and [fixture provenance](https://github.com/zacharyvig/repair/blob/main/tests/testthat/fixtures/README.md).
+[design audit](https://github.com/HallquistLab/repair/blob/main/dev/design-audit.md)
+and [fixture provenance](https://github.com/HallquistLab/repair/blob/main/tests/testthat/fixtures/README.md).
