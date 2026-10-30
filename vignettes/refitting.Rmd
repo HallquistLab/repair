@@ -12,17 +12,17 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(repair)
 ```
 
-`repair_refit()` rebuilds a measurement model, recomputes scores and their error
+`repair_refit()` rebuilds a MLM, recomputes predictions and their error
 covariance, and fits the structural regression again. It first replays the
 reference analysis and verifies agreement with the supplied fit. This supports
 reproducible sensitivity analyses and provides groundwork for a future person
-bootstrap. It currently supports **one measurement model**.
+bootstrap. It currently supports **one MLM**.
 
 ## Verify the reference analysis
 
-Keep the original repeated-observation and person-level data explicitly. The
+Keep the original repeated-observation and unit-level data explicitly. The
 reference data arguments always describe the original fit, including its
-requested cohort and structural exclusions.
+requested scope and structural exclusions.
 
 ```{r reference}
 data(repair_example)
@@ -36,7 +36,7 @@ fit <- repair(re("day", "growth") ~ practice,
   list(growth = measurement), people, "person", backend = "r")
 
 replay <- repair_refit(
-  fit, measurement_data = list(growth = repeated), data = people
+  fit, mlm_data = list(growth = repeated), data = people
 )
 repair_coefficients(replay)
 summary(replay)$refit$checks
@@ -45,42 +45,42 @@ summary(replay)$refit$checks
 With no replacement arguments, the returned object is the actual refitted
 reference analysis. Identity checks cover effective observations, IDs/grouping,
 fixed/random designs, weights and offsets, residual/nuisance and random-effect
-covariance, selected scores, assembled structural inputs, coefficients, and their
+covariance, selected predictions, assembled structural inputs, coefficients, and their
 covariance. Numerical comparisons use `tolerance = 1e-6`; identity, coding, and
 schema checks are exact. A mismatch stops before any replacement fit.
 
-Reference measurement data must retain the fitted observation row names. The
+Reference MLM data must retain the fitted observation row names. The
 adapter selects the original effective rows by these identities; it does not
 re-evaluate old `subset`, `data`, or global-environment expressions. Rows excluded
-from the original measurement fit are listed in
+from the original MLM fit are listed in
 `summary(replay)$refit$reference_excluded_rows`. Structural exclusion reasons remain
 in `repair_diagnostics(replay, "excluded")`.
 
-## Fit explicitly changed data or a revised cohort
+## Fit explicitly changed data or a revised scope
 
-Use the separate `new_measurement_data` and `new_data` arguments for replacements.
+Use the separate `new_mlm_data` and `new_data` arguments for replacements.
 Omitting either replacement argument retains its reference inputs. For example,
-restrict both measurement fitting and structural analysis to 50 people:
+restrict both MLM fitting and structural analysis to 50 people:
 
 ```{r replacement}
 revised_people <- people[1:50, ]
 revised_repeated <- repeated[repeated$person %in% revised_people$person, ]
 revised <- repair_refit(
-  fit, measurement_data = repeated, data = people,
-  new_measurement_data = revised_repeated, new_data = revised_people
+  fit, mlm_data = repeated, data = people,
+  new_mlm_data = revised_repeated, new_data = revised_people
 )
 repair_coefficients(revised)
 summary(revised)$refit$checks
 ```
 
-This estimates the complete procedure on the revised cohort. Keeping all original
+This estimates the complete procedure on the revised scope. Keeping all original
 measurement people while changing only `new_data` defines a different analysis;
-choose the intended measurement cohort explicitly.
+choose the intended MLM scope explicitly.
 
 Every supplied replacement measurement row must be used in its original order.
 Missing used values, implicit callback subsetting, or omission cause an error.
 Replacement structural data use the strict `na_action = "fail"` policy. Prepare a
-complete, substantively chosen cohort before refitting. The original structural
+complete, substantively chosen scope before refitting. The original structural
 formula, computation backend, and regularization policy/custom alpha are retained;
 sample-dependent moments and weights are recomputed.
 
@@ -120,7 +120,7 @@ Identity agreement verifies the reference calculation, not unrecorded settings.
 
 ## Supply an explicit fitting recipe when needed
 
-`refitter` is a deterministic function accepting **one effective measurement data
+`refitter` is a deterministic function accepting **one effective MLM data
 frame** and returning its fitted model. It runs for both reference and replacement
 inputs and is checked for method, rows, specification, and coefficient identities.
 The caller must supply the original fitting choices that the backend did not
@@ -136,7 +136,7 @@ summary(explicit)$refit$checks
 ```
 
 Measurement failures stop with the reference/replacement stage identified.
-A singular random-effect covariance can be retained when convergence, scoring,
+A singular random-effect covariance can be retained when convergence, prediction extraction,
 and structural estimation remain usable. Warnings and messages are recorded in
 `summary(result)$refit$warnings` and `$messages`; informational warnings are not
 blanket failures. Available optimizer failure codes and convergence warnings are
@@ -158,9 +158,9 @@ summary(copied)$refit$checks
 Every occurrence gets a new target identity. All of that source person's
 effective observations and its structural row are copied together. Character
 source IDs such as `"001"` are preserved in a separate mapping rather than parsed
-from generated names. `draw` requires identical measurement and analyzed cohorts;
+from generated names. `draw` requires identical MLM and structural scopes;
 measurement-only people, including those omitted structurally despite having
-measurement data, require an explicitly revised reference fit before using this
+MLM data, require an explicitly revised reference fit before using this
 convenience interface. It cannot be combined
 with replacement data.
 
@@ -195,7 +195,7 @@ data in their model/formula environment; the audit records versions, counts,
 warnings and any deterministic source-ID mapping. Save analysis code, inputs,
 `sessionInfo()`, and result tables along with serialized objects.
 
-Multiple measurement models and supplied cross-model covariance replay remain
+Multiple MLMs and supplied cross-model covariance replay remain
 outside this increment. Random bootstrap sampling, replicate management,
 bootstrap uncertainty, parallel execution, and coverage validation are future
 work. A refitted object's standard errors remain the conditional model-based

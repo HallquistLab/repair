@@ -12,7 +12,7 @@ model, or a named list of models.}
 }
 \value{
 A data frame with \code{model}, \code{group}, \code{term}, and \code{n_levels} columns.
-A bare model is named \code{measurement}. Terms are scalar coefficient names.
+A bare model is named \code{mlm}. Terms are scalar coefficient names.
 The catalog includes nuisance groups; discovery does not establish eligibility
 for structural fitting. Select the target with the \code{group} argument of \code{\link[=re]{re()}}.
 }

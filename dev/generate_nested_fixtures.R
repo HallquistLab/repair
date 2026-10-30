@@ -49,8 +49,8 @@ make_case <- function(seed, kind) {
     drop(lme4::getME(model, "X") %*% lme4::fixef(model))
   vc <- lme4::VarCorr(model)
   g <- as.matrix(vc$person)
-  scores <- matrix(0, n, 2, dimnames = list(people$person, c("(Intercept)", "x")))
-  error <- posterior <- array(0, c(2, 2, n), dimnames = list(colnames(scores), colnames(scores), people$person))
+  predictions <- matrix(0, n, 2, dimnames = list(people$person, c("(Intercept)", "x")))
+  error <- posterior <- array(0, c(2, 2, n), dimnames = list(colnames(predictions), colnames(predictions), people$person))
   covariance <- vector("list", n); names(covariance) <- people$person
   counts <- integer(n)
   for (i in seq_len(n)) {
@@ -65,11 +65,11 @@ make_case <- function(seed, kind) {
     } else r <- r + as.numeric(vc[["person:day"]]) * same_day
     covariance[[i]] <- r
     error[, , i] <- solve(crossprod(z, solve(r, z)))
-    scores[i, ] <- error[, , i] %*% crossprod(z, solve(r, residual[rows]))
+    predictions[i, ] <- error[, , i] %*% crossprod(z, solve(r, residual[rows]))
     posterior[, , i] <- g - g %*% t(z) %*% solve(r + z %*% g %*% t(z), z %*% g)
   }
   # Joint random outcome/predictor errors plus an observed error-free predictor.
-  y <- scores[, "x"]; x <- cbind(scores[, "(Intercept)"], people$practice)
+  y <- predictions[, "x"]; x <- cbind(predictions[, "(Intercept)"], people$practice)
   ex <- array(0, c(2, 2, n)); ex[1, 1, ] <- error[1, 1, ]
   ey <- error[2, 2, ]; exy <- cbind(error[2, 1, ], 0)
   full <- ref$fit_fuller_mlm(y, x, ex, ey, exy, backend = "r")
@@ -90,7 +90,7 @@ make_case <- function(seed, kind) {
   list(kind = kind, data = data, people = people, measurement_formula = formula,
     formula = 're("x", "growth", group = "person") ~ re("(Intercept)", "growth", group = "person") + practice',
     fitted_beta = lme4::fixef(model), target_g = g, n_observations = counts,
-    covariance = covariance, scores = scores, error = error, posterior = posterior,
+    covariance = covariance, predictions = predictions, error = error, posterior = posterior,
     input = list(outcome = y, predictors = x, err_x = ex, err_y = ey, err_xy = exy),
     coefficients = full$coefficients, vcov = full$vcov)
 }
@@ -99,7 +99,7 @@ fixture <- list(provenance = list(
   source_md5 = stats::setNames(unname(tools::md5sum(file.path(root, paths))), paths),
   generator_md5 = unname(tools::md5sum("dev/generate_nested_fixtures.R")),
   lme4_version = as.character(packageVersion("lme4")), R_version = R.version.string,
-  scoring = "Independent within-person GLS with all fitted nuisance contributions; target G excluded",
+  prediction extraction = "Independent within-unit GLS with all fitted nuisance contributions; target G excluded",
   posterior = "Independent G - GZ'(R_target+ZGZ')^-1 ZG",
   inference = "Conditional modified M-MOM; production Fuller and independent algebra audit agree",
   note = "Synthetic per-dataset implementation references, not a coverage study"),

@@ -2,7 +2,7 @@
 % Please edit documentation in R/repair.R
 \name{repair}
 \alias{repair}
-\title{Fit a REPAIR structural regression from measurement models}
+\title{Fit a REPAIR structural regression from MLMs}
 \usage{
 repair(
   formula,
@@ -25,7 +25,7 @@ be numeric or a random coefficient. An intercept is always included.}
 model, or named list. Select one target grouping factor per model. Gaussian
 lmer models may also contain nuisance groups whose every fitted level belongs
 to exactly one target level; nlme models must have one grouping factor.
-Grouping column names may differ, but their values must identify the same people.}
+Grouping column names may differ, but their values must identify the same units.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
 structural variables. Its ID values must match the model's grouping levels.}
@@ -33,7 +33,7 @@ structural variables. Its ID values must match the model's grouping levels.}
 \item{id}{Name of the ID column in \code{data}; need not equal the grouping name.}
 
 \item{na_action}{\code{"fail"} (default) or \code{"omit"}. Omission covers missing or
-nonfinite observed values, unmatched IDs, and failed score blocks; it warns
+nonfinite observed values, unmatched IDs, and failed prediction blocks; it warns
 and records every excluded ID and reason.}
 
 \item{regularization}{Moment regularization: \code{"minimum"} (default), \code{"none"},
@@ -45,16 +45,16 @@ predictor columns plus two. Required for \code{regularization = "custom"}.}
 
 \item{backend}{M-MOM computation backend: \code{"auto"}, \code{"r"}, or \code{"rcpp"}.}
 
-\item{cross_model_error}{Cross-model score-error covariance policy. Default
+\item{cross_model_error}{Cross-model prediction-error covariance policy. Default
 \code{NULL} is valid only when the formula references one model. For multiple
-models, use \code{"independent"} to explicitly assume zero cross-model scoring
+models, use \code{"independent"} to explicitly assume zero cross-model prediction extraction
 error covariance, or a list of blocks, one for every unordered model pair.
 Each block is \code{list(models = c("a", "b"), covariance = array(...))}.
 The numeric array must have three named dimensions: coefficient names from
-model a, coefficient names from model b, and person IDs. Term names must
+model a, coefficient names from model b, and unit IDs. Term names must
 exactly cover the effects selected from those models. Every retained ID
 must be present; extra IDs are allowed. Order does not matter. Values are
-covariances of likelihood-only scoring errors, not latent coefficients or
+covariances of likelihood-only prediction errors, not latent coefficients or
 raw observations. The assembled covariance must be positive semidefinite.
 Missing/invalid supplied blocks are errors even with \code{na_action = "omit"}.}
 }
@@ -69,7 +69,7 @@ accounts for sampling error when estimated random coefficients are used as
 predictors, the outcome, or both in a second-stage regression.
 }
 \details{
-Select random coefficients with \code{\link[=re]{re()}}, match them to person-level data by
+Select random coefficients with \code{\link[=re]{re()}}, match them to unit-level data by
 ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
 models are fitted beforehand so that their fitting choices remain explicit.
 
@@ -77,18 +77,18 @@ The supported structural grammar is additive with an intercept.
 Effects may come from multiple Gaussian lmer or linear lme models, each with
 one target grouping factor. Gaussian lmer models may have nuisance groups
 entirely contained within targets; shared nuisance levels are rejected.
-Full within-person score-error covariance is retained.
+Full within-unit prediction-error covariance is retained.
 Multiple models require an explicit \code{cross_model_error} policy; separate
-fits do not establish independent scoring errors. See \code{\link[=repair_data]{repair_data()}}.
+fits do not establish independent prediction errors. See \code{\link[=repair_data]{repair_data()}}.
 Observed variables are treated as measured without error. Scores are random
 deviations, not fixed-plus-random individual coefficients. For nlme fits,
 supported residual structures and stored-data requirements are described
 in \code{\link[=repair_ranef_gls]{repair_ranef_gls()}}. Use \code{\link[=repair_refit]{repair_refit()}} to verify and replay one
-measurement model with explicit reference/replacement data.
+MLM with explicit reference/replacement data.
 
-Standard errors condition on fitted measurement-model quantities and use
+Standard errors condition on fitted MLM quantities and use
 the modified final predictor moment (the manuscript M-MOM calculation).
-They assume the model-based normal-error covariance; measurement-model
+They assume the model-based normal-error covariance; MLM
 parameter uncertainty is not propagated. Intervals and tests use normal
 reference distributions. Numerical fitting failures return a result with
 \verb{@struc_fit@converged = FALSE} and issue a warning.

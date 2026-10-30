@@ -9,14 +9,14 @@ built in an isolated checkout; uncommitted edits in the author's original
 
 | Finding | Consequence | Applied correction | Verification |
 |---|---|---|---|
-| `repair()`, formula parsing, measurement fitting, structural fitting, and assembly were empty or chained empty stubs | A plausible call could yield a model containing NULL fits | Export a complete fitted-model workflow; replace unused fitting stubs with model normalization and effect discovery | Executable README/help/vignette; `test-workflow.R` |
+| `repair()`, formula parsing, MLM fitting, structural fitting, and assembly were empty or chained empty stubs | A plausible call could yield a model containing NULL fits | Export a complete fitted-model workflow; replace unused fitting stubs with model normalization and effect discovery | Executable README/help/vignette; `test-workflow.R` |
 | The outline combined fitting choices and structural specification without ID or covariance contracts | Users would have to infer joins and how selected effects map to error blocks | Explicit `id`, one-row-per-ID structural table, inspectable `repair_data()` object | Permuted/subset IDs, independent GLS and joint-error assembly tests |
 | `re("x")` lacked model qualification and a scalar-coefficient definition | Ambiguous effects and factor slopes could select the wrong quantity | `repair_effects()` catalog, qualified literal marker, canonical intercept name, ambiguity errors | Unknown/ambiguous names, aliases, both-side references |
 | Formula scope was broader than the M-MOM engine | No-intercept or transformed score formulas could be interpreted incorrectly | Additive grammar with intercept; reject interactions, nonlinear expressions, offsets, `.`, and unsupported models | Grammar rejection tests |
-| Missingness and rank failure had no structural policy | Silent sample changes or invalid matching | Fail by default; explicit omission warns and retains every excluded ID/reason; cohort counts and unused score IDs | Missing/nonfinite/unmatched IDs, failed score blocks, duplicate IDs, minimum sample and rank tests |
-| The score contract had changed from a list to S7, but a second old function definition and stale help remained | Users saw nonexistent arguments and two contradictory implementations | Remove shadowed legacy function; document the actual group-keyed S7 contract and arguments | Regenerated help, current scoring suite, documentation execution |
-| Multi-group scoring supplied within-cluster blocks but no cross-cluster covariance | Shared nuisance effects can violate the structural estimator's independent-row assumption | Keep scorer available as experimental; reject multi-group models in structural assembly and document the extension gate | Explicit multi-group structural rejection; target-group memo addendum |
-| S4 extraction dispatch accepted `merMod`, including GLMMs | Non-Gaussian fits could enter Gaussian GLS formulas | Guard public scoring for Gaussian lmer/lme classes | GLMM rejection regression test |
+| Missingness and rank failure had no structural policy | Silent sample changes or invalid matching | Fail by default; explicit omission warns and retains every excluded ID/reason; scope counts and unused score IDs | Missing/nonfinite/unmatched IDs, failed prediction blocks, duplicate IDs, minimum sample and rank tests |
+| The score contract had changed from a list to S7, but a second old function definition and stale help remained | Users saw nonexistent arguments and two contradictory implementations | Remove shadowed legacy function; document the actual group-keyed S7 contract and arguments | Regenerated help, current prediction extraction suite, documentation execution |
+| Multi-group prediction extraction supplied within-cluster blocks but no cross-cluster covariance | Shared nuisance effects can violate the structural estimator's independent-row assumption | Keep scorer available as experimental; reject multi-group models in structural assembly and document the extension gate | Explicit multi-group structural rejection; target-group memo addendum |
+| S4 extraction dispatch accepted `merMod`, including GLMMs | Non-Gaussian fits could enter Gaussian GLS formulas | Guard public prediction extraction for Gaussian lmer/lme classes | GLMM rejection regression test |
 | Adding fixed effects silently skipped missing coefficient matches | Mixed deviations/total coefficients could appear in one result | Require all matching fixed coefficients when `include_fixed = TRUE`; structural workflow consistently uses deviations | Complete/incomplete matching tests |
 | Extraction assumed one random-effect block per grouping factor | Ordinary `||` models failed despite a single grouping factor | Merge independent blocks in level-major order and align their block-diagonal covariance | Independent per-person GLS and OLS tests for `||` models |
 | No summaries or standard accessors existed | Analysts had to navigate internal S7 properties for routine results | Summary/print, coef, vcov, confint, nobs; explicit failed-fit behavior | Accessor values, confidence levels, printed sample counts, failure tests |
@@ -26,7 +26,7 @@ built in an isolated checkout; uncommitted edits in the author's original
 
 ## Why this scope is coherent
 
-The PR completes one scientific path: fitted measurement model → effect discovery
+The PR completes one scientific path: fitted MLM → effect discovery
 → ID/covariance assembly → M-MOM → interpretable output. It retains the existing
 S7 result and scorer contracts, rather than inventing a parallel fit hierarchy.
 The assembly class adds explicit dimensions and identity; M-MOM validates the
@@ -37,14 +37,14 @@ Gaussian lmer model, one grouping
 factor, and one additive equation with an intercept. Scores may be on either or
 both sides; observed factor contrast columns are permitted and carry zero error.
 Multiple fits may be cataloged, but cross-model equations fail instead of
-assuming zero score-error covariance. Fitted-model input preserves users' fitting
-controls and lets the same measurement model support several structural analyses.
+assuming zero prediction-error covariance. Fitted-model input preserves users' fitting
+controls and lets the same MLM support several structural analyses.
 
 Rejected scope is explicit: joint equations, implicit long-data aggregation,
-nonlinear score-error propagation, no-intercept M-MOM, cross-model covariance,
+nonlinear prediction-error propagation, no-intercept M-MOM, cross-model covariance,
 structural fitting with shared nuisance groups, and automatic reliability
 summaries. The unused reliability generic is removed; its statistical definition
-must precede implementation. Automatic measurement fitting is deferred until the
+must precede implementation. Automatic MLM fitting is deferred until the
 fitted-model workflow is stable. See `package_plan.Rmd` for extension gates.
 
 ## Scientific reference and tests
@@ -64,7 +64,7 @@ both computation backends. Fixtures contain source hashes and estimator settings
 normal tests require no sibling repository. `dev/generate_repair_fixtures.R` is the
 explicit maintenance path, not part of ordinary tests.
 
-New integration tests calculate within-person GLS independently, assemble all
+New integration tests calculate within-unit GLS independently, assemble all
 outcome/predictor error terms, and compare the public workflow to explicit M-MOM.
 The equal-precision, observed-predictor case is checked against OLS. Tests cover
 alignment, factors, omissions, failure diagnostics, grammar, and normal intervals.
@@ -114,8 +114,8 @@ point. Earlier sections record the scope at their respective milestones.
 
 The former reliability deferral is superseded by the definitions and validation
 in [reliability-validation.md](reliability-validation.md). This increment adds
-manuscript-defined posterior reliability, explicit cohort/undefined-value handling,
-structural diagnostic tables, summary integration, and person-level plots. Earlier
+manuscript-defined posterior reliability, explicit scope/undefined-value handling,
+structural diagnostic tables, summary integration, and unit-level plots. Earlier
 sections retain their historical scope. See the executable
 [reliability guide](../vignettes/reliability-diagnostics.Rmd) for user-facing examples.
 
@@ -127,7 +127,7 @@ schemas and exact diagnostic-table selection. See
 [extractor-contracts.md](extractor-contracts.md) for the audit findings, identity/
 ordering/failure contracts, and verification workflow. The executable
 [extractor guide](../vignettes/extracting-results.Rmd) demonstrates reporting,
-cohort inspection, covariance reconstruction, and joins without internal S7 access.
+scope inspection, covariance reconstruction, and joins without internal S7 access.
 
 
 ## Automated package-check follow-up

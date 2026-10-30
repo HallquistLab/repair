@@ -2,13 +2,13 @@
 #'
 #' Standard extraction methods operate on [repair()] results. `summary()` returns
 #' a list containing a coefficient table, effect sources, sample accounting,
-#' regularization, measurement-model messages, posterior reliability, weight
+#' regularization, MLM messages, posterior reliability, weight
 #' concentration, and the inference convention. See [repair_reliability()] and
 #' [repair_diagnostics()] for definitions and individual diagnostic tables.
 #' Use [repair_coefficients()] for a plain coefficient table with a chosen
-#' confidence level, and [repair_scores()] for ID-keyed measurement scores.
+#' confidence level, and [repair_predictions()] for ID-keyed MLM predictions.
 #' Results from [repair_refit()] also expose the replay audit in `summary(fit)$refit`.
-#' `nobs()` counts analyzed people, not repeated observations. `confint()` uses
+#' `nobs()` counts analyzed units, not repeated observations. `confint()` uses
 #' normal quantiles and supports named or integer coefficient selection.
 #' Failed numerical fits remain inspectable with `summary()`; coefficient and
 #' covariance accessors stop rather than presenting failed estimates.
@@ -71,11 +71,11 @@ S7::method(summary, class_repair_mod) <- function(object, ...) {
     coefficients = fit@coefficients, effects = data@effects,
     n_requested = data@diagnostics$n_requested, n_analyzed = length(data@ids),
     excluded = data@diagnostics$excluded,
-    unused_score_ids = data@diagnostics$unused_score_ids,
-    measurement_backend = data@diagnostics$measurement_backend,
-    measurement_singular = data@diagnostics$measurement_singular,
-    measurement_messages = data@diagnostics$measurement_messages,
-    measurement_models = data@diagnostics$measurement_models,
+    unused_prediction_ids = data@diagnostics$unused_prediction_ids,
+    mlm_backend = data@diagnostics$mlm_backend,
+    mlm_singular = data@diagnostics$mlm_singular,
+    mlm_messages = data@diagnostics$mlm_messages,
+    mlm_models = data@diagnostics$mlm_models,
     cross_model_error = data@diagnostics$cross_model_error,
     regularization = fit@diagnostics[c("preliminary_moment_control", "final_moment_control",
       "correction_prelim", "correction_final")],
@@ -83,7 +83,7 @@ S7::method(summary, class_repair_mod) <- function(object, ...) {
     reliability = repair_reliability(object),
     structural_diagnostics = repair_structural_diagnostics(object),
     refit = data@diagnostics$refit[setdiff(names(data@diagnostics$refit), "spec")],
-    inference = "Conditional on fitted measurement-model parameters; model-based normal SEs and intervals."),
+    inference = "Conditional on fitted MLM parameters; model-based normal SEs and intervals."),
     class = "summary_repair")
 }
 
@@ -91,21 +91,21 @@ S7::method(summary, class_repair_mod) <- function(object, ...) {
 print.summary_repair <- function(x, ...) {
   cat("REPAIR structural regression\n")
   cat(paste(deparse(x$formula), collapse = " "), "\n")
-  cat("People:", x$n_analyzed, "analyzed /", x$n_requested, "requested;",
+  cat("Units:", x$n_analyzed, "analyzed /", x$n_requested, "requested;",
       nrow(x$excluded), "excluded\n")
-  for (name in names(x$measurement_models)) {
-    d <- x$measurement_models[[name]]
-    cat("Measurement model: ", name, " (", d$measurement_backend, "; group ", d$group,
-        "; ", length(d$unused_score_ids), " IDs outside cohort)\n", sep = "")
+  for (name in names(x$mlm_models)) {
+    d <- x$mlm_models[[name]]
+    cat("MLM: ", name, " (", d$mlm_backend, "; group ", d$group,
+        "; ", length(d$unused_prediction_ids), " IDs outside scope)\n", sep = "")
     if (length(d$nuisance_groups)) {
       cat("Nested nuisance groups: ", paste(d$nuisance_groups, collapse = ", "),
         " (each fitted level contained within ", d$group, ")\n", sep = "")
     }
-    if (identical(d$measurement_backend, "nlme")) cat("nlme singularity is not assessed; inspect the measurement fit and its fitting warnings.\n")
-    if (isTRUE(d$measurement_singular)) cat("Measurement model: singular random-effect covariance.\n")
-    if (length(d$measurement_messages)) cat("Measurement-model messages:", paste(d$measurement_messages, collapse = "; "), "\n")
+    if (identical(d$mlm_backend, "nlme")) cat("nlme singularity is not assessed; inspect the MLM fit and its fitting warnings.\n")
+    if (isTRUE(d$mlm_singular)) cat("MLM: singular random-effect covariance.\n")
+    if (length(d$mlm_messages)) cat("Measurement-model messages:", paste(d$mlm_messages, collapse = "; "), "\n")
   }
-  cat("Cross-model scoring errors: ", switch(x$cross_model_error$policy,
+  cat("Cross-model prediction errors: ", switch(x$cross_model_error$policy,
       independent = "assumed independent (zero covariance)",
       supplied = "user-supplied covariance blocks (conditional inference)",
       not_applicable = "not applicable (one model)"), "\n", sep = "")
@@ -116,9 +116,9 @@ print.summary_repair <- function(x, ...) {
   }
   cat("Scores: likelihood-only random deviations\n")
   print(x$effects[, c("model", "group", "term", "role"), drop = FALSE], row.names = FALSE)
-  cat("\nPosterior reliability (analyzed cohort; equal person weights):\n")
+  cat("\nPosterior reliability (structural scope; equal unit weights):\n")
   print(as.data.frame(x$reliability)[, c("model", "term", "role", "measure", "reliability",
-    "n_people", "n_defined"), drop = FALSE], row.names = FALSE, digits = 3)
+    "n_units", "n_defined"), drop = FALSE], row.names = FALSE, digits = 3)
   if (any(x$reliability$n_undefined > 0)) cat("Undefined reliability: inspect repair_reliability(fit) for reasons.\n")
   if (x$converged) {
     cat("\n")
@@ -135,7 +135,7 @@ print.summary_repair <- function(x, ...) {
     weight <- x$structural_diagnostics$weight_summary
     cat("Largest analysis-weight fraction:", format(weight$max_fraction, digits = 3),
         "; weight-equivalent count:", format(weight$weight_equivalent_n, digits = 3), "\n")
-    cat("Moment conditioning and individual weights: repair_diagnostics(fit).\n")
+    cat("Moment conditioning and unit weights: repair_diagnostics(fit).\n")
   } else {
     cat("Structural fit FAILED:", x$message, "\n")
   }

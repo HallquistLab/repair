@@ -9,7 +9,7 @@ The development version remains `0.0.0.9000`; a release/tag is a separate step.
 | Finding | Correction | Evidence |
 |---|---|---|
 | Ten of twelve exported-object help topics lacked executable examples | Add a compact example to every missing topic; explain the advanced S7 class and its return value | Generated Rd; R CMD check examples |
-| Beginner examples invented a sleepstudy predictor with no shared teaching dataset | Add `repair_example`, with repeated learning scores, practice hours, and documented generating truth | `R/data.R`, `dev/generate_example_data.R`, README and support-guide execution |
+| Beginner examples invented a sleepstudy predictor with no shared teaching dataset | Add `repair_example`, with repeated learning predictions, practice hours, and documented generating truth | `R/data.R`, `dev/generate_example_data.R`, README and support-guide execution |
 | Supported model and inference limits were scattered across guides | Add one support/troubleshooting matrix, interpretation guidance, and a diagnostic-to-action table | `vignettes/support-and-troubleshooting.Rmd`, linked from help, README, plan, and site |
 | Only plain extracted tables had explicit persistence tests | Save single lmer and paired nlme fits, read in fresh processes, compare summaries/generics/all public result tables | `tests/testthat/test-persistence.R`; includes an omitted person and supplied cross-model covariance |
 | Software and manuscript had no explicit citation file | Add separate software and unpublished-method references | `inst/CITATION`; software version comes from installed metadata |
@@ -51,13 +51,13 @@ publication claim. Reconcile it with the final manuscript before a release.
 ## Acceptance and remaining boundaries
 
 The new tests check same-version persistence, including recomputed diagnostics
-from stored measurement fits. They do not promise serialization compatibility
+from stored MLM fits. They do not promise serialization compatibility
 across future S7/package/dependency versions. Keep analysis code and session
 information and export plain tables for durable reporting.
 
 Fixture agreement is implementation evidence, not a full rerun of the paper's
 Monte Carlo study or a coverage guarantee. Structural inference still conditions
-on fitted measurement quantities and any supplied error-covariance inputs.
+on fitted MLM quantities and any supplied error-covariance inputs.
 Dependency lower bounds beyond the existing R minimum have not been systematically
 tested; adding speculative minima would not establish compatibility.
 

@@ -1,7 +1,7 @@
-# Fitted measurement models are supplied explicitly, preserving their controls,
+# Fitted MLMs are supplied explicitly, preserving their controls,
 # contrasts, weights, offsets, and effective observations.
 normalize_repair_models <- function(models) {
-  if (inherits(models, "lmerMod") || inherits(models, "lme")) models <- list(measurement = models)
+  if (inherits(models, "lmerMod") || inherits(models, "lme")) models <- list(mlm = models)
   if (!is.list(models) || !length(models) || is.null(names(models)) ||
       anyNA(names(models)) || any(!nzchar(names(models))) || anyDuplicated(names(models))) {
     repair_error("`models` must be a fitted lmer/lme model or a uniquely named list of fitted lmer/lme models.")
@@ -17,7 +17,7 @@ normalize_repair_models <- function(models) {
 #' @param models A fitted Gaussian `lme4::lmer()` or linear `nlme::lme()`
 #'   model, or a named list of models.
 #' @return A data frame with `model`, `group`, `term`, and `n_levels` columns.
-#'   A bare model is named `measurement`. Terms are scalar coefficient names.
+#'   A bare model is named `mlm`. Terms are scalar coefficient names.
 #'   The catalog includes nuisance groups; discovery does not establish eligibility
 #'   for structural fitting. Select the target with the `group` argument of [re()].
 #' @examples
@@ -44,17 +44,17 @@ repair_effects <- function(models) {
   })))
 }
 
-repair_measurement_diagnostics <- function(model) {
+repair_mlm_diagnostics <- function(model) {
   if (inherits(model, "lmerMod")) {
-    return(list(measurement_backend = "lme4", measurement_singular = lme4::isSingular(model),
-      measurement_messages = model@optinfo$conv$lme4$messages %||% character()))
+    return(list(mlm_backend = "lme4", mlm_singular = lme4::isSingular(model),
+      mlm_messages = model@optinfo$conv$lme4$messages %||% character()))
   }
-  list(measurement_backend = "nlme", measurement_singular = NA,
-    measurement_messages = if (is.character(model$apVar))
+  list(mlm_backend = "nlme", mlm_singular = NA,
+    mlm_messages = if (is.character(model$apVar))
       paste("nlme variance-parameter uncertainty:", model$apVar) else character())
 }
 
-# Qualification uses all effective fitted rows, before structural cohort selection.
+# Qualification uses all effective fitted rows, before structural scope selection.
 # A name such as person:day is neither required nor sufficient: actual level
 # membership determines whether any nuisance effect is shared between targets.
 repair_validate_target <- function(model, group, name) {
@@ -71,7 +71,7 @@ repair_validate_target <- function(model, group, name) {
       examples <- paste(utils::head(shared, 3L), collapse = ", ")
       repair_error(paste0("Model {.val {name}} has nuisance group {.val {other}} with levels ",
         "shared across target group {.val {group}} (e.g. {examples}). ",
-        "Cross-person scoring-error covariance is not supported, even with `na_action = \"omit\"`."))
+        "Cross-unit prediction-error covariance is not supported, even with `na_action = \"omit\"`."))
     }
   }
   nuisance

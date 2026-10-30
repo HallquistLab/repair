@@ -21,8 +21,8 @@ examples/tests require no companion repository.
 ## End-to-end nlme REPAIR reference datasets
 
 `nlme-workflow-reference.rds` contains three synthetic repeated-observation
-and person-level datasets. It includes model specifications, expected
-likelihood-only scores, joint score-error covariances, and structural estimates,
+and unit-level datasets. It includes model specifications, expected
+likelihood-only predictions, joint prediction-error covariances, and structural estimates,
 standard errors, confidence intervals, and covariance matrices.
 
 Expectations were generated WITHOUT loading repair, using production code in

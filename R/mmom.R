@@ -1,4 +1,4 @@
-#' Fit the M-MOM structural model from scores and error covariances.
+#' Fit the M-MOM structural model from predictions and error covariances.
 #'
 #' @param data_list Either a list of per-person lists with fields `outcome`,
 #'   `predictors`, `err_x`, `err_y`, and `err_xy`, or a matrix-style list with
@@ -6,7 +6,7 @@
 #' @param preliminary_moment_control Correction controls with `correction` and `alpha`.
 #' @param final_moment_control Correction controls with `correction` and `alpha`.
 #' @param backend Computation backend: `"auto"`, `"r"`, or `"rcpp"`.
-#' @details Inputs must be likelihood-only scores with additive sampling-error
+#' @details Inputs must be likelihood-only predictions with additive sampling-error
 #'   covariances, not BLUPs with posterior covariances. Observed error-free
 #'   variables have zero error variance and covariance. Matrix-style inputs
 #'   may instead supply an outcome vector, predictor matrix, an error array
@@ -145,7 +145,7 @@ mmom_step2 <- function(inputs, coef0, predictor_idx, lambda_prelim) {
   if (any(err_resid_var < -1e-8)) {
     return(mmom_failure(
       "resid_var_meas_err_subtract",
-      "The measurement model produced a negative composite error variance."
+      "The MLM produced a negative composite error variance."
     ))
   }
   err_resid_var <- pmax(err_resid_var, 0)

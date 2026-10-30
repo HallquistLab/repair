@@ -133,7 +133,7 @@ get_ranef_base_covariance <- function(elements, rows) {
   covariance
 }
 
-# The same target-specific nuisance covariance is used for likelihood scoring
+# The same target-specific nuisance covariance is used for likelihood prediction extraction
 # and posterior reliability. The target random-effect variance is excluded.
 get_ranef_target_covariance <- function(elements, group, rows) {
   covariance <- get_ranef_base_covariance(elements, rows)
@@ -161,7 +161,7 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
     ncol = length(terms),
     dimnames = list(levels, terms)
   )
-  error_covariance <- array(
+  prediction_error_covariance <- array(
     NA_real_,
     dim = c(
       length(terms),
@@ -241,7 +241,7 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
     }
 
     predictions[level_index, ] <- as.numeric(prediction@solution)
-    error_covariance[, , level_index] <- prediction@inverse
+    prediction_error_covariance[, , level_index] <- prediction@inverse
   }
 
   if (isTRUE(include_fixed)) {
@@ -273,7 +273,7 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
   if (length(failed_levels)) {
     repair_warn(
       "Likelihood-only predictions failed for ",
-      "{length(failed_levels)} cluster(s); their scores and ",
+      "{length(failed_levels)} cluster(s); their predictions and ",
       "covariances are missing. See {.field diagnostics}."
     )
   }
@@ -281,7 +281,7 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
   list(
     success = !length(failed_levels),
     predictions = predictions,
-    error_covariance = error_covariance,
+    prediction_error_covariance = prediction_error_covariance,
     terms = terms,
     levels = levels,
     diagnostics = list(
@@ -294,20 +294,20 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
   )
 }
 
-#' Extract likelihood-only random-coefficient scores
+#' Extract likelihood-only random-coefficient predictions
 #'
-#' Compute target-specific GLS scores after subtracting fitted fixed effects
+#' Compute target-specific GLS predictions after subtracting fitted fixed effects
 #' and offsets. The target covariance excludes the target random effects and
 #' includes residual and nuisance-group covariance contributions.
 #' @param mlm A Gaussian `lme4::lmer()` or `nlme::lme()` fit.
-#' @param target_group Grouping factor to score; NULL scores all groups.
-#' @param include_fixed Add matching fixed coefficients to the scores. Default
+#' @param target_group Grouping factor for prediction extraction; NULL predicts all groups.
+#' @param include_fixed Add matching fixed coefficients to the predictions. Default
 #'   FALSE gives deviations. TRUE requires a fixed coefficient for every random
 #'   coefficient; it does not reconstruct covariate-dependent individual effects.
 #' @details Failed clusters have missing predictions and covariance blocks, issue
 #'   a warning, and appear in `@diagnostics[[group]]$failed_levels`. A singular
 #'   random-effect covariance is allowed when the target design is identifiable.
-#'   Standard errors condition on fitted measurement-model parameters.
+#'   Standard errors condition on fitted MLM parameters.
 #'
 #'   Single-group linear nlme fits must retain their data (`keep.data = TRUE`).
 #'   Supported correlations are independent, `corAR1`, and `corCAR1`; an AR(1)
@@ -325,19 +325,19 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
 #'   The structural [repair()] workflow accepts lmer nuisance groups only when
 #'   every fitted nuisance level belongs to one target level. It rejects shared
 #'   nuisance levels: per-cluster blocks do not describe their cross-cluster
-#'   score errors. Lower-level scoring of such shared structures remains
-#'   experimental; computing scores alone does not validate structural inference.
-#' @return An S7 score object with group-keyed `@predictions` matrices (ID by
-#'   coefficient), `@error_covariance` arrays (coefficient by coefficient by ID),
+#'   prediction errors. Lower-level prediction extraction of such shared structures remains
+#'   experimental; computing predictions alone does not validate structural inference.
+#' @return An S7 prediction object with group-keyed `@predictions` matrices (ID by
+#'   coefficient), `@prediction_error_covariance` arrays (coefficient by coefficient by ID),
 #'   `@levels`, `@terms`, and `@diagnostics`; `@success` is true only if all selected
 #'   clusters scored successfully. These are sampling-error covariances, not
 #'   posterior BLUP covariances.
 #' @examples
 #' data(repair_example)
 #' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
-#' scores <- repair_ranef_gls(growth, target_group = "person")
-#' head(scores@predictions$person)
-#' scores@error_covariance$person[, , 1]
+#' predictions <- repair_ranef_gls(growth, target_group = "person")
+#' head(predictions@predictions$person)
+#' predictions@prediction_error_covariance$person[, , 1]
 #' @export
 repair_ranef_gls <- function(mlm, target_group = NULL, include_fixed = FALSE) {
   if (!is.null(target_group) &&
@@ -403,10 +403,10 @@ repair_ranef_gls <- function(mlm, target_group = NULL, include_fixed = FALSE) {
       ),
       selected_groups
     ),
-    error_covariance = stats::setNames(
+    prediction_error_covariance = stats::setNames(
       lapply(
         group_results,
-        function(result) result$error_covariance
+        function(result) result$prediction_error_covariance
       ),
       selected_groups
     ),

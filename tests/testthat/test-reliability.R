@@ -9,7 +9,7 @@ test_that("posterior reliability reproduces independent manuscript/simulation fi
       control = nlme::lmeControl(msMaxIter = 300))
     fit <- repair(re("z") ~ re("(Intercept)"), model,
       data.frame(person = rev(case$per_person$id)), "person")
-    person <- repair_reliability(fit, "person")
+    person <-     repair_reliability(fit, "unit")
     summary <- repair_reliability(fit)
     cases <- list(intercept = list(term = "(Intercept)", measure = "marginal"),
       slope = list(term = "z", measure = "marginal"),
@@ -23,7 +23,7 @@ test_that("posterior reliability reproduces independent manuscript/simulation fi
       expect_identical(p$n_observations, case$per_person$n_observations[order])
       expect_equal(s$reliability, unname(case$summary[name]), tolerance = 1e-5)
       expect_equal(s$reliability, mean(p$reliability), tolerance = 1e-12)
-      expect_equal(s$n_people, nrow(case$per_person)); expect_equal(s$n_undefined, 0L)
+      expect_equal(s$n_units, nrow(case$per_person)); expect_equal(s$n_undefined, 0L)
       expect_true(all(p$status == "ok"))
     }
     # Cohort summaries use people, not number of observations, as weights.
@@ -39,7 +39,7 @@ test_that("lmer posterior variance agrees with conditional ranef and differs fro
   model <- fit@mlm_fit$growth
   post <- attr(lme4::ranef(model, condVar = TRUE)$Subject, "postVar")
   g <- as.matrix(lme4::VarCorr(model)$Subject)
-  p <- repair_reliability(fit, "person", type = "marginal")
+  p <-   repair_reliability(fit, "unit", type = "marginal")
   for (j in 1:2) {
     rows <- p[p$term == colnames(g)[j], ]
     expect_equal(rows$posterior_variance, as.numeric(post[j, j, ]), tolerance = 1e-8)
@@ -48,21 +48,21 @@ test_that("lmer posterior variance agrees with conditional ranef and differs fro
   slope <- p[p$term == "Days", ]
   expect_gt(max(abs(slope$posterior_variance - fit@analysis_data@err_y)), 1e-3)
   expect_equal(summary(fit)$reliability, repair_reliability(fit))
-  expect_output(print(fit), "Posterior reliability.*analyzed cohort")
+  expect_output(print(fit), "Posterior reliability.*structural scope")
 })
 
-test_that("cohorts preserve analyzed IDs and expose measurement-only people", {
+test_that("scopes preserve analyzed IDs and expose MLM-only units", {
   ex <- workflow_example()
   dat <- ex$data[18:3, ]; dat$x[1] <- NA_real_
   expect_warning(fit <- repair(re("Days") ~ x, ex$models, dat, "person", "omit"), "Omitting")
-  p <- repair_reliability(fit, "person", type = "marginal")
+  p <-   repair_reliability(fit, "unit", type = "marginal")
   expect_identical(p$id, dat$person[-1])
-  expect_equal(repair_reliability(fit)$n_people, c(15L, 15L))
-  all <- repair_reliability(fit, "person", "measurement", "marginal")
+  expect_equal(repair_reliability(fit)$n_units, c(15L, 15L))
+  all <- repair_reliability(fit, "unit", "all", "marginal")
   expect_setequal(all$id, ex$data$person)
-  expect_equal(repair_reliability(fit, cohort = "measurement")$n_people, c(18L, 18L))
+  expect_equal(repair_reliability(fit, scope = "all")$n_units, c(18L, 18L))
   expect_error(repair_reliability(ex$models), "repair")
-  expect_error(repair_reliability(fit, cohort = "requested"), "arg")
+  expect_error(repair_reliability(fit, scope = "requested"), "arg")
 })
 
 test_that("singular prior covariances retain defined marginals and explain undefined contrasts", {
@@ -75,7 +75,7 @@ test_that("singular prior covariances retain defined marginals and explain undef
   for (g in list(diag(c(1, 0)), matrix(1, 2, 2), diag(c(0, 1)), matrix(0, 2, 2))) {
     elements <- original
     elements@random_covariance <- list(Subject = kronecker(diag(18), g))
-    p <- repair_reliability(fit, "person")
+    p <-     repair_reliability(fit, "unit")
     marg <- p[p$measure == "marginal", ]
     for (j in 1:2) {
       rows <- marg[marg$term == c("(Intercept)", "Days")[j], ]
@@ -102,36 +102,36 @@ test_that("posterior covariance handles singular priors and unidentifiable likel
   model <- suppressWarnings(lme4::lmer(Reaction ~ Days + (Days | Subject), d))
   people <- workflow_example()$data
   expect_warning(expect_warning(fit <- repair(re("Days") ~ x, model, people, "person", "omit"), "Omitting"), "predictions failed")
-  p <- repair_reliability(fit, "person", "measurement")
+  p <-   repair_reliability(fit, "unit", "all")
   expect_true(all(is.finite(p$reliability[p$id == "308"])))
-  expect_false("308" %in% repair_reliability(fit, "person")$id)
+  expect_false("308" %in% repair_reliability(fit, "unit")$id)
   diag <- repair_diagnostics(fit)
-  expect_identical(diag$score_failures$id, "308")
-  expect_false(diag$score_failures$analyzed)
-  expect_match(diag$score_failures$reason, "rank-deficient")
+  expect_identical(diag$prediction_failures$id, "308")
+  expect_false(diag$prediction_failures$analyzed)
+  expect_match(diag$prediction_failures$reason, "rank-deficient")
 })
 
 test_that("undefined people are not silently removed from summary denominators", {
-  p <- repair_reliability(reliability_example(), "person", type = "marginal")
+  p <-   repair_reliability(reliability_example(), "unit", type = "marginal")
   p$reliability[1] <- NA_real_; p$status[1] <- "posterior_failure"; p$reason[1] <- "test numerical failure"
   s <- repair_summarize_reliability(p)
   bad <- s[s$term == p$term[1], ]
-  expect_true(is.na(bad$reliability)); expect_equal(bad$n_people, 18L)
+  expect_true(is.na(bad$reliability)); expect_equal(bad$n_units, 18L)
   expect_equal(bad$n_defined, 17L); expect_equal(bad$n_undefined, 1L)
   expect_equal(bad$mean_defined, mean(p$reliability[p$term == p$term[1]], na.rm = TRUE))
   expect_match(bad$reason, "test numerical failure")
 })
 
-test_that("multiple-model reliability is model-specific and uses a common analyzed cohort", {
+test_that("multiple-model reliability is model-specific and uses a common structural scope", {
   skip_if_not_installed("nlme")
   ex <- multimodel_example()
   fit <- repair(ex$formula, ex$models, ex$case$people[1:60, , drop = FALSE], "person",
     cross_model_error = ex$case$cross_model_error)
-  p <- repair_reliability(fit, "person")
+  p <-   repair_reliability(fit, "unit")
   expect_setequal(unique(p$model), c("growth", "response"))
   expect_setequal(unique(p$id), ex$case$people$person[1:60])
-  expect_true(all(repair_reliability(fit)$n_people == 60L))
-  expect_true(all(repair_reliability(fit, cohort = "measurement")$n_people == 70L))
+  expect_true(all(repair_reliability(fit)$n_units == 60L))
+  expect_true(all(repair_reliability(fit, scope = "all")$n_units == 70L))
   independent <- repair(ex$formula, ex$models, ex$case$people[1:60, , drop = FALSE], "person", cross_model_error = "independent")
   expect_equal(repair_reliability(independent), repair_reliability(fit))
   expect_equal(repair_diagnostics(fit)$cross_model_error, fit@analysis_data@diagnostics$cross_model_error)
@@ -146,7 +146,7 @@ test_that("residualization is explicit for effects outside the supported two-ter
 })
 
 test_that("reliability plots dispatch outside the namespace and restore graphics state", {
-  p <- repair_reliability(reliability_example(), "person")
+  p <-   repair_reliability(reliability_example(), "unit")
   path <- tempfile(fileext = ".pdf"); grDevices::pdf(path)
   on.exit({grDevices::dev.off(); unlink(path)}, add = TRUE)
   graphics::par(cex = .8)
@@ -157,6 +157,6 @@ test_that("reliability plots dispatch outside the namespace and restore graphics
   expect_equal(plot(p, type = "observations", pch = 19), p)
   p$reliability[] <- NA_real_
   expect_equal(plot(p), p)
-  expect_error(plot(repair_reliability(reliability_example())), "person-level")
+  expect_error(plot(repair_reliability(reliability_example())), "unit-level")
   expect_error(plot(p[FALSE, ]), "No reliability rows")
 })

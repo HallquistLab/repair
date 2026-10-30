@@ -1,4 +1,4 @@
-# Validate identities before scoring; alignment to the retained cohort happens
+# Validate identities before prediction extraction; alignment to the retained scope happens
 # afterwards. No positional fallback or partially specified zero blocks.
 repair_cross_error_policy <- function(value, parsed) {
   models <- parsed$model
@@ -8,7 +8,7 @@ repair_cross_error_policy <- function(value, parsed) {
   }
   if (identical(value, "independent")) return(list(policy = "independent", blocks = list()))
   if (!is.list(value) || !length(value)) {
-    repair_error("Cross-model scoring errors require an explicit `cross_model_error`: use \"independent\" or supply covariance blocks for every model pair.")
+    repair_error("Cross-model prediction errors require an explicit `cross_model_error`: use \"independent\" or supply covariance blocks for every model pair.")
   }
   seen <- matrix(FALSE, length(models), length(models))
   for (block in value) {
@@ -61,7 +61,7 @@ repair_apply_cross_error <- function(covariances, policy, parsed, ids) {
       m <- covariances[, , i]
       scale <- max(abs(m))
       if (scale > 0 && min(eigen(m / scale, symmetric = TRUE, only.values = TRUE)$values) < -1e-8) {
-        repair_error("Assembled score-error covariance is not positive semidefinite for ID {.val {ids[i]}}. Check the supplied cross-model blocks.")
+        repair_error("Assembled prediction-error covariance is not positive semidefinite for ID {.val {ids[i]}}. Check the supplied cross-model blocks.")
       }
     }
   }

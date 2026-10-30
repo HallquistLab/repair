@@ -43,7 +43,7 @@ test_that("the public workflow reproduces explicit correlated-error M-MOM inputs
   }
 })
 
-test_that("IDs define alignment and cohort independently of row order", {
+test_that("IDs define alignment and scope independently of row order", {
   ex <- workflow_example()
   f <- re("Days") ~ x
   full <- repair(f, ex$models, ex$data, "person", backend = "r")
@@ -53,7 +53,7 @@ test_that("IDs define alignment and cohort independently of row order", {
   expect_identical(reversed@analysis_data@ids, ex$data$person[18:1])
   expect_equal(unname(reversed@analysis_data@err_y), rev(unname(full@analysis_data@err_y)))
   subset <- repair_data(f, ex$models, ex$data[3:18, ], "person")
-  expect_identical(subset@diagnostics$unused_score_ids, ex$data$person[1:2])
+  expect_identical(subset@diagnostics$unused_prediction_ids, ex$data$person[1:2])
   expect_identical(subset@ids, ex$data$person[3:18])
   ordinary <- lm(unname(full@analysis_data@outcome) ~ ex$data$x)
   expect_equal(unname(coef(full)), unname(coef(ordinary)), tolerance = 1e-9)
@@ -97,10 +97,10 @@ test_that("rank-deficient measurement clusters propagate to exclusion diagnostic
   d$Days[d$Subject == "308"] <- 0
   model <- suppressWarnings(lme4::lmer(Reaction ~ Days + (Days | Subject), d))
   dat <- workflow_example()$data
-  expect_warning(expect_error(repair_data(re("Days") ~ x, model, dat, "person"), "scoring failed"), "predictions failed")
+  expect_warning(expect_error(repair_data(re("Days") ~ x, model, dat, "person"), "prediction extraction failed"), "predictions failed")
   expect_warning(expect_warning(a <- repair_data(re("Days") ~ x, model, dat, "person", "omit"), "Omitting 1"), "predictions failed")
   expect_identical(a@diagnostics$excluded$id, "308")
-  expect_identical(a@scores@diagnostics$Subject$failed_levels, "308")
+  expect_identical(a@predictions@diagnostics$Subject$failed_levels, "308")
 })
 
 test_that("effect names and formula grammar fail clearly before numerical fitting", {
@@ -173,7 +173,7 @@ test_that("Gaussian and independent-group boundaries are enforced", {
   totals <- repair_ranef_gls(ex$models$growth, include_fixed = TRUE)
   expect_equal(totals@predictions$Subject,
     sweep(deviations@predictions$Subject, 2, lme4::fixef(ex$models$growth), "+"))
-  expect_equal(totals@error_covariance, deviations@error_covariance)
+  expect_equal(totals@prediction_error_covariance, deviations@prediction_error_covariance)
   unmatched <- lme4::lmer(Reaction ~ 1 + (Days | Subject), d)
   expect_error(repair_ranef_gls(unmatched, include_fixed = TRUE), "matching fixed coefficients")
 })
@@ -188,7 +188,7 @@ test_that("separate random blocks for one grouping factor preserve score orderin
     rows <- as.character(d$Subject) == id
     z <- cbind(1, d$Days[rows])
     expect_equal(unname(score@predictions$Subject[id, ]), unname(lm.fit(z, residual[rows])$coefficients), tolerance = 1e-9)
-    expect_equal(unname(score@error_covariance$Subject[, , id]), sigma(independent)^2 * solve(crossprod(z)), tolerance = 1e-9)
+    expect_equal(unname(score@prediction_error_covariance$Subject[, , id]), sigma(independent)^2 * solve(crossprod(z)), tolerance = 1e-9)
   }
   fit <- repair(re("Days") ~ x, independent, workflow_example()$data, "person")
   ordinary <- lm(score@predictions$Subject[, "Days"] ~ workflow_example()$data$x)

@@ -157,7 +157,7 @@ S7::method(repair_get_mlm_elements, class_merMod) <- function(model) {
     }
 
     if (anyDuplicated(terms)) {
-      repair_error("Random coefficient names must be unique within each grouping factor for likelihood-only scoring.")
+      repair_error("Random coefficient names must be unique within each grouping factor for likelihood-only prediction extraction.")
     }
     blocks <- which(names(block_terms) == group_name)
     # Gp contains zero-based offsets for blocks, not distinct grouping factors.
@@ -221,7 +221,7 @@ S7::method(repair_get_mlm_elements, class_merMod) <- function(model) {
   #   R^-1 A = A * weights / sigma^2
   #
   # Contributions from non-target random effects are added during
-  # REPAIR scoring.
+  # REPAIR prediction extraction.
   sigma2 <- stats::sigma(model)^2
   if (!is.finite(sigma2) || sigma2 <= 0) {
     repair_error(

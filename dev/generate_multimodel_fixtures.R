@@ -38,7 +38,7 @@ make_case <- function(seed, rho) {
   ex[1, 2, ] <- ex[2, 1, ] <- sa$gls_var12
   ey <- sb$gls_var22; exy <- matrix(0, n, 2)
   # Known illustrative residual correlation, conditional on fitted marginal
-  # residual scales. L_a R_ab L_b' propagates observation errors into scores.
+  # residual scales. L_a R_ab L_b' propagates observation errors into predictions.
   # Cross-model covariance is NOT the correlation between latent slopes.
   for (i in seq_len(n)) {
     za <- cbind(1, a$z[a$id == people$person[i]])
@@ -70,7 +70,7 @@ make_case <- function(seed, rho) {
     cross_model_error = if (rho == 0) "independent" else
       list(list(models = c("growth", "response"), covariance = cross)),
     fitted_beta = list(a = nlme::fixef(fit_a), b = nlme::fixef(fit_b)),
-    scores = list(a = sa, b = sb),
+    predictions = list(a = sa, b = sb),
     input = list(outcome = y, predictors = x, err_x = ex, err_y = ey, err_xy = exy),
     coefficients = full$coefficients, vcov = full$vcov, reporting_scale = reporting_scale,
     reported_focal = as.data.frame(production[fields]) * reporting_scale)

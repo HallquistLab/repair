@@ -16,10 +16,10 @@ test_that("nlme effective rows and fitted residual structures reproduce independ
       weights = weights, contrasts = list(phase = contr.sum(2)),
       control = nlme::lmeControl(msMaxIter = 300))
     expected <- independent_nlme_gls(model, dat, structure)
-    scores <- repair_ranef_gls(model)
-    expect_true(scores@success, info = structure)
-    expect_equal(scores@predictions$id, expected$estimates, tolerance = 1e-8, info = structure)
-    expect_equal(scores@error_covariance$id, expected$errors, tolerance = 1e-8, info = structure)
+    predictions <- repair_ranef_gls(model)
+    expect_true(predictions@success, info = structure)
+    expect_equal(predictions@predictions$id, expected$estimates, tolerance = 1e-8, info = structure)
+    expect_equal(predictions@prediction_error_covariance$id, expected$errors, tolerance = 1e-8, info = structure)
     extracted <- repair_get_mlm_elements(model)
     expect_identical(extracted@diagnostics$effective_row_ids, rownames(model$groups))
     expect_equal(extracted@response, dat$y[match(rownames(model$groups), rownames(dat))])
@@ -45,7 +45,7 @@ test_that("nlme effective rows and fitted residual structures reproduce independ
       expect_true(fit@struc_fit@converged)
       expect_equal(unname(coef(fit)), reference@coefficients$estimate, tolerance = 1e-8)
       expect_equal(vcov(fit), reference@vcov, tolerance = 1e-8)
-      expect_identical(a@diagnostics$measurement_backend, "nlme")
+      expect_identical(a@diagnostics$mlm_backend, "nlme")
     }
   }
 })
@@ -70,7 +70,7 @@ test_that("nlme omission, subset and changed caller data cannot change fitted ro
   expect_identical(repair_effects(list(growth = excluded))$term, c("(Intercept)", "z"))
   # Generic backend messages do not call lme4 diagnostics on an lme object.
   bad_apvar <- excluded; bad_apvar$apVar <- "Non-positive definite approximate variance-covariance"
-  expect_match(repair_measurement_diagnostics(bad_apvar)$measurement_messages, "variance-parameter uncertainty")
+  expect_match(repair_mlm_diagnostics(bad_apvar)$mlm_messages, "variance-parameter uncertainty")
 })
 
 test_that("unsupported nlme residual structures and grouping fail explicitly", {
@@ -94,13 +94,13 @@ test_that("nlme rank failures are exposed to structural omission", {
   dat$z[dat$id == "p01"] <- 0
   model <- nlme::lme(y ~ z + phase, random = ~ z | id, data = dat, na.action = na.omit)
   people <- data.frame(id = rownames(nlme::ranef(model)), x = seq_len(35))
-  expect_warning(expect_error(repair_data(re("z") ~ x, model, people, "id"), "scoring failed"), "predictions failed")
+  expect_warning(expect_error(repair_data(re("z") ~ x, model, people, "id"), "prediction extraction failed"), "predictions failed")
   expect_warning(expect_warning(fit <- repair(re("z") ~ x, model, people, "id", na_action = "omit"), "Omitting 1"), "predictions failed")
   expect_identical(fit@analysis_data@diagnostics$excluded$id, "p01")
   expect_equal(nobs(fit), 34L)
 })
 
-test_that("single random-intercept scoring reduces to residualized per-person means", {
+test_that("single random-intercept prediction extraction reduces to residualized per-person means", {
   skip_if_not_installed("nlme")
   dat <- nlme_example_data()
   model <- nlme::lme(y ~ z + phase, random = ~ 1 | id, data = dat, na.action = na.exclude)
@@ -109,7 +109,7 @@ test_that("single random-intercept scoring reduces to residualized per-person me
   residual <- d$y - drop(model.matrix(~ z + phase, d) %*% nlme::fixef(model))
   expected <- tapply(residual, d$id, mean)[score@levels$id]
   expect_equal(unname(score@predictions$id[, 1]), as.numeric(expected))
-  expect_equal(unname(score@error_covariance$id[1, 1, ]), as.numeric(model$sigma^2 / table(d$id)[score@levels$id]))
+  expect_equal(unname(score@prediction_error_covariance$id[1, 1, ]), as.numeric(model$sigma^2 / table(d$id)[score@levels$id]))
 })
 
 test_that("finer correlation groups are not mistaken for independent analysis people", {
@@ -141,8 +141,8 @@ test_that("random-factor coefficients retain their fitted contrasts", {
     values[i, ] <- lm.fit(z[rows, ], residual[rows])$coefficients
     errors[, , i] <- model$sigma^2 * solve(crossprod(z[rows, ]))
   }
-  scores <- repair_ranef_gls(model)
-  expect_equal(unname(scores@predictions$id), values, tolerance = 1e-9)
-  expect_equal(unname(scores@error_covariance$id), errors, tolerance = 1e-9)
+  predictions <- repair_ranef_gls(model)
+  expect_equal(unname(predictions@predictions$id), values, tolerance = 1e-9)
+  expect_equal(unname(predictions@prediction_error_covariance$id), errors, tolerance = 1e-9)
   expect_identical(repair_effects(model)$term, c("(Intercept)", "phase1"))
 })

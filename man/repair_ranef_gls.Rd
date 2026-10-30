@@ -2,28 +2,28 @@
 % Please edit documentation in R/ranef.R
 \name{repair_ranef_gls}
 \alias{repair_ranef_gls}
-\title{Extract likelihood-only random-coefficient scores}
+\title{Extract likelihood-only random-coefficient predictions}
 \usage{
 repair_ranef_gls(mlm, target_group = NULL, include_fixed = FALSE)
 }
 \arguments{
 \item{mlm}{A Gaussian \code{lme4::lmer()} or \code{nlme::lme()} fit.}
 
-\item{target_group}{Grouping factor to score; NULL scores all groups.}
+\item{target_group}{Grouping factor for prediction extraction; NULL predicts all groups.}
 
-\item{include_fixed}{Add matching fixed coefficients to the scores. Default
+\item{include_fixed}{Add matching fixed coefficients to the predictions. Default
 FALSE gives deviations. TRUE requires a fixed coefficient for every random
 coefficient; it does not reconstruct covariate-dependent individual effects.}
 }
 \value{
-An S7 score object with group-keyed \verb{@predictions} matrices (ID by
-coefficient), \verb{@error_covariance} arrays (coefficient by coefficient by ID),
+An S7 prediction object with group-keyed \verb{@predictions} matrices (ID by
+coefficient), \verb{@prediction_error_covariance} arrays (coefficient by coefficient by ID),
 \verb{@levels}, \verb{@terms}, and \verb{@diagnostics}; \verb{@success} is true only if all selected
 clusters scored successfully. These are sampling-error covariances, not
 posterior BLUP covariances.
 }
 \description{
-Compute target-specific GLS scores after subtracting fitted fixed effects
+Compute target-specific GLS predictions after subtracting fitted fixed effects
 and offsets. The target covariance excludes the target random effects and
 includes residual and nuisance-group covariance contributions.
 }
@@ -31,7 +31,7 @@ includes residual and nuisance-group covariance contributions.
 Failed clusters have missing predictions and covariance blocks, issue
 a warning, and appear in \verb{@diagnostics[[group]]$failed_levels}. A singular
 random-effect covariance is allowed when the target design is identifiable.
-Standard errors condition on fitted measurement-model parameters.
+Standard errors condition on fitted MLM parameters.
 
 Single-group linear nlme fits must retain their data (\code{keep.data = TRUE}).
 Supported correlations are independent, \code{corAR1}, and \code{corCAR1}; an AR(1)
@@ -49,13 +49,13 @@ See \code{vignette("nlme-workflow", package = "repair")} for reproduction exampl
 The structural \code{\link[=repair]{repair()}} workflow accepts lmer nuisance groups only when
 every fitted nuisance level belongs to one target level. It rejects shared
 nuisance levels: per-cluster blocks do not describe their cross-cluster
-score errors. Lower-level scoring of such shared structures remains
-experimental; computing scores alone does not validate structural inference.
+prediction errors. Lower-level prediction extraction of such shared structures remains
+experimental; computing predictions alone does not validate structural inference.
 }
 \examples{
 data(repair_example)
 growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
-scores <- repair_ranef_gls(growth, target_group = "person")
-head(scores@predictions$person)
-scores@error_covariance$person[, , 1]
+predictions <- repair_ranef_gls(growth, target_group = "person")
+head(predictions@predictions$person)
+predictions@prediction_error_covariance$person[, , 1]
 }

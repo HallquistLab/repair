@@ -20,14 +20,14 @@ function reference, search, and NEWS. No generated HTML is committed.
 
 The site leads with the public workflow and stable table extractors. Advanced
 matrix interfaces remain available in their own reference section. Posterior
-reliability, scoring-error covariance, and structural coefficient uncertainty are
+reliability, prediction-error covariance, and structural coefficient uncertainty are
 distinguished explicitly. There is no claim that conditional standard errors
-propagate uncertainty from measurement-model fitting.
+propagate uncertainty from MLM fitting.
 
 Audit findings addressed here: useful guides were only discoverable as repository
 source; reference topics lacked a task-based website index; there was no site
 build/deployment check; and the main workflow guide retained an obsolete sentence
-rejecting multiple measurement models. That sentence now points to the supported
+rejecting multiple MLMs. That sentence now points to the supported
 explicit cross-model covariance policies.
 
 ## Local build and verification
