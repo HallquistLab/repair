@@ -15,8 +15,9 @@ stopifnot(requireNamespace("nlme", quietly = TRUE))
 
 ## Fit an nlme measurement model
 
-The paper uses `nlme` for its primary measurement models. The public REPAIR
-workflow now accepts a fitted, single-group linear `nlme::lme()` model:
+The paper uses `nlme` for its primary measurement models.
+The public workflow for Random-Effect Prediction Adjustment for Inference in
+Regression (REPAIR) accepts a fitted, single-group linear `nlme::lme()` model:
 
 ```{r quick-start}
 growth <- nlme::lme(

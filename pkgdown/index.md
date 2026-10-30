@@ -1,13 +1,42 @@
 # repair: regression with estimated random coefficients
 
-**Estimate relationships involving random intercepts and slopes while accounting
-for their sampling error.** `repair` implements the REPAIR modified
-method-of-moments estimator for structural regressions using fitted Gaussian
-mixed models from **lme4** or **nlme**.
+`repair` implements **Random-Effect Prediction Adjustment for Inference in
+Regression (REPAIR)**, a two-stage method for estimating relationships involving
+person- or cluster-specific processes measured with repeated observations.
 
-REPAIR uses likelihood-only scores and their sampling-error covariance. A
-regression that treats estimated BLUPs as error-free data does not make this
-correction.
+## Why use REPAIR?
+
+Do people who improve more rapidly during treatment have better subsequent
+outcomes? Does a person's response to stress predict their symptoms? Are rates
+of change measured in two different tasks related? These questions concern
+individual differences in processes, such as change over time or within-person
+associations, and how those differences relate to other variables.
+
+Multilevel (mixed) models describe these differences using random intercepts
+and slopes. A common next step is to extract the predicted random effects and
+use them as predictors or outcomes in another regression. However, these
+predictions are estimates, with precision that can vary across people because
+of their observation counts, measurement schedules, and predictor distributions.
+Empirical Bayes predictions, often called BLUPs, also shrink uncertain individual
+values toward the population mean. Shrinkage changes their variances and
+covariances, and treating the predictions as perfectly measured can distort
+regression coefficients and their standard errors. The scientific goal is to
+learn about relationships among the underlying processes, rather than just
+relationships among their predicted values.
+
+REPAIR carries information about measurement precision into that second
+regression. It first obtains **likelihood-only scores** and their person-specific
+sampling-error covariances from fitted Gaussian mixed models. These scores
+remove shrinkage but remain noisy estimates. It then uses a **modified
+method-of-moments (M-MOM)** regression to account for their sampling error when
+random coefficients serve as predictors, the outcome, or both.
+
+This workflow is useful when you want to connect processes measured across
+different tasks, settings, or timescales while keeping the measurement models
+separate from the regression of interest. The same principle applies to other
+clusters, such as students nested within classrooms. The motivation follows
+Vig and Hallquist's *Regression among random effects* manuscript; run
+`citation("repair")` for the method and software references.
 
 [**Get started with a complete analysis →**](articles/repair-workflow.html)
 
@@ -18,7 +47,7 @@ correction.
 remotes::install_github("zacharyvig/repair")
 ```
 
-This is a development package, currently distributed through GitHub. Installation
+Version 0.5.0 is currently distributed through GitHub. Installation
 requires **R 4.3 or later** and a C++20 compiler with the R build toolchain
 (including the matching Rtools installation on Windows).
 

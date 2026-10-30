@@ -62,11 +62,15 @@ inspectable \verb{@analysis_data}. Use \code{summary()}, \code{coef()}, \code{vc
 \code{confint()}, and \code{nobs()} for standard output.
 }
 \description{
+Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
+accounts for sampling error when estimated random coefficients are used as
+predictors, the outcome, or both in a second-stage regression.
+}
+\details{
 Select random coefficients with \code{\link[=re]{re()}}, match them to person-level data by
 ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
 models are fitted beforehand so that their fitting choices remain explicit.
-}
-\details{
+
 The supported structural grammar is additive with an intercept.
 Effects may come from multiple Gaussian lmer or linear lme models, each with
 one grouping factor. Full within-person score-error covariance is retained.

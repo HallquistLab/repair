@@ -1,14 +1,16 @@
 Package: repair
 Title: Measurement-Error-Corrected Regression of Random Coefficients
-Version: 0.0.0.9000
+Version: 0.5.0
 Authors@R: 
     c(person("Zachary A.", "Vig", , "zachvig@rocketmail.com",
              role = c("aut", "cre"), comment = "Co-maintainer"),
       person("Michael N.", "Hallquist", role = "aut", comment = "Co-maintainer"))
-Description: Implements the REPAIR modified method-of-moments estimator for
-    structural regressions involving random coefficients from Gaussian mixed
-    models. Extracts likelihood-only scores and sampling-error covariances,
-    aligns them with person-level data by identifier, and reports conditional
+Description: Implements Random-Effect Prediction Adjustment for Inference in
+    Regression (REPAIR), a two-stage method for estimating relationships involving
+    person- or cluster-specific intercepts and slopes from Gaussian mixed models.
+    Uses a modified method-of-moments correction for sampling error in these
+    estimated random coefficients. Extracts likelihood-only scores and sampling-error
+    covariances, aligns them with person-level data by identifier, and reports conditional
     model-based inference and analysis diagnostics.
 URL: https://zacharyvig.github.io/repair/, https://github.com/zacharyvig/repair
 BugReports: https://github.com/zacharyvig/repair/issues

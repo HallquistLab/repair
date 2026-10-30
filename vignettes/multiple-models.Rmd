@@ -16,7 +16,8 @@ stopifnot(requireNamespace("nlme", quietly = TRUE))
 ## Fit a relationship between two processes
 
 Each measurement model estimates a person's random coefficients from repeated
-observations. REPAIR fits a structural regression using their likelihood-only
+observations. Random-Effect Prediction Adjustment for Inference in Regression
+(REPAIR) fits a structural regression using their likelihood-only
 scores and sampling-error covariance. For example, one process's slope can
 predict another process's slope, adjusting for the first process's intercept.
 The two measurement models may use different occasions and grouping column names.

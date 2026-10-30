@@ -7,9 +7,10 @@ template:
 home:
   title: Measurement-error-corrected regression of random coefficients in R
   description: >
-    Fit REPAIR structural regressions using random coefficients from lme4 or
-    nlme models. Inspect scores, preserve their error covariance, report
-    coefficients, and assess reliability with executable guides.
+    Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
+    estimates relationships involving person-specific change and other processes
+    from mixed models, accounting for shrinkage and sampling error in their
+    predictions.
 
 navbar:
   structure:

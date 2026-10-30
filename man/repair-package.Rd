@@ -5,11 +5,18 @@
 \alias{repair-package}
 \title{REPAIR: structural regression with estimated random coefficients}
 \description{
+Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
+estimates relationships involving person- or cluster-specific processes
+represented by random intercepts and slopes. Extracted predictions contain
+sampling error, and shrunken BLUPs can distort relationships in a subsequent
+regression. REPAIR uses likelihood-only scores and their sampling-error
+covariances in a modified method-of-moments regression.
+}
+\details{
 Discover effects with \code{\link[=repair_effects]{repair_effects()}}, inspect matched inputs with
 \code{\link[=repair_data]{repair_data()}}, fit with \code{\link[=repair]{repair()}}, and report results with
 \code{\link[=repair_coefficients]{repair_coefficients()}}. \link{repair_example} provides simulated teaching data.
-}
-\details{
+
 The supported workflow uses Gaussian single-group lmer or supported linear
 lme models. Standard errors are conditional on fitted measurement quantities.
 See \code{vignette("support-and-troubleshooting", package = "repair")} for the

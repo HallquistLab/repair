@@ -3,27 +3,66 @@
 
 [![R-CMD-check](https://github.com/zacharyvig/repair/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/zacharyvig/repair/actions/workflows/R-CMD-check.yaml)
 
-`repair` implements REPAIR: structural regression involving random
-coefficients from a Gaussian mixed model, with a modified
-method-of-moments correction for sampling error in the estimated
-coefficients. It uses **likelihood-only scores** and their
-sampling-error covariance, rather than treating shrunken BLUPs as
-error-free observed variables.
+`repair` implements **Random-Effect Prediction Adjustment for Inference
+in Regression (REPAIR)**, a two-stage method for estimating
+relationships involving person- or cluster-specific processes measured
+with repeated observations.
 
-This is a development package. The supported structural workflow is an
-additive regression with an intercept, using random coefficients from
-**fitted `lme4::lmer()` or linear `nlme::lme()` models, each with one
-grouping factor**. Random coefficients may be predictors, the outcome,
-or both. Numeric, logical, and factor observed predictors are supported.
-See the [workflow guide](vignettes/repair-workflow.Rmd) for matching,
-omission, interpretation, and current limits.
+## Why use REPAIR?
+
+Do people who improve more rapidly during treatment have better
+subsequent outcomes? Does a person’s response to stress predict their
+symptoms? Are rates of change measured in two different tasks related?
+These questions concern individual differences in processes, such as
+change over time or within-person associations, and how those
+differences relate to other variables.
+
+Multilevel (mixed) models describe these differences using random
+intercepts and slopes. A common next step is to extract the predicted
+random effects and use them as predictors or outcomes in another
+regression. However, these predictions are estimates, with precision
+that can vary across people because of their observation counts,
+measurement schedules, and predictor distributions. Empirical Bayes
+predictions, often called BLUPs, also shrink uncertain individual values
+toward the population mean. Shrinkage changes their variances and
+covariances, and treating the predictions as perfectly measured can
+distort regression coefficients and their standard errors. The
+scientific goal is to learn about relationships among the underlying
+processes, rather than just relationships among their predicted values.
+
+REPAIR carries information about measurement precision into that second
+regression. It first obtains **likelihood-only scores** and their
+person-specific sampling-error covariances from fitted Gaussian mixed
+models. These scores remove shrinkage but remain noisy estimates. It
+then uses a **modified method-of-moments (M-MOM)** regression to account
+for their sampling error when random coefficients serve as predictors,
+the outcome, or both.
+
+This workflow is useful when you want to connect processes measured
+across different tasks, settings, or timescales while keeping the
+measurement models separate from the regression of interest. The same
+principle applies to other clusters, such as students nested within
+classrooms. The motivation follows Vig and Hallquist’s *Regression among
+random effects* manuscript; run `citation("repair")` for the method and
+software references.
+
+## Supported analyses
+
+Version 0.5.0 is a development release. The supported structural
+workflow is an additive regression with an intercept, using random
+coefficients from **fitted `lme4::lmer()` or linear `nlme::lme()`
+models, each with one grouping factor**. Random coefficients may be
+predictors, the outcome, or both. Numeric, logical, and factor observed
+predictors are supported. See the [workflow
+guide](vignettes/repair-workflow.Rmd) for matching, omission,
+interpretation, and current limits.
 
 ## Package website
 
 Browse the [package website](https://zacharyvig.github.io/repair/) for a
 guided introduction, searchable function reference, executable articles,
 and release notes. The site is rebuilt from `main`; it documents the
-development version.
+current package version.
 
 ## Install
 
@@ -259,9 +298,8 @@ meaningful synthetic person-level variables.
 
 Run `citation("repair")` for separate software and method references.
 Zachary A. Vig and Michael N. Hallquist are authors and co-maintainers;
-Zach is the primary R package maintainer contact. This remains a
-development version, with no tagged release claimed by these
-instructions.
+Zach is the primary R package maintainer contact. The package version is
+0.5.0; see the release notes for changes.
 
 ## Interpretation and limits
 

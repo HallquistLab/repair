@@ -1,5 +1,12 @@
 #' REPAIR: structural regression with estimated random coefficients
 #'
+#' Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
+#' estimates relationships involving person- or cluster-specific processes
+#' represented by random intercepts and slopes. Extracted predictions contain
+#' sampling error, and shrunken BLUPs can distort relationships in a subsequent
+#' regression. REPAIR uses likelihood-only scores and their sampling-error
+#' covariances in a modified method-of-moments regression.
+#'
 #' Discover effects with [repair_effects()], inspect matched inputs with
 #' [repair_data()], fit with [repair()], and report results with
 #' [repair_coefficients()]. [repair_example] provides simulated teaching data.
