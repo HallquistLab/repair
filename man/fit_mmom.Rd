@@ -2,7 +2,7 @@
 % Please edit documentation in R/mmom.R
 \name{fit_mmom}
 \alias{fit_mmom}
-\title{Fit the M-MOM structural model from scores and error covariances.}
+\title{Fit the M-MOM structural model from predictions and error covariances.}
 \usage{
 fit_mmom(
   data_list,
@@ -26,10 +26,10 @@ those same named fields. See Details for their dimensions.}
 An S7 \code{class_mmom_fit} object. Numerical failures use the same class.
 }
 \description{
-Fit the M-MOM structural model from scores and error covariances.
+Fit the M-MOM structural model from predictions and error covariances.
 }
 \details{
-Inputs must be likelihood-only scores with additive sampling-error
+Inputs must be likelihood-only predictions with additive sampling-error
 covariances, not BLUPs with posterior covariances. Observed error-free
 variables have zero error variance and covariance. Matrix-style inputs
 may instead supply an outcome vector, predictor matrix, an error array

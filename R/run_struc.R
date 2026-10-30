@@ -1,7 +1,7 @@
 #' Assemble and inspect structural analysis inputs
 #'
-#' Match likelihood-only scores and their full within-person error covariance
-#' to a person-level data frame by ID. The data frame defines the analysis cohort
+#' Match likelihood-only predictions and their full within-unit error covariance
+#' to a unit-level data frame by ID. The data frame defines the analysis scope
 #' and its order. No aggregation, row-order matching, or silent omission occurs.
 #' @param formula An additive structural formula with at least one [re()] marker.
 #'   Observed predictors may be numeric, logical, or factors. The outcome must
@@ -10,23 +10,23 @@
 #'   model, or named list. Select one target grouping factor per model. Gaussian
 #'   lmer models may also contain nuisance groups whose every fitted level belongs
 #'   to exactly one target level; nlme models must have one grouping factor.
-#'   Grouping column names may differ, but their values must identify the same people.
+#'   Grouping column names may differ, but their values must identify the same units.
 #' @param data A data frame with one row per analysis ID, containing the observed
 #'   structural variables. Its ID values must match the model's grouping levels.
 #' @param id Name of the ID column in `data`; need not equal the grouping name.
 #' @param na_action `"fail"` (default) or `"omit"`. Omission covers missing or
-#'   nonfinite observed values, unmatched IDs, and failed score blocks; it warns
+#'   nonfinite observed values, unmatched IDs, and failed prediction blocks; it warns
 #'   and records every excluded ID and reason.
-#' @param cross_model_error Cross-model score-error covariance policy. Default
+#' @param cross_model_error Cross-model prediction-error covariance policy. Default
 #'   `NULL` is valid only when the formula references one model. For multiple
-#'   models, use `"independent"` to explicitly assume zero cross-model scoring
+#'   models, use `"independent"` to explicitly assume zero cross-model prediction extraction
 #'   error covariance, or a list of blocks, one for every unordered model pair.
 #'   Each block is `list(models = c("a", "b"), covariance = array(...))`.
 #'   The numeric array must have three named dimensions: coefficient names from
-#'   model a, coefficient names from model b, and person IDs. Term names must
+#'   model a, coefficient names from model b, and unit IDs. Term names must
 #'   exactly cover the effects selected from those models. Every retained ID
 #'   must be present; extra IDs are allowed. Order does not matter. Values are
-#'   covariances of likelihood-only scoring errors, not latent coefficients or
+#'   covariances of likelihood-only prediction errors, not latent coefficients or
 #'   raw observations. The assembled covariance must be positive semidefinite.
 #'   Missing/invalid supplied blocks are errors even with `na_action = "omit"`.
 #' @details Use `re("term", model = "name", group = "person")` to resolve
@@ -36,11 +36,11 @@
 #'   even when only one of their target people is requested. Group names alone
 #'   do not establish nesting. Nested random intercepts/slopes and multiple
 #'   nuisance groups are allowed, provided every nuisance group passes the check.
-#'   Target-specific scoring-error covariance includes every nuisance contribution.
+#'   Target-specific prediction-error covariance includes every nuisance contribution.
 #'   See `vignette("nested-nuisance", package = "repair")` for a complete example.
 #'
 #'   Within-model covariance always comes from the scorer and cannot be
-#'   overridden. Supplied blocks are conditional on the fitted measurement models;
+#'   overridden. Supplied blocks are conditional on the fitted MLMs;
 #'   uncertainty in their estimation is not propagated. Independent errors do not
 #'   imply independent latent processes. The package does not estimate cross-model
 #'   covariance from separate fits. See `vignette("multiple-models", package = "repair")`.
@@ -48,8 +48,8 @@
 #'   `@err_x`, `@err_y`, `@err_xy`, `@effects`, and `@diagnostics` to inspect it.
 #'   Error arrays are ordered predictor by predictor by ID. Observed variables
 #'   have zero sampling error. Scores are deviations from fitted fixed effects.
-#'   `@scores` holds a score object for one referenced model, or a named list for
-#'   multiple models. `@diagnostics$measurement_models` always provides diagnostics
+#'   `@predictions` holds a prediction object for one referenced model, or a named list for
+#'   multiple models. `@diagnostics$mlm_models` always provides diagnostics
 #'   by model, including the verified `nuisance_groups`;
 #'   `@diagnostics$cross_model_error` records the applied policy and blocks.
 #' @examples
@@ -57,8 +57,8 @@
 #' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
 #' analysis <- repair_data(re("day") ~ practice, growth, repair_example$people, "person")
 #' analysis
-#' head(repair_scores(analysis))
-#' head(repair_score_covariance(analysis))
+#' head(repair_predictions(analysis))
+#' head(repair_prediction_covariance(analysis))
 #' @export
 repair_data <- function(formula, models, data, id, na_action = c("fail", "omit"),
                         cross_model_error = NULL) {
@@ -85,7 +85,7 @@ repair_assemble <- function(formula, models, data, id, na_action = c("fail", "om
   ids <- as.character(data[[id]])
   if (anyNA(ids) || any(!nzchar(trimws(ids))) || anyDuplicated(ids) ||
       (is.numeric(data[[id]]) && any(!is.finite(data[[id]])))) {
-    repair_error("IDs must be nonmissing, nonempty, finite, and unique: supply one row per person.")
+    repair_error("IDs must be nonmissing, nonempty, finite, and unique: supply one row per unit.")
   }
   missing_vars <- setdiff(parsed$observed, names(data))
   if (length(missing_vars)) repair_error("Observed variables missing from `data`: {.val {missing_vars}}.")
@@ -103,7 +103,7 @@ repair_assemble <- function(formula, models, data, id, na_action = c("fail", "om
     bad <- if (is.numeric(value)) !is.finite(value) else is.na(value)
     add_reason(bad, paste("missing/nonfinite observed variable", variable))
   }
-  scores <- model_diagnostics <- list()
+  predictions <- model_diagnostics <- list()
   covariances <- array(0, c(length(parsed$effects), length(parsed$effects), length(ids)))
   effect_models <- vapply(parsed$effects, `[[`, character(1), "model")
   for (name in parsed$model) {
@@ -112,23 +112,23 @@ repair_assemble <- function(formula, models, data, id, na_action = c("fail", "om
     effects <- parsed$effects[selected]
     group <- effects[[1L]]$group
     nuisance <- repair_validate_target(model, group, name)
-    score <- repair_ranef_gls(model, target_group = group)
-    scores[[name]] <- score
-    positions <- match(ids, score@levels[[group]])
-    add_reason(is.na(positions), paste("ID absent from measurement model", name))
+    prediction <- repair_ranef_gls(model, target_group = group)
+    predictions[[name]] <- prediction
+    positions <- match(ids, prediction@levels[[group]])
+    add_reason(is.na(positions), paste("ID absent from MLM", name))
     for (effect in effects) {
-      work[[effect$column]] <- score@predictions[[group]][positions, effect$term]
+      work[[effect$column]] <- prediction@predictions[[group]][positions, effect$term]
     }
     terms <- vapply(effects, `[[`, character(1), "term")
-    block <- score@error_covariance[[group]][terms, terms, positions, drop = FALSE]
+    block <- prediction@prediction_error_covariance[[group]][terms, terms, positions, drop = FALSE]
     covariances[selected, selected, ] <- block
     bad <- !vapply(seq_along(ids), function(i) {
       all(is.finite(block[, , i])) &&
         all(vapply(effects, function(e) is.finite(work[[e$column]][i]), logical(1)))
     }, logical(1))
-    add_reason(bad & !is.na(positions), paste("likelihood-only scoring failed in model", name))
+    add_reason(bad & !is.na(positions), paste("likelihood-only prediction extraction failed in model", name))
     model_diagnostics[[name]] <- c(list(group = group, nuisance_groups = nuisance,
-      unused_score_ids = setdiff(score@levels[[group]], ids)), repair_measurement_diagnostics(model))
+      unused_prediction_ids = setdiff(prediction@levels[[group]], ids)), repair_mlm_diagnostics(model))
   }
   keep <- !nzchar(reason)
   excluded <- data.frame(id = ids[!keep], reason = reason[!keep], row.names = NULL)
@@ -180,21 +180,21 @@ repair_assemble <- function(formula, models, data, id, na_action = c("fail", "om
   class_repair_data(
     formula = formula, ids = ids[keep], outcome = y, predictors = x,
     err_x = err_x, err_y = err_y, err_xy = err_xy, effects = effects,
-    scores = if (length(scores) == 1L) scores[[1L]] else scores,
+    predictions = if (length(predictions) == 1L) predictions[[1L]] else predictions,
     diagnostics = c(list(n_requested = length(ids), n_analyzed = n,
       excluded = excluded,
-      unused_score_ids = if (length(scores) == 1L) model_diagnostics[[1L]]$unused_score_ids else
-        lapply(model_diagnostics, `[[`, "unused_score_ids"),
+      unused_prediction_ids = if (length(predictions) == 1L) model_diagnostics[[1L]]$unused_prediction_ids else
+        lapply(model_diagnostics, `[[`, "unused_prediction_ids"),
       structural_factors = repair_refit_factors(mf[intersect(parsed$observed, names(mf))], attr(design, "contrasts"), strict = FALSE),
-      id_column = id, group = if (length(scores) == 1L) model_diagnostics[[1L]]$group else
+      id_column = id, group = if (length(predictions) == 1L) model_diagnostics[[1L]]$group else
         vapply(model_diagnostics, `[[`, character(1), "group"),
-      model = parsed$model, na_action = na_action, measurement_models = model_diagnostics,
+      model = parsed$model, na_action = na_action, mlm_models = model_diagnostics,
       cross_model_error = cross_error,
-      score_semantics = "deviations", conditional_on_stage1 = TRUE),
-      if (length(scores) == 1L) repair_measurement_diagnostics(models[[parsed$model]]) else list(
-        measurement_backend = vapply(model_diagnostics, `[[`, character(1), "measurement_backend"),
-        measurement_singular = vapply(model_diagnostics, `[[`, logical(1), "measurement_singular"),
-        measurement_messages = unlist(lapply(model_diagnostics, `[[`, "measurement_messages"))))
+      prediction_semantics = "deviations", conditional_on_stage1 = TRUE),
+      if (length(predictions) == 1L) repair_mlm_diagnostics(models[[parsed$model]]) else list(
+        mlm_backend = vapply(model_diagnostics, `[[`, character(1), "mlm_backend"),
+        mlm_singular = vapply(model_diagnostics, `[[`, logical(1), "mlm_singular"),
+        mlm_messages = unlist(lapply(model_diagnostics, `[[`, "mlm_messages"))))
   )
 }
 

@@ -8,10 +8,10 @@
 # repair 0.0.0.9000
 
 * Add `repair_refit()` for identity-verified replay of one supported lmer/lme
-  measurement model and its structural analysis, with explicit reference and
+  MLM and its structural analysis, with explicit reference and
   replacement inputs, factor/row/schema checks, and recorded fitting recipes.
-* Add deterministic whole-person draws with fresh target/nuisance identities,
-  audited warnings and controls, and explicit cohort restrictions. This is
+* Add deterministic whole-unit draws with fresh target/nuisance identities,
+  audited warnings and controls, and explicit scope restrictions. This is
   refitting groundwork; bootstrap inference is not yet implemented.
 * Record structural factor coding for reproducible replay and add a refit audit
   to summaries. Add tests against manual refits and fresh-process replay, and an
@@ -23,13 +23,13 @@
 * Add optional `group` qualification to `re()` for ambiguous random coefficient
   names. Each referenced model selects one target group; existing single-group
   labels and stable table schemas are preserved.
-* Include nuisance covariance in both scoring and posterior reliability; report
+* Include nuisance covariance in both prediction extraction and posterior reliability; report
   verified nuisance groups in structural summaries and measurement metadata.
 * Add independent nested GLS, posterior, and production/algebra structural
   references, integration/rejection/persistence tests, and an executable guide.
 
 * Add a documented synthetic teaching dataset, `repair_example`, with repeated
-  observations, person-level predictors, and explicit generating provenance.
+  observations, unit-level predictors, and explicit generating provenance.
 * Complete executable examples for all exported objects and add a support and
   troubleshooting guide covering model/inference boundaries and saved results.
 * Verify saved single- and multiple-model fits in fresh R sessions, including
@@ -52,8 +52,8 @@
 
 * Add `repair_coefficients()` for plain structural coefficient tables with
   documented columns and configurable normal confidence intervals.
-* Add `repair_scores()` for ID-keyed likelihood-only score tables and
-  `repair_score_covariance()` for assembled within- and cross-model error
+* Add `repair_predictions()` for ID-keyed likelihood-only score tables and
+  `repair_prediction_covariance()` for assembled within- and cross-model error
   covariance. Both work on fitted results and pre-fit `repair_data()` assemblies.
 * Add exact named-table selection to `repair_diagnostics()`, preserving the
   existing list interface and avoiding unrequested reliability computation.
@@ -61,36 +61,36 @@
   reporting/join/export workflows; test the interfaces against existing references.
 
 * Add `repair_reliability()` with manuscript-defined marginal and intercept-
-  residualized posterior reliability, person-level results, explicit cohort
+  residualized posterior reliability, unit-level results, explicit scope
   selection, equally weighted summaries, and reasons for undefined values.
-* Add `repair_diagnostics()` tables for sample accounting, scoring failures,
+* Add `repair_diagnostics()` tables for sample accounting, prediction extraction failures,
   input error variances, regularization, corrected-moment conditioning, and
   analysis-weight concentration. Preserve useful diagnostics on structural failure.
 * Include compact reliability and weight summaries in `summary(fit)`; add plots
-  of person-specific reliability distributions and observation-count relationships.
+  of unit-specific reliability distributions and observation-count relationships.
 * Add independent simulation-derived reliability fixtures, boundary/diagnostic
   tests, and an executable reliability guide distinguishing posterior uncertainty
-  from the likelihood-only score-error covariance used by REPAIR.
+  from the likelihood-only prediction-error covariance used by REPAIR.
 
 * Support structural regressions using coefficients from multiple fitted Gaussian
-  lmer or linear lme measurement models, each with one grouping factor.
-* Require an explicit cross-model scoring-error policy: independent errors or
+  lmer or linear lme MLMs, each with one grouping factor.
+* Require an explicit cross-model prediction-error policy: independent errors or
   named per-ID covariance blocks for every model pair. Validate complete model,
   coefficient, and ID coverage and joint positive semidefiniteness.
-* Preserve within-model covariance, align each model to the requested cohort,
-  and report model-specific exclusions and measurement diagnostics. Record the
+* Preserve within-model covariance, align each model to the requested scope,
+  and report model-specific exclusions and MLM diagnostics. Record the
   covariance policy and supplied blocks in analysis diagnostics and summaries.
 * Add two independently generated dual-process reproduction fixtures, tests for
   both computation backends, and an executable multiple-model vignette covering
   covariance assumptions and the simulation's population-SD reporting scale.
 
-* Add validated single-group linear `nlme::lme()` support to scoring, effect
+* Add validated single-group linear `nlme::lme()` support to prediction extraction, effect
   discovery, structural-data assembly, and fitting. Support independent/AR(1)/
   continuous-time AR(1) correlation with constant/varIdent/varPower residual
   variance, using stored effective rows, fitted contrasts, and fitted residual SDs.
 * Reject unsupported nlme structures and missing stored data explicitly. Report
-  the measurement backend and available variance-parameter uncertainty messages.
-* Add three end-to-end reproduction datasets from the paper's production scoring
+  the MLM backend and available variance-parameter uncertainty messages.
+* Add three end-to-end reproduction datasets from the paper's production prediction extraction
   and M-MOM functions, independent GLS tests, and an executable nlme vignette.
 
 * Add the exported `repair()` workflow for additive structural regressions from
@@ -98,15 +98,15 @@
   coefficients on either side of the equation; `repair_effects()` lists their
   model, group, and scalar coefficient names.
 * Add `repair_data()` for explicit ID matching, covariance alignment, and
-  inspectable sample accounting. Missing values and failed scores stop by
+  inspectable sample accounting. Missing values and failed predictions stop by
   default; explicit omission warns and records excluded IDs and reasons.
 * Add summary, print, coef, vcov, confint, and nobs methods. Summaries report
   conditional normal inference, regularization, sample counts, effect sources,
-  and measurement-model diagnostics.
+  and MLM diagnostics.
 * Support independent random-effect blocks for a shared grouping factor,
   including lme4 `||` syntax, with level/term/covariance alignment.
-* Remove the shadowed legacy scoring function and correct the documented S7
-  scoring interface. Reject non-Gaussian scoring and incomplete fixed-effect
+* Remove the shadowed legacy prediction extraction function and correct the documented S7
+  prediction extraction interface. Reject non-Gaussian prediction extraction and incomplete fixed-effect
   matches; reject the unimplemented step-up regularization option immediately.
 * Document estimator assumptions, supported formula grammar, experimental
   backend boundaries, and design decisions in an executable README, vignette,

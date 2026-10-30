@@ -13,25 +13,25 @@ test_that("nested nuisance fits reproduce independent GLS and structural referen
       for (field in names(case$input)) {
         expect_equal(unname(S7::prop(a, field)), unname(case$input[[field]]), tolerance = 1e-5)
       }
-      score <- a@scores
+      score <- a@predictions
       expect_true(score@success)
       expect_equal(unname(score@predictions$person[case$people$person, ]),
         unname(case$scores), tolerance = 1e-5)
-      expect_equal(unname(score@error_covariance$person[, , case$people$person]),
+      expect_equal(unname(score@prediction_error_covariance$person[, , case$people$person]),
         unname(case$error), tolerance = 1e-5)
       for (id in case$people$person) {
         expect_equal(unname(score@diagnostics$person$per_level[[id]]$covariance),
           unname(case$covariance[[id]]), tolerance = 1e-5)
       }
-      covariance <- repair_score_covariance(fit)
+      covariance <- repair_prediction_covariance(fit)
       expect_equal(nrow(covariance), 3L * nrow(case$people))
       expect_true(all(covariance$group1 == "person" & covariance$group2 == "person"))
       expect_true(all(covariance$source == "within_model"))
       off <- covariance[covariance$term1 != covariance$term2, ]
       expect_equal(off$covariance, unname(case$error[1, 2, ]), tolerance = 1e-5)
-      expect_identical(unique(repair_scores(fit)$group), "person")
+      expect_identical(unique(repair_predictions(fit)$group), "person")
       expect_true(all(grepl('group = "person"', a@effects$label, fixed = TRUE)))
-      expect_setequal(summary(fit)$measurement_models$growth$nuisance_groups,
+      expect_setequal(summary(fit)$mlm_models$growth$nuisance_groups,
         if (kind == "nested_slope") c("person:day", "person:block") else "person:day")
       expect_output(print(summary(fit)), "Nested nuisance groups:")
     }
@@ -42,7 +42,7 @@ test_that("posterior reliability includes every nested nuisance covariance contr
   for (kind in c("nested_intercept", "nested_slope")) {
     ex <- nested_example(kind); case <- ex$case
     fit <- repair(ex$formula, list(growth = ex$model), case$people, "person")
-    person <- repair_reliability(fit, level = "person")
+    person <- repair_reliability(fit, detail = "unit")
     g <- case$target_g
     for (term in c("(Intercept)", "x")) {
       k <- match(term, colnames(case$scores))
@@ -94,7 +94,7 @@ test_that("target qualification resolves ambiguity and preserves single-group la
   expect_equal(qualified@predictors, old@predictors)
 })
 
-test_that("nested cohort alignment and omissions preserve scores and joint covariance", {
+test_that("nested scope alignment and omissions preserve predictions and joint covariance", {
   ex <- nested_example(); case <- ex$case
   people <- case$people[48:1, ]; people$practice[2] <- NA_real_
   expect_warning(fit <- repair(ex$formula, list(growth = ex$model), people, "person",
@@ -103,11 +103,11 @@ test_that("nested cohort alignment and omissions preserve scores and joint covar
   expect_identical(a@ids, ids)
   expect_equal(unname(a@outcome), unname(case$scores[ids, "x"]), tolerance = 1e-5)
   expect_equal(unname(a@err_xy[, 1]), unname(case$error[2, 1, ids]), tolerance = 1e-5)
-  expect_equal(nrow(repair_scores(fit, "measurement")), 96L)
+  expect_equal(nrow(repair_predictions(fit, "all")), 96L)
   expect_identical(repair_diagnostics(fit, "excluded")$id, people$person[2])
-  expect_equal(repair_diagnostics(fit, "measurement")$n_measurement, 48L)
-  expect_equal(repair_diagnostics(fit, "cohort")$n_analyzed, 47L)
-  expect_equal(repair_reliability(fit)$n_people, rep(47L, 3))
+  expect_equal(repair_diagnostics(fit, "mlm")$n_levels, 48L)
+  expect_equal(repair_diagnostics(fit, "scope")$n_analyzed, 47L)
+  expect_equal(repair_reliability(fit)$n_units, rep(47L, 3))
 })
 
 test_that("containment follows fitted membership rather than group names or unused rows", {
@@ -123,10 +123,10 @@ test_that("containment follows fitted membership rather than group names or unus
     control = lme4::lmerControl(optimizer = "bobyqa"))
   fit <- repair(ex$formula, list(growth = model), ex$case$people, "person")
   expect_equal(unname(coef(fit)), ex$case$coefficients$estimate, tolerance = 1e-5)
-  expect_identical(summary(fit)$measurement_models$growth$nuisance_groups, "visit")
+  expect_identical(summary(fit)$mlm_models$growth$nuisance_groups, "visit")
 })
 
-test_that("shared nuisance levels are rejected across the entire fitted cohort", {
+test_that("shared nuisance levels are rejected across the entire fitted scope", {
   ex <- nested_example(); d <- ex$case$data
   # Day numbers are reused across people; day alone represents a shared effect.
   shared_day <- suppressMessages(lme4::lmer(y ~ x + (x | person) + (1 | day), d))
@@ -134,7 +134,7 @@ test_that("shared nuisance levels are rejected across the entire fitted cohort",
     "shared across target group")
   d$school <- factor(ceiling(as.integer(d$person) / 4))
   school <- suppressMessages(lme4::lmer(y ~ x + (x | person) + (1 | school), d))
-  # One target person per school does not erase sharing in the measurement fit.
+  # One target person per school does not erase sharing in the MLM fit.
   people <- ex$case$people[seq(1, 48, 4), ]
   for (action in c("fail", "omit")) {
     expect_error(repair_data(ex$formula, list(growth = school), people, "person", na_action = action),
@@ -145,7 +145,7 @@ test_that("shared nuisance levels are rejected across the entire fitted cohort",
     list(growth = ex$model), ex$case$people, "person"), "shared across target group")
 })
 
-test_that("multiple measurement models retain explicit cross-model covariance policies", {
+test_that("multiple MLMs retain explicit cross-model covariance policies", {
   a <- nested_example(); b <- nested_example("nested_slope")
   models <- list(growth = a$model, response = b$model)
   f <- re("x", "growth", "person") ~ re("x", "response", "person") + practice
@@ -153,11 +153,11 @@ test_that("multiple measurement models retain explicit cross-model covariance po
   fit <- repair(f, models, a$case$people, "person", cross_model_error = "independent")
   expect_true(fit@struc_fit@converged)
   expect_equal(fit@analysis_data@err_xy, matrix(0, 48, 2), ignore_attr = TRUE)
-  cov <- repair_score_covariance(fit)
+  cov <- repair_prediction_covariance(fit)
   cross <- cov[cov$model1 != cov$model2, ]
   expect_true(all(cross$source == "assumed_independent" & cross$covariance == 0))
-  expect_equal(repair_diagnostics(fit, "measurement")$n_measurement, c(48L, 48L))
-  expect_equal(repair_reliability(fit)$n_people, rep(48L, 4))
+  expect_equal(repair_diagnostics(fit, "mlm")$n_levels, c(48L, 48L))
+  expect_equal(repair_reliability(fit)$n_units, rep(48L, 4))
 })
 
 test_that("independent target blocks retain nested nuisance covariance", {
@@ -173,7 +173,7 @@ test_that("independent target blocks retain nested nuisance covariance", {
       outer(mf$day[rows], mf$day[rows], "==")
   expected <- solve(crossprod(z, solve(r, z)))
   expect_true(fit@struc_fit@converged)
-  expect_equal(unname(fit@analysis_data@scores@error_covariance$person[c("(Intercept)", "x"), c("(Intercept)", "x"), id]),
+  expect_equal(unname(fit@analysis_data@predictions@prediction_error_covariance$person[c("(Intercept)", "x"), c("(Intercept)", "x"), id]),
     unname(expected), tolerance = 1e-9)
 })
 
@@ -185,10 +185,10 @@ test_that("failed target designs retain explicit omission and score-failure audi
   expect_warning(expect_warning(fit <- repair(ex$formula, list(growth = model),
     ex$case$people, "person", na_action = "omit"), "Omitting 1"), "predictions failed")
   expect_equal(nobs(fit), 47L)
-  bad <- repair_scores(fit, cohort = "measurement")
+  bad <- repair_predictions(fit, scope = "all")
   expect_true(all(bad$status[bad$id == "P001"] == "failed"))
   expect_true(all(!bad$analyzed[bad$id == "P001"]))
-  expect_match(repair_diagnostics(fit, "score_failures")$reason, "rank-deficient")
+  expect_match(repair_diagnostics(fit, "prediction_failures")$reason, "rank-deficient")
   expect_identical(repair_diagnostics(fit, "excluded")$id, "P001")
 })
 

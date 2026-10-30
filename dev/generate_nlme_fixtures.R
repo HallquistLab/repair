@@ -1,7 +1,7 @@
 # From the repair package root:
 # Rscript dev/generate_nlme_fixtures.R /path/to/blup_unshrinking
 # Never load repair here: frozen expectations come from the paper's production
-# scoring/estimation functions, cross-checked against independent algebra.
+# prediction extraction/estimation functions, cross-checked against independent algebra.
 args <- commandArgs(trailingOnly = TRUE)
 root <- normalizePath(if (length(args)) args[[1L]] else "../blup_unshrinking")
 ref <- new.env(parent = globalenv())
@@ -34,28 +34,28 @@ make_case <- function(seed, kind) {
     correlation = if (kind == "both_ar1_ident") nlme::corAR1(form = ~ time | id) else NULL,
     weights = if (kind == "both_ar1_ident") nlme::varIdent(form = ~ 1 | phase) else NULL,
     control = nlme::lmeControl(msMaxIter = 300))
-  # The production scoring helper receives the complete, sorted observations
+  # The production prediction extraction helper receives the complete, sorted observations
   # in these fixtures. Missingness/permutation are separate extraction tests.
-  scores <- ref$get_closed_form_corrected_scores(model, data, "id", "y", "z")
-  scores <- as.data.frame(scores)[match(people$id, scores$id), ]
+  predictions <- ref$get_closed_form_corrected_scores(model, data, "id", "y", "z")
+  predictions <- as.data.frame(predictions)[match(people$id, predictions$id), ]
   if (kind == "predictor_balanced") {
     formula <- 'distal ~ re("(Intercept)", "growth") + re("z", "growth")'
-    x <- cbind(scores$corrected_intercept_full, scores$corrected_slope_full)
+    x <- cbind(predictions$corrected_intercept_full, predictions$corrected_slope_full)
     y <- people$distal; ey <- rep(0, n); exy <- matrix(0, n, 2)
     ex <- array(0, c(2, 2, n))
-    ex[1, 1, ] <- scores$gls_var11; ex[2, 2, ] <- scores$gls_var22
-    ex[1, 2, ] <- ex[2, 1, ] <- scores$gls_var12
+    ex[1, 1, ] <- predictions$gls_var11; ex[2, 2, ] <- predictions$gls_var22
+    ex[1, 2, ] <- ex[2, 1, ] <- predictions$gls_var12
     reporting_scale <- .8 # generating population slope SD, as in VH Study 2
   } else if (kind == "outcome_unbalanced") {
     formula <- 're("z", "growth") ~ observed'
-    x <- cbind(people$observed); y <- scores$corrected_slope_full
-    ex <- array(0, c(1, 1, n)); ey <- scores$gls_var22; exy <- matrix(0, n, 1)
+    x <- cbind(people$observed); y <- predictions$corrected_slope_full
+    ex <- array(0, c(1, 1, n)); ey <- predictions$gls_var22; exy <- matrix(0, n, 1)
     reporting_scale <- 1
   } else {
     formula <- 're("z", "growth") ~ re("(Intercept)", "growth")'
-    x <- cbind(scores$corrected_intercept_full); y <- scores$corrected_slope_full
-    ex <- array(scores$gls_var11, c(1, 1, n)); ey <- scores$gls_var22
-    exy <- cbind(scores$gls_var12); reporting_scale <- 1
+    x <- cbind(predictions$corrected_intercept_full); y <- predictions$corrected_slope_full
+    ex <- array(predictions$gls_var11, c(1, 1, n)); ey <- predictions$gls_var22
+    exy <- cbind(predictions$gls_var12); reporting_scale <- 1
   }
   q <- ncol(x)
   colnames(x) <- paste0("x", seq_len(q))
@@ -79,7 +79,7 @@ make_case <- function(seed, kind) {
   close(unlist(tail(full$coefficients, 1)[fields]), unlist(production[fields]))
   close(unlist(production[fields]), unlist(as.data.frame(audit)[fields]))
   list(data = data, people = people, kind = kind, formula = formula,
-    fitted_beta = nlme::fixef(model), scores = scores,
+    fitted_beta = nlme::fixef(model), predictions = predictions,
     input = list(outcome = y, predictors = x, err_x = ex, err_y = ey, err_xy = exy),
     coefficients = full$coefficients, vcov = full$vcov,
     focal = as.data.frame(production[fields]), reporting_scale = reporting_scale,

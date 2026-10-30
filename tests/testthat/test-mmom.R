@@ -129,5 +129,5 @@ test_that("repair_ranef_gls uses the closed-form within-cluster score", {
     unname(vapply(expected, `[[`, numeric(1), 2)),
     tolerance = 1e-7
   )
-  expect_equal(dim(scored@error_covariance[["id"]]), c(2, 2, 10))
+  expect_equal(dim(scored@prediction_error_covariance[["id"]]), c(2, 2, 10))
 })

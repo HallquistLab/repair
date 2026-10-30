@@ -1,6 +1,6 @@
 # These expectations were produced without loading repair. Every test starts
 # with repeated observations, refits nlme, and invokes the public structural API.
-test_that("the public nlme workflow reproduces production scoring and REPAIR inference", {
+test_that("the public nlme workflow reproduces production prediction extraction and REPAIR inference", {
   skip_if_not_installed("nlme")
   reference <- readRDS(system.file("extdata", "nlme-workflow-reference.rds", package = "repair"))
   for (case in reference$cases) {
@@ -10,12 +10,12 @@ test_that("the public nlme workflow reproduces production scoring and REPAIR inf
       weights = if (correlated) nlme::varIdent(form = ~ 1 | phase) else NULL,
       control = nlme::lmeControl(msMaxIter = 300))
     expect_equal(nlme::fixef(model), case$fitted_beta, tolerance = 1e-5)
-    scores <- repair_ranef_gls(model)
-    expected <- case$scores[match(scores@levels$id, case$scores$id), ]
-    expect_equal(unname(scores@predictions$id[, "z"]), expected$corrected_slope_full, tolerance = 1e-5)
-    expect_equal(unname(scores@predictions$id[, "(Intercept)"]), expected$corrected_intercept_full, tolerance = 1e-5)
-    expect_equal(unname(scores@error_covariance$id["z", "z", ]), expected$gls_var22, tolerance = 1e-5)
-    expect_equal(unname(scores@error_covariance$id["z", "(Intercept)", ]), expected$gls_var12, tolerance = 1e-5)
+    predictions <- repair_ranef_gls(model)
+    expected <- case$scores[match(predictions@levels$id, case$scores$id), ]
+    expect_equal(unname(predictions@predictions$id[, "z"]), expected$corrected_slope_full, tolerance = 1e-5)
+    expect_equal(unname(predictions@predictions$id[, "(Intercept)"]), expected$corrected_intercept_full, tolerance = 1e-5)
+    expect_equal(unname(predictions@prediction_error_covariance$id["z", "z", ]), expected$gls_var22, tolerance = 1e-5)
+    expect_equal(unname(predictions@prediction_error_covariance$id["z", "(Intercept)", ]), expected$gls_var12, tolerance = 1e-5)
     for (backend in c("r", "rcpp")) {
       fit <- repair(as.formula(case$formula), list(growth = model), case$people, "id", backend = backend)
       expect_true(fit@struc_fit@converged, info = paste(case$kind, backend))

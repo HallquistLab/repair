@@ -145,7 +145,7 @@ For person \(j\), write the model as
 
 Here:
 
-- \(\mathbf{b}_{P,j}\) contains the person-level random intercept and slope;
+- \(\mathbf{b}_{P,j}\) contains the unit-level random intercept and slope;
 - \(\mathbf{b}_{D,j}\) contains the day-level random effects;
 - \(\mathbf{e}_j\) is the ordinary residual.
 
@@ -412,7 +412,7 @@ all random-effects covariance matrices
 grouping variables and row mappings
 ```
 
-The scoring layer should construct the target-specific covariance after the target group is known:
+The prediction extraction layer should construct the target-specific covariance after the target group is known:
 
 ```text
 R_target =
@@ -464,7 +464,7 @@ The final condition is especially important for nested structures. When targetin
 
 The target-specific block above describes error covariance **within** target
 cluster j. If two target clusters j and k share nuisance random effects, then
-their score errors can also be correlated. Writing the GLS scoring operator as
+their prediction errors can also be correlated. Writing the GLS prediction extraction operator as
 A_j, the omitted cross-cluster term is
 
 \[
@@ -474,12 +474,12 @@ A_j, the omitted cross-cluster term is
 
 with an additional residual cross-block term if residual errors are correlated
 across target clusters. Mutually independent *random-effect blocks* do not imply
-independent *target-cluster score errors* when nuisance levels are shared.
+independent *target-cluster prediction errors* when nuisance levels are shared.
 
-Consequently, within-cluster GLS scores alone are insufficient to justify the
+Consequently, within-cluster GLS predictions alone are insufficient to justify the
 current row-wise structural M-MOM estimator for arbitrary nested or crossed
 models. The high-level structural workflow is restricted to single-group Gaussian
-lmer or supported linear lme models. Lower-level multi-group scoring remains experimental until its
+lmer or supported linear lme models. Lower-level multi-group prediction extraction remains experimental until its
 cross-cluster covariance and downstream inference contract are validated. See
 `package_plan.Rmd` and `design-audit.md` for implementation boundaries.
 
@@ -494,10 +494,10 @@ above is zero under the fitted model and conditional plug-in assumptions.
 
 `re("term", model = "growth", group = "person")` selects one target group per
 model. All selected effects from that model must use that group. The membership
-check precedes structural cohort selection and omission; zero estimated nuisance
+check precedes structural scope selection and omission; zero estimated nuisance
 variance does not waive it. Nuisance slopes and multiple nuisance groups may be
 used when each group qualifies. Target-specific covariance is shared by GLS
-scoring and posterior reliability.
+prediction extraction and posterior reliability.
 
 Shared school, item, calendar-day, or other nuisance levels remain rejected.
 Multilevel nlme remains unsupported. See `nested-nuisance-validation.md` for the

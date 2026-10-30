@@ -7,10 +7,10 @@ persistence_outputs <- function(fit) {
     intervals = stats::confint(fit), n = stats::nobs(fit), summary = report,
     printed_summary = utils::capture.output(base::print(base::summary(fit))),
     coefficient_table = repair::repair_coefficients(fit),
-    scores = repair::repair_scores(fit),
-    measurement_scores = repair::repair_scores(fit, cohort = "measurement"),
-    covariance = repair::repair_score_covariance(fit),
-    reliability = repair::repair_reliability(fit, level = "person"),
+    predictions = repair::repair_predictions(fit),
+    mlm_predictions = repair::repair_predictions(fit, scope = "all"),
+    covariance = repair::repair_prediction_covariance(fit),
+    reliability = repair::repair_reliability(fit, detail = "unit"),
     diagnostics = repair::repair_diagnostics(fit))
 }
 environment(persistence_outputs) <- baseenv()
@@ -46,7 +46,7 @@ expect_fresh_session_roundtrip <- function(fit) {
   invisible(restored)
 }
 
-test_that("a saved teaching fit retains the omitted cohort in a new R session", {
+test_that("a saved teaching fit retains the omitted scope in a new R session", {
   example <- repair_example
   growth <- lme4::lmer(score ~ day + (day | person), example$repeated)
   people <- example$people[nrow(example$people):1, ]
@@ -56,9 +56,9 @@ test_that("a saved teaching fit retains the omitted cohort in a new R session", 
   expect_true(repair_diagnostics(fit, "status")$converged)
   restored <- expect_fresh_session_roundtrip(fit)
   expect_equal(restored$n, nrow(people) - 1L)
-  expect_identical(restored$scores$id, people$person[-2])
+  expect_identical(restored$predictions$id, people$person[-2])
   expect_identical(restored$diagnostics$excluded$id, people$person[2])
-  expect_equal(sum(!restored$measurement_scores$analyzed), 1L)
+  expect_equal(sum(!restored$mlm_predictions$analyzed), 1L)
 })
 
 test_that("a saved multi-model fit retains supplied cross-error covariance in a new R session", {
@@ -82,8 +82,8 @@ test_that("a saved nested-nuisance fit retains group identities and reliability 
   ex <- nested_example("nested_slope")
   fit <- repair(ex$formula, list(growth = ex$model), ex$case$people, "person")
   restored <- expect_fresh_session_roundtrip(fit)
-  expect_identical(unique(restored$scores$group), "person")
-  expect_setequal(restored$summary$measurement_models$growth$nuisance_groups,
+  expect_identical(unique(restored$predictions$group), "person")
+  expect_setequal(restored$summary$mlm_models$growth$nuisance_groups,
     c("person:day", "person:block"))
 })
 

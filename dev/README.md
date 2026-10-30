@@ -11,7 +11,7 @@ behavior. A design draft does not make its proposed functions available.
   dated CI evidence, merged versus pending website status, concrete release gaps,
   short-term user improvements, and a separate CRAN preparation path.
 - [Person-level bootstrap and refitting design](bootstrap-refit-design.md): a
-  future-version proposal covering resampling identity, replay/cohort contracts,
+  future-version proposal covering resampling identity, replay/scope contracts,
   cross-model covariance, failure handling, inference, and validation. Not a
   first-release commitment and not an implemented API.
 - [Package design plan](package_plan.Rmd): implemented interfaces, statistical
@@ -21,11 +21,11 @@ behavior. A design draft does not make its proposed functions available.
 
 - [Design audit](design-audit.md): original workflow corrections and follow-ups.
 - [nlme validation](nlme-validation.md): effective rows, residual covariance,
-  independent scoring and end-to-end reference checks.
+  independent prediction extraction and end-to-end reference checks.
 - [Multiple-model validation](multimodel-validation.md): effect identities,
   cross-model covariance contracts, paired processes, and reproduction.
 - [Reliability validation](reliability-validation.md): manuscript definitions,
-  cohort/undefined-value behavior, and independent references.
+  scope/undefined-value behavior, and independent references.
 - [Extractor contracts](extractor-contracts.md): public table schemas, ordering,
   keys, covariance reconstruction, and failure behavior.
 - [CI checks](ci-checks.md): platform/R-version matrix, artifacts, local

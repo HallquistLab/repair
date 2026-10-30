@@ -6,7 +6,7 @@ repair_nlme_structure <- function(model) {
   if (inherits(model, "nlme")) repair_error("Nonlinear `nlme` fits are not supported; supply a linear `nlme::lme()` fit.")
   if (is.null(model$groups) || ncol(model$groups) != 1L ||
       length(model$modelStruct$reStruct) != 1L) {
-    repair_error("nlme scoring currently requires exactly one grouping factor.")
+    repair_error("nlme prediction extraction currently requires exactly one grouping factor.")
   }
   correlation <- model$modelStruct$corStruct
   variance <- model$modelStruct$varStruct

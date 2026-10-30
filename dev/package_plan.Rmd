@@ -8,10 +8,10 @@ output: html_document
 # Design objective
 
 Make the paper's REPAIR estimator usable without asking an analyst to assemble
-error arrays manually. Keep the measurement model fixed while the structural
-model changes, and make each analysis person's scores, covariance, and inclusion
-status inspectable. Use **measurement model** and **structural model**, since
-“level 1/level 2” is ambiguous for a multilevel measurement model.
+error arrays manually. Keep the MLM fixed while the structural
+model changes, and make each analysis person's predictions, covariance, and inclusion
+status inspectable. Use **MLM** and **structural model**, since
+“level 1/level 2” is ambiguous for a multilevel MLM.
 
 This document supersedes the October 20 outline. It describes the implementation,
 not an aspirational interface. The source is canonical; the obsolete outline PDF
@@ -31,33 +31,33 @@ separates preparation from publishing a versioned artifact.
 4. Specify one additive structural formula, such as
    `outcome ~ re("time", model = "growth") + age`.
 5. Supply one structural-data row per ID and an explicit ID column name.
-6. Optionally call `repair_data()` to inspect cohort matching and error inputs.
+6. Optionally call `repair_data()` to inspect scope matching and error inputs.
 7. Call `repair()`; use `summary()`, `coef()`, `vcov()`, `confint()`, and `nobs()`.
-   For reporting and joins, use `repair_coefficients()`, `repair_scores()`, and
-   `repair_score_covariance()` with their documented table identities.
+   For reporting and joins, use `repair_coefficients()`, `repair_predictions()`, and
+   `repair_prediction_covariance()` with their documented table identities.
 8. Inspect `repair_reliability(fit)` and `repair_diagnostics(fit)` for reliability,
-   cohort accounting, measurement messages, and numerical diagnostics. Select
+   scope accounting, measurement messages, and numerical diagnostics. Select
    individual diagnostic tables with `table = "name"`. Plot
-   person-level reliability to inspect heterogeneity.
+   unit-level reliability to inspect heterogeneity.
 
 # Supported scope
 
-One equation, Gaussian lmer or linear lme measurement models with one target grouping factor each,
+One equation, Gaussian lmer or linear lme MLMs with one target grouping factor each,
 additive predictors, and an intercept. Random coefficients can appear on either
 side. Observed predictors can be numeric, logical, or factors; an observed
 outcome must be numeric. A named list can supply several fits to the equation.
-Multiple referenced models require explicit independent scoring errors or supplied
+Multiple referenced models require explicit independent prediction errors or supplied
 per-ID covariance blocks for every model pair. Grouping names can differ; person
 identity must agree across fits. See `multimodel-validation.md`.
 
-Single-group nlme scoring and structural fitting now support independent, AR(1),
+Single-group nlme prediction extraction and structural fitting now support independent, AR(1),
 and continuous-time AR(1) correlation, with constant, varIdent, or varPower
 residual variance. Effective rows, fitted contrasts, and residual covariance are
 validated; see `nlme-validation.md`. Multilevel nlme extraction is rejected.
 lmer nuisance groups may be contained within targets: every fitted nuisance
 level must belong to one target level on all effective rows. The same covariance
-enters scoring and posterior reliability; see `nested-nuisance-validation.md`.
-Shared nuisance groups remain rejected because their cross-person score-error
+enters prediction extraction and posterior reliability; see `nested-nuisance-validation.md`.
+Shared nuisance groups remain rejected because their cross-person prediction-error
 covariance cannot enter the row-wise M-MOM contract. Multilevel nlme remains unsupported.
 
 # Contracts and responsibilities
@@ -69,41 +69,41 @@ model and target-group qualification are optional only when unambiguous. Each
 model selects exactly one target group. Existing single-group labels are preserved;
 labels from multi-group models include the group. `(Intercept)` is canonical;
 `1` and `Intercept` are input aliases. Generated columns use reserved `.repair_`
-names so observed columns cannot mask scores. Output labels retain model identity.
+names so observed columns cannot mask predictions. Output labels retain model identity.
 
 The parser validates a small grammar without evaluating marker arguments.
 Interactions, nonlinear score transformations, offsets, `.`, no-intercept models,
 and multiple equations fail explicitly. Outcome/predictor identity is checked.
-Observed transformations must be precomputed in the person-level data frame.
+Observed transformations must be precomputed in the unit-level data frame.
 
-## Measurement extraction and scoring
+## Measurement extraction and prediction extraction
 
 `class_mlm_elements` is the backend normalization contract. The existing scorer
 returns `class_repair_ranef`, with lists keyed by group:
 
 - `predictions`: ID by coefficient matrix;
-- `error_covariance`: coefficient by coefficient by ID array;
+- `prediction_error_covariance`: coefficient by coefficient by ID array;
 - `levels`, `terms`, and per-group/per-cluster diagnostics.
 
 Independent lme4 blocks for one group (including `||`) are normalized into
 level-major design columns and block-diagonal random covariance. Repeated
-coefficient names within a group are rejected as ambiguous for scoring.
+coefficient names within a group are rejected as ambiguous for prediction extraction.
 
 The structural workflow always requests deviations (`include_fixed = FALSE`).
-Likelihood-only scoring subtracts fixed effects and offsets and uses the fitted
+Likelihood-only prediction extraction subtracts fixed effects and offsets and uses the fitted
 residual covariance (including prior weights). Failed score blocks remain
 missing, with diagnostic reasons. They are not silently replaced by BLUPs.
 
 ## Assembly and validation
 
 `repair_data()` is the sole assembly boundary. The supplied data frame defines
-the cohort and order. IDs match model grouping levels as strings, never by row
+the scope and order. IDs match model grouping levels as strings, never by row
 position. Duplicate/missing/empty IDs always fail. All needed observed variables
 must exist. Long data are not implicitly aggregated.
 
 Default missingness policy is failure. Explicit `na_action = "omit"` warns and
-records ID/reason rows for absent measurement IDs, nonfinite/missing observed
-values, or failed scoring. Extra measurement IDs are recorded separately. The
+records ID/reason rows for absent MLM IDs, nonfinite/missing observed
+values, or failed prediction extraction. Extra MLM IDs are recorded separately. The
 analysis matrix is checked for adequate sample size and full column rank.
 
 `class_repair_data` holds IDs, formula, outcome, predictor matrix, error arrays,
@@ -114,14 +114,14 @@ both axes of its covariance block. Observed columns get zero error; within-model
 cross-covariance is preserved, including `err_xy`. Cross-model blocks are aligned
 by model name, coefficient name, and ID, then checked jointly for positive
 semidefiniteness. Missing supplied blocks are errors, not omission candidates.
-Single-model `@scores` remains a score object; multiple-model `@scores` is a named
-list. Diagnostics always include `measurement_models` and `cross_model_error`.
+Single-model `@predictions` remains a prediction object; multiple-model `@predictions` is a named
+list. Diagnostics always include `mlm_models` and `cross_model_error`.
 
 ## Estimation and output
 
 `repair()` delegates assembly to `repair_data()` and estimation to `fit_mmom()`.
 It returns the existing `class_repair_mod` extended with `analysis_data` and `call`.
-Only referenced measurement models are retained. `struc_fit` remains the stable
+Only referenced MLMs are retained. `struc_fit` remains the stable
 M-MOM fit/failure class. Numerical failures warn and remain inspectable; standard
 coefficient/covariance accessors refuse failed fits.
 
@@ -131,18 +131,18 @@ stabilization while retaining measurement-error subtraction. Advanced users can
 set the two controls independently through `fit_mmom()`.
 
 Summaries show effect sources, requested/analyzed/excluded people, coefficient
-inference, regularization and actual subtraction multipliers, measurement-model
+inference, regularization and actual subtraction multipliers, MLM
 messages and singularity, selected-effect posterior reliability, weight
 concentration, and the conditional normal-inference convention.
-`nobs()` means analyzed people. `confint()` can change the confidence level.
+`nobs()` means analyzed units. `confint()` can change the confidence level.
 
 # Methodological boundaries
 
 The covariance uses the final modified moment for its bread, preliminary slopes
 for the extra error term, and squared inverse case-variance weights in that term.
-It conditions on estimated measurement-model parameters and assumes the
+It conditions on estimated MLM parameters and assumes the
 model-based normal-error covariance and independent analysis people. It is not
-robust inference and does not account for measurement-model parameter estimation.
+robust inference and does not account for MLM parameter estimation.
 
 `dev/target_grouping_vars.Rmd` describes a target-specific *within-cluster*
 covariance. That is necessary but insufficient to justify independent structural
@@ -154,8 +154,8 @@ estimator must be specified before admitting shared nuisance levels.
 
 1. Define the effect identities, statistical estimand, and error-covariance
    contract before adding syntax or a backend.
-2. Implement normalization/scoring and verify against independently calculated
-   scores and covariance, including effective observation order and missingness.
+2. Implement normalization/prediction extraction and verify against independently calculated
+   predictions and covariance, including effective observation order and missingness.
 3. Extend assembly with explicit matching and failure policies; test covariance
    permutations and selected outcome/predictor cross-terms.
 4. Connect the estimator without changing its scientific target implicitly.
@@ -167,7 +167,7 @@ estimator must be specified before admitting shared nuisance levels.
 The single-group nlme effective-row and residual-covariance validation milestone
 is implemented (see `nlme-validation.md`), as is the multiple-model assembly
 contract (see `multimodel-validation.md`). Reliability and structural diagnostic
-interfaces are now implemented with explicit contrast, cohort, aggregation, and
+interfaces are now implemented with explicit contrast, scope, aggregation, and
 undefined-value contracts; see `reliability-validation.md`. Stable table extractors
 are implemented; see `extractor-contracts.md` for schema and compatibility rules.
 Cross-platform automated checks are now configured; see `ci-checks.md` for the
@@ -175,7 +175,7 @@ matrix, warning policy, artifacts, and local reproduction. A pkgdown website now
 organizes the executable guides and reference, with PR validation and main-branch
 GitHub Pages deployment; see `website.md`. Bootstrap inference,
 additional residual structures, and shared-group dependence validation require
-separate validation. Cross-person covariance support and formula extensions with
+separate validation. Cross-unit covariance support and formula extensions with
 derived error propagation require explicit statistical contracts.
 
 
@@ -186,7 +186,7 @@ replacement fitting. Original measurement/person data are required; `new_*`
 arguments supply replacements. Native data-only lmer/lme recipes and explicit
 callbacks preserve observable specifications, effective rows and coefficient
 schemas. Structural factor matrices are recorded; refit summaries expose audited
-counts, controls, warnings and versions. Deterministic whole-person draws assign
+counts, controls, warnings and versions. Deterministic whole-unit draws assign
 fresh target/nuisance IDs with an explicit source map. No random sampling or
 bootstrap inference is added. See `refitting-validation.md` and the executable
 refitting guide for the contract, tests and restrictions.

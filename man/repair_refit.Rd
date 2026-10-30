@@ -6,9 +6,9 @@
 \usage{
 repair_refit(
   object,
-  measurement_data,
+  mlm_data,
   data,
-  new_measurement_data = NULL,
+  new_mlm_data = NULL,
   new_data = NULL,
   id = NULL,
   refitter = NULL,
@@ -17,18 +17,18 @@ repair_refit(
 )
 }
 \arguments{
-\item{object}{A converged \code{\link[=repair]{repair()}} fit using one measurement model.}
+\item{object}{A converged \code{\link[=repair]{repair()}} fit using one MLM.}
 
-\item{measurement_data}{Reference repeated-observation data, as a data frame or
+\item{mlm_data}{Reference repeated-observation data, as a data frame or
 one-element list named like the fitted model. Retain original fitted row names.
-Rows excluded from the original measurement fit are filtered by those names.}
+Rows excluded from the original MLM fit are filtered by those names.}
 
-\item{data}{Original person-level data, including requested/excluded rows.}
+\item{data}{Original unit-level data, including requested/excluded unit rows.}
 
-\item{new_measurement_data}{Optional replacement effective repeated observations.
+\item{new_mlm_data}{Optional replacement effective repeated observations.
 Every supplied row must be used; implicit subset or omission is rejected.}
 
-\item{new_data}{Optional replacement person-level data. Every requested person
+\item{new_data}{Optional replacement unit-level data. Every requested unit
 must be complete; the original coefficient schema must remain estimable.}
 
 \item{id}{Structural ID column; defaults to the original ID column and must match it.}
@@ -42,7 +42,7 @@ allowed. Copy whole people and assign fresh target/nuisance identities. Cannot
 be combined with replacement data; no randomness or intervals are generated.}
 
 \item{tolerance}{Positive finite numerical tolerance for identity replay;
-default 1e-6. Identity/schema/cohort checks are exact.}
+default 1e-6. Identity/schema/scope checks are exact.}
 }
 \value{
 An ordinary fitted REPAIR object, with a reference/replacement audit
@@ -50,8 +50,8 @@ in \code{summary(result)$refit}. Original conditional SEs remain conditional;
 no bootstrap uncertainty or coverage claim is added.
 }
 \description{
-Replay one measurement model and the complete structural analysis using explicit
-reference inputs. Optional replacement inputs or a deterministic whole-person
+Replay one MLM and the complete structural analysis using explicit
+reference inputs. Optional replacement inputs or a deterministic whole-unit
 draw are fitted only after identity replay succeeds. This is a refitting tool,
 not a bootstrap inference engine.
 }
@@ -67,13 +67,13 @@ settings. Unrecoverable nlme options are the callback author's explicit
 declaration, identified as \code{callback_declared} in the audit.
 
 Original-data replay checks effective observations, designs, weights/offsets,
-covariance, scores, structural inputs, coefficients and their covariance.
+covariance, predictions, structural inputs, coefficients and their covariance.
 Measurement convergence, specification, and coefficient identities are checked
-again for replacements. Singular but usable measurement fits are retained.
+again for replacements. Singular but usable MLM fits are retained.
 Warnings/messages are recorded in \code{summary(result)$refit}; fitting errors stop.
 Original structural formula, regularization and computation backend are retained.
 
-\code{draw} requires matching measurement/analyzed cohorts and a bare target ID.
+\code{draw} requires matching MLM/structural scopes and a bare target ID.
 Nuisance IDs must be bare columns or grouping expressions containing that ID.
 Shared nuisance groups are rejected by the ordinary structural validator.
 See \code{vignette("refitting", package = "repair")} for scope and examples.

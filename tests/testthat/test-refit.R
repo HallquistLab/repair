@@ -9,18 +9,18 @@ refit_teaching <- function() {
 test_that("native lmer identity replay preserves coefficients, inference, and controls", {
   ex <- refit_teaching()
   snapshot <- function(fit) list(coefficients = coef(fit), vcov = vcov(fit),
-    scores = repair_scores(fit), diagnostics = fit@analysis_data@diagnostics,
+    predictions = repair_predictions(fit), diagnostics = fit@analysis_data@diagnostics,
     weights = model.weights(model.frame(fit@mlm_fit[[1L]])))
   before <- snapshot(ex$fit)
   replay <- repair_refit(ex$fit, ex$data, ex$people)
   expect_true(S7::S7_inherits(replay, class_repair_mod))
   expect_equal(coef(replay), coef(ex$fit), tolerance = 1e-6)
   expect_equal(vcov(replay), vcov(ex$fit), tolerance = 1e-6)
-  expect_equal(repair_scores(replay), repair_scores(ex$fit), tolerance = 1e-6)
-  expect_equal(repair_score_covariance(replay), repair_score_covariance(ex$fit), tolerance = 1e-6)
+  expect_equal(repair_predictions(replay), repair_predictions(ex$fit), tolerance = 1e-6)
+  expect_equal(repair_prediction_covariance(replay), repair_prediction_covariance(ex$fit), tolerance = 1e-6)
   expect_equal(repair_reliability(replay), repair_reliability(ex$fit), tolerance = 1e-6)
-  expect_identical(replay@mlm_fit$measurement@optinfo$control, ex$model@optinfo$control)
-  expect_identical(replay@mlm_fit$measurement@optinfo$optimizer, "bobyqa")
+  expect_identical(replay@mlm_fit$mlm@optinfo$control, ex$model@optinfo$control)
+  expect_identical(replay@mlm_fit$mlm@optinfo$optimizer, "bobyqa")
   expect_identical(replay@struc_fit@diagnostics$backend, "r")
   expect_true(summary(replay)$refit$checks$verified)
   expect_identical(summary(replay)$refit$mode, "identity")
@@ -38,17 +38,17 @@ test_that("replacement fits agree with independent manual reconstruction", {
   manual_model <- lme4::lmer(score ~ day + (day | person), d,
     control = lme4::lmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 100000)))
   manual <- repair(re("day") ~ practice, manual_model, p, "person", backend = "r")
-  r <- repair_refit(ex$fit, ex$data, ex$people, new_measurement_data = d, new_data = p)
+  r <- repair_refit(ex$fit, ex$data, ex$people, new_mlm_data = d, new_data = p)
   expect_equal(coef(r), coef(manual), tolerance = 1e-6)
   expect_equal(vcov(r), vcov(manual), tolerance = 1e-6)
-  expect_equal(repair_scores(r), repair_scores(manual), tolerance = 1e-6)
+  expect_equal(repair_predictions(r), repair_predictions(manual), tolerance = 1e-6)
   expect_identical(summary(r)$refit$checks$stage, c("reference", "replacement"))
-  expect_equal(summary(r)$refit$checks$n_measurement, rep(nrow(d), 2))
+  expect_equal(summary(r)$refit$checks$n_rows, rep(nrow(d), 2))
   wrong <- ex$data; wrong$score[1] <- wrong$score[1] + 2
-  expect_error(repair_refit(ex$fit, wrong, ex$people, new_measurement_data = d), "Reference replay does not reproduce")
+  expect_error(repair_refit(ex$fit, wrong, ex$people, new_mlm_data = d), "Reference replay does not reproduce")
   wrong <- ex$people; wrong$practice[1] <- 100
   expect_error(repair_refit(ex$fit, ex$data, wrong), "Reference replay does not reproduce")
-  expect_error(repair_refit(ex$fit, ex$data, ex$people[60:1, ]), "requested/analyzed cohort")
+  expect_error(repair_refit(ex$fit, ex$data, ex$people[60:1, ]), "requested/structural scope")
 })
 
 test_that("nested deterministic draws duplicate entire people with independent identities", {
@@ -89,7 +89,7 @@ test_that("nested deterministic draws duplicate entire people with independent i
     manual <- repair(ex$formula, list(growth = m), people, "person")
     expect_equal(coef(result), coef(manual), tolerance = 1e-6)
     expect_equal(vcov(result), vcov(manual), tolerance = 1e-6)
-    expect_identical(unique(repair_scores(result)$group), "person")
+    expect_identical(unique(repair_predictions(result)$group), "person")
     expect_true(all(repair_diagnostics(result, "status")$converged))
   }
 })
@@ -153,7 +153,7 @@ test_that("nlme residual structures and fitting settings replay from observation
     r <- repair_refit(f, case$data, case$people)
     expect_equal(coef(r), coef(f), tolerance = 1e-6)
     expect_equal(vcov(r), vcov(f), tolerance = 1e-6)
-    expect_equal(repair_scores(r), repair_scores(f), tolerance = 1e-6)
+    expect_equal(repair_predictions(r), repair_predictions(f), tolerance = 1e-6)
     expect_equal(r@mlm_fit$growth$call$control$msMaxIter, 300)
     expect_identical(r@mlm_fit$growth$method, m$method)
   }
@@ -190,9 +190,9 @@ test_that("nonliteral recipes do not read mutable global bindings", {
 
 test_that("replacement omission, row loss, and unsupported scope fail explicitly", {
   ex <- refit_teaching(); d <- ex$data; d$score[1] <- NA_real_
-  expect_error(repair_refit(ex$fit, ex$data, ex$people, new_measurement_data = d), "Replacement measurement refit failed")
+  expect_error(repair_refit(ex$fit, ex$data, ex$people, new_mlm_data = d), "Replacement measurement refit failed")
   absent <- ex$data; absent$day <- NULL
-  expect_error(repair_refit(ex$fit, ex$data, ex$people, new_measurement_data = absent), "columns absent")
+  expect_error(repair_refit(ex$fit, ex$data, ex$people, new_mlm_data = absent), "columns absent")
   p <- ex$people; p$practice[1] <- NA_real_
   expect_error(repair_refit(ex$fit, ex$data, ex$people, new_data = p), "incomplete")
   expect_error(repair_refit(ex$fit, ex$data, ex$people, id = "wrong"), "original structural ID")
@@ -202,7 +202,7 @@ test_that("replacement omission, row loss, and unsupported scope fail explicitly
     expect_error(repair_refit(ex$fit, ex$data, ex$people, tolerance = tol), "positive finite")
   source <- multimodel_example()
   f <- repair(source$formula, source$models, source$case$people, "person", cross_model_error = source$case$cross_model_error)
-  expect_error(repair_refit(f, list(), data.frame()), "one measurement model")
+  expect_error(repair_refit(f, list(), data.frame()), "one MLM")
 })
 
 test_that("original exclusions are audited and measurement-only people cannot silently disappear in draws", {
@@ -212,7 +212,7 @@ test_that("original exclusions are audited and measurement-only people cannot si
   expect_equal(nobs(replay), 59L)
   expect_equal(summary(replay)$refit$checks$n_requested, 60L)
   expect_true(any(grepl("Omitting 1", summary(replay)$refit$warnings$reference)))
-  expect_error(repair_refit(fit, ex$data, p, draw = fit@analysis_data@ids), "cohorts to coincide")
+  expect_error(repair_refit(fit, ex$data, p, draw = fit@analysis_data@ids), "scopes to coincide")
 })
 
 test_that("warnings are visible in the audit and optimizer failure is fatal", {
@@ -249,7 +249,7 @@ test_that("nlme power and continuous-time correlation recipes are rebuilt with e
     replay <- repair_refit(fit, d, people)
     expect_equal(coef(replay), coef(fit), tolerance = 1e-6)
     expect_equal(vcov(replay), vcov(fit), tolerance = 1e-6)
-    expect_equal(repair_score_covariance(replay), repair_score_covariance(fit), tolerance = 1e-6)
+    expect_equal(repair_prediction_covariance(replay), repair_prediction_covariance(fit), tolerance = 1e-6)
     expect_identical(summary(replay)$refit$checks$controls, "recorded_recipe")
   }
 })
@@ -272,7 +272,7 @@ test_that("nlme control changes require an explicit matching recipe", {
   expect_equal(coef(r), coef(f), tolerance = 1e-6)
 })
 
-test_that("a singular but usable measurement fit is retained", {
+test_that("a singular but usable MLM fit is retained", {
   set.seed(541)
   d <- expand.grid(day = 0:7, person = factor(1:30))
   people <- data.frame(person = levels(d$person), practice = seq_len(30))
@@ -283,19 +283,19 @@ test_that("a singular but usable measurement fit is retained", {
   fit <- repair(re("day") ~ practice, model, people, "person")
   replay <- repair_refit(fit, d, people)
   expect_equal(coef(replay), coef(fit), tolerance = 1e-6)
-  expect_true(lme4::isSingular(replay@mlm_fit$measurement))
+  expect_true(lme4::isSingular(replay@mlm_fit$mlm))
   expect_true(length(summary(replay)$refit$messages$reference) > 0L)
 })
 
 test_that("native replay succeeds in a fresh R process without original call bindings", {
   ex <- refit_teaching()
   # Remove formula environments that could otherwise retain helper/global data.
-  model <- ex$fit@mlm_fit$measurement
+  model <- ex$fit@mlm_fit$mlm
   formula <- stats::formula(model); environment(formula) <- baseenv()
   model@call$formula <- formula; model@call$data <- as.name("missing_original_binding")
   terms <- attr(model@frame, "terms"); attr(terms, ".Environment") <- baseenv()
   attr(model@frame, "terms") <- terms
-  ex$fit@mlm_fit <- list(measurement = model)
+  ex$fit@mlm_fit <- list(mlm = model)
   structural <- ex$fit@analysis_data@formula; environment(structural) <- baseenv()
   ex$fit@analysis_data@formula <- structural
   path <- tempfile(fileext = ".rds"); on.exit(unlink(path), add = TRUE)
@@ -324,7 +324,7 @@ test_that("logical predictor coding is preserved alongside factor coding", {
   replay <- repair_refit(fit, d, p, new_data = p)
   expect_identical(names(coef(replay)), names(coef(fit)))
   expect_equal(coef(replay), coef(fit), tolerance = 1e-6)
-  expect_identical(names(lme4::fixef(replay@mlm_fit$measurement)), names(lme4::fixef(model)))
+  expect_identical(names(lme4::fixef(replay@mlm_fit$mlm)), names(lme4::fixef(model)))
 })
 
 test_that("nlme person draws preserve paired observations and agree with a manual refit", {

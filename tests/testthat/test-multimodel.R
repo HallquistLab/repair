@@ -36,8 +36,8 @@ test_that("all referenced models contribute ID and failed-score exclusions", {
   expect_error(repair_data(ex$formula, ex$models, case$people, "person", cross_model_error = "independent"), "2 analysis row")
   expect_warning(a <- repair_data(ex$formula, ex$models, case$people, "person", "omit", "independent"), "Omitting 2")
   expect_identical(a@ids, case$people$person[-(1:2)])
-  expect_match(a@diagnostics$excluded$reason[1], "model growth")
-  expect_match(a@diagnostics$excluded$reason[2], "model response")
+  expect_match(a@diagnostics$excluded$reason[1], "MLM growth")
+  expect_match(a@diagnostics$excluded$reason[2], "MLM response")
   # Supplied blocks need only cover retained IDs; omissions cannot hide bad blocks.
   cross <- case$cross_model_error
   cross[[1]]$covariance <- cross[[1]]$covariance[, , -(1:2), drop = FALSE]
@@ -46,7 +46,7 @@ test_that("all referenced models contribute ID and failed-score exclusions", {
   cross[[1]]$covariance <- cross[[1]]$covariance[, , -1, drop = FALSE]
   expect_error(repair_data(ex$formula, ex$models, case$people, "person", "omit", cross), "missing retained IDs.*p03")
   subset <- repair_data(ex$formula, ex$models, case$people[3:65, , drop = FALSE], "person", cross_model_error = "independent")
-  expect_identical(subset@diagnostics$measurement_models$growth$unused_score_ids, c("p02", sprintf("p%02d", 66:70)))
+  expect_identical(subset@diagnostics$mlm_models$growth$unused_prediction_ids, c("p02", sprintf("p%02d", 66:70)))
   # A cluster present in the model but without an identifiable random slope.
   d <- lme4::sleepstudy; d$Days[d$Subject == "308"] <- 0
   bad <- suppressWarnings(lme4::lmer(Reaction ~ Days + (Days | Subject), d))
@@ -54,7 +54,7 @@ test_that("all referenced models contribute ID and failed-score exclusions", {
   people <- data.frame(person = levels(d$Subject))
   expect_warning(expect_warning(failed <- repair_data(re("Days", "bad") ~ re("(Intercept)", "good"),
     list(bad = bad, good = good), people, "person", "omit", "independent"), "Omitting 1"), "predictions failed")
-  expect_match(failed@diagnostics$excluded$reason, "scoring failed in model bad")
+  expect_match(failed@diagnostics$excluded$reason, "prediction extraction failed in model bad")
 })
 
 test_that("invalid or implicit cross-model covariance never falls back to independence", {
@@ -107,17 +107,17 @@ test_that("three-model assembly requires all pairs and checks joint positive sem
   expect_equal(unname(valid@err_x[1, 2, ]), unname(.9 * sqrt(var$a * var$c)))
 })
 
-test_that("mixed lmer and nlme models preserve their own scoring covariances", {
+test_that("mixed lmer and nlme models preserve their own prediction covariances", {
   skip_if_not_installed("nlme")
   ex <- multimodel_example("independent"); case <- ex$case
   ex$models$growth <- lme4::lmer(y ~ z + (z | id), case$a)
   fit <- repair(ex$formula, ex$models, case$people, "person", cross_model_error = "independent")
   a <- fit@analysis_data
   expect_true(fit@struc_fit@converged)
-  expect_equal(summary(fit)$measurement_models$growth$measurement_backend, "lme4")
-  expect_equal(summary(fit)$measurement_models$response$measurement_backend, "nlme")
+  expect_equal(summary(fit)$mlm_models$growth$mlm_backend, "lme4")
+  expect_equal(summary(fit)$mlm_models$response$mlm_backend, "nlme")
   direct <- repair_ranef_gls(ex$models$growth)
-  expect_equal(unname(a@err_x), unname(direct@error_covariance$id[, , a@ids]))
+  expect_equal(unname(a@err_x), unname(direct@prediction_error_covariance$id[, , a@ids]))
   expect_true(all(a@err_xy == 0))
   expect_output(print(fit), "growth \\(lme4")
   expect_output(print(fit), "response \\(nlme")

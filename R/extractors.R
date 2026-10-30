@@ -12,10 +12,10 @@ repair_analysis_object <- function(object) {
 #' @param object A fitted [repair()] result.
 #' @param conf.level Confidence level strictly between zero and one; default 0.95.
 #' @details Estimates retain their input scale. Standard errors, two-sided p-values,
-#'   and normal confidence intervals condition on fitted measurement-model quantities
+#'   and normal confidence intervals condition on fitted MLM quantities
 #'   and any supplied cross-model error covariance. Changing `conf.level` changes
 #'   interval endpoints only. Failed structural fits stop with an informative error;
-#'   inspect [repair_diagnostics()] for their status and measurement diagnostics.
+#'   inspect [repair_diagnostics()] for their status and MLM diagnostics.
 #' @return A plain data frame with columns, in order: `term` (character),
 #'   `estimate`, `std.error`, `statistic`, `p.value`, `conf.low`, `conf.high`, and
 #'   `conf.level` (numeric). Rows follow `coef(object)`: the structural intercept,
@@ -40,29 +40,29 @@ repair_coefficients <- function(object, conf.level = 0.95) {
     conf.level = rep(as.numeric(conf.level), nrow(b)), row.names = NULL)
 }
 
-#' Extract selected likelihood-only scores as an ID-keyed table
+#' Extract selected likelihood-only predictions as an ID-keyed table
 #'
-#' Read saved scores and their sampling-error variances without refitting or
-#' navigating the different single- and multiple-model score containers.
+#' Read saved predictions and their sampling-error variances without refitting or
+#' navigating the different single- and multiple-model prediction containers.
 #' @param object A [repair()] result or an assembled [repair_data()] object.
-#'   A numerical structural failure is accepted because measurement scores exist.
-#' @param cohort `"analyzed"` (default) returns retained structural IDs in their
-#'   analysis order. `"measurement"` returns each model's effective grouping levels
-#'   in saved scorer order, including people outside or excluded from the analysis.
-#' @details Only effects selected in the structural formula are returned. Scores
+#'   A numerical structural failure is accepted because MLM predictions exist.
+#' @param scope `"structural"` (default) returns retained structural IDs in their
+#'   analysis order. `"all"` returns each model's effective grouping levels
+#'   in saved scorer order, including units outside or excluded from the analysis.
+#' @details Only effects selected in the structural formula are returned. Predictions
 #'   are likelihood-only random deviations, not BLUPs or fixed-plus-random totals.
-#'   `std.error` is the square root of the scoring-error variance conditional on
-#'   fitted measurement parameters; it is not a posterior SD or a structural SE.
-#'   Marginal variances alone do not describe all score uncertainty: use
-#'   [repair_score_covariance()] for retained within- and cross-model covariances.
+#'   `std.error` is the square root of the prediction-error variance conditional on
+#'   fitted MLM parameters; it is not a posterior SD or a structural SE.
+#'   Marginal variances alone do not describe all prediction uncertainty: use
+#'   [repair_prediction_covariance()] for retained within- and cross-model covariances.
 #'
-#'   A person's structural exclusion does not itself indicate a failed score.
-#'   Failed scores remain as rows, with missing estimates/uncertainty where saved,
-#'   `status = "failed"`, and a reason. Absent measurement IDs have no score row;
+#'   A unit's structural exclusion does not itself indicate a failed prediction.
+#'   Failed predictions remain as rows, with missing estimates/uncertainty where saved,
+#'   `status = "failed"`, and a reason. Absent MLM IDs have no prediction row;
 #'   use `repair_diagnostics(fit, table = "excluded")` for their exclusion reasons.
 #' @return A plain data frame with columns in order: `id`, `model`, `group`, `term`,
-#'   `label`, `role` (character), `score`, `std.error`, `error.variance` (numeric),
-#'   `cohort` (character), `analyzed` (logical), `status`, `reason` (character).
+#'   `label`, `role` (character), `prediction`, `std.error`, `prediction.error.variance` (numeric),
+#'   `scope` (character), `analyzed` (logical), `status`, `reason` (character).
 #'   Rows follow selected-effect order (outcome first when random, then predictor
 #'   references), then IDs within each effect. The key is `(model, group, term, id)`;
 #'   IDs are character and never stored only in row names. `label` is the qualified
@@ -72,28 +72,28 @@ repair_coefficients <- function(object, conf.level = 0.95) {
 #' data(repair_example)
 #' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
 #' fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
-#' head(repair_scores(fit))
-#' head(repair_scores(fit, cohort = "measurement"))
+#' head(repair_predictions(fit))
+#' head(repair_predictions(fit, scope = "all"))
 #' @export
-repair_scores <- function(object, cohort = c("analyzed", "measurement")) {
+repair_predictions <- function(object, scope = c("structural", "all")) {
   a <- repair_analysis_object(object)
-  cohort <- match.arg(cohort)
-  scores <- if (length(a@diagnostics$model) == 1L)
-    stats::setNames(list(a@scores), a@diagnostics$model) else a@scores
+  scope <- match.arg(scope)
+  predictions <- if (length(a@diagnostics$model) == 1L)
+    stats::setNames(list(a@predictions), a@diagnostics$model) else a@predictions
   rows <- lapply(seq_len(nrow(a@effects)), function(j) {
-    e <- a@effects[j, ]; score <- scores[[e$model]]
-    ids <- if (cohort == "analyzed") a@ids else score@levels[[e$group]]
-    estimate <- as.numeric(score@predictions[[e$group]][ids, e$term])
-    variance <- as.numeric(score@error_covariance[[e$group]][e$term, e$term, ids])
+    e <- a@effects[j, ]; prediction <- predictions[[e$model]]
+    ids <- if (scope == "structural") a@ids else prediction@levels[[e$group]]
+    estimate <- as.numeric(prediction@predictions[[e$group]][ids, e$term])
+    variance <- as.numeric(prediction@prediction_error_covariance[[e$group]][e$term, e$term, ids])
     ok <- is.finite(estimate) & is.finite(variance) & variance >= 0
     reason <- vapply(seq_along(ids), function(i) {
-      if (ok[i]) "" else score@diagnostics[[e$group]]$per_level[[ids[i]]]$error %||%
-        "Nonfinite score or invalid sampling-error variance."
+      if (ok[i]) "" else prediction@diagnostics[[e$group]]$per_level[[ids[i]]]$error %||%
+        "Nonfinite prediction or invalid sampling-error variance."
     }, character(1))
     data.frame(id = as.character(ids), model = e$model, group = e$group, term = e$term,
-      label = e$label, role = e$role, score = estimate,
+      label = e$label, role = e$role, prediction = estimate,
       std.error = sqrt(ifelse(is.finite(variance) & variance >= 0, variance, NA_real_)),
-      error.variance = variance, cohort = cohort, analyzed = ids %in% a@ids,
+      prediction.error.variance = variance, scope = scope, analyzed = ids %in% a@ids,
       status = ifelse(ok, "ok", "failed"), reason = reason, row.names = NULL)
   })
   result <- do.call(rbind, rows)
@@ -101,18 +101,18 @@ repair_scores <- function(object, cohort = c("analyzed", "measurement")) {
   result
 }
 
-#' Extract scoring-error covariance for the analyzed cohort
+#' Extract prediction-error covariance for the structural scope
 #'
 #' Return a long table of the covariance actually assembled for selected random
 #' coefficients, including cross-model blocks. This is distinct from `vcov(fit)`,
 #' which describes uncertainty in structural regression coefficients.
-#' @inheritParams repair_scores
-#' @details Only analyzed people and formula-selected random coefficients are
-#'   included. Measurement-cohort cross-model covariance may not be available,
-#'   so this accessor has no measurement-cohort option. Observed structural columns
+#' @inheritParams repair_predictions
+#' @details Only structural units and formula-selected random coefficients are
+#'   included. MLM-scope cross-model covariance may not be available,
+#'   so this accessor has no MLM-scope option. Observed structural columns
 #'   have zero error by assumption and are not included. Within-model entries come
-#'   from scoring; cross-model entries reflect the explicit policy or supplied blocks.
-#'   Values are conditional on fitted measurement quantities and are not posterior
+#'   from prediction extraction; cross-model entries reflect the explicit policy or supplied blocks.
+#'   Values are conditional on fitted MLM quantities and are not posterior
 #'   covariances. Extraction does not change inputs or assume new zero covariances.
 #' @return A plain data frame with columns in order: `id`, `model1`, `group1`,
 #'   `term1`, `label1`, `role1`, `model2`, `group2`, `term2`, `label2`, `role2`
@@ -126,10 +126,10 @@ repair_scores <- function(object, cohort = c("analyzed", "measurement")) {
 #' data(repair_example)
 #' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
 #' fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
-#' head(repair_score_covariance(fit))
+#' head(repair_prediction_covariance(fit))
 #' # vcov(fit) instead describes structural coefficient uncertainty.
 #' @export
-repair_score_covariance <- function(object) {
+repair_prediction_covariance <- function(object) {
   a <- repair_analysis_object(object)
   e <- a@effects
   indices <- match(e$label, colnames(a@predictors))
