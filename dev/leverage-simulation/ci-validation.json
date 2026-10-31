@@ -1,0 +1,16 @@
+{
+  "repository": "HallquistLab/repair",
+  "pull_request": 22,
+  "implementation_head": "9dac9032568bd969ddb1a53d3b22fce958d3de35",
+  "numerical_study_baseline": "cbffe31",
+  "date": "2026-10-31",
+  "package_check_run": "https://github.com/HallquistLab/repair/actions/runs/41201343545",
+  "package_check_conclusion": "success",
+  "successful_platforms": ["ubuntu R devel", "ubuntu R release", "ubuntu R oldrel-1", "ubuntu R 4.3", "windows R release", "macos R release"],
+  "website_run": "https://github.com/HallquistLab/repair/actions/runs/41201343444",
+  "website_conclusion": "success",
+  "local_assertions_passed": 2164,
+  "local_site_pages_validated": 69,
+  "local_initial_check": "One external R-header compiler warning and one unqualified tail() NOTE. The NOTE is fixed by utils::tail in the tested implementation head. Initial logs are retained with that label; no warning suppression was added.",
+  "scope": "These are implementation-head checks. The final results/documentation commit triggers a separate CI run."
+}

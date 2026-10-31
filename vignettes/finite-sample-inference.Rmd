@@ -141,3 +141,13 @@ Leverage and jackknife Wald intervals still use symmetric intervals about the
 original estimate. A new independent-stream six-profile simulation compares
 these options; its frozen protocol, results, denominators and reproducible
 evidence are archived under `dev/leverage-simulation/` in the source repository.
+
+In that fresh 600-dataset screen, full-system HC3 improved nonzero-effect
+coverage over plain IF in several difficult profiles, but its median matched
+interval widths were about 1.6–1.85 times bootstrap widths and its upper width
+tails were much larger. Both analytic methods returned 756/1,200 analyses;
+singular original measurement fits accounted for all refusals. Delete-one
+returned 1,192/1,200 but its difficult-profile Wald coverage remained about
+82–92%. Person-percentile returned 1,158/1,200 with condition-dependent coverage.
+These findings support inspecting bias, widths, detection and availability
+together, rather than treating a finite corrected SE as a coverage guarantee.

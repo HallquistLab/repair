@@ -117,3 +117,102 @@ Standard RNG state is restored even when a callback uses RNG or fails.
 Normal Wald intervals are primary. N-1 t intervals are explicitly labeled
 secondary heuristics, not derived degrees of freedom. Neither symmetric method
 is presented as a universal correction for skewness, bias or active boundaries.
+
+## Implementation verification
+
+All 2,164 assertions passed with no test failures, warnings or skips; examples
+and vignette rebuilds passed. The initial local source check recorded the known
+external R_ext/Boolean.h Clang warning and a missing namespace qualification for
+tail(). The latter is fixed with utils::tail; the six-platform remote check
+matrix passed on implementation head 9dac903 (Linux release/devel/oldrel/R4.3,
+Windows release and macOS release). Website CI also passed, and local validation
+checked 69 HTML pages, links/assets and search targets. Initial logs are labeled
+as such in the review bundle; no compiler-warning suppression was introduced.
+
+The numerical study library remains frozen at cbffe31. Qualifying a utility
+function and adding documentation do not alter the estimating equations. Fresh
+native fits, analytic outputs, source/binary hashes, input hashes and endpoint-
+based verification are retained separately from the earlier studies.
+
+## Fresh simulation findings (2026-10-31)
+
+Read [the report and review bundle](leverage-simulation/README.md). The executed
+protocol is preserved verbatim, including normalization, original-N analytic
+policy, normal primary references and strict failure gates. New master seed
+202610319 produces 600 inputs distinct from all 600 old main inputs. Main B499,
+first-three/profile B1999 and half-step checks use frozen code cbffe31. No
+dataset, failed coefficient vector or extreme interval was omitted or replaced.
+
+There are 1,200 paired null/effect structural analyses and 12,200 method-specific
+interval records (122 cells, each 100 planned datasets). Full IF and HC3 each
+return 756/1,200; all 444 refusals are singular original measurement fits, with
+no extra HC3 conditioning/branch failures. Exact delete-one returns 1,192/1,200
+(eight failed outcome-specific deletion vectors, four measurement datasets);
+person percentile returns 1,158/1,200. Availability is not calibration.
+
+Available-case nonzero-effect coverage:
+
+| Profile | Full IF (n) | HC3-style (same n) | Delete-one (n) | Person percentile (n) |
+| --- | ---: | ---: | ---: | ---: |
+| Low, balanced | 82.1% (56) | 92.9% (56) | 81.6% (98) | 94.8% (97) |
+| Negative correlation | 85.4% (48) | 95.8% (48) | 91.9% (99) | 94.9% (98) |
+| Small, short | 71.1% (45) | 86.7% (45) | 81.8% (99) | 81.5% (92) |
+| Low, larger N | 85.9% (64) | 89.1% (64) | 82.0% (100) | 96.9% (96) |
+| High reliability | 89.0% (100) | 92.0% (100) | 90.0% (100) | 89.0% (100) |
+| Unequal information | 83.1% (65) | 93.8% (65) | 88.0% (100) | 94.8% (96) |
+
+On identical IF/HC3 datasets, four hard profiles gain about 10–16 percentage
+points of coverage (unadjusted paired MC intervals exclude zero). The larger-N
+gain is only 3.1 points with MC bounds including zero. Common-eligible HC3 minus
+bootstrap coverage is −3.6 points balanced (n=55), +2.1 negative (n=48), +4.9
+small/short (n=41), −6.5 larger N (n=62), +3.0 high control (n=100), and −1.6
+unequal (n=61). Only the larger-N contrast excludes zero in this exploratory
+unadjusted comparison. These do not establish general superiority.
+
+The cost is substantial: median matched HC3/bootstrap width ratios are 1.62–1.85
+in hard profiles. HC3's 95th width percentiles at truth .40 range 8.7–28.0,
+versus roughly 1.0–1.64 for returned bootstrap intervals. Corrected/HC0 variance
+ratios range .957–2252 across all available analyses. Mean SEs hide the heavy
+tails; effect detection often drops. There is no post hoc leverage cap or
+variance/interval trimming. Very large interval inflation is not declared a
+successful calibrated method merely because coverage improves.
+
+Exact deletion does not solve symmetric Wald inference: effect coverage remains
+81.6–91.9% in the hard profiles despite 98–100 returned intervals/profile. N-1
+t references add little. Point bias remains −.178 for small/short and −.156
+for negative correlation; neither method subtracts diagnostic jackknife bias.
+Bootstrap-SD Wald coverage is lower than percentile coverage in hard profiles,
+confirming that interval shape/location matters beyond estimating a variance.
+
+The analytic/actual deletion comparison is informative. At truth .40 the median
+focal relative shift RMSE is .012 in high control. Among hard-profile datasets
+without actual singularity/floor/final-branch transitions it is .027–.201; among
+those with a transition it is .55–1.33. These selected diagnostic strata support
+investigation of local approximation limits, not a causal claim about a single
+mechanism. Full details retain per-deletion native and moment diagnostics.
+
+All endpoints and paired rates were independently checked. Complete public
+checks comprise 24 B99 bootstraps (2,376 attempts) and 12 jackknives (760 deletions),
+with maximum coefficient discrepancy 2.93e-14. Signed decomposition error is at
+most 6.31e-16; augmented HC0 relative gap is at most 6.16e-6. Half steps change no
+availability decisions on the preselected subset and change matched covariance
+by at most 4.86e-7. These validate numerical implementation, not coverage theory.
+
+In the B sensitivity subset, all 78 percentile intervals are available at B499;
+six are withheld at B1999 under the unchanged all-vector policy. The 72 common
+intervals have unchanged coverage decisions (all cover). Prefixes of native
+draws, full/frozen coefficients and usability flags agree exactly. Lost
+intervals are retained in the sensitivity evidence, not counted as non-rejections.
+
+After observing the wide tails, a separately labeled post hoc numerical audit
+checked the 12 largest HC3/HC0 variance ratios at h/2 and h/4. All 24 calculations
+remain available; maximum relative covariance change is 1.06e-4 (about .011%).
+No main estimate, threshold, step or interval was replaced. This rules out gross
+differencing error as an explanation of those extremes without turning the audit
+into a prespecified coverage comparison or a guarantee of exact precision.
+
+Decision: keep both new APIs experimental and separate from ordinary inference.
+Full-system leverage can expose sensitivity and improve selected-case coverage,
+but its extreme widths and boundary gate prevent a general default recommendation.
+Delete-one refitting is a useful complete-person influence/branch diagnostic;
+these results do not validate its Wald intervals as a universal bootstrap substitute.

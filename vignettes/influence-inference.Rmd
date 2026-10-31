@@ -173,6 +173,12 @@ full cases bootstrapping target the same first-order sampling covariance.
 Their finite-sample distribution approximations and interval constructions differ.
 The bootstrap likewise provides no universal solution to bias or boundary issues.
 
+The separate [finite-sample inference guide](finite-sample-inference.html)
+introduces `repair_leverage()` for an opt-in full-system HC3-style correction
+and `repair_jackknife()` for actual whole-person deletion refits. The original
+`repair_sandwich()` calculation remains HC0. These alternatives retain strict
+all-person failure gates and do not establish uniform boundary coverage.
+
 In the package's six-profile exploratory screen (100 datasets/profile), full
 influence inference was often unavailable at singular low-reliability measurement
 fits. Where available, its nonzero noisy-predictor coverage was 73–83% in the

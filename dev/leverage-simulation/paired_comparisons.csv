@@ -1,0 +1,193 @@
+"profile","gamma","method_a","method_b","metric","n","difference","mc_se","mc_low","mc_high","a_only","b_only","zero_discordance"
+"low_balanced",0,"Full-system HC3 Wald","Full IF Wald","covers",56,0,0.0254823595718813,-0.0499445070019868,0.0499445070019868,1,1,FALSE
+"low_balanced",0,"Full-system HC3 Wald","Full IF Wald","rejects_zero",56,0,0.0254823595718813,-0.0499445070019868,0.0499445070019868,1,1,FALSE
+"low_balanced",0,"Full-system HC3 Wald","Person percentile","covers",55,-0.0363636363636364,0.0254737782079162,-0.0862913242013133,0.0135640514740406,0,2,FALSE
+"low_balanced",0,"Full-system HC3 Wald","Person percentile","rejects_zero",55,0.0363636363636364,0.0254737782079162,-0.0135640514740406,0.0862913242013133,2,0,FALSE
+"low_balanced",0,"Delete-one Wald","Person percentile","covers",95,-0.0842105263157894,0.0286429066584514,-0.140349591778897,-0.0280714608526822,0,8,FALSE
+"low_balanced",0,"Delete-one Wald","Person percentile","rejects_zero",95,0.0842105263157894,0.0286429066584514,0.0280714608526822,0.140349591778897,8,0,FALSE
+"low_balanced",0,"Full-system HC3 Wald","Delete-one Wald","covers",54,0,0.0264350528572715,-0.0518117515296647,0.0518117515296647,1,1,FALSE
+"low_balanced",0,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",54,0,0.0264350528572715,-0.0518117515296647,0.0518117515296647,1,1,FALSE
+"low_balanced",0,"Full-system HC3 t","Full-system HC3 Wald","covers",56,0.0178571428571428,0.0178571428571429,-0.0171422140096438,0.0528564997239295,1,0,FALSE
+"low_balanced",0,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",56,-0.0178571428571428,0.0178571428571429,-0.0528564997239295,0.0171422140096438,0,1,FALSE
+"low_balanced",0,"Delete-one t","Delete-one Wald","covers",98,0,0,NA,NA,0,0,TRUE
+"low_balanced",0,"Delete-one t","Delete-one Wald","rejects_zero",98,0,0,NA,NA,0,0,TRUE
+"low_balanced",0,"Person percentile","Bootstrap-SD Wald","covers",97,0.0721649484536082,0.0302034292633109,0.0129673148879157,0.131362582019301,8,1,FALSE
+"low_balanced",0,"Person percentile","Bootstrap-SD Wald","rejects_zero",97,-0.0721649484536082,0.0302034292633109,-0.131362582019301,-0.0129673148879157,1,8,FALSE
+"low_balanced",0,"Full IF Wald","Conditional Wald","covers",56,-0.0535714285714286,0.0303619171188468,-0.113079692625958,0.00593683548310135,0,3,FALSE
+"low_balanced",0,"Full IF Wald","Conditional Wald","rejects_zero",56,0.0535714285714286,0.0303619171188468,-0.00593683548310135,0.113079692625958,3,0,FALSE
+"low_balanced",0.4,"Full-system HC3 Wald","Full IF Wald","covers",56,0.107142857142857,0.0417053005800816,0.0254019700414798,0.188883744244234,6,0,FALSE
+"low_balanced",0.4,"Full-system HC3 Wald","Full IF Wald","rejects_zero",56,-0.0714285714285715,0.0347266024860284,-0.139491461606626,-0.00336568125051667,0,4,FALSE
+"low_balanced",0.4,"Full-system HC3 Wald","Person percentile","covers",55,-0.0363636363636364,0.0363636363636364,-0.107635053983275,0.034907781256002,1,3,FALSE
+"low_balanced",0.4,"Full-system HC3 Wald","Person percentile","rejects_zero",55,-0.0909090909090909,0.0536400729185929,-0.196041701957635,0.0142235201394535,2,7,FALSE
+"low_balanced",0.4,"Delete-one Wald","Person percentile","covers",95,-0.126315789473684,0.0342643215597545,-0.193472625685502,-0.0591589532618662,0,12,FALSE
+"low_balanced",0.4,"Delete-one Wald","Person percentile","rejects_zero",95,0.0105263157894737,0.0381390655168768,-0.0642248790276183,0.0852775106065657,7,6,FALSE
+"low_balanced",0.4,"Full-system HC3 Wald","Delete-one Wald","covers",54,0.0740740740740741,0.0359735504576764,0.0035672107809939,0.144580937367154,4,0,FALSE
+"low_balanced",0.4,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",54,-0.0740740740740741,0.0359735504576765,-0.144580937367154,-0.00356721078099391,0,4,FALSE
+"low_balanced",0.4,"Full-system HC3 t","Full-system HC3 Wald","covers",56,0.0178571428571428,0.0178571428571429,-0.0171422140096439,0.0528564997239296,1,0,FALSE
+"low_balanced",0.4,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",56,0,0,NA,NA,0,0,TRUE
+"low_balanced",0.4,"Delete-one t","Delete-one Wald","covers",98,0.0102040816326531,0.0102040816326531,-0.00979555086265362,0.0302037141279597,1,0,FALSE
+"low_balanced",0.4,"Delete-one t","Delete-one Wald","rejects_zero",98,-0.0102040816326531,0.0102040816326531,-0.0302037141279597,0.00979555086265362,0,1,FALSE
+"low_balanced",0.4,"Person percentile","Bootstrap-SD Wald","covers",97,0.0824742268041237,0.0280758327119728,0.0274466058526855,0.137501847755562,8,0,FALSE
+"low_balanced",0.4,"Person percentile","Bootstrap-SD Wald","rejects_zero",97,-0.11340206185567,0.0384300158871908,-0.188723508919866,-0.0380806147914741,2,13,FALSE
+"low_balanced",0.4,"Full IF Wald","Conditional Wald","covers",56,-0.142857142857143,0.0471841613625583,-0.235336399768483,-0.0503778859458023,0,8,FALSE
+"low_balanced",0.4,"Full IF Wald","Conditional Wald","rejects_zero",56,0.160714285714286,0.049522300593063,0.0636523601203157,0.257776211308256,9,0,FALSE
+"low_negative",0,"Full-system HC3 Wald","Full IF Wald","covers",48,0.0416666666666667,0.029147663515556,-0.0154617040573153,0.0987950373906486,2,0,FALSE
+"low_negative",0,"Full-system HC3 Wald","Full IF Wald","rejects_zero",48,-0.0416666666666667,0.029147663515556,-0.0987950373906486,0.0154617040573153,0,2,FALSE
+"low_negative",0,"Full-system HC3 Wald","Person percentile","covers",48,0.0208333333333333,0.0208333333333333,-0.0199992496779178,0.0616659163445844,1,0,FALSE
+"low_negative",0,"Full-system HC3 Wald","Person percentile","rejects_zero",48,-0.0208333333333333,0.0208333333333333,-0.0616659163445844,0.0199992496779178,0,1,FALSE
+"low_negative",0,"Delete-one Wald","Person percentile","covers",97,-0.0206185567010309,0.0145033874709056,-0.0490446737978354,0.00780756039577354,0,2,FALSE
+"low_negative",0,"Delete-one Wald","Person percentile","rejects_zero",97,0.0206185567010309,0.0145033874709056,-0.00780756039577354,0.0490446737978354,2,0,FALSE
+"low_negative",0,"Full-system HC3 Wald","Delete-one Wald","covers",47,0.0425531914893617,0.0297607917523504,-0.0157768884966418,0.100883271475365,2,0,FALSE
+"low_negative",0,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",47,-0.0425531914893617,0.0297607917523504,-0.100883271475365,0.0157768884966418,0,2,FALSE
+"low_negative",0,"Full-system HC3 t","Full-system HC3 Wald","covers",48,0,0,NA,NA,0,0,TRUE
+"low_negative",0,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",48,0,0,NA,NA,0,0,TRUE
+"low_negative",0,"Delete-one t","Delete-one Wald","covers",99,0.0101010101010101,0.0101010101010101,-0.00969660590444497,0.0298986261064652,1,0,FALSE
+"low_negative",0,"Delete-one t","Delete-one Wald","rejects_zero",99,-0.0101010101010101,0.0101010101010101,-0.0298986261064652,0.00969660590444497,0,1,FALSE
+"low_negative",0,"Person percentile","Bootstrap-SD Wald","covers",98,0.0306122448979592,0.0174908327565674,-0.0036691573645264,0.0648936471604448,3,0,FALSE
+"low_negative",0,"Person percentile","Bootstrap-SD Wald","rejects_zero",98,-0.0306122448979592,0.0174908327565674,-0.0648936471604448,0.0036691573645264,0,3,FALSE
+"low_negative",0,"Full IF Wald","Conditional Wald","covers",48,-0.0416666666666667,0.029147663515556,-0.0987950373906486,0.0154617040573153,0,2,FALSE
+"low_negative",0,"Full IF Wald","Conditional Wald","rejects_zero",48,0.0416666666666667,0.029147663515556,-0.0154617040573153,0.0987950373906486,2,0,FALSE
+"low_negative",0.4,"Full-system HC3 Wald","Full IF Wald","covers",48,0.104166666666667,0.0445583462158785,0.0168339128728783,0.191499420460455,5,0,FALSE
+"low_negative",0.4,"Full-system HC3 Wald","Full IF Wald","rejects_zero",48,-0.0208333333333333,0.0208333333333333,-0.0616659163445844,0.0199992496779178,0,1,FALSE
+"low_negative",0.4,"Full-system HC3 Wald","Person percentile","covers",48,0.0208333333333333,0.0363394083671269,-0.0503905982857288,0.0920572649523955,2,1,FALSE
+"low_negative",0.4,"Full-system HC3 Wald","Person percentile","rejects_zero",48,0,0.0297745667087707,-0.0583570784044758,0.0583570784044758,1,1,FALSE
+"low_negative",0.4,"Delete-one Wald","Person percentile","covers",97,-0.0309278350515464,0.027235167498535,-0.0843077824615909,0.022452112358498,2,5,FALSE
+"low_negative",0.4,"Delete-one Wald","Person percentile","rejects_zero",97,0.0927835051546391,0.0330393204863049,0.0280276269278052,0.157539383381473,10,1,FALSE
+"low_negative",0.4,"Full-system HC3 Wald","Delete-one Wald","covers",47,0.0212765957446808,0.0212765957446809,-0.0204247656285118,0.0629779571178735,1,0,FALSE
+"low_negative",0.4,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",47,-0.0212765957446809,0.0212765957446809,-0.0629779571178735,0.0204247656285118,0,1,FALSE
+"low_negative",0.4,"Full-system HC3 t","Full-system HC3 Wald","covers",48,0,0,NA,NA,0,0,TRUE
+"low_negative",0.4,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",48,0,0,NA,NA,0,0,TRUE
+"low_negative",0.4,"Delete-one t","Delete-one Wald","covers",99,0,0,NA,NA,0,0,TRUE
+"low_negative",0.4,"Delete-one t","Delete-one Wald","rejects_zero",99,0,0,NA,NA,0,0,TRUE
+"low_negative",0.4,"Person percentile","Bootstrap-SD Wald","covers",98,0.0714285714285714,0.0261491618623928,0.0201771559523733,0.12267998690477,7,0,FALSE
+"low_negative",0.4,"Person percentile","Bootstrap-SD Wald","rejects_zero",98,-0.153061224489796,0.0365571838523037,-0.22471198821652,-0.0814104607630714,0,15,FALSE
+"low_negative",0.4,"Full IF Wald","Conditional Wald","covers",48,0,0.0297745667087707,-0.0583570784044758,0.0583570784044758,1,1,FALSE
+"low_negative",0.4,"Full IF Wald","Conditional Wald","rejects_zero",48,0.104166666666667,0.0445583462158785,0.0168339128728783,0.191499420460455,5,0,FALSE
+"small_short",0,"Full-system HC3 Wald","Full IF Wald","covers",45,0.0666666666666667,0.0376050716545177,-0.00703791941223614,0.14037125274557,3,0,FALSE
+"small_short",0,"Full-system HC3 Wald","Full IF Wald","rejects_zero",45,-0.0666666666666667,0.0376050716545177,-0.14037125274557,0.00703791941223614,0,3,FALSE
+"small_short",0,"Full-system HC3 Wald","Person percentile","covers",41,0.048780487804878,0.034059122057973,-0.0179741647738028,0.115535140383559,2,0,FALSE
+"small_short",0,"Full-system HC3 Wald","Person percentile","rejects_zero",41,-0.048780487804878,0.034059122057973,-0.115535140383559,0.0179741647738028,0,2,FALSE
+"small_short",0,"Delete-one Wald","Person percentile","covers",91,-0.0879120879120879,0.0336916697071558,-0.153946547117132,-0.0218776287070434,1,9,FALSE
+"small_short",0,"Delete-one Wald","Person percentile","rejects_zero",91,0.0879120879120879,0.0336916697071558,0.0218776287070434,0.153946547117132,9,1,FALSE
+"small_short",0,"Full-system HC3 Wald","Delete-one Wald","covers",45,0.0666666666666667,0.0376050716545177,-0.00703791941223614,0.14037125274557,3,0,FALSE
+"small_short",0,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",45,-0.0666666666666667,0.0376050716545177,-0.14037125274557,0.00703791941223614,0,3,FALSE
+"small_short",0,"Full-system HC3 t","Full-system HC3 Wald","covers",45,0,0,NA,NA,0,0,TRUE
+"small_short",0,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",45,0,0,NA,NA,0,0,TRUE
+"small_short",0,"Delete-one t","Delete-one Wald","covers",99,0.0101010101010101,0.0101010101010101,-0.00969660590444496,0.0298986261064652,1,0,FALSE
+"small_short",0,"Delete-one t","Delete-one Wald","rejects_zero",99,-0.0101010101010101,0.0101010101010101,-0.0298986261064652,0.00969660590444496,0,1,FALSE
+"small_short",0,"Person percentile","Bootstrap-SD Wald","covers",92,0.108695652173913,0.0326285972076745,0.0447447767808068,0.172646527567019,10,0,FALSE
+"small_short",0,"Person percentile","Bootstrap-SD Wald","rejects_zero",92,-0.108695652173913,0.0326285972076745,-0.172646527567019,-0.0447447767808068,0,10,FALSE
+"small_short",0,"Full IF Wald","Conditional Wald","covers",45,-0.0666666666666667,0.0376050716545177,-0.14037125274557,0.00703791941223614,0,3,FALSE
+"small_short",0,"Full IF Wald","Conditional Wald","rejects_zero",45,0.0666666666666667,0.0376050716545177,-0.00703791941223614,0.14037125274557,3,0,FALSE
+"small_short",0.4,"Full-system HC3 Wald","Full IF Wald","covers",45,0.155555555555556,0.0546389023688829,0.0484652747577448,0.262645836353366,7,0,FALSE
+"small_short",0.4,"Full-system HC3 Wald","Full IF Wald","rejects_zero",45,-0.111111111111111,0.0473779369679134,-0.20397016123003,-0.018252060992192,0,5,FALSE
+"small_short",0.4,"Full-system HC3 Wald","Person percentile","covers",41,0.048780487804878,0.0694158510768668,-0.0872720802619769,0.184833055871733,5,3,FALSE
+"small_short",0.4,"Full-system HC3 Wald","Person percentile","rejects_zero",41,0.024390243902439,0.042595729747739,-0.0590958522983307,0.107876340103209,2,1,FALSE
+"small_short",0.4,"Delete-one Wald","Person percentile","covers",91,0,0.0270665980980383,-0.0530495574561754,0.0530495574561754,3,3,FALSE
+"small_short",0.4,"Delete-one Wald","Person percentile","rejects_zero",91,0.0769230769230769,0.0357401052531882,0.00687375782315724,0.146972396022997,9,2,FALSE
+"small_short",0.4,"Full-system HC3 Wald","Delete-one Wald","covers",45,0.111111111111111,0.0473779369679134,0.018252060992192,0.20397016123003,5,0,FALSE
+"small_short",0.4,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",45,-0.0444444444444444,0.0310677909075347,-0.105336195702433,0.0164473068135446,0,2,FALSE
+"small_short",0.4,"Full-system HC3 t","Full-system HC3 Wald","covers",45,0.0222222222222222,0.0222222222222222,-0.021332532989779,0.0657769774342234,1,0,FALSE
+"small_short",0.4,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",45,0,0,NA,NA,0,0,TRUE
+"small_short",0.4,"Delete-one t","Delete-one Wald","covers",99,0,0,NA,NA,0,0,TRUE
+"small_short",0.4,"Delete-one t","Delete-one Wald","rejects_zero",99,-0.0202020202020202,0.0142119160199078,-0.0480568637523473,0.00765282334830684,0,2,FALSE
+"small_short",0.4,"Person percentile","Bootstrap-SD Wald","covers",92,0.0652173913043478,0.0301467497948494,0.00613084745550275,0.124303935153193,7,1,FALSE
+"small_short",0.4,"Person percentile","Bootstrap-SD Wald","rejects_zero",92,-0.0978260869565217,0.031142378403193,-0.158864027019698,-0.0367881468933456,0,9,FALSE
+"small_short",0.4,"Full IF Wald","Conditional Wald","covers",45,-0.0666666666666667,0.0376050716545177,-0.14037125274557,0.00703791941223615,0,3,FALSE
+"small_short",0.4,"Full IF Wald","Conditional Wald","rejects_zero",45,0.155555555555556,0.0546389023688829,0.0484652747577448,0.262645836353366,7,0,FALSE
+"low_larger",0,"Full-system HC3 Wald","Full IF Wald","covers",64,0.015625,0.015625,-0.0149994372584383,0.0462494372584383,1,0,FALSE
+"low_larger",0,"Full-system HC3 Wald","Full IF Wald","rejects_zero",64,-0.015625,0.015625,-0.0462494372584383,0.0149994372584383,0,1,FALSE
+"low_larger",0,"Full-system HC3 Wald","Person percentile","covers",62,0.0161290322580645,0.0280885459102869,-0.0389235061041976,0.0711815706203267,2,1,FALSE
+"low_larger",0,"Full-system HC3 Wald","Person percentile","rejects_zero",62,-0.0161290322580645,0.0280885459102869,-0.0711815706203267,0.0389235061041976,1,2,FALSE
+"low_larger",0,"Delete-one Wald","Person percentile","covers",96,-0.0729166666666667,0.0339142095752077,-0.139387295998217,-0.00644603733511609,2,9,FALSE
+"low_larger",0,"Delete-one Wald","Person percentile","rejects_zero",96,0.0729166666666667,0.0339142095752077,0.00644603733511609,0.139387295998217,9,2,FALSE
+"low_larger",0,"Full-system HC3 Wald","Delete-one Wald","covers",64,0,0,NA,NA,0,0,TRUE
+"low_larger",0,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",64,0,0,NA,NA,0,0,TRUE
+"low_larger",0,"Full-system HC3 t","Full-system HC3 Wald","covers",64,0,0,NA,NA,0,0,TRUE
+"low_larger",0,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",64,0,0,NA,NA,0,0,TRUE
+"low_larger",0,"Delete-one t","Delete-one Wald","covers",100,0,0,NA,NA,0,0,TRUE
+"low_larger",0,"Delete-one t","Delete-one Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"low_larger",0,"Person percentile","Bootstrap-SD Wald","covers",96,0.0833333333333333,0.0319904956645798,0.0206331139831722,0.146033552683494,9,1,FALSE
+"low_larger",0,"Person percentile","Bootstrap-SD Wald","rejects_zero",96,-0.0833333333333333,0.0319904956645798,-0.146033552683494,-0.0206331139831722,1,9,FALSE
+"low_larger",0,"Full IF Wald","Conditional Wald","covers",64,-0.046875,0.0266302532264483,-0.0990693372230203,0.00531933722302028,0,3,FALSE
+"low_larger",0,"Full IF Wald","Conditional Wald","rejects_zero",64,0.046875,0.0266302532264483,-0.00531933722302028,0.0990693372230203,3,0,FALSE
+"low_larger",0.4,"Full-system HC3 Wald","Full IF Wald","covers",64,0.03125,0.0219210117003813,-0.0117143934374285,0.0742143934374285,2,0,FALSE
+"low_larger",0.4,"Full-system HC3 Wald","Full IF Wald","rejects_zero",64,-0.0625,0.0304968772796417,-0.122272781109035,-0.0027272188909645,0,4,FALSE
+"low_larger",0.4,"Full-system HC3 Wald","Person percentile","covers",62,-0.0645161290322581,0.0314548331210218,-0.126166469089178,-0.00286578897533776,0,4,FALSE
+"low_larger",0.4,"Full-system HC3 Wald","Person percentile","rejects_zero",62,-0.112903225806452,0.0519571412976413,-0.214737351489487,-0.011069100123416,2,9,FALSE
+"low_larger",0.4,"Delete-one Wald","Person percentile","covers",96,-0.145833333333333,0.0362107823753356,-0.216805162641009,-0.0748615040256578,0,14,FALSE
+"low_larger",0.4,"Delete-one Wald","Person percentile","rejects_zero",96,-0.0416666666666667,0.0442200108177864,-0.1283362952655,0.0450029619321662,7,11,FALSE
+"low_larger",0.4,"Full-system HC3 Wald","Delete-one Wald","covers",64,0.03125,0.0219210117003813,-0.0117143934374285,0.0742143934374285,2,0,FALSE
+"low_larger",0.4,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",64,0,0,NA,NA,0,0,TRUE
+"low_larger",0.4,"Full-system HC3 t","Full-system HC3 Wald","covers",64,0,0,NA,NA,0,0,TRUE
+"low_larger",0.4,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",64,0,0,NA,NA,0,0,TRUE
+"low_larger",0.4,"Delete-one t","Delete-one Wald","covers",100,0,0,NA,NA,0,0,TRUE
+"low_larger",0.4,"Delete-one t","Delete-one Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"low_larger",0.4,"Person percentile","Bootstrap-SD Wald","covers",96,0.0833333333333333,0.0319904956645798,0.0206331139831722,0.146033552683494,9,1,FALSE
+"low_larger",0.4,"Person percentile","Bootstrap-SD Wald","rejects_zero",96,-0.0625,0.0386518990250882,-0.138256330023252,0.0132563300232517,4,10,FALSE
+"low_larger",0.4,"Full IF Wald","Conditional Wald","covers",64,-0.09375,0.0367231032120627,-0.16572595969619,-0.02177404030381,0,6,FALSE
+"low_larger",0.4,"Full IF Wald","Conditional Wald","rejects_zero",64,0.15625,0.0457453159194625,0.0665908283364468,0.245909171663553,10,0,FALSE
+"high_control",0,"Full-system HC3 Wald","Full IF Wald","covers",100,0.03,0.0171446607997765,-0.00360291769471768,0.0636029176947177,3,0,FALSE
+"high_control",0,"Full-system HC3 Wald","Full IF Wald","rejects_zero",100,-0.03,0.0171446607997765,-0.0636029176947177,0.00360291769471768,0,3,FALSE
+"high_control",0,"Full-system HC3 Wald","Person percentile","covers",100,0.02,0.014070529413629,-0.00757773089412424,0.0475777308941242,2,0,FALSE
+"high_control",0,"Full-system HC3 Wald","Person percentile","rejects_zero",100,-0.02,0.014070529413629,-0.0475777308941242,0.00757773089412424,0,2,FALSE
+"high_control",0,"Delete-one Wald","Person percentile","covers",100,0,0.014213381090374,-0.0278577150356757,0.0278577150356757,1,1,FALSE
+"high_control",0,"Delete-one Wald","Person percentile","rejects_zero",100,0,0.014213381090374,-0.0278577150356757,0.0278577150356757,1,1,FALSE
+"high_control",0,"Full-system HC3 Wald","Delete-one Wald","covers",100,0.02,0.014070529413629,-0.00757773089412425,0.0475777308941242,2,0,FALSE
+"high_control",0,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",100,-0.02,0.014070529413629,-0.0475777308941242,0.00757773089412425,0,2,FALSE
+"high_control",0,"Full-system HC3 t","Full-system HC3 Wald","covers",100,0,0,NA,NA,0,0,TRUE
+"high_control",0,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"high_control",0,"Delete-one t","Delete-one Wald","covers",100,0.02,0.014070529413629,-0.00757773089412425,0.0475777308941242,2,0,FALSE
+"high_control",0,"Delete-one t","Delete-one Wald","rejects_zero",100,-0.02,0.014070529413629,-0.0475777308941242,0.00757773089412425,0,2,FALSE
+"high_control",0,"Person percentile","Bootstrap-SD Wald","covers",100,0,0,NA,NA,0,0,TRUE
+"high_control",0,"Person percentile","Bootstrap-SD Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"high_control",0,"Full IF Wald","Conditional Wald","covers",100,-0.03,0.0171446607997765,-0.0636029176947177,0.00360291769471768,0,3,FALSE
+"high_control",0,"Full IF Wald","Conditional Wald","rejects_zero",100,0.03,0.0171446607997765,-0.00360291769471768,0.0636029176947177,3,0,FALSE
+"high_control",0.4,"Full-system HC3 Wald","Full IF Wald","covers",100,0.03,0.0171446607997765,-0.00360291769471768,0.0636029176947177,3,0,FALSE
+"high_control",0.4,"Full-system HC3 Wald","Full IF Wald","rejects_zero",100,-0.03,0.0171446607997765,-0.0636029176947177,0.00360291769471771,0,3,FALSE
+"high_control",0.4,"Full-system HC3 Wald","Person percentile","covers",100,0.03,0.0171446607997765,-0.00360291769471768,0.0636029176947177,3,0,FALSE
+"high_control",0.4,"Full-system HC3 Wald","Person percentile","rejects_zero",100,-0.00999999999999999,0.0173787284350784,-0.0440616818298557,0.0240616818298558,1,2,FALSE
+"high_control",0.4,"Delete-one Wald","Person percentile","covers",100,0.00999999999999999,0.01,-0.00959963984540053,0.0295996398454005,1,0,FALSE
+"high_control",0.4,"Delete-one Wald","Person percentile","rejects_zero",100,-0.00999999999999999,0.0173787284350784,-0.0440616818298557,0.0240616818298558,1,2,FALSE
+"high_control",0.4,"Full-system HC3 Wald","Delete-one Wald","covers",100,0.02,0.014070529413629,-0.00757773089412426,0.0475777308941242,2,0,FALSE
+"high_control",0.4,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"high_control",0.4,"Full-system HC3 t","Full-system HC3 Wald","covers",100,0,0,NA,NA,0,0,TRUE
+"high_control",0.4,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"high_control",0.4,"Delete-one t","Delete-one Wald","covers",100,0.02,0.014070529413629,-0.00757773089412426,0.0475777308941242,2,0,FALSE
+"high_control",0.4,"Delete-one t","Delete-one Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"high_control",0.4,"Person percentile","Bootstrap-SD Wald","covers",100,-0.01,0.01,-0.0295996398454005,0.00959963984540053,0,1,FALSE
+"high_control",0.4,"Person percentile","Bootstrap-SD Wald","rejects_zero",100,0,0.0201007563051842,-0.0393967584201775,0.0393967584201775,2,2,FALSE
+"high_control",0.4,"Full IF Wald","Conditional Wald","covers",100,-0.04,0.0196946385566932,-0.0786007822596526,-0.00139921774034736,0,4,FALSE
+"high_control",0.4,"Full IF Wald","Conditional Wald","rejects_zero",100,0.01,0.01,-0.00959963984540053,0.0295996398454005,1,0,FALSE
+"low_unequal",0,"Full-system HC3 Wald","Full IF Wald","covers",65,0.0307692307692308,0.0215864849236958,-0.0115395022340298,0.0730779637724914,2,0,FALSE
+"low_unequal",0,"Full-system HC3 Wald","Full IF Wald","rejects_zero",65,-0.0307692307692308,0.0215864849236958,-0.0730779637724914,0.0115395022340298,0,2,FALSE
+"low_unequal",0,"Full-system HC3 Wald","Person percentile","covers",61,0.0327868852459016,0.0327868852459016,-0.0314742290013133,0.0970479994931165,3,1,FALSE
+"low_unequal",0,"Full-system HC3 Wald","Person percentile","rejects_zero",61,-0.0327868852459016,0.0327868852459016,-0.0970479994931165,0.0314742290013133,1,3,FALSE
+"low_unequal",0,"Delete-one Wald","Person percentile","covers",96,-0.0416666666666667,0.0328362052355172,-0.106024446317246,0.0226911129839125,3,7,FALSE
+"low_unequal",0,"Delete-one Wald","Person percentile","rejects_zero",96,0.0416666666666667,0.0328362052355172,-0.0226911129839125,0.106024446317246,7,3,FALSE
+"low_unequal",0,"Full-system HC3 Wald","Delete-one Wald","covers",65,0.0307692307692308,0.0215864849236958,-0.0115395022340298,0.0730779637724914,2,0,FALSE
+"low_unequal",0,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",65,-0.0307692307692308,0.0215864849236958,-0.0730779637724914,0.0115395022340298,0,2,FALSE
+"low_unequal",0,"Full-system HC3 t","Full-system HC3 Wald","covers",65,0,0,NA,NA,0,0,TRUE
+"low_unequal",0,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",65,0,0,NA,NA,0,0,TRUE
+"low_unequal",0,"Delete-one t","Delete-one Wald","covers",100,0.01,0.01,-0.00959963984540053,0.0295996398454005,1,0,FALSE
+"low_unequal",0,"Delete-one t","Delete-one Wald","rejects_zero",100,-0.01,0.01,-0.0295996398454005,0.00959963984540053,0,1,FALSE
+"low_unequal",0,"Person percentile","Bootstrap-SD Wald","covers",96,0.0833333333333333,0.035251809293702,0.0142410567278032,0.152425609938864,10,2,FALSE
+"low_unequal",0,"Person percentile","Bootstrap-SD Wald","rejects_zero",96,-0.0833333333333333,0.035251809293702,-0.152425609938864,-0.0142410567278032,2,10,FALSE
+"low_unequal",0,"Full IF Wald","Conditional Wald","covers",65,0.138461538461538,0.057499678414331,0.0257642396468147,0.251158837276262,12,3,FALSE
+"low_unequal",0,"Full IF Wald","Conditional Wald","rejects_zero",65,-0.138461538461538,0.057499678414331,-0.251158837276262,-0.0257642396468147,3,12,FALSE
+"low_unequal",0.4,"Full-system HC3 Wald","Full IF Wald","covers",65,0.107692307692308,0.0387489263069421,0.0317458076911045,0.183638807693511,7,0,FALSE
+"low_unequal",0.4,"Full-system HC3 Wald","Full IF Wald","rejects_zero",65,-0.123076923076923,0.0410656855847358,-0.203564187823451,-0.0425896583303952,0,8,FALSE
+"low_unequal",0.4,"Full-system HC3 Wald","Person percentile","covers",61,-0.0163934426229508,0.0285515857434167,-0.0723535223815548,0.0395666371356532,1,2,FALSE
+"low_unequal",0.4,"Full-system HC3 Wald","Person percentile","rejects_zero",61,-0.180327868852459,0.0596354898612385,-0.29721128118089,-0.0634444565240281,2,13,FALSE
+"low_unequal",0.4,"Delete-one Wald","Person percentile","covers",96,-0.0729166666666667,0.0266754029001071,-0.125199495623972,-0.0206338377093615,0,7,FALSE
+"low_unequal",0.4,"Delete-one Wald","Person percentile","rejects_zero",96,-0.0104166666666667,0.0456310328063124,-0.0998518475444046,0.0790185142110713,9,10,FALSE
+"low_unequal",0.4,"Full-system HC3 Wald","Delete-one Wald","covers",65,0.0615384615384615,0.0300394218304102,0.00266227663445132,0.120414646442472,4,0,FALSE
+"low_unequal",0.4,"Full-system HC3 Wald","Delete-one Wald","rejects_zero",65,-0.107692307692308,0.0387489263069421,-0.183638807693511,-0.0317458076911045,0,7,FALSE
+"low_unequal",0.4,"Full-system HC3 t","Full-system HC3 Wald","covers",65,0,0,NA,NA,0,0,TRUE
+"low_unequal",0.4,"Full-system HC3 t","Full-system HC3 Wald","rejects_zero",65,0,0,NA,NA,0,0,TRUE
+"low_unequal",0.4,"Delete-one t","Delete-one Wald","covers",100,0.00999999999999999,0.01,-0.00959963984540053,0.0295996398454005,1,0,FALSE
+"low_unequal",0.4,"Delete-one t","Delete-one Wald","rejects_zero",100,0,0,NA,NA,0,0,TRUE
+"low_unequal",0.4,"Person percentile","Bootstrap-SD Wald","covers",96,0.0625,0.0248349816949696,0.0138243303211482,0.111175669678852,6,0,FALSE
+"low_unequal",0.4,"Person percentile","Bootstrap-SD Wald","rejects_zero",96,-0.125,0.04253481546117,-0.208366706392951,-0.0416332936070493,3,15,FALSE
+"low_unequal",0.4,"Full IF Wald","Conditional Wald","covers",65,-0.0923076923076923,0.0524545449884071,-0.195116711310406,0.0105013266950216,3,9,FALSE
+"low_unequal",0.4,"Full IF Wald","Conditional Wald","rejects_zero",65,-0.076923076923077,0.0550685425510629,-0.184855437004272,0.0310092831581178,4,9,FALSE
