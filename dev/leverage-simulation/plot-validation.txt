@@ -1,0 +1,4 @@
+PASS 1,200 original point estimates / 12 mean-bias MC intervals; one shared point estimator.
+PASS all-method intersection IDs / 60 matched coverage cells; 50-100% coverage views contain every MC bound.
+PASS 30 full returned-set width quantile/max summaries and exact exceedance curves; no extreme intervals omitted.
+PASS matched-cohort studentized tails, including exact 1.96 noncoverage identities for normal Wald intervals.

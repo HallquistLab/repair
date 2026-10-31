@@ -51,6 +51,11 @@ leverage equations; those are validated by package tests and the full archive.
 - `freshness.csv`, `previous-input-hashes.csv`: 600 distinct new inputs and no
   identical old main-study input. Seed labels alone are not the only check.
 - `summary.rds`, PNG/PDF figures: report inputs and exportable scientific plots.
+- `bias_plot_*`, `matched_plot_cohorts.csv`, `matched_coverage_plot_data.csv`,
+  `width_tail_plot_data.csv`, `width_exceedance_plot_data.csv`, `studentized_*`:
+  auditable inputs to the bias, 50–100% coverage, and untrimmed tail figures.
+  `plot-validation.txt` and `drivers/check-plots.R` verify the plotted summaries,
+  common eligibility cohorts, all observed maxima and exact exceedance counts.
 - `protocol.md`, `study-README.md`, `drivers/`, source/raw manifests,
   `provenance.rds`, `sessionInfo.txt`, `validation.txt`: frozen design, commands,
   numerical environment and executed checks. The drivers source external

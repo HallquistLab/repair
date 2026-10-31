@@ -1,0 +1,2562 @@
+"profile","gamma","method","n","value","exceedance"
+"high_control",0.4,"Conditional Wald",100,0.30954394865368,1
+"high_control",0.4,"Conditional Wald",100,0.325021146086364,0.99
+"high_control",0.4,"Conditional Wald",100,0.325227890646037,0.98
+"high_control",0.4,"Conditional Wald",100,0.332140503284559,0.97
+"high_control",0.4,"Conditional Wald",100,0.335932935533519,0.96
+"high_control",0.4,"Conditional Wald",100,0.345420958773643,0.95
+"high_control",0.4,"Conditional Wald",100,0.351110050184882,0.94
+"high_control",0.4,"Conditional Wald",100,0.35130370961614,0.93
+"high_control",0.4,"Conditional Wald",100,0.353119663374174,0.92
+"high_control",0.4,"Conditional Wald",100,0.354387350075728,0.91
+"high_control",0.4,"Conditional Wald",100,0.361767219750992,0.9
+"high_control",0.4,"Conditional Wald",100,0.364488494379576,0.89
+"high_control",0.4,"Conditional Wald",100,0.371859601207129,0.88
+"high_control",0.4,"Conditional Wald",100,0.37510344068234,0.87
+"high_control",0.4,"Conditional Wald",100,0.376432691269314,0.86
+"high_control",0.4,"Conditional Wald",100,0.380327229211246,0.85
+"high_control",0.4,"Conditional Wald",100,0.380688223072103,0.84
+"high_control",0.4,"Conditional Wald",100,0.383133523338835,0.83
+"high_control",0.4,"Conditional Wald",100,0.387548480830402,0.82
+"high_control",0.4,"Conditional Wald",100,0.388280429803398,0.81
+"high_control",0.4,"Conditional Wald",100,0.388519298304783,0.8
+"high_control",0.4,"Conditional Wald",100,0.388657353269425,0.79
+"high_control",0.4,"Conditional Wald",100,0.390570764928184,0.78
+"high_control",0.4,"Conditional Wald",100,0.390623637328386,0.77
+"high_control",0.4,"Conditional Wald",100,0.391139706607744,0.76
+"high_control",0.4,"Conditional Wald",100,0.395557011205565,0.75
+"high_control",0.4,"Conditional Wald",100,0.397316341903954,0.74
+"high_control",0.4,"Conditional Wald",100,0.398406966984636,0.73
+"high_control",0.4,"Conditional Wald",100,0.400265880066892,0.72
+"high_control",0.4,"Conditional Wald",100,0.402280686668309,0.71
+"high_control",0.4,"Conditional Wald",100,0.403658299044157,0.7
+"high_control",0.4,"Conditional Wald",100,0.410175712290403,0.69
+"high_control",0.4,"Conditional Wald",100,0.410694915266191,0.68
+"high_control",0.4,"Conditional Wald",100,0.410699058384407,0.67
+"high_control",0.4,"Conditional Wald",100,0.412214607921923,0.66
+"high_control",0.4,"Conditional Wald",100,0.412812936544304,0.65
+"high_control",0.4,"Conditional Wald",100,0.414943133681159,0.64
+"high_control",0.4,"Conditional Wald",100,0.41568326259297,0.63
+"high_control",0.4,"Conditional Wald",100,0.416124974980433,0.62
+"high_control",0.4,"Conditional Wald",100,0.417827428059406,0.61
+"high_control",0.4,"Conditional Wald",100,0.419019510587313,0.6
+"high_control",0.4,"Conditional Wald",100,0.421606551529828,0.59
+"high_control",0.4,"Conditional Wald",100,0.421913014424531,0.58
+"high_control",0.4,"Conditional Wald",100,0.423276519813036,0.57
+"high_control",0.4,"Conditional Wald",100,0.423815399082342,0.56
+"high_control",0.4,"Conditional Wald",100,0.42386021622936,0.55
+"high_control",0.4,"Conditional Wald",100,0.424649673437815,0.54
+"high_control",0.4,"Conditional Wald",100,0.42774676890779,0.53
+"high_control",0.4,"Conditional Wald",100,0.429516412186864,0.52
+"high_control",0.4,"Conditional Wald",100,0.429972595203811,0.51
+"high_control",0.4,"Conditional Wald",100,0.430826194394188,0.5
+"high_control",0.4,"Conditional Wald",100,0.433079720881552,0.49
+"high_control",0.4,"Conditional Wald",100,0.435978913394046,0.48
+"high_control",0.4,"Conditional Wald",100,0.436478407940695,0.47
+"high_control",0.4,"Conditional Wald",100,0.439258543590606,0.46
+"high_control",0.4,"Conditional Wald",100,0.441356627054285,0.45
+"high_control",0.4,"Conditional Wald",100,0.44566523875672,0.44
+"high_control",0.4,"Conditional Wald",100,0.44656132964341,0.43
+"high_control",0.4,"Conditional Wald",100,0.448512608382008,0.42
+"high_control",0.4,"Conditional Wald",100,0.449474972123094,0.41
+"high_control",0.4,"Conditional Wald",100,0.451146501314545,0.4
+"high_control",0.4,"Conditional Wald",100,0.453796994502174,0.39
+"high_control",0.4,"Conditional Wald",100,0.458371781094399,0.38
+"high_control",0.4,"Conditional Wald",100,0.466993330386608,0.37
+"high_control",0.4,"Conditional Wald",100,0.472376792867001,0.36
+"high_control",0.4,"Conditional Wald",100,0.472420878011343,0.35
+"high_control",0.4,"Conditional Wald",100,0.472740175802047,0.34
+"high_control",0.4,"Conditional Wald",100,0.478267017625204,0.33
+"high_control",0.4,"Conditional Wald",100,0.478646839657314,0.32
+"high_control",0.4,"Conditional Wald",100,0.480922883726165,0.31
+"high_control",0.4,"Conditional Wald",100,0.484973032453938,0.3
+"high_control",0.4,"Conditional Wald",100,0.486067353983662,0.29
+"high_control",0.4,"Conditional Wald",100,0.490382296989287,0.28
+"high_control",0.4,"Conditional Wald",100,0.491288921379442,0.27
+"high_control",0.4,"Conditional Wald",100,0.492385507421981,0.26
+"high_control",0.4,"Conditional Wald",100,0.492463953057239,0.25
+"high_control",0.4,"Conditional Wald",100,0.492535868624726,0.24
+"high_control",0.4,"Conditional Wald",100,0.493193996630238,0.23
+"high_control",0.4,"Conditional Wald",100,0.49541707392495,0.22
+"high_control",0.4,"Conditional Wald",100,0.496317009931263,0.21
+"high_control",0.4,"Conditional Wald",100,0.497151353062769,0.2
+"high_control",0.4,"Conditional Wald",100,0.498814259808271,0.19
+"high_control",0.4,"Conditional Wald",100,0.499970789875081,0.18
+"high_control",0.4,"Conditional Wald",100,0.502713396390077,0.17
+"high_control",0.4,"Conditional Wald",100,0.508087822608584,0.16
+"high_control",0.4,"Conditional Wald",100,0.508289098940628,0.15
+"high_control",0.4,"Conditional Wald",100,0.514716384210931,0.14
+"high_control",0.4,"Conditional Wald",100,0.519838638341915,0.13
+"high_control",0.4,"Conditional Wald",100,0.524413969636968,0.12
+"high_control",0.4,"Conditional Wald",100,0.533230808845187,0.11
+"high_control",0.4,"Conditional Wald",100,0.533492028216675,0.1
+"high_control",0.4,"Conditional Wald",100,0.537249344358153,0.09
+"high_control",0.4,"Conditional Wald",100,0.539130960288822,0.08
+"high_control",0.4,"Conditional Wald",100,0.557095588320871,0.07
+"high_control",0.4,"Conditional Wald",100,0.56298269212599,0.06
+"high_control",0.4,"Conditional Wald",100,0.564591313559055,0.05
+"high_control",0.4,"Conditional Wald",100,0.620993403720518,0.04
+"high_control",0.4,"Conditional Wald",100,0.631789783303481,0.03
+"high_control",0.4,"Conditional Wald",100,0.663660500480227,0.02
+"high_control",0.4,"Conditional Wald",100,0.670595617855077,0.01
+"high_control",0.4,"Conditional Wald",100,0.729854269405652,0
+"low_balanced",0.4,"Conditional Wald",100,0.387648888732716,1
+"low_balanced",0.4,"Conditional Wald",100,0.407031333169351,0.99
+"low_balanced",0.4,"Conditional Wald",100,0.497462272381457,0.98
+"low_balanced",0.4,"Conditional Wald",100,0.498396895551485,0.97
+"low_balanced",0.4,"Conditional Wald",100,0.544180874656234,0.96
+"low_balanced",0.4,"Conditional Wald",100,0.588850526072118,0.95
+"low_balanced",0.4,"Conditional Wald",100,0.611219694754691,0.94
+"low_balanced",0.4,"Conditional Wald",100,0.620326930081566,0.93
+"low_balanced",0.4,"Conditional Wald",100,0.658772956140324,0.92
+"low_balanced",0.4,"Conditional Wald",100,0.675248032433585,0.91
+"low_balanced",0.4,"Conditional Wald",100,0.707214449748942,0.9
+"low_balanced",0.4,"Conditional Wald",100,0.722103203914605,0.89
+"low_balanced",0.4,"Conditional Wald",100,0.745638985868802,0.88
+"low_balanced",0.4,"Conditional Wald",100,0.746815378323965,0.87
+"low_balanced",0.4,"Conditional Wald",100,0.749618761237437,0.86
+"low_balanced",0.4,"Conditional Wald",100,0.77214357577983,0.85
+"low_balanced",0.4,"Conditional Wald",100,0.785510911904961,0.84
+"low_balanced",0.4,"Conditional Wald",100,0.788417794605097,0.83
+"low_balanced",0.4,"Conditional Wald",100,0.788957012542266,0.82
+"low_balanced",0.4,"Conditional Wald",100,0.803599832813143,0.81
+"low_balanced",0.4,"Conditional Wald",100,0.816244999426025,0.8
+"low_balanced",0.4,"Conditional Wald",100,0.818577660044015,0.79
+"low_balanced",0.4,"Conditional Wald",100,0.842362837895936,0.78
+"low_balanced",0.4,"Conditional Wald",100,0.863346796594316,0.77
+"low_balanced",0.4,"Conditional Wald",100,0.868479494138869,0.76
+"low_balanced",0.4,"Conditional Wald",100,0.868566510779291,0.75
+"low_balanced",0.4,"Conditional Wald",100,0.871053809962375,0.74
+"low_balanced",0.4,"Conditional Wald",100,0.879553798883527,0.73
+"low_balanced",0.4,"Conditional Wald",100,0.880851360175938,0.72
+"low_balanced",0.4,"Conditional Wald",100,0.893965895585164,0.71
+"low_balanced",0.4,"Conditional Wald",100,0.913574440991929,0.7
+"low_balanced",0.4,"Conditional Wald",100,0.937617664999075,0.69
+"low_balanced",0.4,"Conditional Wald",100,0.961033409542458,0.68
+"low_balanced",0.4,"Conditional Wald",100,0.975542924068388,0.67
+"low_balanced",0.4,"Conditional Wald",100,0.988203579405205,0.66
+"low_balanced",0.4,"Conditional Wald",100,1.0050970578702,0.65
+"low_balanced",0.4,"Conditional Wald",100,1.03983671374881,0.64
+"low_balanced",0.4,"Conditional Wald",100,1.05391714454436,0.63
+"low_balanced",0.4,"Conditional Wald",100,1.08032254252527,0.62
+"low_balanced",0.4,"Conditional Wald",100,1.11065302527461,0.61
+"low_balanced",0.4,"Conditional Wald",100,1.12178711324984,0.6
+"low_balanced",0.4,"Conditional Wald",100,1.17043382937528,0.59
+"low_balanced",0.4,"Conditional Wald",100,1.17513768463549,0.58
+"low_balanced",0.4,"Conditional Wald",100,1.17800814838873,0.57
+"low_balanced",0.4,"Conditional Wald",100,1.18224787253599,0.56
+"low_balanced",0.4,"Conditional Wald",100,1.18671372081422,0.55
+"low_balanced",0.4,"Conditional Wald",100,1.18831601342516,0.54
+"low_balanced",0.4,"Conditional Wald",100,1.21588121576152,0.53
+"low_balanced",0.4,"Conditional Wald",100,1.22893764939191,0.52
+"low_balanced",0.4,"Conditional Wald",100,1.26827749898299,0.51
+"low_balanced",0.4,"Conditional Wald",100,1.29079083155094,0.5
+"low_balanced",0.4,"Conditional Wald",100,1.32269965518829,0.49
+"low_balanced",0.4,"Conditional Wald",100,1.35576473704694,0.48
+"low_balanced",0.4,"Conditional Wald",100,1.37994474989879,0.47
+"low_balanced",0.4,"Conditional Wald",100,1.43249957801559,0.46
+"low_balanced",0.4,"Conditional Wald",100,1.51184431061219,0.45
+"low_balanced",0.4,"Conditional Wald",100,1.54267150232601,0.44
+"low_balanced",0.4,"Conditional Wald",100,1.59346883432861,0.43
+"low_balanced",0.4,"Conditional Wald",100,1.60882763925059,0.42
+"low_balanced",0.4,"Conditional Wald",100,1.63538300409383,0.41
+"low_balanced",0.4,"Conditional Wald",100,1.64691384364965,0.4
+"low_balanced",0.4,"Conditional Wald",100,1.66770856502871,0.39
+"low_balanced",0.4,"Conditional Wald",100,1.69056988783246,0.38
+"low_balanced",0.4,"Conditional Wald",100,1.80507359051121,0.37
+"low_balanced",0.4,"Conditional Wald",100,2.05612201119276,0.36
+"low_balanced",0.4,"Conditional Wald",100,2.05763295727068,0.35
+"low_balanced",0.4,"Conditional Wald",100,2.08079010394285,0.34
+"low_balanced",0.4,"Conditional Wald",100,2.10323781881499,0.33
+"low_balanced",0.4,"Conditional Wald",100,2.12942334128985,0.32
+"low_balanced",0.4,"Conditional Wald",100,2.13371381466104,0.31
+"low_balanced",0.4,"Conditional Wald",100,2.16667873518357,0.3
+"low_balanced",0.4,"Conditional Wald",100,2.17212706930667,0.29
+"low_balanced",0.4,"Conditional Wald",100,2.20402186932452,0.28
+"low_balanced",0.4,"Conditional Wald",100,2.21483048945326,0.27
+"low_balanced",0.4,"Conditional Wald",100,2.23197607736787,0.26
+"low_balanced",0.4,"Conditional Wald",100,2.27450223003103,0.25
+"low_balanced",0.4,"Conditional Wald",100,2.27845754116835,0.24
+"low_balanced",0.4,"Conditional Wald",100,2.30910551196063,0.23
+"low_balanced",0.4,"Conditional Wald",100,2.31373813127715,0.22
+"low_balanced",0.4,"Conditional Wald",100,2.39339966658816,0.21
+"low_balanced",0.4,"Conditional Wald",100,2.43045868974266,0.2
+"low_balanced",0.4,"Conditional Wald",100,2.44859770730966,0.19
+"low_balanced",0.4,"Conditional Wald",100,2.56640743524566,0.18
+"low_balanced",0.4,"Conditional Wald",100,2.61953376826263,0.17
+"low_balanced",0.4,"Conditional Wald",100,2.64459998486551,0.16
+"low_balanced",0.4,"Conditional Wald",100,2.67512022947086,0.15
+"low_balanced",0.4,"Conditional Wald",100,2.84134901954082,0.14
+"low_balanced",0.4,"Conditional Wald",100,2.87202349306196,0.13
+"low_balanced",0.4,"Conditional Wald",100,2.90075787523336,0.12
+"low_balanced",0.4,"Conditional Wald",100,2.93321493886832,0.11
+"low_balanced",0.4,"Conditional Wald",100,2.99624166868911,0.1
+"low_balanced",0.4,"Conditional Wald",100,2.99831667561013,0.09
+"low_balanced",0.4,"Conditional Wald",100,2.99938053901906,0.08
+"low_balanced",0.4,"Conditional Wald",100,3.00784681492257,0.07
+"low_balanced",0.4,"Conditional Wald",100,3.17888110104349,0.06
+"low_balanced",0.4,"Conditional Wald",100,3.26558638867338,0.05
+"low_balanced",0.4,"Conditional Wald",100,3.42278678652033,0.04
+"low_balanced",0.4,"Conditional Wald",100,3.54723255934355,0.03
+"low_balanced",0.4,"Conditional Wald",100,3.57059700364027,0.02
+"low_balanced",0.4,"Conditional Wald",100,3.79554975783318,0.01
+"low_balanced",0.4,"Conditional Wald",100,4.21094822164111,0
+"low_larger",0.4,"Conditional Wald",100,0.36620810153233,1
+"low_larger",0.4,"Conditional Wald",100,0.384518506608946,0.99
+"low_larger",0.4,"Conditional Wald",100,0.494779375956406,0.98
+"low_larger",0.4,"Conditional Wald",100,0.502693476594084,0.97
+"low_larger",0.4,"Conditional Wald",100,0.538733632498967,0.96
+"low_larger",0.4,"Conditional Wald",100,0.551148071248495,0.95
+"low_larger",0.4,"Conditional Wald",100,0.578647846138557,0.94
+"low_larger",0.4,"Conditional Wald",100,0.592648702189171,0.93
+"low_larger",0.4,"Conditional Wald",100,0.598526098323701,0.92
+"low_larger",0.4,"Conditional Wald",100,0.632347134033584,0.91
+"low_larger",0.4,"Conditional Wald",100,0.642476497198228,0.9
+"low_larger",0.4,"Conditional Wald",100,0.67575358009788,0.89
+"low_larger",0.4,"Conditional Wald",100,0.713340451275652,0.88
+"low_larger",0.4,"Conditional Wald",100,0.71541324907865,0.87
+"low_larger",0.4,"Conditional Wald",100,0.716470389304326,0.86
+"low_larger",0.4,"Conditional Wald",100,0.787186228837487,0.85
+"low_larger",0.4,"Conditional Wald",100,0.793114895173304,0.84
+"low_larger",0.4,"Conditional Wald",100,0.808294467839832,0.83
+"low_larger",0.4,"Conditional Wald",100,0.824102709657041,0.82
+"low_larger",0.4,"Conditional Wald",100,0.900270598280749,0.81
+"low_larger",0.4,"Conditional Wald",100,0.961955411373703,0.8
+"low_larger",0.4,"Conditional Wald",100,0.993052635508671,0.79
+"low_larger",0.4,"Conditional Wald",100,1.11021654467882,0.78
+"low_larger",0.4,"Conditional Wald",100,1.13535915723553,0.77
+"low_larger",0.4,"Conditional Wald",100,1.15203167046738,0.76
+"low_larger",0.4,"Conditional Wald",100,1.18561430539648,0.75
+"low_larger",0.4,"Conditional Wald",100,1.20294310871458,0.74
+"low_larger",0.4,"Conditional Wald",100,1.21550466021762,0.73
+"low_larger",0.4,"Conditional Wald",100,1.23459235422799,0.72
+"low_larger",0.4,"Conditional Wald",100,1.24661239435521,0.71
+"low_larger",0.4,"Conditional Wald",100,1.31576507410249,0.7
+"low_larger",0.4,"Conditional Wald",100,1.31652244925526,0.69
+"low_larger",0.4,"Conditional Wald",100,1.34599471744875,0.68
+"low_larger",0.4,"Conditional Wald",100,1.36053034911775,0.67
+"low_larger",0.4,"Conditional Wald",100,1.37204473600928,0.66
+"low_larger",0.4,"Conditional Wald",100,1.4811523728383,0.65
+"low_larger",0.4,"Conditional Wald",100,1.51001345677062,0.64
+"low_larger",0.4,"Conditional Wald",100,1.551594701989,0.63
+"low_larger",0.4,"Conditional Wald",100,1.58554039076132,0.62
+"low_larger",0.4,"Conditional Wald",100,1.59118793765961,0.61
+"low_larger",0.4,"Conditional Wald",100,1.61714952315582,0.6
+"low_larger",0.4,"Conditional Wald",100,1.6777947670901,0.59
+"low_larger",0.4,"Conditional Wald",100,1.73009638621381,0.58
+"low_larger",0.4,"Conditional Wald",100,1.91088942002101,0.57
+"low_larger",0.4,"Conditional Wald",100,1.91131134976052,0.56
+"low_larger",0.4,"Conditional Wald",100,1.99461046238742,0.55
+"low_larger",0.4,"Conditional Wald",100,2.04417578254056,0.54
+"low_larger",0.4,"Conditional Wald",100,2.13577621497938,0.53
+"low_larger",0.4,"Conditional Wald",100,2.14404016118245,0.52
+"low_larger",0.4,"Conditional Wald",100,2.15725540897858,0.51
+"low_larger",0.4,"Conditional Wald",100,2.2137209509178,0.5
+"low_larger",0.4,"Conditional Wald",100,2.35800550012671,0.49
+"low_larger",0.4,"Conditional Wald",100,2.38712389581457,0.48
+"low_larger",0.4,"Conditional Wald",100,2.43472541377526,0.47
+"low_larger",0.4,"Conditional Wald",100,2.44679561023213,0.46
+"low_larger",0.4,"Conditional Wald",100,2.45802665569383,0.45
+"low_larger",0.4,"Conditional Wald",100,2.56463008536417,0.44
+"low_larger",0.4,"Conditional Wald",100,2.57433973118372,0.43
+"low_larger",0.4,"Conditional Wald",100,2.62102257305427,0.42
+"low_larger",0.4,"Conditional Wald",100,2.66993019567898,0.41
+"low_larger",0.4,"Conditional Wald",100,2.67760569929347,0.4
+"low_larger",0.4,"Conditional Wald",100,2.70913568082555,0.39
+"low_larger",0.4,"Conditional Wald",100,2.71210120492055,0.38
+"low_larger",0.4,"Conditional Wald",100,2.75687411628998,0.37
+"low_larger",0.4,"Conditional Wald",100,2.77343783631963,0.36
+"low_larger",0.4,"Conditional Wald",100,2.92622365275655,0.35
+"low_larger",0.4,"Conditional Wald",100,2.94096345456375,0.34
+"low_larger",0.4,"Conditional Wald",100,3.0030750017166,0.33
+"low_larger",0.4,"Conditional Wald",100,3.09502526441227,0.32
+"low_larger",0.4,"Conditional Wald",100,3.1151294043221,0.31
+"low_larger",0.4,"Conditional Wald",100,3.14984310537529,0.3
+"low_larger",0.4,"Conditional Wald",100,3.15603514307281,0.29
+"low_larger",0.4,"Conditional Wald",100,3.22602855632978,0.28
+"low_larger",0.4,"Conditional Wald",100,3.26001846418332,0.27
+"low_larger",0.4,"Conditional Wald",100,3.26181346974919,0.26
+"low_larger",0.4,"Conditional Wald",100,3.32439176671494,0.25
+"low_larger",0.4,"Conditional Wald",100,3.40626161314189,0.24
+"low_larger",0.4,"Conditional Wald",100,3.46032934793144,0.23
+"low_larger",0.4,"Conditional Wald",100,3.52509862258846,0.22
+"low_larger",0.4,"Conditional Wald",100,3.75923759247913,0.21
+"low_larger",0.4,"Conditional Wald",100,3.83142723283598,0.2
+"low_larger",0.4,"Conditional Wald",100,3.92839009230882,0.19
+"low_larger",0.4,"Conditional Wald",100,3.93387895165999,0.18
+"low_larger",0.4,"Conditional Wald",100,3.98151321885376,0.17
+"low_larger",0.4,"Conditional Wald",100,4.06320269349978,0.16
+"low_larger",0.4,"Conditional Wald",100,4.37564463812325,0.15
+"low_larger",0.4,"Conditional Wald",100,4.43622526383456,0.14
+"low_larger",0.4,"Conditional Wald",100,4.45184035902844,0.13
+"low_larger",0.4,"Conditional Wald",100,4.63998392893256,0.12
+"low_larger",0.4,"Conditional Wald",100,4.65883423054207,0.11
+"low_larger",0.4,"Conditional Wald",100,4.68722877553022,0.1
+"low_larger",0.4,"Conditional Wald",100,5.15733615787014,0.09
+"low_larger",0.4,"Conditional Wald",100,5.27623908310592,0.08
+"low_larger",0.4,"Conditional Wald",100,5.40827153009338,0.07
+"low_larger",0.4,"Conditional Wald",100,5.52239630520648,0.06
+"low_larger",0.4,"Conditional Wald",100,5.74295245365454,0.05
+"low_larger",0.4,"Conditional Wald",100,5.80054935207227,0.04
+"low_larger",0.4,"Conditional Wald",100,5.89582716421874,0.03
+"low_larger",0.4,"Conditional Wald",100,6.21845185877316,0.02
+"low_larger",0.4,"Conditional Wald",100,6.35025391261333,0.01
+"low_larger",0.4,"Conditional Wald",100,7.29473040991958,0
+"low_negative",0.4,"Conditional Wald",100,0.303933784868784,1
+"low_negative",0.4,"Conditional Wald",100,0.319130474112223,0.99
+"low_negative",0.4,"Conditional Wald",100,0.436260384137633,0.98
+"low_negative",0.4,"Conditional Wald",100,0.461453667688379,0.97
+"low_negative",0.4,"Conditional Wald",100,0.477017815317413,0.96
+"low_negative",0.4,"Conditional Wald",100,0.485383945673071,0.95
+"low_negative",0.4,"Conditional Wald",100,0.487049638501971,0.94
+"low_negative",0.4,"Conditional Wald",100,0.500777260570034,0.93
+"low_negative",0.4,"Conditional Wald",100,0.532763190452684,0.92
+"low_negative",0.4,"Conditional Wald",100,0.535628654921953,0.91
+"low_negative",0.4,"Conditional Wald",100,0.540961368171582,0.9
+"low_negative",0.4,"Conditional Wald",100,0.559226938454451,0.89
+"low_negative",0.4,"Conditional Wald",100,0.591851205524081,0.88
+"low_negative",0.4,"Conditional Wald",100,0.661780664849273,0.87
+"low_negative",0.4,"Conditional Wald",100,0.663862995229659,0.86
+"low_negative",0.4,"Conditional Wald",100,0.69903485528054,0.85
+"low_negative",0.4,"Conditional Wald",100,0.704289282900607,0.84
+"low_negative",0.4,"Conditional Wald",100,0.715976374856126,0.83
+"low_negative",0.4,"Conditional Wald",100,0.739324473174206,0.82
+"low_negative",0.4,"Conditional Wald",100,0.79772829847764,0.81
+"low_negative",0.4,"Conditional Wald",100,0.801823244458035,0.8
+"low_negative",0.4,"Conditional Wald",100,0.895611947725732,0.79
+"low_negative",0.4,"Conditional Wald",100,0.917416243974984,0.78
+"low_negative",0.4,"Conditional Wald",100,0.923502681150374,0.77
+"low_negative",0.4,"Conditional Wald",100,0.930555945548046,0.76
+"low_negative",0.4,"Conditional Wald",100,0.948468302969774,0.75
+"low_negative",0.4,"Conditional Wald",100,0.956070672914772,0.74
+"low_negative",0.4,"Conditional Wald",100,0.979850620092249,0.73
+"low_negative",0.4,"Conditional Wald",100,0.989252269490363,0.72
+"low_negative",0.4,"Conditional Wald",100,0.996380136323103,0.71
+"low_negative",0.4,"Conditional Wald",100,1.01456379581574,0.7
+"low_negative",0.4,"Conditional Wald",100,1.01654124068017,0.69
+"low_negative",0.4,"Conditional Wald",100,1.0184732115587,0.68
+"low_negative",0.4,"Conditional Wald",100,1.02080826048457,0.67
+"low_negative",0.4,"Conditional Wald",100,1.02320957735937,0.66
+"low_negative",0.4,"Conditional Wald",100,1.04924473749819,0.65
+"low_negative",0.4,"Conditional Wald",100,1.0685783369964,0.64
+"low_negative",0.4,"Conditional Wald",100,1.09997069394566,0.63
+"low_negative",0.4,"Conditional Wald",100,1.11162981838489,0.62
+"low_negative",0.4,"Conditional Wald",100,1.14402654592734,0.61
+"low_negative",0.4,"Conditional Wald",100,1.19850813978899,0.6
+"low_negative",0.4,"Conditional Wald",100,1.22123940389633,0.59
+"low_negative",0.4,"Conditional Wald",100,1.25228350369699,0.58
+"low_negative",0.4,"Conditional Wald",100,1.26141251630113,0.57
+"low_negative",0.4,"Conditional Wald",100,1.28831467785279,0.56
+"low_negative",0.4,"Conditional Wald",100,1.36180839451903,0.55
+"low_negative",0.4,"Conditional Wald",100,1.40481087837341,0.54
+"low_negative",0.4,"Conditional Wald",100,1.40637956502983,0.53
+"low_negative",0.4,"Conditional Wald",100,1.45218516081616,0.52
+"low_negative",0.4,"Conditional Wald",100,1.45944645489216,0.51
+"low_negative",0.4,"Conditional Wald",100,1.61590725928309,0.5
+"low_negative",0.4,"Conditional Wald",100,1.67547133695262,0.49
+"low_negative",0.4,"Conditional Wald",100,1.6878032747016,0.48
+"low_negative",0.4,"Conditional Wald",100,1.68950517855988,0.47
+"low_negative",0.4,"Conditional Wald",100,1.69621754518036,0.46
+"low_negative",0.4,"Conditional Wald",100,1.69895556250447,0.45
+"low_negative",0.4,"Conditional Wald",100,1.74806582059795,0.44
+"low_negative",0.4,"Conditional Wald",100,1.81559417882835,0.43
+"low_negative",0.4,"Conditional Wald",100,1.82132040345343,0.42
+"low_negative",0.4,"Conditional Wald",100,1.82792154884854,0.41
+"low_negative",0.4,"Conditional Wald",100,2.09628031841108,0.4
+"low_negative",0.4,"Conditional Wald",100,2.10042445079978,0.39
+"low_negative",0.4,"Conditional Wald",100,2.12314911636799,0.38
+"low_negative",0.4,"Conditional Wald",100,2.14403277494718,0.37
+"low_negative",0.4,"Conditional Wald",100,2.18804885236062,0.36
+"low_negative",0.4,"Conditional Wald",100,2.31849045006903,0.35
+"low_negative",0.4,"Conditional Wald",100,2.38707863695762,0.34
+"low_negative",0.4,"Conditional Wald",100,2.42144245845849,0.33
+"low_negative",0.4,"Conditional Wald",100,2.42932122831475,0.32
+"low_negative",0.4,"Conditional Wald",100,2.4395800797509,0.31
+"low_negative",0.4,"Conditional Wald",100,2.45711431823722,0.3
+"low_negative",0.4,"Conditional Wald",100,2.47434998630137,0.29
+"low_negative",0.4,"Conditional Wald",100,2.4913430177375,0.28
+"low_negative",0.4,"Conditional Wald",100,2.55571112902302,0.27
+"low_negative",0.4,"Conditional Wald",100,2.62995824961072,0.26
+"low_negative",0.4,"Conditional Wald",100,2.65757713504924,0.25
+"low_negative",0.4,"Conditional Wald",100,2.69423277616987,0.24
+"low_negative",0.4,"Conditional Wald",100,2.73280660218686,0.23
+"low_negative",0.4,"Conditional Wald",100,2.7823709472626,0.22
+"low_negative",0.4,"Conditional Wald",100,2.8098265385883,0.21
+"low_negative",0.4,"Conditional Wald",100,2.85122224000221,0.2
+"low_negative",0.4,"Conditional Wald",100,2.86043292901395,0.19
+"low_negative",0.4,"Conditional Wald",100,2.88734774089983,0.18
+"low_negative",0.4,"Conditional Wald",100,2.92577250466158,0.17
+"low_negative",0.4,"Conditional Wald",100,2.9764155345247,0.16
+"low_negative",0.4,"Conditional Wald",100,3.02516519006752,0.15
+"low_negative",0.4,"Conditional Wald",100,3.06063663951385,0.14
+"low_negative",0.4,"Conditional Wald",100,3.06667844997739,0.13
+"low_negative",0.4,"Conditional Wald",100,3.15334511240897,0.12
+"low_negative",0.4,"Conditional Wald",100,3.15730253281605,0.11
+"low_negative",0.4,"Conditional Wald",100,3.22157549946389,0.1
+"low_negative",0.4,"Conditional Wald",100,3.2350182862212,0.09
+"low_negative",0.4,"Conditional Wald",100,3.25014562309464,0.08
+"low_negative",0.4,"Conditional Wald",100,3.25657853230432,0.07
+"low_negative",0.4,"Conditional Wald",100,3.610677731616,0.06
+"low_negative",0.4,"Conditional Wald",100,3.64741001941707,0.05
+"low_negative",0.4,"Conditional Wald",100,3.67147764866842,0.04
+"low_negative",0.4,"Conditional Wald",100,3.67517592306124,0.03
+"low_negative",0.4,"Conditional Wald",100,3.74087237237355,0.02
+"low_negative",0.4,"Conditional Wald",100,4.01665305766362,0.01
+"low_negative",0.4,"Conditional Wald",100,4.10741839473947,0
+"low_unequal",0.4,"Conditional Wald",100,0.178019921250246,1
+"low_unequal",0.4,"Conditional Wald",100,0.186920917312758,0.99
+"low_unequal",0.4,"Conditional Wald",100,0.268230824688204,0.98
+"low_unequal",0.4,"Conditional Wald",100,0.284579224750978,0.97
+"low_unequal",0.4,"Conditional Wald",100,0.383020255046117,0.96
+"low_unequal",0.4,"Conditional Wald",100,0.383399681236949,0.95
+"low_unequal",0.4,"Conditional Wald",100,0.397908242345361,0.94
+"low_unequal",0.4,"Conditional Wald",100,0.423097471532401,0.93
+"low_unequal",0.4,"Conditional Wald",100,0.458125004515221,0.92
+"low_unequal",0.4,"Conditional Wald",100,0.463094415803663,0.91
+"low_unequal",0.4,"Conditional Wald",100,0.485933110601515,0.9
+"low_unequal",0.4,"Conditional Wald",100,0.486280131531184,0.89
+"low_unequal",0.4,"Conditional Wald",100,0.489360417011751,0.88
+"low_unequal",0.4,"Conditional Wald",100,0.496358678651611,0.87
+"low_unequal",0.4,"Conditional Wald",100,0.526701700206369,0.86
+"low_unequal",0.4,"Conditional Wald",100,0.555544538267875,0.85
+"low_unequal",0.4,"Conditional Wald",100,0.573741906396422,0.84
+"low_unequal",0.4,"Conditional Wald",100,0.575343063261744,0.83
+"low_unequal",0.4,"Conditional Wald",100,0.577181636717904,0.82
+"low_unequal",0.4,"Conditional Wald",100,0.605488914808913,0.81
+"low_unequal",0.4,"Conditional Wald",100,0.618427531071061,0.8
+"low_unequal",0.4,"Conditional Wald",100,0.638719910692124,0.79
+"low_unequal",0.4,"Conditional Wald",100,0.648508498278388,0.78
+"low_unequal",0.4,"Conditional Wald",100,0.652727237396045,0.77
+"low_unequal",0.4,"Conditional Wald",100,0.667136886309409,0.76
+"low_unequal",0.4,"Conditional Wald",100,0.692491312658965,0.75
+"low_unequal",0.4,"Conditional Wald",100,0.694885020731298,0.74
+"low_unequal",0.4,"Conditional Wald",100,0.697542043506517,0.73
+"low_unequal",0.4,"Conditional Wald",100,0.724402179426964,0.72
+"low_unequal",0.4,"Conditional Wald",100,0.76828668106909,0.71
+"low_unequal",0.4,"Conditional Wald",100,0.789034756538011,0.7
+"low_unequal",0.4,"Conditional Wald",100,0.799491556615975,0.69
+"low_unequal",0.4,"Conditional Wald",100,0.82122705150429,0.68
+"low_unequal",0.4,"Conditional Wald",100,0.823438950247398,0.67
+"low_unequal",0.4,"Conditional Wald",100,0.829586015230619,0.66
+"low_unequal",0.4,"Conditional Wald",100,0.839787037735697,0.65
+"low_unequal",0.4,"Conditional Wald",100,0.842769776176426,0.64
+"low_unequal",0.4,"Conditional Wald",100,0.858148797125137,0.63
+"low_unequal",0.4,"Conditional Wald",100,0.85868694513948,0.62
+"low_unequal",0.4,"Conditional Wald",100,0.864394446577047,0.61
+"low_unequal",0.4,"Conditional Wald",100,0.866498100200055,0.6
+"low_unequal",0.4,"Conditional Wald",100,0.866979935639298,0.59
+"low_unequal",0.4,"Conditional Wald",100,0.870252428051002,0.58
+"low_unequal",0.4,"Conditional Wald",100,0.882965093134686,0.57
+"low_unequal",0.4,"Conditional Wald",100,0.890554664404498,0.56
+"low_unequal",0.4,"Conditional Wald",100,0.931624762312298,0.55
+"low_unequal",0.4,"Conditional Wald",100,0.945469680403878,0.54
+"low_unequal",0.4,"Conditional Wald",100,0.949824993288375,0.53
+"low_unequal",0.4,"Conditional Wald",100,0.967718670314435,0.52
+"low_unequal",0.4,"Conditional Wald",100,0.975067326969575,0.51
+"low_unequal",0.4,"Conditional Wald",100,0.97823770843937,0.5
+"low_unequal",0.4,"Conditional Wald",100,0.983773337024094,0.49
+"low_unequal",0.4,"Conditional Wald",100,1.0057763256167,0.48
+"low_unequal",0.4,"Conditional Wald",100,1.0235228411703,0.47
+"low_unequal",0.4,"Conditional Wald",100,1.05795542303434,0.46
+"low_unequal",0.4,"Conditional Wald",100,1.0655441501994,0.45
+"low_unequal",0.4,"Conditional Wald",100,1.07241727392072,0.44
+"low_unequal",0.4,"Conditional Wald",100,1.07815580403213,0.43
+"low_unequal",0.4,"Conditional Wald",100,1.08326009002193,0.42
+"low_unequal",0.4,"Conditional Wald",100,1.12769515312793,0.41
+"low_unequal",0.4,"Conditional Wald",100,1.13840188476961,0.4
+"low_unequal",0.4,"Conditional Wald",100,1.13919997067931,0.39
+"low_unequal",0.4,"Conditional Wald",100,1.13959647793187,0.38
+"low_unequal",0.4,"Conditional Wald",100,1.14512127673962,0.37
+"low_unequal",0.4,"Conditional Wald",100,1.1524716025614,0.36
+"low_unequal",0.4,"Conditional Wald",100,1.15462440088263,0.35
+"low_unequal",0.4,"Conditional Wald",100,1.15498901554587,0.34
+"low_unequal",0.4,"Conditional Wald",100,1.20659664689067,0.33
+"low_unequal",0.4,"Conditional Wald",100,1.21286328081253,0.32
+"low_unequal",0.4,"Conditional Wald",100,1.24250221587418,0.31
+"low_unequal",0.4,"Conditional Wald",100,1.28599314869202,0.3
+"low_unequal",0.4,"Conditional Wald",100,1.29165378732123,0.29
+"low_unequal",0.4,"Conditional Wald",100,1.32096811292383,0.28
+"low_unequal",0.4,"Conditional Wald",100,1.33591387570214,0.27
+"low_unequal",0.4,"Conditional Wald",100,1.40343191655997,0.26
+"low_unequal",0.4,"Conditional Wald",100,1.43396466138408,0.25
+"low_unequal",0.4,"Conditional Wald",100,1.44437535854186,0.24
+"low_unequal",0.4,"Conditional Wald",100,1.51874710295172,0.23
+"low_unequal",0.4,"Conditional Wald",100,1.52611593932982,0.22
+"low_unequal",0.4,"Conditional Wald",100,1.55637369791934,0.21
+"low_unequal",0.4,"Conditional Wald",100,1.66680517563241,0.2
+"low_unequal",0.4,"Conditional Wald",100,1.74484805092599,0.19
+"low_unequal",0.4,"Conditional Wald",100,1.79621817206914,0.18
+"low_unequal",0.4,"Conditional Wald",100,2.05104958019091,0.17
+"low_unequal",0.4,"Conditional Wald",100,2.0657558396109,0.16
+"low_unequal",0.4,"Conditional Wald",100,2.20758670961151,0.15
+"low_unequal",0.4,"Conditional Wald",100,2.24017459362251,0.14
+"low_unequal",0.4,"Conditional Wald",100,2.30760555862076,0.13
+"low_unequal",0.4,"Conditional Wald",100,2.36883493492262,0.12
+"low_unequal",0.4,"Conditional Wald",100,2.37283069136423,0.11
+"low_unequal",0.4,"Conditional Wald",100,2.50918202832662,0.1
+"low_unequal",0.4,"Conditional Wald",100,2.51990121165979,0.09
+"low_unequal",0.4,"Conditional Wald",100,2.53342882261903,0.08
+"low_unequal",0.4,"Conditional Wald",100,2.54438432941815,0.07
+"low_unequal",0.4,"Conditional Wald",100,2.55482745857579,0.06
+"low_unequal",0.4,"Conditional Wald",100,2.59940592899553,0.05
+"low_unequal",0.4,"Conditional Wald",100,2.61321051648228,0.04
+"low_unequal",0.4,"Conditional Wald",100,2.61749110922157,0.03
+"low_unequal",0.4,"Conditional Wald",100,2.76101492234528,0.02
+"low_unequal",0.4,"Conditional Wald",100,3.29489701099752,0.01
+"low_unequal",0.4,"Conditional Wald",100,3.60184121764669,0
+"small_short",0.4,"Conditional Wald",100,0.168344451905112,1
+"small_short",0.4,"Conditional Wald",100,0.176761674500367,0.99
+"small_short",0.4,"Conditional Wald",100,0.366247015477028,0.98
+"small_short",0.4,"Conditional Wald",100,0.429095074442224,0.97
+"small_short",0.4,"Conditional Wald",100,0.463796337967169,0.96
+"small_short",0.4,"Conditional Wald",100,0.474697565610416,0.95
+"small_short",0.4,"Conditional Wald",100,0.478720232966701,0.94
+"small_short",0.4,"Conditional Wald",100,0.484477649895981,0.93
+"small_short",0.4,"Conditional Wald",100,0.50438737921225,0.92
+"small_short",0.4,"Conditional Wald",100,0.536920556903008,0.91
+"small_short",0.4,"Conditional Wald",100,0.544777486605895,0.9
+"small_short",0.4,"Conditional Wald",100,0.556337884727332,0.89
+"small_short",0.4,"Conditional Wald",100,0.563252458967173,0.88
+"small_short",0.4,"Conditional Wald",100,0.56500527224586,0.87
+"small_short",0.4,"Conditional Wald",100,0.574242001396101,0.86
+"small_short",0.4,"Conditional Wald",100,0.57760454029154,0.85
+"small_short",0.4,"Conditional Wald",100,0.586923225939594,0.84
+"small_short",0.4,"Conditional Wald",100,0.589386100004276,0.83
+"small_short",0.4,"Conditional Wald",100,0.603491053922118,0.82
+"small_short",0.4,"Conditional Wald",100,0.632344170966059,0.81
+"small_short",0.4,"Conditional Wald",100,0.638683315215185,0.8
+"small_short",0.4,"Conditional Wald",100,0.669207557081896,0.79
+"small_short",0.4,"Conditional Wald",100,0.678325136137116,0.78
+"small_short",0.4,"Conditional Wald",100,0.721251944758957,0.77
+"small_short",0.4,"Conditional Wald",100,0.734058024309976,0.76
+"small_short",0.4,"Conditional Wald",100,0.739049612791888,0.75
+"small_short",0.4,"Conditional Wald",100,0.74560463120648,0.74
+"small_short",0.4,"Conditional Wald",100,0.75669263747087,0.73
+"small_short",0.4,"Conditional Wald",100,0.760941106747487,0.72
+"small_short",0.4,"Conditional Wald",100,0.796218882733238,0.71
+"small_short",0.4,"Conditional Wald",100,0.815014628599419,0.7
+"small_short",0.4,"Conditional Wald",100,0.835382312977104,0.69
+"small_short",0.4,"Conditional Wald",100,0.838606854034164,0.68
+"small_short",0.4,"Conditional Wald",100,0.84389298756247,0.67
+"small_short",0.4,"Conditional Wald",100,0.844821054350654,0.66
+"small_short",0.4,"Conditional Wald",100,0.848412957620061,0.65
+"small_short",0.4,"Conditional Wald",100,0.87046739455117,0.64
+"small_short",0.4,"Conditional Wald",100,0.904443562566316,0.63
+"small_short",0.4,"Conditional Wald",100,0.913958280456403,0.62
+"small_short",0.4,"Conditional Wald",100,0.920001386443391,0.61
+"small_short",0.4,"Conditional Wald",100,0.92100924962488,0.6
+"small_short",0.4,"Conditional Wald",100,0.930751473662099,0.59
+"small_short",0.4,"Conditional Wald",100,0.937516183028441,0.58
+"small_short",0.4,"Conditional Wald",100,0.950491564433772,0.57
+"small_short",0.4,"Conditional Wald",100,1.01114406955578,0.56
+"small_short",0.4,"Conditional Wald",100,1.01482893623293,0.55
+"small_short",0.4,"Conditional Wald",100,1.0217256293127,0.54
+"small_short",0.4,"Conditional Wald",100,1.02718168714753,0.53
+"small_short",0.4,"Conditional Wald",100,1.03946456352125,0.52
+"small_short",0.4,"Conditional Wald",100,1.04788661866563,0.51
+"small_short",0.4,"Conditional Wald",100,1.05782074388813,0.5
+"small_short",0.4,"Conditional Wald",100,1.05904700979046,0.49
+"small_short",0.4,"Conditional Wald",100,1.07091733717025,0.48
+"small_short",0.4,"Conditional Wald",100,1.11073379197075,0.47
+"small_short",0.4,"Conditional Wald",100,1.11366738333956,0.46
+"small_short",0.4,"Conditional Wald",100,1.12751113450461,0.45
+"small_short",0.4,"Conditional Wald",100,1.13128733085533,0.44
+"small_short",0.4,"Conditional Wald",100,1.17311323162715,0.43
+"small_short",0.4,"Conditional Wald",100,1.17544351892675,0.42
+"small_short",0.4,"Conditional Wald",100,1.18141072503586,0.41
+"small_short",0.4,"Conditional Wald",100,1.189552466687,0.4
+"small_short",0.4,"Conditional Wald",100,1.19634398842637,0.39
+"small_short",0.4,"Conditional Wald",100,1.20508637771816,0.38
+"small_short",0.4,"Conditional Wald",100,1.21358017230819,0.37
+"small_short",0.4,"Conditional Wald",100,1.21583652477121,0.36
+"small_short",0.4,"Conditional Wald",100,1.22035396183628,0.35
+"small_short",0.4,"Conditional Wald",100,1.24431742583034,0.34
+"small_short",0.4,"Conditional Wald",100,1.24822896566438,0.33
+"small_short",0.4,"Conditional Wald",100,1.2603652748611,0.32
+"small_short",0.4,"Conditional Wald",100,1.26180638868452,0.31
+"small_short",0.4,"Conditional Wald",100,1.26949938247272,0.3
+"small_short",0.4,"Conditional Wald",100,1.2882847380337,0.29
+"small_short",0.4,"Conditional Wald",100,1.29744392469914,0.28
+"small_short",0.4,"Conditional Wald",100,1.30253288784062,0.27
+"small_short",0.4,"Conditional Wald",100,1.35001082001291,0.26
+"small_short",0.4,"Conditional Wald",100,1.3605476630419,0.25
+"small_short",0.4,"Conditional Wald",100,1.38627755352987,0.24
+"small_short",0.4,"Conditional Wald",100,1.40253451168653,0.23
+"small_short",0.4,"Conditional Wald",100,1.42632825774953,0.22
+"small_short",0.4,"Conditional Wald",100,1.43097367122465,0.21
+"small_short",0.4,"Conditional Wald",100,1.45129835473892,0.2
+"small_short",0.4,"Conditional Wald",100,1.47145983597542,0.19
+"small_short",0.4,"Conditional Wald",100,1.5105579399993,0.18
+"small_short",0.4,"Conditional Wald",100,1.51555099891502,0.17
+"small_short",0.4,"Conditional Wald",100,1.52888007009853,0.16
+"small_short",0.4,"Conditional Wald",100,1.57531762208498,0.15
+"small_short",0.4,"Conditional Wald",100,1.62480035092748,0.14
+"small_short",0.4,"Conditional Wald",100,1.66329762907332,0.13
+"small_short",0.4,"Conditional Wald",100,1.67353856451787,0.12
+"small_short",0.4,"Conditional Wald",100,1.71198412224369,0.11
+"small_short",0.4,"Conditional Wald",100,1.8081581158847,0.1
+"small_short",0.4,"Conditional Wald",100,1.86062619763028,0.09
+"small_short",0.4,"Conditional Wald",100,1.87884243814598,0.08
+"small_short",0.4,"Conditional Wald",100,1.88483789306482,0.07
+"small_short",0.4,"Conditional Wald",100,1.93636743432392,0.06
+"small_short",0.4,"Conditional Wald",100,1.97564158791654,0.05
+"small_short",0.4,"Conditional Wald",100,1.97913890966148,0.04
+"small_short",0.4,"Conditional Wald",100,2.00394184592265,0.03
+"small_short",0.4,"Conditional Wald",100,2.04224207653938,0.02
+"small_short",0.4,"Conditional Wald",100,2.19511237084568,0.01
+"small_short",0.4,"Conditional Wald",100,2.5275721759679,0
+"high_control",0.4,"Delete-one Wald",100,0.255757828203041,1
+"high_control",0.4,"Delete-one Wald",100,0.268545719613193,0.99
+"high_control",0.4,"Delete-one Wald",100,0.297311359703365,0.98
+"high_control",0.4,"Delete-one Wald",100,0.301444271083463,0.97
+"high_control",0.4,"Delete-one Wald",100,0.316164852763312,0.96
+"high_control",0.4,"Delete-one Wald",100,0.324177125056843,0.95
+"high_control",0.4,"Delete-one Wald",100,0.324855675303686,0.94
+"high_control",0.4,"Delete-one Wald",100,0.332824754128274,0.93
+"high_control",0.4,"Delete-one Wald",100,0.334014864700159,0.92
+"high_control",0.4,"Delete-one Wald",100,0.338141970910815,0.91
+"high_control",0.4,"Delete-one Wald",100,0.342600428218371,0.9
+"high_control",0.4,"Delete-one Wald",100,0.343043703616282,0.89
+"high_control",0.4,"Delete-one Wald",100,0.347436383471851,0.88
+"high_control",0.4,"Delete-one Wald",100,0.348572293430322,0.87
+"high_control",0.4,"Delete-one Wald",100,0.349383792481782,0.86
+"high_control",0.4,"Delete-one Wald",100,0.350454334246189,0.85
+"high_control",0.4,"Delete-one Wald",100,0.352378156635306,0.84
+"high_control",0.4,"Delete-one Wald",100,0.360655164829895,0.83
+"high_control",0.4,"Delete-one Wald",100,0.365146010904521,0.82
+"high_control",0.4,"Delete-one Wald",100,0.366879294387681,0.81
+"high_control",0.4,"Delete-one Wald",100,0.375407318072437,0.8
+"high_control",0.4,"Delete-one Wald",100,0.376513836025478,0.79
+"high_control",0.4,"Delete-one Wald",100,0.379662475966296,0.78
+"high_control",0.4,"Delete-one Wald",100,0.381401409293709,0.77
+"high_control",0.4,"Delete-one Wald",100,0.385369306578755,0.76
+"high_control",0.4,"Delete-one Wald",100,0.387820995090756,0.75
+"high_control",0.4,"Delete-one Wald",100,0.392474877361794,0.74
+"high_control",0.4,"Delete-one Wald",100,0.39350964617991,0.73
+"high_control",0.4,"Delete-one Wald",100,0.394736076462759,0.72
+"high_control",0.4,"Delete-one Wald",100,0.402342622614682,0.71
+"high_control",0.4,"Delete-one Wald",100,0.403413065167664,0.7
+"high_control",0.4,"Delete-one Wald",100,0.403827691540668,0.69
+"high_control",0.4,"Delete-one Wald",100,0.409302599766088,0.68
+"high_control",0.4,"Delete-one Wald",100,0.411294603390332,0.67
+"high_control",0.4,"Delete-one Wald",100,0.411536518384355,0.66
+"high_control",0.4,"Delete-one Wald",100,0.413921278627815,0.65
+"high_control",0.4,"Delete-one Wald",100,0.414415678887075,0.64
+"high_control",0.4,"Delete-one Wald",100,0.41510648226974,0.63
+"high_control",0.4,"Delete-one Wald",100,0.416469535470077,0.62
+"high_control",0.4,"Delete-one Wald",100,0.417431751894341,0.61
+"high_control",0.4,"Delete-one Wald",100,0.423619553557993,0.6
+"high_control",0.4,"Delete-one Wald",100,0.42599730256661,0.59
+"high_control",0.4,"Delete-one Wald",100,0.428723512800611,0.58
+"high_control",0.4,"Delete-one Wald",100,0.430188955304577,0.57
+"high_control",0.4,"Delete-one Wald",100,0.433255310340978,0.56
+"high_control",0.4,"Delete-one Wald",100,0.441152928448907,0.55
+"high_control",0.4,"Delete-one Wald",100,0.441358999206701,0.54
+"high_control",0.4,"Delete-one Wald",100,0.44387262300772,0.53
+"high_control",0.4,"Delete-one Wald",100,0.445214610522812,0.52
+"high_control",0.4,"Delete-one Wald",100,0.448863550276963,0.51
+"high_control",0.4,"Delete-one Wald",100,0.449226209853916,0.5
+"high_control",0.4,"Delete-one Wald",100,0.449773774024701,0.49
+"high_control",0.4,"Delete-one Wald",100,0.450362728756407,0.48
+"high_control",0.4,"Delete-one Wald",100,0.45240913999917,0.47
+"high_control",0.4,"Delete-one Wald",100,0.453284860033734,0.46
+"high_control",0.4,"Delete-one Wald",100,0.456118354061835,0.45
+"high_control",0.4,"Delete-one Wald",100,0.459243182984261,0.44
+"high_control",0.4,"Delete-one Wald",100,0.460139512602915,0.43
+"high_control",0.4,"Delete-one Wald",100,0.461746805054777,0.42
+"high_control",0.4,"Delete-one Wald",100,0.466447032505979,0.41
+"high_control",0.4,"Delete-one Wald",100,0.470054894631965,0.4
+"high_control",0.4,"Delete-one Wald",100,0.472625205540764,0.39
+"high_control",0.4,"Delete-one Wald",100,0.473895717007627,0.38
+"high_control",0.4,"Delete-one Wald",100,0.473949270753474,0.37
+"high_control",0.4,"Delete-one Wald",100,0.48525792846437,0.36
+"high_control",0.4,"Delete-one Wald",100,0.488581025940352,0.35
+"high_control",0.4,"Delete-one Wald",100,0.489706429819759,0.34
+"high_control",0.4,"Delete-one Wald",100,0.491219182934304,0.33
+"high_control",0.4,"Delete-one Wald",100,0.491930652937169,0.32
+"high_control",0.4,"Delete-one Wald",100,0.494236945924421,0.31
+"high_control",0.4,"Delete-one Wald",100,0.494555533929418,0.3
+"high_control",0.4,"Delete-one Wald",100,0.499584581220591,0.29
+"high_control",0.4,"Delete-one Wald",100,0.504501617167184,0.28
+"high_control",0.4,"Delete-one Wald",100,0.505027335345618,0.27
+"high_control",0.4,"Delete-one Wald",100,0.512564605723804,0.26
+"high_control",0.4,"Delete-one Wald",100,0.518762286271833,0.25
+"high_control",0.4,"Delete-one Wald",100,0.518785723889304,0.24
+"high_control",0.4,"Delete-one Wald",100,0.518939477217082,0.23
+"high_control",0.4,"Delete-one Wald",100,0.524091191259605,0.22
+"high_control",0.4,"Delete-one Wald",100,0.52546693852085,0.21
+"high_control",0.4,"Delete-one Wald",100,0.527366278739557,0.2
+"high_control",0.4,"Delete-one Wald",100,0.531716997962297,0.19
+"high_control",0.4,"Delete-one Wald",100,0.536146917117808,0.18
+"high_control",0.4,"Delete-one Wald",100,0.54083262429189,0.17
+"high_control",0.4,"Delete-one Wald",100,0.546453776375117,0.16
+"high_control",0.4,"Delete-one Wald",100,0.547053889802206,0.15
+"high_control",0.4,"Delete-one Wald",100,0.549983418769018,0.14
+"high_control",0.4,"Delete-one Wald",100,0.550836958818555,0.13
+"high_control",0.4,"Delete-one Wald",100,0.583807670167625,0.12
+"high_control",0.4,"Delete-one Wald",100,0.585060718514709,0.11
+"high_control",0.4,"Delete-one Wald",100,0.61012026158359,0.1
+"high_control",0.4,"Delete-one Wald",100,0.626946727647915,0.09
+"high_control",0.4,"Delete-one Wald",100,0.627207108357846,0.08
+"high_control",0.4,"Delete-one Wald",100,0.633810965569876,0.07
+"high_control",0.4,"Delete-one Wald",100,0.641356608051885,0.06
+"high_control",0.4,"Delete-one Wald",100,0.647287142885398,0.05
+"high_control",0.4,"Delete-one Wald",100,0.65296801830697,0.04
+"high_control",0.4,"Delete-one Wald",100,0.65825251531623,0.03
+"high_control",0.4,"Delete-one Wald",100,0.692336685149244,0.02
+"high_control",0.4,"Delete-one Wald",100,0.719598191572682,0.01
+"high_control",0.4,"Delete-one Wald",100,0.753103853928172,0
+"low_balanced",0.4,"Delete-one Wald",98,0.23441243849375,1
+"low_balanced",0.4,"Delete-one Wald",98,0.246133060418438,0.989795918367347
+"low_balanced",0.4,"Delete-one Wald",98,0.248460268941205,0.979591836734694
+"low_balanced",0.4,"Delete-one Wald",98,0.354214850529702,0.969387755102041
+"low_balanced",0.4,"Delete-one Wald",98,0.366116654175553,0.959183673469388
+"low_balanced",0.4,"Delete-one Wald",98,0.379491135420805,0.948979591836735
+"low_balanced",0.4,"Delete-one Wald",98,0.403615970521041,0.938775510204082
+"low_balanced",0.4,"Delete-one Wald",98,0.409897833158652,0.928571428571429
+"low_balanced",0.4,"Delete-one Wald",98,0.433546709413438,0.918367346938776
+"low_balanced",0.4,"Delete-one Wald",98,0.461699394253863,0.908163265306122
+"low_balanced",0.4,"Delete-one Wald",98,0.488211877615142,0.897959183673469
+"low_balanced",0.4,"Delete-one Wald",98,0.514746403731337,0.887755102040816
+"low_balanced",0.4,"Delete-one Wald",98,0.519992216272451,0.877551020408163
+"low_balanced",0.4,"Delete-one Wald",98,0.526884581636786,0.86734693877551
+"low_balanced",0.4,"Delete-one Wald",98,0.538650229707758,0.857142857142857
+"low_balanced",0.4,"Delete-one Wald",98,0.54472288145084,0.846938775510204
+"low_balanced",0.4,"Delete-one Wald",98,0.56222899240799,0.836734693877551
+"low_balanced",0.4,"Delete-one Wald",98,0.570094654367653,0.826530612244898
+"low_balanced",0.4,"Delete-one Wald",98,0.570965522720838,0.816326530612245
+"low_balanced",0.4,"Delete-one Wald",98,0.583477101464941,0.806122448979592
+"low_balanced",0.4,"Delete-one Wald",98,0.598379859786764,0.795918367346939
+"low_balanced",0.4,"Delete-one Wald",98,0.604759701514372,0.785714285714286
+"low_balanced",0.4,"Delete-one Wald",98,0.620868486198387,0.775510204081633
+"low_balanced",0.4,"Delete-one Wald",98,0.641889854262934,0.76530612244898
+"low_balanced",0.4,"Delete-one Wald",98,0.66582208593852,0.755102040816326
+"low_balanced",0.4,"Delete-one Wald",98,0.696685835890872,0.744897959183674
+"low_balanced",0.4,"Delete-one Wald",98,0.737902547908107,0.73469387755102
+"low_balanced",0.4,"Delete-one Wald",98,0.750123513726128,0.724489795918367
+"low_balanced",0.4,"Delete-one Wald",98,0.756016253190076,0.714285714285714
+"low_balanced",0.4,"Delete-one Wald",98,0.759871507798932,0.704081632653061
+"low_balanced",0.4,"Delete-one Wald",98,0.761341869198092,0.693877551020408
+"low_balanced",0.4,"Delete-one Wald",98,0.789196352874383,0.683673469387755
+"low_balanced",0.4,"Delete-one Wald",98,0.802008086031473,0.673469387755102
+"low_balanced",0.4,"Delete-one Wald",98,0.810195778438645,0.663265306122449
+"low_balanced",0.4,"Delete-one Wald",98,0.811359214968369,0.653061224489796
+"low_balanced",0.4,"Delete-one Wald",98,0.81892078310387,0.642857142857143
+"low_balanced",0.4,"Delete-one Wald",98,0.82335562714162,0.63265306122449
+"low_balanced",0.4,"Delete-one Wald",98,0.825034280398697,0.622448979591837
+"low_balanced",0.4,"Delete-one Wald",98,0.860364287362629,0.612244897959184
+"low_balanced",0.4,"Delete-one Wald",98,0.872046977954132,0.602040816326531
+"low_balanced",0.4,"Delete-one Wald",98,0.886123991474886,0.591836734693878
+"low_balanced",0.4,"Delete-one Wald",98,0.923951353275488,0.581632653061224
+"low_balanced",0.4,"Delete-one Wald",98,0.930456105873025,0.571428571428571
+"low_balanced",0.4,"Delete-one Wald",98,0.954513821075036,0.561224489795918
+"low_balanced",0.4,"Delete-one Wald",98,0.955112823840994,0.551020408163265
+"low_balanced",0.4,"Delete-one Wald",98,0.982065621138439,0.540816326530612
+"low_balanced",0.4,"Delete-one Wald",98,1.02249104266709,0.530612244897959
+"low_balanced",0.4,"Delete-one Wald",98,1.02301317559013,0.520408163265306
+"low_balanced",0.4,"Delete-one Wald",98,1.03246192750926,0.510204081632653
+"low_balanced",0.4,"Delete-one Wald",98,1.05040493975113,0.5
+"low_balanced",0.4,"Delete-one Wald",98,1.05187237419109,0.489795918367347
+"low_balanced",0.4,"Delete-one Wald",98,1.06235941374447,0.479591836734694
+"low_balanced",0.4,"Delete-one Wald",98,1.09525442147935,0.469387755102041
+"low_balanced",0.4,"Delete-one Wald",98,1.09754627402056,0.459183673469388
+"low_balanced",0.4,"Delete-one Wald",98,1.11561595729234,0.448979591836735
+"low_balanced",0.4,"Delete-one Wald",98,1.14607276038266,0.438775510204082
+"low_balanced",0.4,"Delete-one Wald",98,1.15548977685769,0.428571428571429
+"low_balanced",0.4,"Delete-one Wald",98,1.18109629485325,0.418367346938776
+"low_balanced",0.4,"Delete-one Wald",98,1.23490403300306,0.408163265306122
+"low_balanced",0.4,"Delete-one Wald",98,1.24078110708883,0.397959183673469
+"low_balanced",0.4,"Delete-one Wald",98,1.25749231115718,0.387755102040816
+"low_balanced",0.4,"Delete-one Wald",98,1.26095899454267,0.377551020408163
+"low_balanced",0.4,"Delete-one Wald",98,1.26893530908631,0.36734693877551
+"low_balanced",0.4,"Delete-one Wald",98,1.2901512437069,0.357142857142857
+"low_balanced",0.4,"Delete-one Wald",98,1.3332776532155,0.346938775510204
+"low_balanced",0.4,"Delete-one Wald",98,1.38925129527812,0.336734693877551
+"low_balanced",0.4,"Delete-one Wald",98,1.39802742497227,0.326530612244898
+"low_balanced",0.4,"Delete-one Wald",98,1.40712799482915,0.316326530612245
+"low_balanced",0.4,"Delete-one Wald",98,1.40903469230227,0.306122448979592
+"low_balanced",0.4,"Delete-one Wald",98,1.45195500765458,0.295918367346939
+"low_balanced",0.4,"Delete-one Wald",98,1.48936270121464,0.285714285714286
+"low_balanced",0.4,"Delete-one Wald",98,1.50165222747771,0.275510204081633
+"low_balanced",0.4,"Delete-one Wald",98,1.50944043222926,0.26530612244898
+"low_balanced",0.4,"Delete-one Wald",98,1.54919013546969,0.255102040816327
+"low_balanced",0.4,"Delete-one Wald",98,1.57190719090993,0.244897959183673
+"low_balanced",0.4,"Delete-one Wald",98,1.5836033762091,0.23469387755102
+"low_balanced",0.4,"Delete-one Wald",98,1.59167344818894,0.224489795918367
+"low_balanced",0.4,"Delete-one Wald",98,1.62641084475938,0.214285714285714
+"low_balanced",0.4,"Delete-one Wald",98,1.7385978035824,0.204081632653061
+"low_balanced",0.4,"Delete-one Wald",98,1.75997814029142,0.193877551020408
+"low_balanced",0.4,"Delete-one Wald",98,1.86593636298031,0.183673469387755
+"low_balanced",0.4,"Delete-one Wald",98,1.88999528058593,0.173469387755102
+"low_balanced",0.4,"Delete-one Wald",98,1.9442600486635,0.163265306122449
+"low_balanced",0.4,"Delete-one Wald",98,1.95519183615009,0.153061224489796
+"low_balanced",0.4,"Delete-one Wald",98,2.00477771107358,0.142857142857143
+"low_balanced",0.4,"Delete-one Wald",98,2.09044222524133,0.13265306122449
+"low_balanced",0.4,"Delete-one Wald",98,2.11595399475212,0.122448979591837
+"low_balanced",0.4,"Delete-one Wald",98,2.12188217186557,0.112244897959184
+"low_balanced",0.4,"Delete-one Wald",98,2.20264175218969,0.102040816326531
+"low_balanced",0.4,"Delete-one Wald",98,2.218434039649,0.0918367346938776
+"low_balanced",0.4,"Delete-one Wald",98,2.22376891089195,0.0816326530612245
+"low_balanced",0.4,"Delete-one Wald",98,2.28042617663968,0.0714285714285714
+"low_balanced",0.4,"Delete-one Wald",98,2.32336442556362,0.0612244897959184
+"low_balanced",0.4,"Delete-one Wald",98,2.38459724337835,0.0510204081632653
+"low_balanced",0.4,"Delete-one Wald",98,2.3946903998633,0.0408163265306122
+"low_balanced",0.4,"Delete-one Wald",98,2.49558265173321,0.0306122448979592
+"low_balanced",0.4,"Delete-one Wald",98,2.57981106322544,0.0204081632653061
+"low_balanced",0.4,"Delete-one Wald",98,3.09174276938506,0.0102040816326531
+"low_balanced",0.4,"Delete-one Wald",98,3.19619464266836,0
+"low_larger",0.4,"Delete-one Wald",100,0.315226933924458,1
+"low_larger",0.4,"Delete-one Wald",100,0.330988280620681,0.99
+"low_larger",0.4,"Delete-one Wald",100,0.388935907274237,0.98
+"low_larger",0.4,"Delete-one Wald",100,0.408288060254284,0.97
+"low_larger",0.4,"Delete-one Wald",100,0.414789902648328,0.96
+"low_larger",0.4,"Delete-one Wald",100,0.457631369680536,0.95
+"low_larger",0.4,"Delete-one Wald",100,0.472898570472791,0.94
+"low_larger",0.4,"Delete-one Wald",100,0.533568739442239,0.93
+"low_larger",0.4,"Delete-one Wald",100,0.548386663884297,0.92
+"low_larger",0.4,"Delete-one Wald",100,0.554222001823081,0.91
+"low_larger",0.4,"Delete-one Wald",100,0.576072256976744,0.9
+"low_larger",0.4,"Delete-one Wald",100,0.588909943589949,0.89
+"low_larger",0.4,"Delete-one Wald",100,0.617403486770795,0.88
+"low_larger",0.4,"Delete-one Wald",100,0.620564879121575,0.87
+"low_larger",0.4,"Delete-one Wald",100,0.63149308590531,0.86
+"low_larger",0.4,"Delete-one Wald",100,0.64722579893078,0.85
+"low_larger",0.4,"Delete-one Wald",100,0.659765932706842,0.84
+"low_larger",0.4,"Delete-one Wald",100,0.665774188399356,0.83
+"low_larger",0.4,"Delete-one Wald",100,0.66619715220675,0.82
+"low_larger",0.4,"Delete-one Wald",100,0.71547494892044,0.81
+"low_larger",0.4,"Delete-one Wald",100,0.719036717710183,0.8
+"low_larger",0.4,"Delete-one Wald",100,0.798767097615262,0.79
+"low_larger",0.4,"Delete-one Wald",100,0.801635515147208,0.78
+"low_larger",0.4,"Delete-one Wald",100,0.805659914478731,0.77
+"low_larger",0.4,"Delete-one Wald",100,0.821323866651087,0.76
+"low_larger",0.4,"Delete-one Wald",100,0.822959169924187,0.75
+"low_larger",0.4,"Delete-one Wald",100,0.843953664560363,0.74
+"low_larger",0.4,"Delete-one Wald",100,0.863803111874219,0.73
+"low_larger",0.4,"Delete-one Wald",100,0.884544602976206,0.72
+"low_larger",0.4,"Delete-one Wald",100,0.893037662974499,0.71
+"low_larger",0.4,"Delete-one Wald",100,0.89620400275574,0.7
+"low_larger",0.4,"Delete-one Wald",100,0.896582675005371,0.69
+"low_larger",0.4,"Delete-one Wald",100,0.899692144641643,0.68
+"low_larger",0.4,"Delete-one Wald",100,0.97202754377056,0.67
+"low_larger",0.4,"Delete-one Wald",100,1.00690040219037,0.66
+"low_larger",0.4,"Delete-one Wald",100,1.03338992593203,0.65
+"low_larger",0.4,"Delete-one Wald",100,1.03895286260008,0.64
+"low_larger",0.4,"Delete-one Wald",100,1.03920355891524,0.63
+"low_larger",0.4,"Delete-one Wald",100,1.11128856235675,0.62
+"low_larger",0.4,"Delete-one Wald",100,1.1336230862965,0.61
+"low_larger",0.4,"Delete-one Wald",100,1.15827837651773,0.6
+"low_larger",0.4,"Delete-one Wald",100,1.2136804807008,0.59
+"low_larger",0.4,"Delete-one Wald",100,1.23877820339547,0.58
+"low_larger",0.4,"Delete-one Wald",100,1.26935249267153,0.57
+"low_larger",0.4,"Delete-one Wald",100,1.28519697158922,0.56
+"low_larger",0.4,"Delete-one Wald",100,1.30869828162017,0.55
+"low_larger",0.4,"Delete-one Wald",100,1.31511321971102,0.54
+"low_larger",0.4,"Delete-one Wald",100,1.31946276336631,0.53
+"low_larger",0.4,"Delete-one Wald",100,1.34435907558432,0.52
+"low_larger",0.4,"Delete-one Wald",100,1.35382775760286,0.51
+"low_larger",0.4,"Delete-one Wald",100,1.36876692422477,0.5
+"low_larger",0.4,"Delete-one Wald",100,1.40678855195408,0.49
+"low_larger",0.4,"Delete-one Wald",100,1.44088748109905,0.48
+"low_larger",0.4,"Delete-one Wald",100,1.46907688611553,0.47
+"low_larger",0.4,"Delete-one Wald",100,1.53295794316221,0.46
+"low_larger",0.4,"Delete-one Wald",100,1.54377594465859,0.45
+"low_larger",0.4,"Delete-one Wald",100,1.57563431034772,0.44
+"low_larger",0.4,"Delete-one Wald",100,1.63181247454484,0.43
+"low_larger",0.4,"Delete-one Wald",100,1.68557780199724,0.42
+"low_larger",0.4,"Delete-one Wald",100,1.75650260625501,0.41
+"low_larger",0.4,"Delete-one Wald",100,1.85975559583836,0.4
+"low_larger",0.4,"Delete-one Wald",100,1.86511768938961,0.39
+"low_larger",0.4,"Delete-one Wald",100,1.87161818750506,0.38
+"low_larger",0.4,"Delete-one Wald",100,1.90630436005961,0.37
+"low_larger",0.4,"Delete-one Wald",100,1.94891984196313,0.36
+"low_larger",0.4,"Delete-one Wald",100,1.95535963968765,0.35
+"low_larger",0.4,"Delete-one Wald",100,1.98441601475599,0.34
+"low_larger",0.4,"Delete-one Wald",100,2.04551049428241,0.33
+"low_larger",0.4,"Delete-one Wald",100,2.09490627837008,0.32
+"low_larger",0.4,"Delete-one Wald",100,2.12720333533062,0.31
+"low_larger",0.4,"Delete-one Wald",100,2.13286087310708,0.3
+"low_larger",0.4,"Delete-one Wald",100,2.13639948827991,0.29
+"low_larger",0.4,"Delete-one Wald",100,2.24797918416962,0.28
+"low_larger",0.4,"Delete-one Wald",100,2.32349958678559,0.27
+"low_larger",0.4,"Delete-one Wald",100,2.42193837863511,0.26
+"low_larger",0.4,"Delete-one Wald",100,2.49027326652033,0.25
+"low_larger",0.4,"Delete-one Wald",100,2.53242260227663,0.24
+"low_larger",0.4,"Delete-one Wald",100,2.54553896950048,0.23
+"low_larger",0.4,"Delete-one Wald",100,2.57667853703683,0.22
+"low_larger",0.4,"Delete-one Wald",100,2.60726560521907,0.21
+"low_larger",0.4,"Delete-one Wald",100,2.62742091586356,0.2
+"low_larger",0.4,"Delete-one Wald",100,2.62767778154386,0.19
+"low_larger",0.4,"Delete-one Wald",100,2.71074241308621,0.18
+"low_larger",0.4,"Delete-one Wald",100,2.74223825799337,0.17
+"low_larger",0.4,"Delete-one Wald",100,2.89092141915199,0.16
+"low_larger",0.4,"Delete-one Wald",100,2.94774401564677,0.15
+"low_larger",0.4,"Delete-one Wald",100,2.9905976059329,0.14
+"low_larger",0.4,"Delete-one Wald",100,3.07094068025939,0.13
+"low_larger",0.4,"Delete-one Wald",100,3.11700546991883,0.12
+"low_larger",0.4,"Delete-one Wald",100,3.14651861057081,0.11
+"low_larger",0.4,"Delete-one Wald",100,3.27166686038093,0.1
+"low_larger",0.4,"Delete-one Wald",100,3.30255755336804,0.09
+"low_larger",0.4,"Delete-one Wald",100,3.33344255133635,0.08
+"low_larger",0.4,"Delete-one Wald",100,3.35944672535478,0.07
+"low_larger",0.4,"Delete-one Wald",100,3.3733439302524,0.06
+"low_larger",0.4,"Delete-one Wald",100,3.44155731109703,0.05
+"low_larger",0.4,"Delete-one Wald",100,3.56652687092934,0.04
+"low_larger",0.4,"Delete-one Wald",100,3.56656151071381,0.03
+"low_larger",0.4,"Delete-one Wald",100,3.711512587751,0.02
+"low_larger",0.4,"Delete-one Wald",100,3.7905186302564,0.01
+"low_larger",0.4,"Delete-one Wald",100,3.7979912851889,0
+"low_negative",0.4,"Delete-one Wald",99,0.394983385552108,1
+"low_negative",0.4,"Delete-one Wald",99,0.414732554829713,0.98989898989899
+"low_negative",0.4,"Delete-one Wald",99,0.428565525302665,0.97979797979798
+"low_negative",0.4,"Delete-one Wald",99,0.464080196465365,0.96969696969697
+"low_negative",0.4,"Delete-one Wald",99,0.486634040271859,0.95959595959596
+"low_negative",0.4,"Delete-one Wald",99,0.527807189894131,0.94949494949495
+"low_negative",0.4,"Delete-one Wald",99,0.530707048686207,0.93939393939394
+"low_negative",0.4,"Delete-one Wald",99,0.534882873193944,0.929292929292929
+"low_negative",0.4,"Delete-one Wald",99,0.597349892784742,0.919191919191919
+"low_negative",0.4,"Delete-one Wald",99,0.60645873427388,0.909090909090909
+"low_negative",0.4,"Delete-one Wald",99,0.615883126756368,0.898989898989899
+"low_negative",0.4,"Delete-one Wald",99,0.619555981501825,0.888888888888889
+"low_negative",0.4,"Delete-one Wald",99,0.621707389700522,0.878787878787879
+"low_negative",0.4,"Delete-one Wald",99,0.632907353253348,0.868686868686869
+"low_negative",0.4,"Delete-one Wald",99,0.638999299063267,0.858585858585859
+"low_negative",0.4,"Delete-one Wald",99,0.658524844589588,0.848484848484849
+"low_negative",0.4,"Delete-one Wald",99,0.690963514424546,0.838383838383838
+"low_negative",0.4,"Delete-one Wald",99,0.726571543210168,0.828282828282828
+"low_negative",0.4,"Delete-one Wald",99,0.750204563172473,0.818181818181818
+"low_negative",0.4,"Delete-one Wald",99,0.756469156355151,0.808080808080808
+"low_negative",0.4,"Delete-one Wald",99,0.764572821648525,0.797979797979798
+"low_negative",0.4,"Delete-one Wald",99,0.77020103833174,0.787878787878788
+"low_negative",0.4,"Delete-one Wald",99,0.780221290876457,0.777777777777778
+"low_negative",0.4,"Delete-one Wald",99,0.788245394314218,0.767676767676768
+"low_negative",0.4,"Delete-one Wald",99,0.820637038592464,0.757575757575758
+"low_negative",0.4,"Delete-one Wald",99,0.826252275339112,0.747474747474748
+"low_negative",0.4,"Delete-one Wald",99,0.829120363612929,0.737373737373737
+"low_negative",0.4,"Delete-one Wald",99,0.834943198529414,0.727272727272727
+"low_negative",0.4,"Delete-one Wald",99,0.839286712388846,0.717171717171717
+"low_negative",0.4,"Delete-one Wald",99,0.847953113191666,0.707070707070707
+"low_negative",0.4,"Delete-one Wald",99,0.853580486053071,0.696969696969697
+"low_negative",0.4,"Delete-one Wald",99,0.865700327600031,0.686868686868687
+"low_negative",0.4,"Delete-one Wald",99,0.872114559675784,0.676767676767677
+"low_negative",0.4,"Delete-one Wald",99,0.879472483321017,0.666666666666667
+"low_negative",0.4,"Delete-one Wald",99,0.89560236299935,0.656565656565657
+"low_negative",0.4,"Delete-one Wald",99,0.912578040780196,0.646464646464647
+"low_negative",0.4,"Delete-one Wald",99,0.928211998565615,0.636363636363636
+"low_negative",0.4,"Delete-one Wald",99,0.929479824039847,0.626262626262626
+"low_negative",0.4,"Delete-one Wald",99,0.942118602145691,0.616161616161616
+"low_negative",0.4,"Delete-one Wald",99,0.949018564801693,0.606060606060606
+"low_negative",0.4,"Delete-one Wald",99,0.972370350629592,0.595959595959596
+"low_negative",0.4,"Delete-one Wald",99,1.00311153122084,0.585858585858586
+"low_negative",0.4,"Delete-one Wald",99,1.0122454616079,0.575757575757576
+"low_negative",0.4,"Delete-one Wald",99,1.02313963804829,0.565656565656566
+"low_negative",0.4,"Delete-one Wald",99,1.04244625538884,0.555555555555556
+"low_negative",0.4,"Delete-one Wald",99,1.07538726202368,0.545454545454545
+"low_negative",0.4,"Delete-one Wald",99,1.12909429466307,0.535353535353535
+"low_negative",0.4,"Delete-one Wald",99,1.15377796912301,0.525252525252525
+"low_negative",0.4,"Delete-one Wald",99,1.16186015801312,0.515151515151515
+"low_negative",0.4,"Delete-one Wald",99,1.16540927510671,0.505050505050505
+"low_negative",0.4,"Delete-one Wald",99,1.17166253332611,0.494949494949495
+"low_negative",0.4,"Delete-one Wald",99,1.21997760839327,0.484848484848485
+"low_negative",0.4,"Delete-one Wald",99,1.27425506396822,0.474747474747475
+"low_negative",0.4,"Delete-one Wald",99,1.29514801251254,0.464646464646465
+"low_negative",0.4,"Delete-one Wald",99,1.29864868897492,0.454545454545455
+"low_negative",0.4,"Delete-one Wald",99,1.33449465807425,0.444444444444444
+"low_negative",0.4,"Delete-one Wald",99,1.36363621409645,0.434343434343434
+"low_negative",0.4,"Delete-one Wald",99,1.39276952559202,0.424242424242424
+"low_negative",0.4,"Delete-one Wald",99,1.40964718848526,0.414141414141414
+"low_negative",0.4,"Delete-one Wald",99,1.41417516709577,0.404040404040404
+"low_negative",0.4,"Delete-one Wald",99,1.43531492491359,0.393939393939394
+"low_negative",0.4,"Delete-one Wald",99,1.46974556264913,0.383838383838384
+"low_negative",0.4,"Delete-one Wald",99,1.5271782667062,0.373737373737374
+"low_negative",0.4,"Delete-one Wald",99,1.57627666436741,0.363636363636364
+"low_negative",0.4,"Delete-one Wald",99,1.58017258679536,0.353535353535354
+"low_negative",0.4,"Delete-one Wald",99,1.62339621677208,0.343434343434343
+"low_negative",0.4,"Delete-one Wald",99,1.64889825470694,0.333333333333333
+"low_negative",0.4,"Delete-one Wald",99,1.71129861689486,0.323232323232323
+"low_negative",0.4,"Delete-one Wald",99,1.73516284772857,0.313131313131313
+"low_negative",0.4,"Delete-one Wald",99,1.82517181744889,0.303030303030303
+"low_negative",0.4,"Delete-one Wald",99,1.84884541787995,0.292929292929293
+"low_negative",0.4,"Delete-one Wald",99,1.86482097169861,0.282828282828283
+"low_negative",0.4,"Delete-one Wald",99,1.88792386987688,0.272727272727273
+"low_negative",0.4,"Delete-one Wald",99,1.8889056298197,0.262626262626263
+"low_negative",0.4,"Delete-one Wald",99,1.90906556240146,0.252525252525253
+"low_negative",0.4,"Delete-one Wald",99,1.91571586918663,0.242424242424242
+"low_negative",0.4,"Delete-one Wald",99,1.92708958654104,0.232323232323232
+"low_negative",0.4,"Delete-one Wald",99,1.94351055530947,0.222222222222222
+"low_negative",0.4,"Delete-one Wald",99,1.96449934708052,0.212121212121212
+"low_negative",0.4,"Delete-one Wald",99,2.00096932920334,0.202020202020202
+"low_negative",0.4,"Delete-one Wald",99,2.01268040185696,0.191919191919192
+"low_negative",0.4,"Delete-one Wald",99,2.04011435029254,0.181818181818182
+"low_negative",0.4,"Delete-one Wald",99,2.06542257758224,0.171717171717172
+"low_negative",0.4,"Delete-one Wald",99,2.09465058555769,0.161616161616162
+"low_negative",0.4,"Delete-one Wald",99,2.12956709342018,0.151515151515152
+"low_negative",0.4,"Delete-one Wald",99,2.18102189142339,0.141414141414141
+"low_negative",0.4,"Delete-one Wald",99,2.21586208931928,0.131313131313131
+"low_negative",0.4,"Delete-one Wald",99,2.24390008296142,0.121212121212121
+"low_negative",0.4,"Delete-one Wald",99,2.34769017742781,0.111111111111111
+"low_negative",0.4,"Delete-one Wald",99,2.54066135523867,0.101010101010101
+"low_negative",0.4,"Delete-one Wald",99,2.56908175513397,0.0909090909090909
+"low_negative",0.4,"Delete-one Wald",99,2.58177503750519,0.0808080808080808
+"low_negative",0.4,"Delete-one Wald",99,2.58906413989402,0.0707070707070707
+"low_negative",0.4,"Delete-one Wald",99,2.63653060507137,0.0606060606060606
+"low_negative",0.4,"Delete-one Wald",99,2.66381032622146,0.0505050505050505
+"low_negative",0.4,"Delete-one Wald",99,2.68574366193878,0.0404040404040404
+"low_negative",0.4,"Delete-one Wald",99,2.69680277775238,0.0303030303030303
+"low_negative",0.4,"Delete-one Wald",99,2.88866782932209,0.0202020202020202
+"low_negative",0.4,"Delete-one Wald",99,3.37763946200425,0.0101010101010101
+"low_negative",0.4,"Delete-one Wald",99,3.391316720337,0
+"low_unequal",0.4,"Delete-one Wald",100,0.334794039285532,1
+"low_unequal",0.4,"Delete-one Wald",100,0.351533741249809,0.99
+"low_unequal",0.4,"Delete-one Wald",100,0.411221243572329,0.98
+"low_unequal",0.4,"Delete-one Wald",100,0.420707789627318,0.97
+"low_unequal",0.4,"Delete-one Wald",100,0.427176009620312,0.96
+"low_unequal",0.4,"Delete-one Wald",100,0.427925035557134,0.95
+"low_unequal",0.4,"Delete-one Wald",100,0.443014744124189,0.94
+"low_unequal",0.4,"Delete-one Wald",100,0.496537747465654,0.93
+"low_unequal",0.4,"Delete-one Wald",100,0.524389925965071,0.92
+"low_unequal",0.4,"Delete-one Wald",100,0.544325985649689,0.91
+"low_unequal",0.4,"Delete-one Wald",100,0.588141954291531,0.9
+"low_unequal",0.4,"Delete-one Wald",100,0.615657037934076,0.89
+"low_unequal",0.4,"Delete-one Wald",100,0.620572019924766,0.88
+"low_unequal",0.4,"Delete-one Wald",100,0.629849967475673,0.87
+"low_unequal",0.4,"Delete-one Wald",100,0.645709087677129,0.86
+"low_unequal",0.4,"Delete-one Wald",100,0.649854256656993,0.85
+"low_unequal",0.4,"Delete-one Wald",100,0.695019074164322,0.84
+"low_unequal",0.4,"Delete-one Wald",100,0.711283218756134,0.83
+"low_unequal",0.4,"Delete-one Wald",100,0.713980028217761,0.82
+"low_unequal",0.4,"Delete-one Wald",100,0.748231282714419,0.81
+"low_unequal",0.4,"Delete-one Wald",100,0.760551624242142,0.8
+"low_unequal",0.4,"Delete-one Wald",100,0.766725223294786,0.79
+"low_unequal",0.4,"Delete-one Wald",100,0.766937834538515,0.78
+"low_unequal",0.4,"Delete-one Wald",100,0.80895945601416,0.77
+"low_unequal",0.4,"Delete-one Wald",100,0.816824363861651,0.76
+"low_unequal",0.4,"Delete-one Wald",100,0.878816534333074,0.75
+"low_unequal",0.4,"Delete-one Wald",100,0.878930327011582,0.74
+"low_unequal",0.4,"Delete-one Wald",100,0.881534274366377,0.73
+"low_unequal",0.4,"Delete-one Wald",100,0.89129902348593,0.72
+"low_unequal",0.4,"Delete-one Wald",100,0.893893130569327,0.71
+"low_unequal",0.4,"Delete-one Wald",100,0.900968728617545,0.7
+"low_unequal",0.4,"Delete-one Wald",100,0.927158754243306,0.69
+"low_unequal",0.4,"Delete-one Wald",100,0.937222718223289,0.68
+"low_unequal",0.4,"Delete-one Wald",100,0.943245259009987,0.67
+"low_unequal",0.4,"Delete-one Wald",100,0.944672612852174,0.66
+"low_unequal",0.4,"Delete-one Wald",100,0.96829068960177,0.65
+"low_unequal",0.4,"Delete-one Wald",100,0.977921231177867,0.64
+"low_unequal",0.4,"Delete-one Wald",100,0.996337116535174,0.63
+"low_unequal",0.4,"Delete-one Wald",100,1.01089838428663,0.62
+"low_unequal",0.4,"Delete-one Wald",100,1.01482643944887,0.61
+"low_unequal",0.4,"Delete-one Wald",100,1.02829140998714,0.6
+"low_unequal",0.4,"Delete-one Wald",100,1.03221076369738,0.59
+"low_unequal",0.4,"Delete-one Wald",100,1.03325378218923,0.58
+"low_unequal",0.4,"Delete-one Wald",100,1.11339029059279,0.57
+"low_unequal",0.4,"Delete-one Wald",100,1.12357238591806,0.56
+"low_unequal",0.4,"Delete-one Wald",100,1.127785944762,0.55
+"low_unequal",0.4,"Delete-one Wald",100,1.13529535962439,0.54
+"low_unequal",0.4,"Delete-one Wald",100,1.14515536393054,0.53
+"low_unequal",0.4,"Delete-one Wald",100,1.14703442874147,0.52
+"low_unequal",0.4,"Delete-one Wald",100,1.18263389759962,0.51
+"low_unequal",0.4,"Delete-one Wald",100,1.1828121166167,0.5
+"low_unequal",0.4,"Delete-one Wald",100,1.19356916085242,0.49
+"low_unequal",0.4,"Delete-one Wald",100,1.20465075551246,0.48
+"low_unequal",0.4,"Delete-one Wald",100,1.21703276753518,0.47
+"low_unequal",0.4,"Delete-one Wald",100,1.23187236923791,0.46
+"low_unequal",0.4,"Delete-one Wald",100,1.24445327900515,0.45
+"low_unequal",0.4,"Delete-one Wald",100,1.24600592062713,0.44
+"low_unequal",0.4,"Delete-one Wald",100,1.28871168159801,0.43
+"low_unequal",0.4,"Delete-one Wald",100,1.2937067472473,0.42
+"low_unequal",0.4,"Delete-one Wald",100,1.35309910124776,0.41
+"low_unequal",0.4,"Delete-one Wald",100,1.3814287976749,0.4
+"low_unequal",0.4,"Delete-one Wald",100,1.40992329819807,0.39
+"low_unequal",0.4,"Delete-one Wald",100,1.4125343862468,0.38
+"low_unequal",0.4,"Delete-one Wald",100,1.41685365087421,0.37
+"low_unequal",0.4,"Delete-one Wald",100,1.43019515764906,0.36
+"low_unequal",0.4,"Delete-one Wald",100,1.46211548188787,0.35
+"low_unequal",0.4,"Delete-one Wald",100,1.49751959620821,0.34
+"low_unequal",0.4,"Delete-one Wald",100,1.50271606705057,0.33
+"low_unequal",0.4,"Delete-one Wald",100,1.52455811109661,0.32
+"low_unequal",0.4,"Delete-one Wald",100,1.54812075596773,0.31
+"low_unequal",0.4,"Delete-one Wald",100,1.56284055411257,0.3
+"low_unequal",0.4,"Delete-one Wald",100,1.58021194076469,0.29
+"low_unequal",0.4,"Delete-one Wald",100,1.59189744984102,0.28
+"low_unequal",0.4,"Delete-one Wald",100,1.62915485175298,0.27
+"low_unequal",0.4,"Delete-one Wald",100,1.69528172284583,0.26
+"low_unequal",0.4,"Delete-one Wald",100,1.75880366194384,0.25
+"low_unequal",0.4,"Delete-one Wald",100,1.768094428751,0.24
+"low_unequal",0.4,"Delete-one Wald",100,1.77490601073564,0.23
+"low_unequal",0.4,"Delete-one Wald",100,1.81926274825104,0.22
+"low_unequal",0.4,"Delete-one Wald",100,1.82602398175939,0.21
+"low_unequal",0.4,"Delete-one Wald",100,1.85835991639499,0.2
+"low_unequal",0.4,"Delete-one Wald",100,1.85974124494169,0.19
+"low_unequal",0.4,"Delete-one Wald",100,2.01209549580734,0.18
+"low_unequal",0.4,"Delete-one Wald",100,2.06978788602671,0.17
+"low_unequal",0.4,"Delete-one Wald",100,2.09902481349555,0.16
+"low_unequal",0.4,"Delete-one Wald",100,2.13564738812205,0.15
+"low_unequal",0.4,"Delete-one Wald",100,2.22686115241269,0.14
+"low_unequal",0.4,"Delete-one Wald",100,2.26238981601381,0.13
+"low_unequal",0.4,"Delete-one Wald",100,2.33361386871973,0.12
+"low_unequal",0.4,"Delete-one Wald",100,2.3532774126234,0.11
+"low_unequal",0.4,"Delete-one Wald",100,2.39860482611447,0.1
+"low_unequal",0.4,"Delete-one Wald",100,2.43242548647696,0.09
+"low_unequal",0.4,"Delete-one Wald",100,2.4726070247782,0.08
+"low_unequal",0.4,"Delete-one Wald",100,2.57390928566398,0.07
+"low_unequal",0.4,"Delete-one Wald",100,2.62480720197391,0.06
+"low_unequal",0.4,"Delete-one Wald",100,2.71814583915861,0.05
+"low_unequal",0.4,"Delete-one Wald",100,2.86902935824552,0.04
+"low_unequal",0.4,"Delete-one Wald",100,2.91939233184684,0.03
+"low_unequal",0.4,"Delete-one Wald",100,3.10632965241347,0.02
+"low_unequal",0.4,"Delete-one Wald",100,3.16382163493399,0.01
+"low_unequal",0.4,"Delete-one Wald",100,3.28624702032835,0
+"small_short",0.4,"Delete-one Wald",99,0.247977589823837,1
+"small_short",0.4,"Delete-one Wald",99,0.260376469315029,0.98989898989899
+"small_short",0.4,"Delete-one Wald",99,0.283929034713811,0.97979797979798
+"small_short",0.4,"Delete-one Wald",99,0.342857619588529,0.96969696969697
+"small_short",0.4,"Delete-one Wald",99,0.343800091370191,0.95959595959596
+"small_short",0.4,"Delete-one Wald",99,0.377794198755492,0.94949494949495
+"small_short",0.4,"Delete-one Wald",99,0.388218326721277,0.93939393939394
+"small_short",0.4,"Delete-one Wald",99,0.404407236956473,0.929292929292929
+"small_short",0.4,"Delete-one Wald",99,0.411362416429325,0.919191919191919
+"small_short",0.4,"Delete-one Wald",99,0.427581282612312,0.909090909090909
+"small_short",0.4,"Delete-one Wald",99,0.434164098049654,0.898989898989899
+"small_short",0.4,"Delete-one Wald",99,0.440060064508136,0.888888888888889
+"small_short",0.4,"Delete-one Wald",99,0.470994090172145,0.878787878787879
+"small_short",0.4,"Delete-one Wald",99,0.471770368263566,0.868686868686869
+"small_short",0.4,"Delete-one Wald",99,0.490494783457313,0.858585858585859
+"small_short",0.4,"Delete-one Wald",99,0.532561338873306,0.848484848484849
+"small_short",0.4,"Delete-one Wald",99,0.537695582229295,0.838383838383838
+"small_short",0.4,"Delete-one Wald",99,0.569217848827939,0.828282828282828
+"small_short",0.4,"Delete-one Wald",99,0.571292033784575,0.818181818181818
+"small_short",0.4,"Delete-one Wald",99,0.574050334590834,0.808080808080808
+"small_short",0.4,"Delete-one Wald",99,0.583100994988636,0.797979797979798
+"small_short",0.4,"Delete-one Wald",99,0.58891682975287,0.787878787878788
+"small_short",0.4,"Delete-one Wald",99,0.603657843814992,0.777777777777778
+"small_short",0.4,"Delete-one Wald",99,0.605046664125462,0.767676767676768
+"small_short",0.4,"Delete-one Wald",99,0.608205290915885,0.757575757575758
+"small_short",0.4,"Delete-one Wald",99,0.612946117453324,0.747474747474748
+"small_short",0.4,"Delete-one Wald",99,0.624831869698757,0.737373737373737
+"small_short",0.4,"Delete-one Wald",99,0.631162825662856,0.727272727272727
+"small_short",0.4,"Delete-one Wald",99,0.643782860661815,0.717171717171717
+"small_short",0.4,"Delete-one Wald",99,0.675032243422266,0.707070707070707
+"small_short",0.4,"Delete-one Wald",99,0.675648669209733,0.696969696969697
+"small_short",0.4,"Delete-one Wald",99,0.678876939012669,0.686868686868687
+"small_short",0.4,"Delete-one Wald",99,0.67974258792766,0.676767676767677
+"small_short",0.4,"Delete-one Wald",99,0.68153220843918,0.666666666666667
+"small_short",0.4,"Delete-one Wald",99,0.691555427490779,0.656565656565657
+"small_short",0.4,"Delete-one Wald",99,0.718699129211996,0.646464646464647
+"small_short",0.4,"Delete-one Wald",99,0.737466248453332,0.636363636363636
+"small_short",0.4,"Delete-one Wald",99,0.749162774510625,0.626262626262626
+"small_short",0.4,"Delete-one Wald",99,0.749481258728581,0.616161616161616
+"small_short",0.4,"Delete-one Wald",99,0.754504194041988,0.606060606060606
+"small_short",0.4,"Delete-one Wald",99,0.764532897789271,0.595959595959596
+"small_short",0.4,"Delete-one Wald",99,0.770505146942116,0.585858585858586
+"small_short",0.4,"Delete-one Wald",99,0.795574904201139,0.575757575757576
+"small_short",0.4,"Delete-one Wald",99,0.809392539080823,0.565656565656566
+"small_short",0.4,"Delete-one Wald",99,0.830714131922437,0.555555555555556
+"small_short",0.4,"Delete-one Wald",99,0.831791156851547,0.545454545454545
+"small_short",0.4,"Delete-one Wald",99,0.837661455815944,0.535353535353535
+"small_short",0.4,"Delete-one Wald",99,0.855637862141533,0.525252525252525
+"small_short",0.4,"Delete-one Wald",99,0.864286260872285,0.515151515151515
+"small_short",0.4,"Delete-one Wald",99,0.87053936226288,0.505050505050505
+"small_short",0.4,"Delete-one Wald",99,0.876782806483082,0.494949494949495
+"small_short",0.4,"Delete-one Wald",99,0.886781530950885,0.484848484848485
+"small_short",0.4,"Delete-one Wald",99,0.924086836226075,0.474747474747475
+"small_short",0.4,"Delete-one Wald",99,0.926778765459953,0.464646464646465
+"small_short",0.4,"Delete-one Wald",99,0.942872375616594,0.454545454545455
+"small_short",0.4,"Delete-one Wald",99,0.963473005552651,0.444444444444444
+"small_short",0.4,"Delete-one Wald",99,0.964239181013951,0.434343434343434
+"small_short",0.4,"Delete-one Wald",99,0.984821382010457,0.424242424242424
+"small_short",0.4,"Delete-one Wald",99,0.98903771819739,0.414141414141414
+"small_short",0.4,"Delete-one Wald",99,0.997996818007243,0.404040404040404
+"small_short",0.4,"Delete-one Wald",99,1.06415786593742,0.393939393939394
+"small_short",0.4,"Delete-one Wald",99,1.06889694220846,0.383838383838384
+"small_short",0.4,"Delete-one Wald",99,1.08382427882324,0.373737373737374
+"small_short",0.4,"Delete-one Wald",99,1.08745924741167,0.363636363636364
+"small_short",0.4,"Delete-one Wald",99,1.09241474259691,0.353535353535354
+"small_short",0.4,"Delete-one Wald",99,1.09373033712279,0.343434343434343
+"small_short",0.4,"Delete-one Wald",99,1.11300940271092,0.333333333333333
+"small_short",0.4,"Delete-one Wald",99,1.13759723985167,0.323232323232323
+"small_short",0.4,"Delete-one Wald",99,1.14726084098789,0.313131313131313
+"small_short",0.4,"Delete-one Wald",99,1.15814679571216,0.303030303030303
+"small_short",0.4,"Delete-one Wald",99,1.15954371401577,0.292929292929293
+"small_short",0.4,"Delete-one Wald",99,1.16353709981251,0.282828282828283
+"small_short",0.4,"Delete-one Wald",99,1.19831704773027,0.272727272727273
+"small_short",0.4,"Delete-one Wald",99,1.2558505219547,0.262626262626263
+"small_short",0.4,"Delete-one Wald",99,1.2591464247962,0.252525252525253
+"small_short",0.4,"Delete-one Wald",99,1.2701368674938,0.242424242424242
+"small_short",0.4,"Delete-one Wald",99,1.2715700026676,0.232323232323232
+"small_short",0.4,"Delete-one Wald",99,1.31479783939762,0.222222222222222
+"small_short",0.4,"Delete-one Wald",99,1.3239242755483,0.212121212121212
+"small_short",0.4,"Delete-one Wald",99,1.35978147064383,0.202020202020202
+"small_short",0.4,"Delete-one Wald",99,1.37301657652777,0.191919191919192
+"small_short",0.4,"Delete-one Wald",99,1.39246870097473,0.181818181818182
+"small_short",0.4,"Delete-one Wald",99,1.39632917113026,0.171717171717172
+"small_short",0.4,"Delete-one Wald",99,1.40759932431882,0.161616161616162
+"small_short",0.4,"Delete-one Wald",99,1.41854783742161,0.151515151515152
+"small_short",0.4,"Delete-one Wald",99,1.418851397796,0.141414141414141
+"small_short",0.4,"Delete-one Wald",99,1.42486066495005,0.131313131313131
+"small_short",0.4,"Delete-one Wald",99,1.42563087472377,0.121212121212121
+"small_short",0.4,"Delete-one Wald",99,1.44888758605531,0.111111111111111
+"small_short",0.4,"Delete-one Wald",99,1.47920031836752,0.101010101010101
+"small_short",0.4,"Delete-one Wald",99,1.50422755737163,0.0909090909090909
+"small_short",0.4,"Delete-one Wald",99,1.54324537283864,0.0808080808080808
+"small_short",0.4,"Delete-one Wald",99,1.57143305611765,0.0707070707070707
+"small_short",0.4,"Delete-one Wald",99,1.57172611782574,0.0606060606060606
+"small_short",0.4,"Delete-one Wald",99,1.58523787106414,0.0505050505050505
+"small_short",0.4,"Delete-one Wald",99,1.6199113905711,0.0404040404040404
+"small_short",0.4,"Delete-one Wald",99,1.70138727078357,0.0303030303030303
+"small_short",0.4,"Delete-one Wald",99,1.71998082988029,0.0202020202020202
+"small_short",0.4,"Delete-one Wald",99,1.76588606394867,0.0101010101010101
+"small_short",0.4,"Delete-one Wald",99,2.24602269079286,0
+"high_control",0.4,"Full IF Wald",100,0.245221843511019,1
+"high_control",0.4,"Full IF Wald",100,0.25748293568657,0.99
+"high_control",0.4,"Full IF Wald",100,0.2829860512075,0.98
+"high_control",0.4,"Full IF Wald",100,0.288503058830565,0.97
+"high_control",0.4,"Full IF Wald",100,0.300170433902909,0.96
+"high_control",0.4,"Full IF Wald",100,0.30905355469234,0.95
+"high_control",0.4,"Full IF Wald",100,0.310254732140266,0.94
+"high_control",0.4,"Full IF Wald",100,0.31384485757473,0.93
+"high_control",0.4,"Full IF Wald",100,0.319450290930484,0.92
+"high_control",0.4,"Full IF Wald",100,0.322612739642524,0.91
+"high_control",0.4,"Full IF Wald",100,0.323959466218392,0.9
+"high_control",0.4,"Full IF Wald",100,0.326453695113248,0.89
+"high_control",0.4,"Full IF Wald",100,0.326901716794932,0.88
+"high_control",0.4,"Full IF Wald",100,0.330620379699785,0.87
+"high_control",0.4,"Full IF Wald",100,0.331677333614959,0.86
+"high_control",0.4,"Full IF Wald",100,0.334588001778806,0.85
+"high_control",0.4,"Full IF Wald",100,0.33533851643242,0.84
+"high_control",0.4,"Full IF Wald",100,0.335777461659564,0.83
+"high_control",0.4,"Full IF Wald",100,0.346782900715245,0.82
+"high_control",0.4,"Full IF Wald",100,0.348207819056575,0.81
+"high_control",0.4,"Full IF Wald",100,0.357074614075314,0.8
+"high_control",0.4,"Full IF Wald",100,0.35879615536938,0.79
+"high_control",0.4,"Full IF Wald",100,0.360764561483206,0.78
+"high_control",0.4,"Full IF Wald",100,0.362056959658704,0.77
+"high_control",0.4,"Full IF Wald",100,0.362345818188568,0.76
+"high_control",0.4,"Full IF Wald",100,0.368219985596712,0.75
+"high_control",0.4,"Full IF Wald",100,0.36947017798388,0.74
+"high_control",0.4,"Full IF Wald",100,0.370924400756621,0.73
+"high_control",0.4,"Full IF Wald",100,0.373603299749643,0.72
+"high_control",0.4,"Full IF Wald",100,0.376650946942364,0.71
+"high_control",0.4,"Full IF Wald",100,0.378986649634849,0.7
+"high_control",0.4,"Full IF Wald",100,0.382882049358336,0.69
+"high_control",0.4,"Full IF Wald",100,0.384454453494034,0.68
+"high_control",0.4,"Full IF Wald",100,0.387245658419246,0.67
+"high_control",0.4,"Full IF Wald",100,0.387533007402245,0.66
+"high_control",0.4,"Full IF Wald",100,0.38773296328156,0.65
+"high_control",0.4,"Full IF Wald",100,0.390935504834655,0.64
+"high_control",0.4,"Full IF Wald",100,0.39100234525008,0.63
+"high_control",0.4,"Full IF Wald",100,0.395119458483936,0.62
+"high_control",0.4,"Full IF Wald",100,0.395646463238266,0.61
+"high_control",0.4,"Full IF Wald",100,0.396930948321096,0.6
+"high_control",0.4,"Full IF Wald",100,0.404832682705018,0.59
+"high_control",0.4,"Full IF Wald",100,0.408830401139812,0.58
+"high_control",0.4,"Full IF Wald",100,0.411209478040098,0.57
+"high_control",0.4,"Full IF Wald",100,0.414966877034952,0.56
+"high_control",0.4,"Full IF Wald",100,0.416169295250799,0.55
+"high_control",0.4,"Full IF Wald",100,0.418962655698098,0.54
+"high_control",0.4,"Full IF Wald",100,0.421985108274592,0.53
+"high_control",0.4,"Full IF Wald",100,0.422603574675305,0.52
+"high_control",0.4,"Full IF Wald",100,0.423002800294961,0.51
+"high_control",0.4,"Full IF Wald",100,0.423177733331292,0.5
+"high_control",0.4,"Full IF Wald",100,0.425327212727673,0.49
+"high_control",0.4,"Full IF Wald",100,0.42693648069987,0.48
+"high_control",0.4,"Full IF Wald",100,0.42698513924693,0.47
+"high_control",0.4,"Full IF Wald",100,0.429050555835011,0.46
+"high_control",0.4,"Full IF Wald",100,0.432132110843646,0.45
+"high_control",0.4,"Full IF Wald",100,0.432206977284824,0.44
+"high_control",0.4,"Full IF Wald",100,0.432669242645504,0.43
+"high_control",0.4,"Full IF Wald",100,0.43589516433889,0.42
+"high_control",0.4,"Full IF Wald",100,0.440226970545628,0.41
+"high_control",0.4,"Full IF Wald",100,0.445177593173735,0.4
+"high_control",0.4,"Full IF Wald",100,0.450958252149616,0.39
+"high_control",0.4,"Full IF Wald",100,0.451544212506833,0.38
+"high_control",0.4,"Full IF Wald",100,0.452746120511356,0.37
+"high_control",0.4,"Full IF Wald",100,0.455348349580389,0.36
+"high_control",0.4,"Full IF Wald",100,0.459954126872582,0.35
+"high_control",0.4,"Full IF Wald",100,0.461172221490241,0.34
+"high_control",0.4,"Full IF Wald",100,0.461754187309096,0.33
+"high_control",0.4,"Full IF Wald",100,0.466102762565609,0.32
+"high_control",0.4,"Full IF Wald",100,0.467175425936308,0.31
+"high_control",0.4,"Full IF Wald",100,0.467313266380138,0.3
+"high_control",0.4,"Full IF Wald",100,0.47146564934684,0.29
+"high_control",0.4,"Full IF Wald",100,0.471573207588343,0.28
+"high_control",0.4,"Full IF Wald",100,0.474927204634291,0.27
+"high_control",0.4,"Full IF Wald",100,0.478129475369212,0.26
+"high_control",0.4,"Full IF Wald",100,0.485853285219515,0.25
+"high_control",0.4,"Full IF Wald",100,0.486330894382332,0.24
+"high_control",0.4,"Full IF Wald",100,0.487127059418431,0.23
+"high_control",0.4,"Full IF Wald",100,0.490017283491883,0.22
+"high_control",0.4,"Full IF Wald",100,0.491417278883897,0.21
+"high_control",0.4,"Full IF Wald",100,0.501806682191781,0.2
+"high_control",0.4,"Full IF Wald",100,0.503068465104138,0.19
+"high_control",0.4,"Full IF Wald",100,0.504999627153226,0.18
+"high_control",0.4,"Full IF Wald",100,0.51119040071253,0.17
+"high_control",0.4,"Full IF Wald",100,0.512522877189205,0.16
+"high_control",0.4,"Full IF Wald",100,0.513028001710957,0.15
+"high_control",0.4,"Full IF Wald",100,0.5164478174349,0.14
+"high_control",0.4,"Full IF Wald",100,0.521099930403222,0.13
+"high_control",0.4,"Full IF Wald",100,0.54623256840632,0.12
+"high_control",0.4,"Full IF Wald",100,0.550359918825567,0.11
+"high_control",0.4,"Full IF Wald",100,0.571466446233458,0.1
+"high_control",0.4,"Full IF Wald",100,0.578038876203032,0.09
+"high_control",0.4,"Full IF Wald",100,0.588311781736326,0.08
+"high_control",0.4,"Full IF Wald",100,0.590563416883363,0.07
+"high_control",0.4,"Full IF Wald",100,0.591225194543473,0.06
+"high_control",0.4,"Full IF Wald",100,0.591596903580063,0.05
+"high_control",0.4,"Full IF Wald",100,0.592154890760629,0.04
+"high_control",0.4,"Full IF Wald",100,0.627026532176461,0.03
+"high_control",0.4,"Full IF Wald",100,0.63575017433548,0.02
+"high_control",0.4,"Full IF Wald",100,0.67793336287837,0.01
+"high_control",0.4,"Full IF Wald",100,0.702585441163628,0
+"low_balanced",0.4,"Full IF Wald",56,0.21580744674185,1
+"low_balanced",0.4,"Full IF Wald",56,0.226597819078943,0.982142857142857
+"low_balanced",0.4,"Full IF Wald",56,0.323746785614912,0.964285714285714
+"low_balanced",0.4,"Full IF Wald",56,0.454140565313447,0.946428571428571
+"low_balanced",0.4,"Full IF Wald",56,0.473823904803643,0.928571428571429
+"low_balanced",0.4,"Full IF Wald",56,0.47753331192773,0.910714285714286
+"low_balanced",0.4,"Full IF Wald",56,0.492393626512656,0.892857142857143
+"low_balanced",0.4,"Full IF Wald",56,0.507393005602707,0.875
+"low_balanced",0.4,"Full IF Wald",56,0.523898254092166,0.857142857142857
+"low_balanced",0.4,"Full IF Wald",56,0.552432414020192,0.839285714285714
+"low_balanced",0.4,"Full IF Wald",56,0.557357848832237,0.821428571428571
+"low_balanced",0.4,"Full IF Wald",56,0.568634948286487,0.803571428571429
+"low_balanced",0.4,"Full IF Wald",56,0.594596223355203,0.785714285714286
+"low_balanced",0.4,"Full IF Wald",56,0.613829970663916,0.767857142857143
+"low_balanced",0.4,"Full IF Wald",56,0.638397740519792,0.75
+"low_balanced",0.4,"Full IF Wald",56,0.654507124714842,0.732142857142857
+"low_balanced",0.4,"Full IF Wald",56,0.660066085161465,0.714285714285714
+"low_balanced",0.4,"Full IF Wald",56,0.660437619114857,0.696428571428571
+"low_balanced",0.4,"Full IF Wald",56,0.671908249135743,0.678571428571429
+"low_balanced",0.4,"Full IF Wald",56,0.682992623220315,0.660714285714286
+"low_balanced",0.4,"Full IF Wald",56,0.693048370958584,0.642857142857143
+"low_balanced",0.4,"Full IF Wald",56,0.706520397687482,0.625
+"low_balanced",0.4,"Full IF Wald",56,0.72956779551454,0.607142857142857
+"low_balanced",0.4,"Full IF Wald",56,0.767670781792017,0.589285714285714
+"low_balanced",0.4,"Full IF Wald",56,0.792738054404619,0.571428571428571
+"low_balanced",0.4,"Full IF Wald",56,0.79944754152382,0.553571428571429
+"low_balanced",0.4,"Full IF Wald",56,0.837683463329347,0.535714285714286
+"low_balanced",0.4,"Full IF Wald",56,0.852660766708984,0.517857142857143
+"low_balanced",0.4,"Full IF Wald",56,0.853950931984859,0.5
+"low_balanced",0.4,"Full IF Wald",56,0.863010105390343,0.482142857142857
+"low_balanced",0.4,"Full IF Wald",56,0.870996216777578,0.464285714285714
+"low_balanced",0.4,"Full IF Wald",56,0.877705091201564,0.446428571428571
+"low_balanced",0.4,"Full IF Wald",56,0.892763024146319,0.428571428571429
+"low_balanced",0.4,"Full IF Wald",56,0.909478452758502,0.410714285714286
+"low_balanced",0.4,"Full IF Wald",56,0.98798266547131,0.392857142857143
+"low_balanced",0.4,"Full IF Wald",56,0.998692158676433,0.375
+"low_balanced",0.4,"Full IF Wald",56,1.03920562947963,0.357142857142857
+"low_balanced",0.4,"Full IF Wald",56,1.07438061556788,0.339285714285714
+"low_balanced",0.4,"Full IF Wald",56,1.11234725862447,0.321428571428571
+"low_balanced",0.4,"Full IF Wald",56,1.11664557763,0.303571428571429
+"low_balanced",0.4,"Full IF Wald",56,1.16697297921769,0.285714285714286
+"low_balanced",0.4,"Full IF Wald",56,1.25231888291135,0.267857142857143
+"low_balanced",0.4,"Full IF Wald",56,1.26809353872231,0.25
+"low_balanced",0.4,"Full IF Wald",56,1.33782884737309,0.232142857142857
+"low_balanced",0.4,"Full IF Wald",56,1.39398950731722,0.214285714285714
+"low_balanced",0.4,"Full IF Wald",56,1.43153592211533,0.196428571428571
+"low_balanced",0.4,"Full IF Wald",56,1.52540273915438,0.178571428571429
+"low_balanced",0.4,"Full IF Wald",56,1.5325872901052,0.160714285714286
+"low_balanced",0.4,"Full IF Wald",56,1.95212447237749,0.142857142857143
+"low_balanced",0.4,"Full IF Wald",56,1.95951612165957,0.125
+"low_balanced",0.4,"Full IF Wald",56,2.15564229633949,0.107142857142857
+"low_balanced",0.4,"Full IF Wald",56,2.51758371031746,0.0892857142857143
+"low_balanced",0.4,"Full IF Wald",56,2.86710859352483,0.0714285714285714
+"low_balanced",0.4,"Full IF Wald",56,2.92867014373754,0.0535714285714286
+"low_balanced",0.4,"Full IF Wald",56,3.28063544372513,0.0357142857142857
+"low_balanced",0.4,"Full IF Wald",56,3.68217020625544,0.0178571428571429
+"low_balanced",0.4,"Full IF Wald",56,4.64541151805567,0
+"low_larger",0.4,"Full IF Wald",64,0.349667536719514,1
+"low_larger",0.4,"Full IF Wald",64,0.36715091355549,0.984375
+"low_larger",0.4,"Full IF Wald",64,0.423085979826041,0.96875
+"low_larger",0.4,"Full IF Wald",64,0.437663814799064,0.953125
+"low_larger",0.4,"Full IF Wald",64,0.470228642542232,0.9375
+"low_larger",0.4,"Full IF Wald",64,0.474437640337737,0.921875
+"low_larger",0.4,"Full IF Wald",64,0.493417795506719,0.90625
+"low_larger",0.4,"Full IF Wald",64,0.539635444811769,0.890625
+"low_larger",0.4,"Full IF Wald",64,0.555013301322583,0.875
+"low_larger",0.4,"Full IF Wald",64,0.563204017496715,0.859375
+"low_larger",0.4,"Full IF Wald",64,0.566969865331841,0.84375
+"low_larger",0.4,"Full IF Wald",64,0.593837863929901,0.828125
+"low_larger",0.4,"Full IF Wald",64,0.642268721420916,0.8125
+"low_larger",0.4,"Full IF Wald",64,0.645761165581809,0.796875
+"low_larger",0.4,"Full IF Wald",64,0.6628137857118,0.78125
+"low_larger",0.4,"Full IF Wald",64,0.678965836610046,0.765625
+"low_larger",0.4,"Full IF Wald",64,0.729384875065473,0.75
+"low_larger",0.4,"Full IF Wald",64,0.732017335716478,0.734375
+"low_larger",0.4,"Full IF Wald",64,0.74636490870759,0.71875
+"low_larger",0.4,"Full IF Wald",64,0.74961897746935,0.703125
+"low_larger",0.4,"Full IF Wald",64,0.811509575052311,0.6875
+"low_larger",0.4,"Full IF Wald",64,0.863437914471334,0.671875
+"low_larger",0.4,"Full IF Wald",64,0.883454566344577,0.65625
+"low_larger",0.4,"Full IF Wald",64,0.889128887712525,0.640625
+"low_larger",0.4,"Full IF Wald",64,0.941062962626869,0.625
+"low_larger",0.4,"Full IF Wald",64,0.943336011985644,0.609375
+"low_larger",0.4,"Full IF Wald",64,1.01208770352734,0.59375
+"low_larger",0.4,"Full IF Wald",64,1.07269743264001,0.578125
+"low_larger",0.4,"Full IF Wald",64,1.08260641673756,0.5625
+"low_larger",0.4,"Full IF Wald",64,1.09660241483238,0.546875
+"low_larger",0.4,"Full IF Wald",64,1.10205746653385,0.53125
+"low_larger",0.4,"Full IF Wald",64,1.12033373990154,0.515625
+"low_larger",0.4,"Full IF Wald",64,1.14204335998905,0.5
+"low_larger",0.4,"Full IF Wald",64,1.14370666809912,0.484375
+"low_larger",0.4,"Full IF Wald",64,1.19910643746966,0.46875
+"low_larger",0.4,"Full IF Wald",64,1.2086872102876,0.453125
+"low_larger",0.4,"Full IF Wald",64,1.23039439419248,0.4375
+"low_larger",0.4,"Full IF Wald",64,1.2938806965331,0.421875
+"low_larger",0.4,"Full IF Wald",64,1.33538399354609,0.40625
+"low_larger",0.4,"Full IF Wald",64,1.36333928935275,0.390625
+"low_larger",0.4,"Full IF Wald",64,1.41682365308585,0.375
+"low_larger",0.4,"Full IF Wald",64,1.48656787320661,0.359375
+"low_larger",0.4,"Full IF Wald",64,1.53880899999928,0.34375
+"low_larger",0.4,"Full IF Wald",64,1.54225718571548,0.328125
+"low_larger",0.4,"Full IF Wald",64,1.55740107536918,0.3125
+"low_larger",0.4,"Full IF Wald",64,1.65679231870401,0.296875
+"low_larger",0.4,"Full IF Wald",64,1.66611906573928,0.28125
+"low_larger",0.4,"Full IF Wald",64,1.68081142781891,0.265625
+"low_larger",0.4,"Full IF Wald",64,1.8612456516931,0.25
+"low_larger",0.4,"Full IF Wald",64,1.899798351938,0.234375
+"low_larger",0.4,"Full IF Wald",64,1.90236587340309,0.21875
+"low_larger",0.4,"Full IF Wald",64,2.34522577647149,0.203125
+"low_larger",0.4,"Full IF Wald",64,2.4623285280105,0.1875
+"low_larger",0.4,"Full IF Wald",64,2.46968163481527,0.171875
+"low_larger",0.4,"Full IF Wald",64,2.4794378072886,0.15625
+"low_larger",0.4,"Full IF Wald",64,2.63070149135768,0.140625
+"low_larger",0.4,"Full IF Wald",64,2.80650678185699,0.125
+"low_larger",0.4,"Full IF Wald",64,2.88553544853051,0.109375
+"low_larger",0.4,"Full IF Wald",64,2.91390548067965,0.09375
+"low_larger",0.4,"Full IF Wald",64,3.19015517036229,0.078125
+"low_larger",0.4,"Full IF Wald",64,3.41952431153684,0.0625
+"low_larger",0.4,"Full IF Wald",64,3.49500773762352,0.046875
+"low_larger",0.4,"Full IF Wald",64,3.69064992252761,0.03125
+"low_larger",0.4,"Full IF Wald",64,3.74990839234503,0.015625
+"low_larger",0.4,"Full IF Wald",64,4.16686495461838,0
+"low_negative",0.4,"Full IF Wald",48,0.38995714205994,1
+"low_negative",0.4,"Full IF Wald",48,0.409454999162937,0.979166666666667
+"low_negative",0.4,"Full IF Wald",48,0.418008286559826,0.958333333333333
+"low_negative",0.4,"Full IF Wald",48,0.461239780085045,0.9375
+"low_negative",0.4,"Full IF Wald",48,0.461710251043261,0.916666666666667
+"low_negative",0.4,"Full IF Wald",48,0.504807460210698,0.895833333333333
+"low_negative",0.4,"Full IF Wald",48,0.510317254508437,0.875
+"low_negative",0.4,"Full IF Wald",48,0.521923829698886,0.854166666666667
+"low_negative",0.4,"Full IF Wald",48,0.541464666245204,0.833333333333333
+"low_negative",0.4,"Full IF Wald",48,0.543441071446543,0.8125
+"low_negative",0.4,"Full IF Wald",48,0.573998222452505,0.791666666666667
+"low_negative",0.4,"Full IF Wald",48,0.615425813667885,0.770833333333333
+"low_negative",0.4,"Full IF Wald",48,0.631108167813326,0.75
+"low_negative",0.4,"Full IF Wald",48,0.657319008247722,0.729166666666667
+"low_negative",0.4,"Full IF Wald",48,0.657722080775134,0.708333333333333
+"low_negative",0.4,"Full IF Wald",48,0.658110527110306,0.6875
+"low_negative",0.4,"Full IF Wald",48,0.66385236969073,0.666666666666667
+"low_negative",0.4,"Full IF Wald",48,0.696275852435545,0.645833333333333
+"low_negative",0.4,"Full IF Wald",48,0.719777614845751,0.625
+"low_negative",0.4,"Full IF Wald",48,0.724326937702816,0.604166666666667
+"low_negative",0.4,"Full IF Wald",48,0.73126766939252,0.583333333333333
+"low_negative",0.4,"Full IF Wald",48,0.738328746736938,0.5625
+"low_negative",0.4,"Full IF Wald",48,0.738753055480427,0.541666666666667
+"low_negative",0.4,"Full IF Wald",48,0.779279126007046,0.520833333333333
+"low_negative",0.4,"Full IF Wald",48,0.964496677687195,0.5
+"low_negative",0.4,"Full IF Wald",48,0.974789058759919,0.479166666666667
+"low_negative",0.4,"Full IF Wald",48,1.03417324128273,0.458333333333333
+"low_negative",0.4,"Full IF Wald",48,1.0419080270696,0.4375
+"low_negative",0.4,"Full IF Wald",48,1.04608524711111,0.416666666666667
+"low_negative",0.4,"Full IF Wald",48,1.09019234518105,0.395833333333333
+"low_negative",0.4,"Full IF Wald",48,1.13183258516148,0.375
+"low_negative",0.4,"Full IF Wald",48,1.20498701843041,0.354166666666667
+"low_negative",0.4,"Full IF Wald",48,1.23994954937803,0.333333333333333
+"low_negative",0.4,"Full IF Wald",48,1.26115353363422,0.3125
+"low_negative",0.4,"Full IF Wald",48,1.29165724079224,0.291666666666667
+"low_negative",0.4,"Full IF Wald",48,1.32461250908833,0.270833333333333
+"low_negative",0.4,"Full IF Wald",48,1.36126513612046,0.25
+"low_negative",0.4,"Full IF Wald",48,1.3678212748826,0.229166666666667
+"low_negative",0.4,"Full IF Wald",48,1.48938077209558,0.208333333333333
+"low_negative",0.4,"Full IF Wald",48,1.65834588316341,0.1875
+"low_negative",0.4,"Full IF Wald",48,1.74340333401483,0.166666666666667
+"low_negative",0.4,"Full IF Wald",48,1.75521986654756,0.145833333333333
+"low_negative",0.4,"Full IF Wald",48,2.13137248210528,0.125
+"low_negative",0.4,"Full IF Wald",48,2.64610647317515,0.104166666666667
+"low_negative",0.4,"Full IF Wald",48,2.92949434768011,0.0833333333333333
+"low_negative",0.4,"Full IF Wald",48,3.01479392138202,0.0625
+"low_negative",0.4,"Full IF Wald",48,3.37139176163234,0.0416666666666667
+"low_negative",0.4,"Full IF Wald",48,3.4782449286339,0.0208333333333333
+"low_negative",0.4,"Full IF Wald",48,3.5094392675284,0
+"low_unequal",0.4,"Full IF Wald",65,0.297415757974797,1
+"low_unequal",0.4,"Full IF Wald",65,0.312286545873536,0.984615384615385
+"low_unequal",0.4,"Full IF Wald",65,0.346056649523228,0.969230769230769
+"low_unequal",0.4,"Full IF Wald",65,0.368240308976544,0.953846153846154
+"low_unequal",0.4,"Full IF Wald",65,0.388619808875674,0.938461538461538
+"low_unequal",0.4,"Full IF Wald",65,0.391318546595849,0.923076923076923
+"low_unequal",0.4,"Full IF Wald",65,0.417712284121557,0.907692307692308
+"low_unequal",0.4,"Full IF Wald",65,0.469964381998008,0.892307692307692
+"low_unequal",0.4,"Full IF Wald",65,0.499834851525653,0.876923076923077
+"low_unequal",0.4,"Full IF Wald",65,0.534444117685622,0.861538461538462
+"low_unequal",0.4,"Full IF Wald",65,0.537089048505123,0.846153846153846
+"low_unequal",0.4,"Full IF Wald",65,0.539882030937106,0.830769230769231
+"low_unequal",0.4,"Full IF Wald",65,0.541672133574568,0.815384615384615
+"low_unequal",0.4,"Full IF Wald",65,0.587565253686491,0.8
+"low_unequal",0.4,"Full IF Wald",65,0.597524596019223,0.784615384615385
+"low_unequal",0.4,"Full IF Wald",65,0.607361238640276,0.769230769230769
+"low_unequal",0.4,"Full IF Wald",65,0.62949969507711,0.753846153846154
+"low_unequal",0.4,"Full IF Wald",65,0.67049711362033,0.738461538461539
+"low_unequal",0.4,"Full IF Wald",65,0.682978724731657,0.723076923076923
+"low_unequal",0.4,"Full IF Wald",65,0.69038254171091,0.707692307692308
+"low_unequal",0.4,"Full IF Wald",65,0.705602342696678,0.692307692307692
+"low_unequal",0.4,"Full IF Wald",65,0.717788879887592,0.676923076923077
+"low_unequal",0.4,"Full IF Wald",65,0.722081345026739,0.661538461538462
+"low_unequal",0.4,"Full IF Wald",65,0.725404720047638,0.646153846153846
+"low_unequal",0.4,"Full IF Wald",65,0.730200241257177,0.630769230769231
+"low_unequal",0.4,"Full IF Wald",65,0.790686138004748,0.615384615384615
+"low_unequal",0.4,"Full IF Wald",65,0.825054030269681,0.6
+"low_unequal",0.4,"Full IF Wald",65,0.844896133353897,0.584615384615385
+"low_unequal",0.4,"Full IF Wald",65,0.869353189178546,0.569230769230769
+"low_unequal",0.4,"Full IF Wald",65,0.892527318878547,0.553846153846154
+"low_unequal",0.4,"Full IF Wald",65,0.894011665243715,0.538461538461538
+"low_unequal",0.4,"Full IF Wald",65,0.8989097261918,0.523076923076923
+"low_unequal",0.4,"Full IF Wald",65,0.924971059112479,0.507692307692308
+"low_unequal",0.4,"Full IF Wald",65,0.95062223487665,0.492307692307692
+"low_unequal",0.4,"Full IF Wald",65,0.971815077307308,0.476923076923077
+"low_unequal",0.4,"Full IF Wald",65,0.987618332317312,0.461538461538462
+"low_unequal",0.4,"Full IF Wald",65,1.04503406562276,0.446153846153846
+"low_unequal",0.4,"Full IF Wald",65,1.05956105877076,0.430769230769231
+"low_unequal",0.4,"Full IF Wald",65,1.12001068291111,0.415384615384615
+"low_unequal",0.4,"Full IF Wald",65,1.12437234623194,0.4
+"low_unequal",0.4,"Full IF Wald",65,1.17438398088539,0.384615384615385
+"low_unequal",0.4,"Full IF Wald",65,1.17767678707438,0.369230769230769
+"low_unequal",0.4,"Full IF Wald",65,1.23456323539677,0.353846153846154
+"low_unequal",0.4,"Full IF Wald",65,1.24719717914288,0.338461538461538
+"low_unequal",0.4,"Full IF Wald",65,1.29309160027257,0.323076923076923
+"low_unequal",0.4,"Full IF Wald",65,1.30614886542871,0.307692307692308
+"low_unequal",0.4,"Full IF Wald",65,1.3340258125522,0.292307692307692
+"low_unequal",0.4,"Full IF Wald",65,1.34536279067816,0.276923076923077
+"low_unequal",0.4,"Full IF Wald",65,1.39305941900035,0.261538461538462
+"low_unequal",0.4,"Full IF Wald",65,1.39843557267599,0.246153846153846
+"low_unequal",0.4,"Full IF Wald",65,1.41794015237431,0.230769230769231
+"low_unequal",0.4,"Full IF Wald",65,1.48986192269067,0.215384615384615
+"low_unequal",0.4,"Full IF Wald",65,1.54038339858727,0.2
+"low_unequal",0.4,"Full IF Wald",65,1.59747050346452,0.184615384615385
+"low_unequal",0.4,"Full IF Wald",65,1.60840950041839,0.169230769230769
+"low_unequal",0.4,"Full IF Wald",65,1.62219590670763,0.153846153846154
+"low_unequal",0.4,"Full IF Wald",65,1.70839419774131,0.138461538461538
+"low_unequal",0.4,"Full IF Wald",65,1.7110876696147,0.123076923076923
+"low_unequal",0.4,"Full IF Wald",65,1.76878407228823,0.107692307692308
+"low_unequal",0.4,"Full IF Wald",65,1.85043672396448,0.0923076923076923
+"low_unequal",0.4,"Full IF Wald",65,1.9284479791745,0.0769230769230769
+"low_unequal",0.4,"Full IF Wald",65,2.03371933974252,0.0615384615384615
+"low_unequal",0.4,"Full IF Wald",65,2.19584990024517,0.0461538461538462
+"low_unequal",0.4,"Full IF Wald",65,2.47565042374692,0.0307692307692308
+"low_unequal",0.4,"Full IF Wald",65,3.09711512735774,0.0153846153846154
+"low_unequal",0.4,"Full IF Wald",65,3.4543920742887,0
+"small_short",0.4,"Full IF Wald",45,0.217532491664735,1
+"small_short",0.4,"Full IF Wald",45,0.228409116247972,0.977777777777778
+"small_short",0.4,"Full IF Wald",45,0.313568722694422,0.955555555555556
+"small_short",0.4,"Full IF Wald",45,0.320880976087572,0.933333333333333
+"small_short",0.4,"Full IF Wald",45,0.344848568145661,0.911111111111111
+"small_short",0.4,"Full IF Wald",45,0.374791198576738,0.888888888888889
+"small_short",0.4,"Full IF Wald",45,0.393837096988032,0.866666666666667
+"small_short",0.4,"Full IF Wald",45,0.395266422235004,0.844444444444444
+"small_short",0.4,"Full IF Wald",45,0.402782752349003,0.822222222222222
+"small_short",0.4,"Full IF Wald",45,0.41891567602024,0.8
+"small_short",0.4,"Full IF Wald",45,0.450550984327789,0.777777777777778
+"small_short",0.4,"Full IF Wald",45,0.459704638531931,0.755555555555556
+"small_short",0.4,"Full IF Wald",45,0.470216975711037,0.733333333333333
+"small_short",0.4,"Full IF Wald",45,0.516881794756397,0.711111111111111
+"small_short",0.4,"Full IF Wald",45,0.520324422726371,0.688888888888889
+"small_short",0.4,"Full IF Wald",45,0.52943452935678,0.666666666666667
+"small_short",0.4,"Full IF Wald",45,0.564991004843667,0.644444444444444
+"small_short",0.4,"Full IF Wald",45,0.599096739009457,0.622222222222222
+"small_short",0.4,"Full IF Wald",45,0.644939112158496,0.6
+"small_short",0.4,"Full IF Wald",45,0.646343888795076,0.577777777777778
+"small_short",0.4,"Full IF Wald",45,0.679478174828324,0.555555555555556
+"small_short",0.4,"Full IF Wald",45,0.6802023245078,0.533333333333333
+"small_short",0.4,"Full IF Wald",45,0.720422517533554,0.511111111111111
+"small_short",0.4,"Full IF Wald",45,0.725432498386416,0.488888888888889
+"small_short",0.4,"Full IF Wald",45,0.746393641741724,0.466666666666667
+"small_short",0.4,"Full IF Wald",45,0.759807019322996,0.444444444444444
+"small_short",0.4,"Full IF Wald",45,0.767654156775573,0.422222222222222
+"small_short",0.4,"Full IF Wald",45,0.777917533484252,0.4
+"small_short",0.4,"Full IF Wald",45,0.781912715954628,0.377777777777778
+"small_short",0.4,"Full IF Wald",45,0.820118485464453,0.355555555555556
+"small_short",0.4,"Full IF Wald",45,0.832223028571187,0.333333333333333
+"small_short",0.4,"Full IF Wald",45,0.838710291331337,0.311111111111111
+"small_short",0.4,"Full IF Wald",45,0.839903520716696,0.288888888888889
+"small_short",0.4,"Full IF Wald",45,0.887867905008116,0.266666666666667
+"small_short",0.4,"Full IF Wald",45,0.898291919209083,0.244444444444444
+"small_short",0.4,"Full IF Wald",45,0.949415802425245,0.222222222222222
+"small_short",0.4,"Full IF Wald",45,0.97166100551697,0.2
+"small_short",0.4,"Full IF Wald",45,0.999703253533939,0.177777777777778
+"small_short",0.4,"Full IF Wald",45,1.05812970781951,0.155555555555556
+"small_short",0.4,"Full IF Wald",45,1.14008303974223,0.133333333333333
+"small_short",0.4,"Full IF Wald",45,1.170045038663,0.111111111111111
+"small_short",0.4,"Full IF Wald",45,1.18743197132813,0.0888888888888889
+"small_short",0.4,"Full IF Wald",45,1.26435377478511,0.0666666666666667
+"small_short",0.4,"Full IF Wald",45,1.30630479294281,0.0444444444444444
+"small_short",0.4,"Full IF Wald",45,1.38287377574802,0.0222222222222222
+"small_short",0.4,"Full IF Wald",45,1.64245367129059,0
+"high_control",0.4,"Full-system HC3 Wald",100,0.259797906662449,1
+"high_control",0.4,"Full-system HC3 Wald",100,0.272787801995572,0.99
+"high_control",0.4,"Full-system HC3 Wald",100,0.302093819672272,0.98
+"high_control",0.4,"Full-system HC3 Wald",100,0.306107146403699,0.97
+"high_control",0.4,"Full-system HC3 Wald",100,0.320960903835391,0.96
+"high_control",0.4,"Full-system HC3 Wald",100,0.329288731296203,0.95
+"high_control",0.4,"Full-system HC3 Wald",100,0.330051729462865,0.94
+"high_control",0.4,"Full-system HC3 Wald",100,0.337785727374355,0.93
+"high_control",0.4,"Full-system HC3 Wald",100,0.339108130628812,0.92
+"high_control",0.4,"Full-system HC3 Wald",100,0.343490078585067,0.91
+"high_control",0.4,"Full-system HC3 Wald",100,0.348088966845543,0.9
+"high_control",0.4,"Full-system HC3 Wald",100,0.348100957169052,0.89
+"high_control",0.4,"Full-system HC3 Wald",100,0.352665489695469,0.88
+"high_control",0.4,"Full-system HC3 Wald",100,0.353960689161681,0.87
+"high_control",0.4,"Full-system HC3 Wald",100,0.354871869093293,0.86
+"high_control",0.4,"Full-system HC3 Wald",100,0.355838054958297,0.85
+"high_control",0.4,"Full-system HC3 Wald",100,0.357864212974013,0.84
+"high_control",0.4,"Full-system HC3 Wald",100,0.366440753095276,0.83
+"high_control",0.4,"Full-system HC3 Wald",100,0.37070245596612,0.82
+"high_control",0.4,"Full-system HC3 Wald",100,0.372452927532671,0.81
+"high_control",0.4,"Full-system HC3 Wald",100,0.381230114237729,0.8
+"high_control",0.4,"Full-system HC3 Wald",100,0.382413419580186,0.79
+"high_control",0.4,"Full-system HC3 Wald",100,0.385987065009277,0.78
+"high_control",0.4,"Full-system HC3 Wald",100,0.387269838779719,0.77
+"high_control",0.4,"Full-system HC3 Wald",100,0.391267424932064,0.76
+"high_control",0.4,"Full-system HC3 Wald",100,0.394153616955,0.75
+"high_control",0.4,"Full-system HC3 Wald",100,0.398447653098269,0.74
+"high_control",0.4,"Full-system HC3 Wald",100,0.399916951479223,0.73
+"high_control",0.4,"Full-system HC3 Wald",100,0.40081322072784,0.72
+"high_control",0.4,"Full-system HC3 Wald",100,0.408801274208336,0.71
+"high_control",0.4,"Full-system HC3 Wald",100,0.409489361590517,0.7
+"high_control",0.4,"Full-system HC3 Wald",100,0.409991347567105,0.69
+"high_control",0.4,"Full-system HC3 Wald",100,0.415688262913903,0.68
+"high_control",0.4,"Full-system HC3 Wald",100,0.417192355955219,0.67
+"high_control",0.4,"Full-system HC3 Wald",100,0.418422198950907,0.66
+"high_control",0.4,"Full-system HC3 Wald",100,0.420291476069336,0.65
+"high_control",0.4,"Full-system HC3 Wald",100,0.421237928171684,0.64
+"high_control",0.4,"Full-system HC3 Wald",100,0.421592971352551,0.63
+"high_control",0.4,"Full-system HC3 Wald",100,0.422980241739086,0.62
+"high_control",0.4,"Full-system HC3 Wald",100,0.423976318707415,0.61
+"high_control",0.4,"Full-system HC3 Wald",100,0.430210937791649,0.6
+"high_control",0.4,"Full-system HC3 Wald",100,0.432871748370346,0.59
+"high_control",0.4,"Full-system HC3 Wald",100,0.435438840394536,0.58
+"high_control",0.4,"Full-system HC3 Wald",100,0.436818024824293,0.57
+"high_control",0.4,"Full-system HC3 Wald",100,0.439963312678622,0.56
+"high_control",0.4,"Full-system HC3 Wald",100,0.44783064360865,0.55
+"high_control",0.4,"Full-system HC3 Wald",100,0.448467027677895,0.54
+"high_control",0.4,"Full-system HC3 Wald",100,0.451145040881465,0.53
+"high_control",0.4,"Full-system HC3 Wald",100,0.45229019109051,0.52
+"high_control",0.4,"Full-system HC3 Wald",100,0.45589913265928,0.51
+"high_control",0.4,"Full-system HC3 Wald",100,0.456219380748942,0.5
+"high_control",0.4,"Full-system HC3 Wald",100,0.457197874334739,0.49
+"high_control",0.4,"Full-system HC3 Wald",100,0.457483179307983,0.48
+"high_control",0.4,"Full-system HC3 Wald",100,0.458773262410168,0.47
+"high_control",0.4,"Full-system HC3 Wald",100,0.46084489966701,0.46
+"high_control",0.4,"Full-system HC3 Wald",100,0.463440004777422,0.45
+"high_control",0.4,"Full-system HC3 Wald",100,0.466155466768177,0.44
+"high_control",0.4,"Full-system HC3 Wald",100,0.46721350885522,0.43
+"high_control",0.4,"Full-system HC3 Wald",100,0.468960521666943,0.42
+"high_control",0.4,"Full-system HC3 Wald",100,0.473377551478502,0.41
+"high_control",0.4,"Full-system HC3 Wald",100,0.477631584692408,0.4
+"high_control",0.4,"Full-system HC3 Wald",100,0.479510170813789,0.39
+"high_control",0.4,"Full-system HC3 Wald",100,0.481219215792988,0.38
+"high_control",0.4,"Full-system HC3 Wald",100,0.481772392024519,0.37
+"high_control",0.4,"Full-system HC3 Wald",100,0.492952359522851,0.36
+"high_control",0.4,"Full-system HC3 Wald",100,0.496095175083781,0.35
+"high_control",0.4,"Full-system HC3 Wald",100,0.497858923676363,0.34
+"high_control",0.4,"Full-system HC3 Wald",100,0.498553654706224,0.33
+"high_control",0.4,"Full-system HC3 Wald",100,0.499685709453631,0.32
+"high_control",0.4,"Full-system HC3 Wald",100,0.5018494820319,0.31
+"high_control",0.4,"Full-system HC3 Wald",100,0.502282111964621,0.3
+"high_control",0.4,"Full-system HC3 Wald",100,0.50747889200502,0.29
+"high_control",0.4,"Full-system HC3 Wald",100,0.511483755062694,0.28
+"high_control",0.4,"Full-system HC3 Wald",100,0.512539608448468,0.27
+"high_control",0.4,"Full-system HC3 Wald",100,0.521070824551664,0.26
+"high_control",0.4,"Full-system HC3 Wald",100,0.526265424451566,0.25
+"high_control",0.4,"Full-system HC3 Wald",100,0.526895640494934,0.24
+"high_control",0.4,"Full-system HC3 Wald",100,0.527522753095176,0.23
+"high_control",0.4,"Full-system HC3 Wald",100,0.532318071886607,0.22
+"high_control",0.4,"Full-system HC3 Wald",100,0.534227746249152,0.21
+"high_control",0.4,"Full-system HC3 Wald",100,0.536051962890684,0.2
+"high_control",0.4,"Full-system HC3 Wald",100,0.53990205865911,0.19
+"high_control",0.4,"Full-system HC3 Wald",100,0.545359423573489,0.18
+"high_control",0.4,"Full-system HC3 Wald",100,0.549299479990964,0.17
+"high_control",0.4,"Full-system HC3 Wald",100,0.555031782850456,0.16
+"high_control",0.4,"Full-system HC3 Wald",100,0.555361707235715,0.15
+"high_control",0.4,"Full-system HC3 Wald",100,0.558150429364983,0.14
+"high_control",0.4,"Full-system HC3 Wald",100,0.558856452832793,0.13
+"high_control",0.4,"Full-system HC3 Wald",100,0.593019858685232,0.12
+"high_control",0.4,"Full-system HC3 Wald",100,0.594559649261453,0.11
+"high_control",0.4,"Full-system HC3 Wald",100,0.619585851323413,0.1
+"high_control",0.4,"Full-system HC3 Wald",100,0.63655677922649,0.09
+"high_control",0.4,"Full-system HC3 Wald",100,0.636972328504745,0.08
+"high_control",0.4,"Full-system HC3 Wald",100,0.643464790595605,0.07
+"high_control",0.4,"Full-system HC3 Wald",100,0.651117535792474,0.06
+"high_control",0.4,"Full-system HC3 Wald",100,0.657210500759166,0.05
+"high_control",0.4,"Full-system HC3 Wald",100,0.66323419991804,0.04
+"high_control",0.4,"Full-system HC3 Wald",100,0.668499435564659,0.03
+"high_control",0.4,"Full-system HC3 Wald",100,0.703569174583435,0.02
+"high_control",0.4,"Full-system HC3 Wald",100,0.730589357422276,0.01
+"high_control",0.4,"Full-system HC3 Wald",100,0.765384549541032,0
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.275119914661851,1
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.288875910394943,0.982142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.546796034171768,0.964285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.560651381832067,0.946428571428571
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.577100523338601,0.928571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.5799086939918,0.910714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.600658870522378,0.892857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.604740324266409,0.875
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.622459118050826,0.857142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.647114672843306,0.839285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.688274378972894,0.821428571428571
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.837352185986667,0.803571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.851265011228922,0.785714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.86046505383417,0.767857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.896443592281449,0.75
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.961110110192982,0.732142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,0.961195309582627,0.714285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.03468375546434,0.696428571428571
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.03924794878814,0.678571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.11820095834053,0.660714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.12950305913803,0.642857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.14096270780422,0.625
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.15666984106461,0.607142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.19866438169691,0.589285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.20139102629679,0.571428571428571
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.22136764430671,0.553571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.22869845716241,0.535714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.2466763517238,0.517857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.34232975230294,0.5
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.38855497618321,0.482142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.45679884906741,0.464285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.46526793715497,0.446428571428571
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.46598333224085,0.428571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.58584978585269,0.410714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.75162928321684,0.392857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,1.7792962754831,0.375
+"low_balanced",0.4,"Full-system HC3 Wald",56,2.02627121862368,0.357142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,2.10587146919239,0.339285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,2.1554727690258,0.321428571428571
+"low_balanced",0.4,"Full-system HC3 Wald",56,2.29446600131801,0.303571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,3.12803397041288,0.285714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,3.53565020911431,0.267857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,3.57291201704511,0.25
+"low_balanced",0.4,"Full-system HC3 Wald",56,4.02231792701968,0.232142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,4.43294812029155,0.214285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,4.5448490004899,0.196428571428571
+"low_balanced",0.4,"Full-system HC3 Wald",56,4.8615951896197,0.178571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,5.26080528287332,0.160714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,5.35571113876368,0.142857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,6.01134387691723,0.125
+"low_balanced",0.4,"Full-system HC3 Wald",56,8.15948399887127,0.107142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,9.00481408358525,0.0892857142857143
+"low_balanced",0.4,"Full-system HC3 Wald",56,11.0691928795306,0.0714285714285714
+"low_balanced",0.4,"Full-system HC3 Wald",56,15.1579784000233,0.0535714285714286
+"low_balanced",0.4,"Full-system HC3 Wald",56,31.8015171414106,0.0357142857142857
+"low_balanced",0.4,"Full-system HC3 Wald",56,34.1134813673681,0.0178571428571429
+"low_balanced",0.4,"Full-system HC3 Wald",56,37.2123045179677,0
+"low_larger",0.4,"Full-system HC3 Wald",64,0.40090732368349,1
+"low_larger",0.4,"Full-system HC3 Wald",64,0.420952689867665,0.984375
+"low_larger",0.4,"Full-system HC3 Wald",64,0.480032889487385,0.96875
+"low_larger",0.4,"Full-system HC3 Wald",64,0.555278886799031,0.953125
+"low_larger",0.4,"Full-system HC3 Wald",64,0.562915064567272,0.9375
+"low_larger",0.4,"Full-system HC3 Wald",64,0.583613901242193,0.921875
+"low_larger",0.4,"Full-system HC3 Wald",64,0.649715765134445,0.90625
+"low_larger",0.4,"Full-system HC3 Wald",64,0.659935602798971,0.890625
+"low_larger",0.4,"Full-system HC3 Wald",64,0.66576257142567,0.875
+"low_larger",0.4,"Full-system HC3 Wald",64,0.727953657214491,0.859375
+"low_larger",0.4,"Full-system HC3 Wald",64,0.745617111302628,0.84375
+"low_larger",0.4,"Full-system HC3 Wald",64,0.765552659064457,0.828125
+"low_larger",0.4,"Full-system HC3 Wald",64,0.813725517187167,0.8125
+"low_larger",0.4,"Full-system HC3 Wald",64,0.813730145231728,0.796875
+"low_larger",0.4,"Full-system HC3 Wald",64,0.83263190382759,0.78125
+"low_larger",0.4,"Full-system HC3 Wald",64,0.838920043035744,0.765625
+"low_larger",0.4,"Full-system HC3 Wald",64,0.847536736186203,0.75
+"low_larger",0.4,"Full-system HC3 Wald",64,0.893327921690419,0.734375
+"low_larger",0.4,"Full-system HC3 Wald",64,0.975566265592561,0.71875
+"low_larger",0.4,"Full-system HC3 Wald",64,1.00459617109403,0.703125
+"low_larger",0.4,"Full-system HC3 Wald",64,1.01870502959452,0.6875
+"low_larger",0.4,"Full-system HC3 Wald",64,1.04836977740122,0.671875
+"low_larger",0.4,"Full-system HC3 Wald",64,1.08906321427564,0.65625
+"low_larger",0.4,"Full-system HC3 Wald",64,1.2397185405198,0.640625
+"low_larger",0.4,"Full-system HC3 Wald",64,1.24620029446953,0.625
+"low_larger",0.4,"Full-system HC3 Wald",64,1.25676878581621,0.609375
+"low_larger",0.4,"Full-system HC3 Wald",64,1.32393185338842,0.59375
+"low_larger",0.4,"Full-system HC3 Wald",64,1.34261423457807,0.578125
+"low_larger",0.4,"Full-system HC3 Wald",64,1.3619998157171,0.5625
+"low_larger",0.4,"Full-system HC3 Wald",64,1.3638002650647,0.546875
+"low_larger",0.4,"Full-system HC3 Wald",64,1.44542169572094,0.53125
+"low_larger",0.4,"Full-system HC3 Wald",64,1.45097592727526,0.515625
+"low_larger",0.4,"Full-system HC3 Wald",64,1.55425559551379,0.5
+"low_larger",0.4,"Full-system HC3 Wald",64,1.56591752085512,0.484375
+"low_larger",0.4,"Full-system HC3 Wald",64,1.61660575353919,0.46875
+"low_larger",0.4,"Full-system HC3 Wald",64,1.69458754326476,0.453125
+"low_larger",0.4,"Full-system HC3 Wald",64,1.81212708470673,0.4375
+"low_larger",0.4,"Full-system HC3 Wald",64,1.87245263439709,0.421875
+"low_larger",0.4,"Full-system HC3 Wald",64,1.88575788362774,0.40625
+"low_larger",0.4,"Full-system HC3 Wald",64,1.90275818496923,0.390625
+"low_larger",0.4,"Full-system HC3 Wald",64,1.91838605633707,0.375
+"low_larger",0.4,"Full-system HC3 Wald",64,2.00120528444847,0.359375
+"low_larger",0.4,"Full-system HC3 Wald",64,2.14337097900996,0.34375
+"low_larger",0.4,"Full-system HC3 Wald",64,2.14386979750008,0.328125
+"low_larger",0.4,"Full-system HC3 Wald",64,2.38940783007721,0.3125
+"low_larger",0.4,"Full-system HC3 Wald",64,2.54499724770521,0.296875
+"low_larger",0.4,"Full-system HC3 Wald",64,2.55632618744762,0.28125
+"low_larger",0.4,"Full-system HC3 Wald",64,2.57378784223406,0.265625
+"low_larger",0.4,"Full-system HC3 Wald",64,2.59522492605294,0.25
+"low_larger",0.4,"Full-system HC3 Wald",64,2.81720272485711,0.234375
+"low_larger",0.4,"Full-system HC3 Wald",64,2.95619166059594,0.21875
+"low_larger",0.4,"Full-system HC3 Wald",64,3.95964232088078,0.203125
+"low_larger",0.4,"Full-system HC3 Wald",64,4.09426284675563,0.1875
+"low_larger",0.4,"Full-system HC3 Wald",64,4.54190803149216,0.171875
+"low_larger",0.4,"Full-system HC3 Wald",64,5.06272207180091,0.15625
+"low_larger",0.4,"Full-system HC3 Wald",64,5.67168773765601,0.140625
+"low_larger",0.4,"Full-system HC3 Wald",64,6.19608051331988,0.125
+"low_larger",0.4,"Full-system HC3 Wald",64,6.6076270052445,0.109375
+"low_larger",0.4,"Full-system HC3 Wald",64,7.13615860757049,0.09375
+"low_larger",0.4,"Full-system HC3 Wald",64,7.96039419259376,0.078125
+"low_larger",0.4,"Full-system HC3 Wald",64,7.96462047882696,0.0625
+"low_larger",0.4,"Full-system HC3 Wald",64,11.7500670895423,0.046875
+"low_larger",0.4,"Full-system HC3 Wald",64,16.2540705005709,0.03125
+"low_larger",0.4,"Full-system HC3 Wald",64,25.8583531014872,0.015625
+"low_larger",0.4,"Full-system HC3 Wald",64,34.0932016226225,0
+"low_negative",0.4,"Full-system HC3 Wald",48,0.496676419062306,1
+"low_negative",0.4,"Full-system HC3 Wald",48,0.521510240015422,0.979166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,0.552322138891931,0.958333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,0.555738829075902,0.9375
+"low_negative",0.4,"Full-system HC3 Wald",48,0.618805698524068,0.916666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,0.631784423306204,0.895833333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,0.64597404214228,0.875
+"low_negative",0.4,"Full-system HC3 Wald",48,0.75751479877107,0.854166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,0.780193273021437,0.833333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,0.782651087164117,0.8125
+"low_negative",0.4,"Full-system HC3 Wald",48,0.868989196509796,0.791666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,0.881537330250408,0.770833333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,0.884074430163855,0.75
+"low_negative",0.4,"Full-system HC3 Wald",48,0.901433192133536,0.729166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,0.931951554276917,0.708333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,0.960794466617016,0.6875
+"low_negative",0.4,"Full-system HC3 Wald",48,1.03336109488114,0.666666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,1.03999102215968,0.645833333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,1.0486801875777,0.625
+"low_negative",0.4,"Full-system HC3 Wald",48,1.07642981343111,0.604166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,1.10225990890724,0.583333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,1.1211519261146,0.5625
+"low_negative",0.4,"Full-system HC3 Wald",48,1.47685895994187,0.541666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,1.63857428491654,0.520833333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,1.66954630446292,0.5
+"low_negative",0.4,"Full-system HC3 Wald",48,1.72060219195219,0.479166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,1.73958351423424,0.458333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,1.75119661503882,0.4375
+"low_negative",0.4,"Full-system HC3 Wald",48,1.75307408537493,0.416666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,1.84885063565312,0.395833333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,1.9072203752078,0.375
+"low_negative",0.4,"Full-system HC3 Wald",48,2.10842636027822,0.354166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,2.18915310338236,0.333333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,2.36784362017774,0.3125
+"low_negative",0.4,"Full-system HC3 Wald",48,2.63736806921418,0.291666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,3.99875514528438,0.270833333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,5.14751791580202,0.25
+"low_negative",0.4,"Full-system HC3 Wald",48,6.13389777832016,0.229166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,6.53769812651323,0.208333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,6.94118129047336,0.1875
+"low_negative",0.4,"Full-system HC3 Wald",48,8.69302544666601,0.166666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,11.5786372818704,0.145833333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,14.6497982605371,0.125
+"low_negative",0.4,"Full-system HC3 Wald",48,16.1377718454481,0.104166666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,18.7727430014212,0.0833333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,25.8162188555501,0.0625
+"low_negative",0.4,"Full-system HC3 Wald",48,26.5717062576651,0.0416666666666667
+"low_negative",0.4,"Full-system HC3 Wald",48,32.9247475186975,0.0208333333333333
+"low_negative",0.4,"Full-system HC3 Wald",48,37.8180192193987,0
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.431949782070075,1
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.453547271173578,0.984615384615385
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.455760148366256,0.969230769230769
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.466472510684942,0.953846153846154
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.476751015053899,0.938461538461538
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.55518766149407,0.923076923076923
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.602238751561485,0.907692307692308
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.615594912964208,0.892307692307692
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.652367094231057,0.876923076923077
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.65297412456801,0.861538461538462
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.784117129456252,0.846153846153846
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.829805057242385,0.830769230769231
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.916249850434231,0.815384615384615
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.941722409111151,0.8
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.990764988171446,0.784615384615385
+"low_unequal",0.4,"Full-system HC3 Wald",65,0.994183426601749,0.769230769230769
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.05610535187967,0.753846153846154
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.05883703905047,0.738461538461539
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.07516336519375,0.723076923076923
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.204101069238,0.707692307692308
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.27638783052025,0.692307692307692
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.2850572683413,0.676923076923077
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.32078606745758,0.661538461538462
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.33519291064059,0.646153846153846
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.36243500842014,0.630769230769231
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.39412077087809,0.615384615384615
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.4218269514141,0.6
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.46684540583293,0.584615384615385
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.49130169993431,0.569230769230769
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.4946824209192,0.553846153846154
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.55430209150281,0.538461538461538
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.55677753350877,0.523076923076923
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.56136639291863,0.507692307692308
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.59510550383314,0.492307692307692
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.5989012455255,0.476923076923077
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.90188413652074,0.461538461538462
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.95591284952214,0.446153846153846
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.97884143450574,0.430769230769231
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.98650762965324,0.415384615384615
+"low_unequal",0.4,"Full-system HC3 Wald",65,1.99736230231325,0.4
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.03405239899377,0.384615384615385
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.07665121522273,0.369230769230769
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.1198768378241,0.353846153846154
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.1714946385231,0.338461538461538
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.49934101035385,0.323076923076923
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.56172635391184,0.307692307692308
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.56931507834241,0.292307692307692
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.5803964219172,0.276923076923077
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.76665379379004,0.261538461538462
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.78080888568659,0.246153846153846
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.80669729755565,0.230769230769231
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.81103974940505,0.215384615384615
+"low_unequal",0.4,"Full-system HC3 Wald",65,2.83454453539324,0.2
+"low_unequal",0.4,"Full-system HC3 Wald",65,3.16357598113438,0.184615384615385
+"low_unequal",0.4,"Full-system HC3 Wald",65,3.25799140938659,0.169230769230769
+"low_unequal",0.4,"Full-system HC3 Wald",65,4.10171752199112,0.153846153846154
+"low_unequal",0.4,"Full-system HC3 Wald",65,5.9394958041806,0.138461538461538
+"low_unequal",0.4,"Full-system HC3 Wald",65,6.21910428390989,0.123076923076923
+"low_unequal",0.4,"Full-system HC3 Wald",65,6.82758622086821,0.107692307692308
+"low_unequal",0.4,"Full-system HC3 Wald",65,7.44281246374154,0.0923076923076923
+"low_unequal",0.4,"Full-system HC3 Wald",65,8.62036740075899,0.0769230769230769
+"low_unequal",0.4,"Full-system HC3 Wald",65,9.67160535938075,0.0615384615384615
+"low_unequal",0.4,"Full-system HC3 Wald",65,32.533957057753,0.0461538461538462
+"low_unequal",0.4,"Full-system HC3 Wald",65,39.3558365322495,0.0307692307692308
+"low_unequal",0.4,"Full-system HC3 Wald",65,68.0085775028526,0.0153846153846154
+"low_unequal",0.4,"Full-system HC3 Wald",65,86.7942217574926,0
+"small_short",0.4,"Full-system HC3 Wald",45,0.369204053124504,1
+"small_short",0.4,"Full-system HC3 Wald",45,0.387664255780729,0.977777777777778
+"small_short",0.4,"Full-system HC3 Wald",45,0.446637236849888,0.955555555555556
+"small_short",0.4,"Full-system HC3 Wald",45,0.460141919807137,0.933333333333333
+"small_short",0.4,"Full-system HC3 Wald",45,0.476711412711208,0.911111111111111
+"small_short",0.4,"Full-system HC3 Wald",45,0.499964805233221,0.888888888888889
+"small_short",0.4,"Full-system HC3 Wald",45,0.505405549602822,0.866666666666667
+"small_short",0.4,"Full-system HC3 Wald",45,0.548985092827111,0.844444444444444
+"small_short",0.4,"Full-system HC3 Wald",45,0.571437031758744,0.822222222222222
+"small_short",0.4,"Full-system HC3 Wald",45,0.573671273071078,0.8
+"small_short",0.4,"Full-system HC3 Wald",45,0.610711129531215,0.777777777777778
+"small_short",0.4,"Full-system HC3 Wald",45,0.619859885880949,0.755555555555556
+"small_short",0.4,"Full-system HC3 Wald",45,0.654006154988798,0.733333333333333
+"small_short",0.4,"Full-system HC3 Wald",45,0.725045281742436,0.711111111111111
+"small_short",0.4,"Full-system HC3 Wald",45,0.739876289076021,0.688888888888889
+"small_short",0.4,"Full-system HC3 Wald",45,0.80310527694988,0.666666666666667
+"small_short",0.4,"Full-system HC3 Wald",45,0.813185167419043,0.644444444444444
+"small_short",0.4,"Full-system HC3 Wald",45,0.850526235949349,0.622222222222222
+"small_short",0.4,"Full-system HC3 Wald",45,0.877229878902506,0.6
+"small_short",0.4,"Full-system HC3 Wald",45,0.877791691753494,0.577777777777778
+"small_short",0.4,"Full-system HC3 Wald",45,0.890063519393798,0.555555555555556
+"small_short",0.4,"Full-system HC3 Wald",45,0.903738630313578,0.533333333333333
+"small_short",0.4,"Full-system HC3 Wald",45,1.11084234191637,0.511111111111111
+"small_short",0.4,"Full-system HC3 Wald",45,1.19919420830384,0.488888888888889
+"small_short",0.4,"Full-system HC3 Wald",45,1.25845931935246,0.466666666666667
+"small_short",0.4,"Full-system HC3 Wald",45,1.28492405871169,0.444444444444444
+"small_short",0.4,"Full-system HC3 Wald",45,1.28579874614981,0.422222222222222
+"small_short",0.4,"Full-system HC3 Wald",45,1.36762859095176,0.4
+"small_short",0.4,"Full-system HC3 Wald",45,1.42244112911503,0.377777777777778
+"small_short",0.4,"Full-system HC3 Wald",45,1.45732784634874,0.355555555555556
+"small_short",0.4,"Full-system HC3 Wald",45,1.55140817011149,0.333333333333333
+"small_short",0.4,"Full-system HC3 Wald",45,1.57351088306038,0.311111111111111
+"small_short",0.4,"Full-system HC3 Wald",45,1.69655293281021,0.288888888888889
+"small_short",0.4,"Full-system HC3 Wald",45,1.85136643170528,0.266666666666667
+"small_short",0.4,"Full-system HC3 Wald",45,2.01996890504096,0.244444444444444
+"small_short",0.4,"Full-system HC3 Wald",45,2.0707819806601,0.222222222222222
+"small_short",0.4,"Full-system HC3 Wald",45,2.18225090887601,0.2
+"small_short",0.4,"Full-system HC3 Wald",45,2.3337637061874,0.177777777777778
+"small_short",0.4,"Full-system HC3 Wald",45,2.35134517868077,0.155555555555556
+"small_short",0.4,"Full-system HC3 Wald",45,2.60338923367103,0.133333333333333
+"small_short",0.4,"Full-system HC3 Wald",45,2.94070304467409,0.111111111111111
+"small_short",0.4,"Full-system HC3 Wald",45,6.3278264560316,0.0888888888888889
+"small_short",0.4,"Full-system HC3 Wald",45,8.19073057945744,0.0666666666666667
+"small_short",0.4,"Full-system HC3 Wald",45,8.84870522567048,0.0444444444444444
+"small_short",0.4,"Full-system HC3 Wald",45,16.0860838633656,0.0222222222222222
+"small_short",0.4,"Full-system HC3 Wald",45,16.2450283380155,0
+"high_control",0.4,"Person percentile",100,0.261723864407841,1
+"high_control",0.4,"Person percentile",100,0.274810057628233,0.99
+"high_control",0.4,"Person percentile",100,0.284648395101171,0.98
+"high_control",0.4,"Person percentile",100,0.309095694911449,0.97
+"high_control",0.4,"Person percentile",100,0.319257985278885,0.96
+"high_control",0.4,"Person percentile",100,0.322811493111061,0.95
+"high_control",0.4,"Person percentile",100,0.336641840955583,0.94
+"high_control",0.4,"Person percentile",100,0.338768623264531,0.93
+"high_control",0.4,"Person percentile",100,0.339789243501394,0.92
+"high_control",0.4,"Person percentile",100,0.343237635096936,0.91
+"high_control",0.4,"Person percentile",100,0.350141979149224,0.9
+"high_control",0.4,"Person percentile",100,0.351192539450497,0.89
+"high_control",0.4,"Person percentile",100,0.352980006459932,0.88
+"high_control",0.4,"Person percentile",100,0.359574701570228,0.87
+"high_control",0.4,"Person percentile",100,0.363141660621398,0.86
+"high_control",0.4,"Person percentile",100,0.366235424486474,0.85
+"high_control",0.4,"Person percentile",100,0.367515657154076,0.84
+"high_control",0.4,"Person percentile",100,0.369204982929501,0.83
+"high_control",0.4,"Person percentile",100,0.374300808830496,0.82
+"high_control",0.4,"Person percentile",100,0.376789968365767,0.81
+"high_control",0.4,"Person percentile",100,0.378134978723305,0.8
+"high_control",0.4,"Person percentile",100,0.379252706634664,0.79
+"high_control",0.4,"Person percentile",100,0.381071536108496,0.78
+"high_control",0.4,"Person percentile",100,0.392268772530963,0.77
+"high_control",0.4,"Person percentile",100,0.392652574875967,0.76
+"high_control",0.4,"Person percentile",100,0.395552194812462,0.75
+"high_control",0.4,"Person percentile",100,0.397296920583455,0.74
+"high_control",0.4,"Person percentile",100,0.400908381344228,0.73
+"high_control",0.4,"Person percentile",100,0.402426783852363,0.72
+"high_control",0.4,"Person percentile",100,0.409359001610114,0.71
+"high_control",0.4,"Person percentile",100,0.410201655338035,0.7
+"high_control",0.4,"Person percentile",100,0.414898053125064,0.69
+"high_control",0.4,"Person percentile",100,0.417499309495076,0.68
+"high_control",0.4,"Person percentile",100,0.417684246684631,0.67
+"high_control",0.4,"Person percentile",100,0.420043613881868,0.66
+"high_control",0.4,"Person percentile",100,0.420702182336473,0.65
+"high_control",0.4,"Person percentile",100,0.421747616488981,0.64
+"high_control",0.4,"Person percentile",100,0.422134668849462,0.63
+"high_control",0.4,"Person percentile",100,0.425291256803146,0.62
+"high_control",0.4,"Person percentile",100,0.429487280172208,0.61
+"high_control",0.4,"Person percentile",100,0.434107627328872,0.6
+"high_control",0.4,"Person percentile",100,0.435411123849636,0.59
+"high_control",0.4,"Person percentile",100,0.439340607476428,0.58
+"high_control",0.4,"Person percentile",100,0.445311707939294,0.57
+"high_control",0.4,"Person percentile",100,0.450537106775266,0.56
+"high_control",0.4,"Person percentile",100,0.451894692493277,0.55
+"high_control",0.4,"Person percentile",100,0.45590433323759,0.54
+"high_control",0.4,"Person percentile",100,0.456668173195613,0.53
+"high_control",0.4,"Person percentile",100,0.458058349402562,0.52
+"high_control",0.4,"Person percentile",100,0.460748962452663,0.51
+"high_control",0.4,"Person percentile",100,0.462010520075445,0.5
+"high_control",0.4,"Person percentile",100,0.46419055632388,0.49
+"high_control",0.4,"Person percentile",100,0.46472562401049,0.48
+"high_control",0.4,"Person percentile",100,0.466060950688035,0.47
+"high_control",0.4,"Person percentile",100,0.467683597713991,0.46
+"high_control",0.4,"Person percentile",100,0.468312203674034,0.45
+"high_control",0.4,"Person percentile",100,0.468554843215137,0.44
+"high_control",0.4,"Person percentile",100,0.469291184424136,0.43
+"high_control",0.4,"Person percentile",100,0.47218208698013,0.42
+"high_control",0.4,"Person percentile",100,0.473727392672345,0.41
+"high_control",0.4,"Person percentile",100,0.475795257203138,0.4
+"high_control",0.4,"Person percentile",100,0.485077042107329,0.39
+"high_control",0.4,"Person percentile",100,0.48647628547273,0.38
+"high_control",0.4,"Person percentile",100,0.486733626622448,0.37
+"high_control",0.4,"Person percentile",100,0.49485443145164,0.36
+"high_control",0.4,"Person percentile",100,0.498265057351056,0.35
+"high_control",0.4,"Person percentile",100,0.501115414504162,0.34
+"high_control",0.4,"Person percentile",100,0.503454457633949,0.33
+"high_control",0.4,"Person percentile",100,0.505920608874688,0.32
+"high_control",0.4,"Person percentile",100,0.509775279237014,0.31
+"high_control",0.4,"Person percentile",100,0.511100304258819,0.3
+"high_control",0.4,"Person percentile",100,0.514447292796897,0.29
+"high_control",0.4,"Person percentile",100,0.51698147229246,0.28
+"high_control",0.4,"Person percentile",100,0.523455176301588,0.27
+"high_control",0.4,"Person percentile",100,0.523747899404419,0.26
+"high_control",0.4,"Person percentile",100,0.524369580016492,0.25
+"high_control",0.4,"Person percentile",100,0.529160438454982,0.24
+"high_control",0.4,"Person percentile",100,0.531531158070707,0.23
+"high_control",0.4,"Person percentile",100,0.532587011467589,0.22
+"high_control",0.4,"Person percentile",100,0.537664758717149,0.21
+"high_control",0.4,"Person percentile",100,0.537877355252714,0.2
+"high_control",0.4,"Person percentile",100,0.545396382066759,0.19
+"high_control",0.4,"Person percentile",100,0.547642137437164,0.18
+"high_control",0.4,"Person percentile",100,0.54912176773616,0.17
+"high_control",0.4,"Person percentile",100,0.573563554167868,0.16
+"high_control",0.4,"Person percentile",100,0.574057606025352,0.15
+"high_control",0.4,"Person percentile",100,0.584498289745005,0.14
+"high_control",0.4,"Person percentile",100,0.595257012219931,0.13
+"high_control",0.4,"Person percentile",100,0.595832967691458,0.12
+"high_control",0.4,"Person percentile",100,0.601181896679815,0.11
+"high_control",0.4,"Person percentile",100,0.601698181677707,0.1
+"high_control",0.4,"Person percentile",100,0.611690251200085,0.09
+"high_control",0.4,"Person percentile",100,0.625426132146446,0.08
+"high_control",0.4,"Person percentile",100,0.63578236017171,0.07
+"high_control",0.4,"Person percentile",100,0.64717592088058,0.06
+"high_control",0.4,"Person percentile",100,0.672952383451314,0.05
+"high_control",0.4,"Person percentile",100,0.678551844379166,0.04
+"high_control",0.4,"Person percentile",100,0.680975739707579,0.03
+"high_control",0.4,"Person percentile",100,0.682873426003152,0.02
+"high_control",0.4,"Person percentile",100,0.734823155082712,0.01
+"high_control",0.4,"Person percentile",100,0.85028228063059,0
+"low_balanced",0.4,"Person percentile",97,0.3331541929615,1
+"low_balanced",0.4,"Person percentile",97,0.349811902609575,0.989690721649485
+"low_balanced",0.4,"Person percentile",97,0.366983585590434,0.979381443298969
+"low_balanced",0.4,"Person percentile",97,0.396779734269857,0.969072164948454
+"low_balanced",0.4,"Person percentile",97,0.438212749689202,0.958762886597938
+"low_balanced",0.4,"Person percentile",97,0.473157692314726,0.948453608247423
+"low_balanced",0.4,"Person percentile",97,0.476882046065516,0.938144329896907
+"low_balanced",0.4,"Person percentile",97,0.484545912608442,0.927835051546392
+"low_balanced",0.4,"Person percentile",97,0.498323103215435,0.917525773195876
+"low_balanced",0.4,"Person percentile",97,0.502019190550937,0.907216494845361
+"low_balanced",0.4,"Person percentile",97,0.505134900711816,0.896907216494845
+"low_balanced",0.4,"Person percentile",97,0.508327372926913,0.88659793814433
+"low_balanced",0.4,"Person percentile",97,0.522794898294306,0.876288659793814
+"low_balanced",0.4,"Person percentile",97,0.539506382887264,0.865979381443299
+"low_balanced",0.4,"Person percentile",97,0.551093916574818,0.855670103092783
+"low_balanced",0.4,"Person percentile",97,0.561365341964855,0.845360824742268
+"low_balanced",0.4,"Person percentile",97,0.585534331608275,0.835051546391753
+"low_balanced",0.4,"Person percentile",97,0.587815888787302,0.824742268041237
+"low_balanced",0.4,"Person percentile",97,0.615748517244464,0.814432989690722
+"low_balanced",0.4,"Person percentile",97,0.620161406657526,0.804123711340206
+"low_balanced",0.4,"Person percentile",97,0.621133966782021,0.793814432989691
+"low_balanced",0.4,"Person percentile",97,0.631260241162176,0.783505154639175
+"low_balanced",0.4,"Person percentile",97,0.6381072872514,0.77319587628866
+"low_balanced",0.4,"Person percentile",97,0.641900350177819,0.762886597938144
+"low_balanced",0.4,"Person percentile",97,0.642505443272909,0.752577319587629
+"low_balanced",0.4,"Person percentile",97,0.660836871217836,0.742268041237113
+"low_balanced",0.4,"Person percentile",97,0.664648229364714,0.731958762886598
+"low_balanced",0.4,"Person percentile",97,0.666218411190964,0.721649484536082
+"low_balanced",0.4,"Person percentile",97,0.666899902111792,0.711340206185567
+"low_balanced",0.4,"Person percentile",97,0.675594035210289,0.701030927835051
+"low_balanced",0.4,"Person percentile",97,0.697018153510031,0.690721649484536
+"low_balanced",0.4,"Person percentile",97,0.701813959975339,0.680412371134021
+"low_balanced",0.4,"Person percentile",97,0.705320190812891,0.670103092783505
+"low_balanced",0.4,"Person percentile",97,0.708929690257585,0.65979381443299
+"low_balanced",0.4,"Person percentile",97,0.712953218200815,0.649484536082474
+"low_balanced",0.4,"Person percentile",97,0.720392160490227,0.639175257731959
+"low_balanced",0.4,"Person percentile",97,0.724770469845316,0.628865979381443
+"low_balanced",0.4,"Person percentile",97,0.744340572909137,0.618556701030928
+"low_balanced",0.4,"Person percentile",97,0.74532281028994,0.608247422680412
+"low_balanced",0.4,"Person percentile",97,0.745628471541278,0.597938144329897
+"low_balanced",0.4,"Person percentile",97,0.75059211471348,0.587628865979381
+"low_balanced",0.4,"Person percentile",97,0.767505178467975,0.577319587628866
+"low_balanced",0.4,"Person percentile",97,0.779860696946989,0.56701030927835
+"low_balanced",0.4,"Person percentile",97,0.782005472594307,0.556701030927835
+"low_balanced",0.4,"Person percentile",97,0.7953751560361,0.54639175257732
+"low_balanced",0.4,"Person percentile",97,0.798368915072372,0.536082474226804
+"low_balanced",0.4,"Person percentile",97,0.799622451755265,0.525773195876289
+"low_balanced",0.4,"Person percentile",97,0.804909221099653,0.515463917525773
+"low_balanced",0.4,"Person percentile",97,0.808278587153952,0.505154639175258
+"low_balanced",0.4,"Person percentile",97,0.817581574770961,0.494845360824742
+"low_balanced",0.4,"Person percentile",97,0.832635591506301,0.484536082474227
+"low_balanced",0.4,"Person percentile",97,0.850561022184918,0.474226804123711
+"low_balanced",0.4,"Person percentile",97,0.853238350085032,0.463917525773196
+"low_balanced",0.4,"Person percentile",97,0.859542511409216,0.45360824742268
+"low_balanced",0.4,"Person percentile",97,0.861663710277159,0.443298969072165
+"low_balanced",0.4,"Person percentile",97,0.864267577761658,0.43298969072165
+"low_balanced",0.4,"Person percentile",97,0.866274683400917,0.422680412371134
+"low_balanced",0.4,"Person percentile",97,0.871132246915302,0.412371134020619
+"low_balanced",0.4,"Person percentile",97,0.873150902280889,0.402061855670103
+"low_balanced",0.4,"Person percentile",97,0.885138231436204,0.391752577319588
+"low_balanced",0.4,"Person percentile",97,0.900019671548374,0.381443298969072
+"low_balanced",0.4,"Person percentile",97,0.904471883240014,0.371134020618557
+"low_balanced",0.4,"Person percentile",97,0.912604859249662,0.360824742268041
+"low_balanced",0.4,"Person percentile",97,0.926759623224399,0.350515463917526
+"low_balanced",0.4,"Person percentile",97,0.929845683252837,0.34020618556701
+"low_balanced",0.4,"Person percentile",97,0.936610336306273,0.329896907216495
+"low_balanced",0.4,"Person percentile",97,0.960107207965461,0.319587628865979
+"low_balanced",0.4,"Person percentile",97,0.971333310812187,0.309278350515464
+"low_balanced",0.4,"Person percentile",97,0.973216855118499,0.298969072164948
+"low_balanced",0.4,"Person percentile",97,0.974730543108565,0.288659793814433
+"low_balanced",0.4,"Person percentile",97,0.988128730898464,0.278350515463918
+"low_balanced",0.4,"Person percentile",97,1.0310995108974,0.268041237113402
+"low_balanced",0.4,"Person percentile",97,1.03478406785818,0.257731958762887
+"low_balanced",0.4,"Person percentile",97,1.04854731032852,0.247422680412371
+"low_balanced",0.4,"Person percentile",97,1.0602254211507,0.237113402061856
+"low_balanced",0.4,"Person percentile",97,1.0702818075518,0.22680412371134
+"low_balanced",0.4,"Person percentile",97,1.08881056236635,0.216494845360825
+"low_balanced",0.4,"Person percentile",97,1.10273502011032,0.206185567010309
+"low_balanced",0.4,"Person percentile",97,1.10883687487193,0.195876288659794
+"low_balanced",0.4,"Person percentile",97,1.12965118019113,0.185567010309278
+"low_balanced",0.4,"Person percentile",97,1.13430865948352,0.175257731958763
+"low_balanced",0.4,"Person percentile",97,1.13901665321291,0.164948453608247
+"low_balanced",0.4,"Person percentile",97,1.147223942805,0.154639175257732
+"low_balanced",0.4,"Person percentile",97,1.15579967488851,0.144329896907216
+"low_balanced",0.4,"Person percentile",97,1.16219505762526,0.134020618556701
+"low_balanced",0.4,"Person percentile",97,1.16822708454507,0.123711340206186
+"low_balanced",0.4,"Person percentile",97,1.18119312104218,0.11340206185567
+"low_balanced",0.4,"Person percentile",97,1.23513923895707,0.103092783505155
+"low_balanced",0.4,"Person percentile",97,1.24761119628457,0.0927835051546392
+"low_balanced",0.4,"Person percentile",97,1.28861970326406,0.0824742268041237
+"low_balanced",0.4,"Person percentile",97,1.32049554802597,0.0721649484536082
+"low_balanced",0.4,"Person percentile",97,1.3449883787949,0.0618556701030928
+"low_balanced",0.4,"Person percentile",97,1.34796082678459,0.0515463917525773
+"low_balanced",0.4,"Person percentile",97,1.35738845657557,0.0412371134020619
+"low_balanced",0.4,"Person percentile",97,1.39343670646916,0.0309278350515464
+"low_balanced",0.4,"Person percentile",97,1.42656943811433,0.0206185567010309
+"low_balanced",0.4,"Person percentile",97,1.44383464714017,0.0103092783505155
+"low_balanced",0.4,"Person percentile",97,1.59672303790288,0
+"low_larger",0.4,"Person percentile",96,0.555439907443984,1
+"low_larger",0.4,"Person percentile",96,0.583211902816183,0.989583333333333
+"low_larger",0.4,"Person percentile",96,0.584494793890408,0.979166666666667
+"low_larger",0.4,"Person percentile",96,0.612165609772287,0.96875
+"low_larger",0.4,"Person percentile",96,0.661205171143045,0.958333333333333
+"low_larger",0.4,"Person percentile",96,0.688677633945548,0.947916666666667
+"low_larger",0.4,"Person percentile",96,0.70699276932017,0.9375
+"low_larger",0.4,"Person percentile",96,0.712590638920611,0.927083333333333
+"low_larger",0.4,"Person percentile",96,0.728954348049725,0.916666666666667
+"low_larger",0.4,"Person percentile",96,0.742560177949246,0.90625
+"low_larger",0.4,"Person percentile",96,0.753273676209131,0.895833333333333
+"low_larger",0.4,"Person percentile",96,0.769366618445903,0.885416666666667
+"low_larger",0.4,"Person percentile",96,0.771771921607138,0.875
+"low_larger",0.4,"Person percentile",96,0.804696619037135,0.864583333333333
+"low_larger",0.4,"Person percentile",96,0.833685449270095,0.854166666666667
+"low_larger",0.4,"Person percentile",96,0.84010838055571,0.84375
+"low_larger",0.4,"Person percentile",96,0.846059626503941,0.833333333333333
+"low_larger",0.4,"Person percentile",96,0.849635271864858,0.822916666666667
+"low_larger",0.4,"Person percentile",96,0.852014536934435,0.8125
+"low_larger",0.4,"Person percentile",96,0.859997455238375,0.802083333333333
+"low_larger",0.4,"Person percentile",96,0.86542929427966,0.791666666666667
+"low_larger",0.4,"Person percentile",96,0.879761674498664,0.78125
+"low_larger",0.4,"Person percentile",96,0.882989706617366,0.770833333333333
+"low_larger",0.4,"Person percentile",96,0.887939759413549,0.760416666666667
+"low_larger",0.4,"Person percentile",96,0.900383049339112,0.75
+"low_larger",0.4,"Person percentile",96,0.912409870878183,0.739583333333333
+"low_larger",0.4,"Person percentile",96,0.922655752733166,0.729166666666667
+"low_larger",0.4,"Person percentile",96,0.934156852615586,0.71875
+"low_larger",0.4,"Person percentile",96,0.941847563184095,0.708333333333333
+"low_larger",0.4,"Person percentile",96,0.947848524680506,0.697916666666667
+"low_larger",0.4,"Person percentile",96,0.991442880036191,0.6875
+"low_larger",0.4,"Person percentile",96,0.997388314920379,0.677083333333333
+"low_larger",0.4,"Person percentile",96,1.00661684336959,0.666666666666667
+"low_larger",0.4,"Person percentile",96,1.03008740009405,0.65625
+"low_larger",0.4,"Person percentile",96,1.051462472426,0.645833333333333
+"low_larger",0.4,"Person percentile",96,1.06267516887197,0.635416666666667
+"low_larger",0.4,"Person percentile",96,1.06381916512603,0.625
+"low_larger",0.4,"Person percentile",96,1.08261795699727,0.614583333333333
+"low_larger",0.4,"Person percentile",96,1.09225585472644,0.604166666666667
+"low_larger",0.4,"Person percentile",96,1.10391399799159,0.59375
+"low_larger",0.4,"Person percentile",96,1.10717212690871,0.583333333333333
+"low_larger",0.4,"Person percentile",96,1.10990825959775,0.572916666666667
+"low_larger",0.4,"Person percentile",96,1.11926708408153,0.5625
+"low_larger",0.4,"Person percentile",96,1.11983927692807,0.552083333333333
+"low_larger",0.4,"Person percentile",96,1.11997167357363,0.541666666666667
+"low_larger",0.4,"Person percentile",96,1.12591342098323,0.53125
+"low_larger",0.4,"Person percentile",96,1.13412478648783,0.520833333333333
+"low_larger",0.4,"Person percentile",96,1.13813795637768,0.510416666666667
+"low_larger",0.4,"Person percentile",96,1.14127849967541,0.5
+"low_larger",0.4,"Person percentile",96,1.14262713268717,0.489583333333333
+"low_larger",0.4,"Person percentile",96,1.14590450616457,0.479166666666667
+"low_larger",0.4,"Person percentile",96,1.16024633819665,0.46875
+"low_larger",0.4,"Person percentile",96,1.16432526512996,0.458333333333333
+"low_larger",0.4,"Person percentile",96,1.17667516119244,0.447916666666667
+"low_larger",0.4,"Person percentile",96,1.17748176262919,0.4375
+"low_larger",0.4,"Person percentile",96,1.21994222709884,0.427083333333333
+"low_larger",0.4,"Person percentile",96,1.22852141825329,0.416666666666667
+"low_larger",0.4,"Person percentile",96,1.23256961085519,0.40625
+"low_larger",0.4,"Person percentile",96,1.23612880009165,0.395833333333333
+"low_larger",0.4,"Person percentile",96,1.24928657954502,0.385416666666667
+"low_larger",0.4,"Person percentile",96,1.25691198261892,0.375
+"low_larger",0.4,"Person percentile",96,1.28014111789668,0.364583333333333
+"low_larger",0.4,"Person percentile",96,1.28641615239239,0.354166666666667
+"low_larger",0.4,"Person percentile",96,1.28858543554719,0.34375
+"low_larger",0.4,"Person percentile",96,1.31272809426877,0.333333333333333
+"low_larger",0.4,"Person percentile",96,1.31282139746806,0.322916666666667
+"low_larger",0.4,"Person percentile",96,1.31571103247372,0.3125
+"low_larger",0.4,"Person percentile",96,1.3251156111982,0.302083333333333
+"low_larger",0.4,"Person percentile",96,1.35072371709078,0.291666666666667
+"low_larger",0.4,"Person percentile",96,1.37754408916862,0.28125
+"low_larger",0.4,"Person percentile",96,1.38473016281967,0.270833333333333
+"low_larger",0.4,"Person percentile",96,1.38714679010303,0.260416666666667
+"low_larger",0.4,"Person percentile",96,1.40046016618483,0.25
+"low_larger",0.4,"Person percentile",96,1.40583214245238,0.239583333333333
+"low_larger",0.4,"Person percentile",96,1.41007168143748,0.229166666666667
+"low_larger",0.4,"Person percentile",96,1.4180798333648,0.21875
+"low_larger",0.4,"Person percentile",96,1.4197742293947,0.208333333333333
+"low_larger",0.4,"Person percentile",96,1.41988010224831,0.197916666666667
+"low_larger",0.4,"Person percentile",96,1.46012548733914,0.1875
+"low_larger",0.4,"Person percentile",96,1.474878727531,0.177083333333333
+"low_larger",0.4,"Person percentile",96,1.47595941003238,0.166666666666667
+"low_larger",0.4,"Person percentile",96,1.51061170514333,0.15625
+"low_larger",0.4,"Person percentile",96,1.51596043581095,0.145833333333333
+"low_larger",0.4,"Person percentile",96,1.52036188835767,0.135416666666667
+"low_larger",0.4,"Person percentile",96,1.52539042083929,0.125
+"low_larger",0.4,"Person percentile",96,1.55837039911556,0.114583333333333
+"low_larger",0.4,"Person percentile",96,1.58697848103283,0.104166666666667
+"low_larger",0.4,"Person percentile",96,1.60226261938166,0.09375
+"low_larger",0.4,"Person percentile",96,1.6042905175475,0.0833333333333333
+"low_larger",0.4,"Person percentile",96,1.61501181458097,0.0729166666666667
+"low_larger",0.4,"Person percentile",96,1.61939946216938,0.0625
+"low_larger",0.4,"Person percentile",96,1.6212978113881,0.0520833333333333
+"low_larger",0.4,"Person percentile",96,1.71324078091396,0.0416666666666667
+"low_larger",0.4,"Person percentile",96,1.71874891623795,0.03125
+"low_larger",0.4,"Person percentile",96,1.82111557102465,0.0208333333333333
+"low_larger",0.4,"Person percentile",96,1.89134027409695,0.0104166666666667
+"low_larger",0.4,"Person percentile",96,1.95285826011499,0
+"low_negative",0.4,"Person percentile",98,0.470201843614378,1
+"low_negative",0.4,"Person percentile",98,0.493711935795097,0.989795918367347
+"low_negative",0.4,"Person percentile",98,0.504067849788258,0.979591836734694
+"low_negative",0.4,"Person percentile",98,0.580059441275231,0.969387755102041
+"low_negative",0.4,"Person percentile",98,0.5804051774097,0.959183673469388
+"low_negative",0.4,"Person percentile",98,0.58315422501322,0.948979591836735
+"low_negative",0.4,"Person percentile",98,0.619941354753844,0.938775510204082
+"low_negative",0.4,"Person percentile",98,0.622479308194372,0.928571428571429
+"low_negative",0.4,"Person percentile",98,0.626928999565505,0.918367346938776
+"low_negative",0.4,"Person percentile",98,0.639218575159734,0.908163265306122
+"low_negative",0.4,"Person percentile",98,0.646297804819893,0.897959183673469
+"low_negative",0.4,"Person percentile",98,0.659198875252796,0.887755102040816
+"low_negative",0.4,"Person percentile",98,0.672154459802704,0.877551020408163
+"low_negative",0.4,"Person percentile",98,0.678996354154179,0.86734693877551
+"low_negative",0.4,"Person percentile",98,0.680765384599359,0.857142857142857
+"low_negative",0.4,"Person percentile",98,0.700026319256333,0.846938775510204
+"low_negative",0.4,"Person percentile",98,0.72934350312836,0.836734693877551
+"low_negative",0.4,"Person percentile",98,0.739053169637453,0.826530612244898
+"low_negative",0.4,"Person percentile",98,0.741067358376375,0.816326530612245
+"low_negative",0.4,"Person percentile",98,0.745938107726833,0.806122448979592
+"low_negative",0.4,"Person percentile",98,0.771568256150304,0.795918367346939
+"low_negative",0.4,"Person percentile",98,0.783081106064855,0.785714285714286
+"low_negative",0.4,"Person percentile",98,0.787273836449734,0.775510204081633
+"low_negative",0.4,"Person percentile",98,0.793456419336691,0.76530612244898
+"low_negative",0.4,"Person percentile",98,0.793611246043882,0.755102040816326
+"low_negative",0.4,"Person percentile",98,0.79898706277016,0.744897959183674
+"low_negative",0.4,"Person percentile",98,0.812900780449661,0.73469387755102
+"low_negative",0.4,"Person percentile",98,0.825048398015242,0.724489795918367
+"low_negative",0.4,"Person percentile",98,0.825799567571363,0.714285714285714
+"low_negative",0.4,"Person percentile",98,0.839345798410237,0.704081632653061
+"low_negative",0.4,"Person percentile",98,0.861303580680339,0.693877551020408
+"low_negative",0.4,"Person percentile",98,0.871528993575599,0.683673469387755
+"low_negative",0.4,"Person percentile",98,0.87527277721895,0.673469387755102
+"low_negative",0.4,"Person percentile",98,0.878202402218769,0.663265306122449
+"low_negative",0.4,"Person percentile",98,0.88637750061744,0.653061224489796
+"low_negative",0.4,"Person percentile",98,0.888025694576713,0.642857142857143
+"low_negative",0.4,"Person percentile",98,0.894458800956967,0.63265306122449
+"low_negative",0.4,"Person percentile",98,0.89563441274745,0.622448979591837
+"low_negative",0.4,"Person percentile",98,0.908171064552178,0.612244897959184
+"low_negative",0.4,"Person percentile",98,0.932237346666523,0.602040816326531
+"low_negative",0.4,"Person percentile",98,0.935721083193473,0.591836734693878
+"low_negative",0.4,"Person percentile",98,0.936752324265352,0.581632653061224
+"low_negative",0.4,"Person percentile",98,0.940179079148252,0.571428571428571
+"low_negative",0.4,"Person percentile",98,0.944127124248268,0.561224489795918
+"low_negative",0.4,"Person percentile",98,0.950147536041772,0.551020408163265
+"low_negative",0.4,"Person percentile",98,0.952788615937463,0.540816326530612
+"low_negative",0.4,"Person percentile",98,0.95792269320186,0.530612244897959
+"low_negative",0.4,"Person percentile",98,0.967709322754723,0.520408163265306
+"low_negative",0.4,"Person percentile",98,0.971770220422161,0.510204081632653
+"low_negative",0.4,"Person percentile",98,0.985629910568645,0.5
+"low_negative",0.4,"Person percentile",98,0.991962019803167,0.489795918367347
+"low_negative",0.4,"Person percentile",98,1.00960781111499,0.479591836734694
+"low_negative",0.4,"Person percentile",98,1.01529434258061,0.469387755102041
+"low_negative",0.4,"Person percentile",98,1.01597210177694,0.459183673469388
+"low_negative",0.4,"Person percentile",98,1.02075533171642,0.448979591836735
+"low_negative",0.4,"Person percentile",98,1.0249986404703,0.438775510204082
+"low_negative",0.4,"Person percentile",98,1.04103745076807,0.428571428571429
+"low_negative",0.4,"Person percentile",98,1.05631891365358,0.418367346938776
+"low_negative",0.4,"Person percentile",98,1.07717374582294,0.408163265306122
+"low_negative",0.4,"Person percentile",98,1.08326223369212,0.397959183673469
+"low_negative",0.4,"Person percentile",98,1.09200556031077,0.387755102040816
+"low_negative",0.4,"Person percentile",98,1.09467511977229,0.377551020408163
+"low_negative",0.4,"Person percentile",98,1.10493682822635,0.36734693877551
+"low_negative",0.4,"Person percentile",98,1.10798523119426,0.357142857142857
+"low_negative",0.4,"Person percentile",98,1.11961841545326,0.346938775510204
+"low_negative",0.4,"Person percentile",98,1.12938550387247,0.336734693877551
+"low_negative",0.4,"Person percentile",98,1.1294949906838,0.326530612244898
+"low_negative",0.4,"Person percentile",98,1.13239642664074,0.316326530612245
+"low_negative",0.4,"Person percentile",98,1.15091831403964,0.306122448979592
+"low_negative",0.4,"Person percentile",98,1.17196737219755,0.295918367346939
+"low_negative",0.4,"Person percentile",98,1.18276449191654,0.285714285714286
+"low_negative",0.4,"Person percentile",98,1.194104423476,0.275510204081633
+"low_negative",0.4,"Person percentile",98,1.19636170753778,0.26530612244898
+"low_negative",0.4,"Person percentile",98,1.21559294236561,0.255102040816327
+"low_negative",0.4,"Person percentile",98,1.22630296232491,0.244897959183673
+"low_negative",0.4,"Person percentile",98,1.24077727002179,0.23469387755102
+"low_negative",0.4,"Person percentile",98,1.24123206018553,0.224489795918367
+"low_negative",0.4,"Person percentile",98,1.25208405359706,0.214285714285714
+"low_negative",0.4,"Person percentile",98,1.27481163769419,0.204081632653061
+"low_negative",0.4,"Person percentile",98,1.28866702779556,0.193877551020408
+"low_negative",0.4,"Person percentile",98,1.29139071289419,0.183673469387755
+"low_negative",0.4,"Person percentile",98,1.30326989090549,0.173469387755102
+"low_negative",0.4,"Person percentile",98,1.31801685629068,0.163265306122449
+"low_negative",0.4,"Person percentile",98,1.33194358890058,0.153061224489796
+"low_negative",0.4,"Person percentile",98,1.34072106885389,0.142857142857143
+"low_negative",0.4,"Person percentile",98,1.38459717307935,0.13265306122449
+"low_negative",0.4,"Person percentile",98,1.43322784732612,0.122448979591837
+"low_negative",0.4,"Person percentile",98,1.43906453757661,0.112244897959184
+"low_negative",0.4,"Person percentile",98,1.44268346452448,0.102040816326531
+"low_negative",0.4,"Person percentile",98,1.45575034212723,0.0918367346938776
+"low_negative",0.4,"Person percentile",98,1.52897543635436,0.0816326530612245
+"low_negative",0.4,"Person percentile",98,1.54348609887938,0.0714285714285714
+"low_negative",0.4,"Person percentile",98,1.58599747051062,0.0612244897959184
+"low_negative",0.4,"Person percentile",98,1.60745683783856,0.0510204081632653
+"low_negative",0.4,"Person percentile",98,1.62809447743732,0.0408163265306122
+"low_negative",0.4,"Person percentile",98,1.62828916606983,0.0306122448979592
+"low_negative",0.4,"Person percentile",98,1.67579079215278,0.0204081632653061
+"low_negative",0.4,"Person percentile",98,1.7161833966916,0.0102040816326531
+"low_negative",0.4,"Person percentile",98,1.71859272163534,0
+"low_unequal",0.4,"Person percentile",96,0.421631275695505,1
+"low_unequal",0.4,"Person percentile",96,0.44271283948028,0.989583333333333
+"low_unequal",0.4,"Person percentile",96,0.459443292651583,0.979166666666667
+"low_unequal",0.4,"Person percentile",96,0.469721646000486,0.96875
+"low_unequal",0.4,"Person percentile",96,0.479511035515228,0.958333333333333
+"low_unequal",0.4,"Person percentile",96,0.48333404007288,0.947916666666667
+"low_unequal",0.4,"Person percentile",96,0.511061384116953,0.9375
+"low_unequal",0.4,"Person percentile",96,0.525060768964375,0.927083333333333
+"low_unequal",0.4,"Person percentile",96,0.529665013710428,0.916666666666667
+"low_unequal",0.4,"Person percentile",96,0.540716447940224,0.90625
+"low_unequal",0.4,"Person percentile",96,0.575815106297176,0.895833333333333
+"low_unequal",0.4,"Person percentile",96,0.578926698719445,0.885416666666667
+"low_unequal",0.4,"Person percentile",96,0.583573050527915,0.875
+"low_unequal",0.4,"Person percentile",96,0.59559113689636,0.864583333333333
+"low_unequal",0.4,"Person percentile",96,0.6232264713115,0.854166666666667
+"low_unequal",0.4,"Person percentile",96,0.630275169936344,0.84375
+"low_unequal",0.4,"Person percentile",96,0.636531614565236,0.833333333333333
+"low_unequal",0.4,"Person percentile",96,0.646762711362496,0.822916666666667
+"low_unequal",0.4,"Person percentile",96,0.688123238803953,0.8125
+"low_unequal",0.4,"Person percentile",96,0.688725445657645,0.802083333333333
+"low_unequal",0.4,"Person percentile",96,0.691327172272899,0.791666666666667
+"low_unequal",0.4,"Person percentile",96,0.715011742244253,0.78125
+"low_unequal",0.4,"Person percentile",96,0.724222221026525,0.770833333333333
+"low_unequal",0.4,"Person percentile",96,0.735922835993751,0.760416666666667
+"low_unequal",0.4,"Person percentile",96,0.737173917241393,0.75
+"low_unequal",0.4,"Person percentile",96,0.75018270941569,0.739583333333333
+"low_unequal",0.4,"Person percentile",96,0.751503409029886,0.729166666666667
+"low_unequal",0.4,"Person percentile",96,0.752456657958922,0.71875
+"low_unequal",0.4,"Person percentile",96,0.758501864274873,0.708333333333333
+"low_unequal",0.4,"Person percentile",96,0.76265302790573,0.697916666666667
+"low_unequal",0.4,"Person percentile",96,0.762866866412556,0.6875
+"low_unequal",0.4,"Person percentile",96,0.769241770395931,0.677083333333333
+"low_unequal",0.4,"Person percentile",96,0.769746315585511,0.666666666666667
+"low_unequal",0.4,"Person percentile",96,0.772466831887036,0.65625
+"low_unequal",0.4,"Person percentile",96,0.778101355618962,0.645833333333333
+"low_unequal",0.4,"Person percentile",96,0.778827145911561,0.635416666666667
+"low_unequal",0.4,"Person percentile",96,0.809624363498607,0.625
+"low_unequal",0.4,"Person percentile",96,0.821071655723303,0.614583333333333
+"low_unequal",0.4,"Person percentile",96,0.821715109012987,0.604166666666667
+"low_unequal",0.4,"Person percentile",96,0.829353988757349,0.59375
+"low_unequal",0.4,"Person percentile",96,0.833344377934519,0.583333333333333
+"low_unequal",0.4,"Person percentile",96,0.840882141367592,0.572916666666667
+"low_unequal",0.4,"Person percentile",96,0.852061620968867,0.5625
+"low_unequal",0.4,"Person percentile",96,0.853894464273718,0.552083333333333
+"low_unequal",0.4,"Person percentile",96,0.884409997564567,0.541666666666667
+"low_unequal",0.4,"Person percentile",96,0.890243519620316,0.53125
+"low_unequal",0.4,"Person percentile",96,0.891589002334046,0.520833333333333
+"low_unequal",0.4,"Person percentile",96,0.894828128684704,0.510416666666667
+"low_unequal",0.4,"Person percentile",96,0.89890751185576,0.5
+"low_unequal",0.4,"Person percentile",96,0.900586006847079,0.489583333333333
+"low_unequal",0.4,"Person percentile",96,0.921035704158804,0.479166666666667
+"low_unequal",0.4,"Person percentile",96,0.928441579998687,0.46875
+"low_unequal",0.4,"Person percentile",96,0.930872383697271,0.458333333333333
+"low_unequal",0.4,"Person percentile",96,0.931339151672252,0.447916666666667
+"low_unequal",0.4,"Person percentile",96,0.935751008994022,0.4375
+"low_unequal",0.4,"Person percentile",96,0.943128704475186,0.427083333333333
+"low_unequal",0.4,"Person percentile",96,0.950202675549186,0.416666666666667
+"low_unequal",0.4,"Person percentile",96,0.9578812027697,0.40625
+"low_unequal",0.4,"Person percentile",96,0.963385421248205,0.395833333333333
+"low_unequal",0.4,"Person percentile",96,0.979101500896622,0.385416666666667
+"low_unequal",0.4,"Person percentile",96,0.983101360223907,0.375
+"low_unequal",0.4,"Person percentile",96,0.983978296269767,0.364583333333333
+"low_unequal",0.4,"Person percentile",96,0.98655627665115,0.354166666666667
+"low_unequal",0.4,"Person percentile",96,0.989079293627713,0.34375
+"low_unequal",0.4,"Person percentile",96,0.994584384025683,0.333333333333333
+"low_unequal",0.4,"Person percentile",96,1.01048289090146,0.322916666666667
+"low_unequal",0.4,"Person percentile",96,1.01132123406637,0.3125
+"low_unequal",0.4,"Person percentile",96,1.01189033590691,0.302083333333333
+"low_unequal",0.4,"Person percentile",96,1.03036513641302,0.291666666666667
+"low_unequal",0.4,"Person percentile",96,1.06727173074986,0.28125
+"low_unequal",0.4,"Person percentile",96,1.08868718125106,0.270833333333333
+"low_unequal",0.4,"Person percentile",96,1.10637249003014,0.260416666666667
+"low_unequal",0.4,"Person percentile",96,1.11516513123282,0.25
+"low_unequal",0.4,"Person percentile",96,1.1199637449974,0.239583333333333
+"low_unequal",0.4,"Person percentile",96,1.1244669099935,0.229166666666667
+"low_unequal",0.4,"Person percentile",96,1.13683714010126,0.21875
+"low_unequal",0.4,"Person percentile",96,1.14200744817689,0.208333333333333
+"low_unequal",0.4,"Person percentile",96,1.14929380695075,0.197916666666667
+"low_unequal",0.4,"Person percentile",96,1.15766715263406,0.1875
+"low_unequal",0.4,"Person percentile",96,1.17856188305157,0.177083333333333
+"low_unequal",0.4,"Person percentile",96,1.19033813097714,0.166666666666667
+"low_unequal",0.4,"Person percentile",96,1.20133663413479,0.15625
+"low_unequal",0.4,"Person percentile",96,1.21843500264299,0.145833333333333
+"low_unequal",0.4,"Person percentile",96,1.23646397345953,0.135416666666667
+"low_unequal",0.4,"Person percentile",96,1.26332674870051,0.125
+"low_unequal",0.4,"Person percentile",96,1.28868074342309,0.114583333333333
+"low_unequal",0.4,"Person percentile",96,1.29596151956298,0.104166666666667
+"low_unequal",0.4,"Person percentile",96,1.30176545398504,0.09375
+"low_unequal",0.4,"Person percentile",96,1.30562972417282,0.0833333333333333
+"low_unequal",0.4,"Person percentile",96,1.30753180419064,0.0729166666666667
+"low_unequal",0.4,"Person percentile",96,1.33155600586139,0.0625
+"low_unequal",0.4,"Person percentile",96,1.38660747164712,0.0520833333333333
+"low_unequal",0.4,"Person percentile",96,1.44925356519662,0.0416666666666667
+"low_unequal",0.4,"Person percentile",96,1.505434713357,0.03125
+"low_unequal",0.4,"Person percentile",96,1.54689914451043,0.0208333333333333
+"low_unequal",0.4,"Person percentile",96,1.57780847862989,0.0104166666666667
+"low_unequal",0.4,"Person percentile",96,1.74310277616656,0
+"small_short",0.4,"Person percentile",92,0.259667235540217,1
+"small_short",0.4,"Person percentile",92,0.272650597317228,0.989130434782609
+"small_short",0.4,"Person percentile",92,0.362406390976937,0.978260869565217
+"small_short",0.4,"Person percentile",92,0.376657079521365,0.967391304347826
+"small_short",0.4,"Person percentile",92,0.379365330425407,0.956521739130435
+"small_short",0.4,"Person percentile",92,0.393801601072752,0.945652173913043
+"small_short",0.4,"Person percentile",92,0.44599241672197,0.934782608695652
+"small_short",0.4,"Person percentile",92,0.450272625252394,0.923913043478261
+"small_short",0.4,"Person percentile",92,0.477603062323632,0.91304347826087
+"small_short",0.4,"Person percentile",92,0.481904430169681,0.902173913043478
+"small_short",0.4,"Person percentile",92,0.485865288729894,0.891304347826087
+"small_short",0.4,"Person percentile",92,0.487928921704115,0.880434782608696
+"small_short",0.4,"Person percentile",92,0.500424240410601,0.869565217391304
+"small_short",0.4,"Person percentile",92,0.501577709267493,0.858695652173913
+"small_short",0.4,"Person percentile",92,0.513515605587555,0.847826086956522
+"small_short",0.4,"Person percentile",92,0.514402341785734,0.83695652173913
+"small_short",0.4,"Person percentile",92,0.516978379519165,0.826086956521739
+"small_short",0.4,"Person percentile",92,0.539570193867424,0.815217391304348
+"small_short",0.4,"Person percentile",92,0.553049677643798,0.804347826086957
+"small_short",0.4,"Person percentile",92,0.553423559908576,0.793478260869565
+"small_short",0.4,"Person percentile",92,0.557208762515031,0.782608695652174
+"small_short",0.4,"Person percentile",92,0.557349095213839,0.771739130434783
+"small_short",0.4,"Person percentile",92,0.562889270501079,0.760869565217391
+"small_short",0.4,"Person percentile",92,0.565459853522817,0.75
+"small_short",0.4,"Person percentile",92,0.575496161727952,0.739130434782609
+"small_short",0.4,"Person percentile",92,0.577781190208795,0.728260869565217
+"small_short",0.4,"Person percentile",92,0.58439093442471,0.717391304347826
+"small_short",0.4,"Person percentile",92,0.603068599415576,0.706521739130435
+"small_short",0.4,"Person percentile",92,0.606024928208848,0.695652173913043
+"small_short",0.4,"Person percentile",92,0.616102244129466,0.684782608695652
+"small_short",0.4,"Person percentile",92,0.617726141563077,0.673913043478261
+"small_short",0.4,"Person percentile",92,0.618024217497231,0.66304347826087
+"small_short",0.4,"Person percentile",92,0.618839061542195,0.652173913043478
+"small_short",0.4,"Person percentile",92,0.622157290925166,0.641304347826087
+"small_short",0.4,"Person percentile",92,0.62358972984235,0.630434782608696
+"small_short",0.4,"Person percentile",92,0.631355202164452,0.619565217391304
+"small_short",0.4,"Person percentile",92,0.642428151583454,0.608695652173913
+"small_short",0.4,"Person percentile",92,0.64510483708648,0.597826086956522
+"small_short",0.4,"Person percentile",92,0.647171619397039,0.58695652173913
+"small_short",0.4,"Person percentile",92,0.658949518273714,0.576086956521739
+"small_short",0.4,"Person percentile",92,0.670701313796893,0.565217391304348
+"small_short",0.4,"Person percentile",92,0.671588705426567,0.554347826086957
+"small_short",0.4,"Person percentile",92,0.678016093341519,0.543478260869565
+"small_short",0.4,"Person percentile",92,0.67999450981889,0.532608695652174
+"small_short",0.4,"Person percentile",92,0.683876822772378,0.521739130434783
+"small_short",0.4,"Person percentile",92,0.692682009858484,0.510869565217391
+"small_short",0.4,"Person percentile",92,0.699961138699896,0.5
+"small_short",0.4,"Person percentile",92,0.700399487723162,0.489130434782609
+"small_short",0.4,"Person percentile",92,0.708243229359321,0.478260869565217
+"small_short",0.4,"Person percentile",92,0.715641165692329,0.467391304347826
+"small_short",0.4,"Person percentile",92,0.720695302464566,0.456521739130435
+"small_short",0.4,"Person percentile",92,0.720986579137763,0.445652173913043
+"small_short",0.4,"Person percentile",92,0.727131571079251,0.434782608695652
+"small_short",0.4,"Person percentile",92,0.72819540473859,0.423913043478261
+"small_short",0.4,"Person percentile",92,0.735401140279359,0.41304347826087
+"small_short",0.4,"Person percentile",92,0.737751142857937,0.402173913043478
+"small_short",0.4,"Person percentile",92,0.742334727941939,0.391304347826087
+"small_short",0.4,"Person percentile",92,0.746291664568119,0.380434782608696
+"small_short",0.4,"Person percentile",92,0.754551546328478,0.369565217391304
+"small_short",0.4,"Person percentile",92,0.758388403807273,0.358695652173913
+"small_short",0.4,"Person percentile",92,0.763292778703306,0.347826086956522
+"small_short",0.4,"Person percentile",92,0.767495892095049,0.33695652173913
+"small_short",0.4,"Person percentile",92,0.777224952909863,0.326086956521739
+"small_short",0.4,"Person percentile",92,0.79601416195741,0.315217391304348
+"small_short",0.4,"Person percentile",92,0.796286467090465,0.304347826086957
+"small_short",0.4,"Person percentile",92,0.813057053340975,0.293478260869565
+"small_short",0.4,"Person percentile",92,0.814356361778399,0.282608695652174
+"small_short",0.4,"Person percentile",92,0.818701627680073,0.271739130434783
+"small_short",0.4,"Person percentile",92,0.825487947105153,0.260869565217391
+"small_short",0.4,"Person percentile",92,0.835938097834589,0.25
+"small_short",0.4,"Person percentile",92,0.845966043966395,0.239130434782609
+"small_short",0.4,"Person percentile",92,0.847178415547464,0.228260869565217
+"small_short",0.4,"Person percentile",92,0.85254830304848,0.217391304347826
+"small_short",0.4,"Person percentile",92,0.863066081047906,0.206521739130435
+"small_short",0.4,"Person percentile",92,0.864148169121588,0.195652173913043
+"small_short",0.4,"Person percentile",92,0.88664588840317,0.184782608695652
+"small_short",0.4,"Person percentile",92,0.893976148992527,0.173913043478261
+"small_short",0.4,"Person percentile",92,0.897353126982196,0.16304347826087
+"small_short",0.4,"Person percentile",92,0.89778221032086,0.152173913043478
+"small_short",0.4,"Person percentile",92,0.931963865736915,0.141304347826087
+"small_short",0.4,"Person percentile",92,0.938179337611242,0.130434782608696
+"small_short",0.4,"Person percentile",92,0.947723253294046,0.119565217391304
+"small_short",0.4,"Person percentile",92,0.966500378064511,0.108695652173913
+"small_short",0.4,"Person percentile",92,0.977873765837728,0.0978260869565217
+"small_short",0.4,"Person percentile",92,0.981907442081343,0.0869565217391304
+"small_short",0.4,"Person percentile",92,0.98369342873984,0.0760869565217391
+"small_short",0.4,"Person percentile",92,0.985425812201776,0.0652173913043478
+"small_short",0.4,"Person percentile",92,0.987928498513271,0.0543478260869565
+"small_short",0.4,"Person percentile",92,1.00183159036771,0.0434782608695652
+"small_short",0.4,"Person percentile",92,1.06354979202461,0.0326086956521739
+"small_short",0.4,"Person percentile",92,1.11162470716591,0.0217391304347826
+"small_short",0.4,"Person percentile",92,1.15841062856937,0.0108695652173913
+"small_short",0.4,"Person percentile",92,1.21524493216714,0

@@ -9,7 +9,7 @@ copy(file.path(here,c('report.Rmd','report.html')),out)
 copy(file.path(here,'design.md'),file.path(out,'protocol.md'))
 copy(file.path(here,'README.md'),file.path(out,'study-README.md'))
 dir.create(file.path(out,'drivers'),showWarnings=FALSE)
-copy(file.path(here,c('engine.R','run.R','summarize.R','validate.R','audit_extremes.R','make_bundle.R')),file.path(out,'drivers'))
+copy(file.path(here,c('engine.R','run.R','summarize.R','plots.R','check-plots.R','validate.R','audit_extremes.R','make_bundle.R')),file.path(out,'drivers'))
 files<-list.files(file.path(here,'results/main'),'^p[0-9]+_r[0-9]+[.]rds$',full.names=TRUE);stopifnot(length(files)==600L)
 shifts<-lapply(files,function(f){
  r<-readRDS(f);stopifnot(is.null(r$error))

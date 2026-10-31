@@ -60,3 +60,4 @@ stopifnot(nrow(extreme)==24L,all(extreme$available),all(is.finite(extreme$relati
 cat('PASS checksums; 12,200 endpoints / 122 rates; paired decisions; actual centered jackknife\n',
  'and uncentered HC3 person-shift covariances; strict failure gates; signed decomposition;\n',
  '24 public bootstraps / 12 jackknives; 600 fresh hashes; 36 sensitivity records.\n',sep='')
+source(file.path(root,'drivers/check-plots.R'))

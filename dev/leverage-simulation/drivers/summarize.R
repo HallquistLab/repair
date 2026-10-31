@@ -140,3 +140,4 @@ ggsave(file.path(out,'availability.png'),g,width=14,height=6,dpi=160);ggsave(fil
 saveRDS(list(performance=performance,paired=paired,diagnostics=diagnostics,components=components,exact=deletions,api=api,
  deletion_statistics=deletion_statistics,branch_performance=branch_performance,steps=steps,tails=tails,profiles=profiles),file.path(out,'summary.rds'))
 cat('Wrote',nrow(d),'endpoints /',nrow(performance),'performance cells.\n')
+source(file.path(here,'plots.R'))

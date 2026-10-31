@@ -166,6 +166,23 @@ Normal reference intervals are primary. HC3 and delete-one t_(N−1) intervals
 are prespecified secondary heuristics, not fitted effective degrees of freedom.
 There is no data-selected multiplier or hidden finite-sample correction.
 
+## Bias and the sampling-error distribution
+
+```{r bias-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'bias.png'))
+```
+
+All methods retain the same original coefficient, so separate method-specific
+bias curves would duplicate the point estimator. This figure uses **all 100
+fresh datasets per profile and truth**, showing each signed estimation error
+and mean bias with its Monte Carlo uncertainty. It makes the negative bias in
+the small/short and negative-correlation conditions visible alongside the
+distribution's tails. The blue error bars concern the simulation mean bias;
+they are not the confidence intervals whose coverage is assessed below.
+
+Bias conditional on returning an interval can differ because eligibility
+selects different datasets; those eligible-set summaries remain in performance.csv.
+
 ## Availability is part of the result
 
 ```{r availability, out.width='100%'}
@@ -198,8 +215,14 @@ Zero exclusion here is detection, not type-I error. Median width can conceal
 extreme intervals, so the 95th width percentile is also shown. All five methods
 share original coefficients; the CSV retains overall and eligible bias/SD and
 mean SEs rather than treating higher coverage alone as evidence of better inference.
+Coverage figures display **50–100%**, rather than starting at zero, and retain
+every plotted point and Monte Carlo bound. The dashed reference is 95%.
 
 ## Null-effect coverage and rejection
+
+```{r null-coverage-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'coverage_null.png'))
+```
 
 ```{r null}
 tab(compact(0))
@@ -210,6 +233,16 @@ Smaller eligible subsets have wider uncertainty. Figure bars and the CSV give
 Wilson 95% Monte Carlo intervals; few-point changes do not establish superiority.
 
 ## Comparisons on common eligible datasets
+
+```{r matched-coverage-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'coverage_matched.png'))
+```
+
+This figure uses the **intersection of the five primary methods' eligibility**,
+so each panel compares exactly the same datasets for every method. It is a
+selected-cohort comparison, not population-wide calibration. Its rates can
+differ from the method-specific returned-interval figures and from the pairwise
+comparisons below, whose intersections are defined for each method pair.
 
 ```{r paired}
 x<-s$paired[s$paired$gamma==.4 & s$paired$metric=='covers' &
@@ -228,6 +261,46 @@ matched comparisons distinguish eligibility selection from interval construction
 tab(compact(.4,c('Full-system HC3 Wald','Full-system HC3 t','Delete-one Wald','Delete-one t',
                 'Bootstrap-SD Wald','Person percentile')))
 ```
+
+## Tail behavior: wide intervals and studentized errors
+
+```{r width-tail-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'width_tails.png'))
+```
+
+The width axis is logarithmic so typical intervals and extreme corrections
+remain visible together. Circles show medians, diamonds empirical 95th
+percentiles, and triangles the **largest observed intervals**. The full-system
+HC3 tail is much longer in the difficult profiles; the typical-width summary
+alone conceals that cost. Every returned interval contributes, and the maximum
+is never dropped or winsorized. These are empirical summaries from 45–100
+returned intervals per cell, not precise estimates of population-tail quantiles.
+
+```{r width-exceedance-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'width_exceedance.png'))
+```
+
+The step curves show the fraction of returned intervals wider than each
+threshold, focusing vertically on the **upper 20% of widths**. All observed
+thresholds remain on the logarithmic horizontal axis, and each curve reaches
+zero at its observed maximum. The horizontal 5% line helps locate the upper
+tail; finite-sample step locations need not equal interpolated type-7 quantiles
+exactly. Eligibility still differs here; the denominators are those shown in
+the method-specific coverage figures.
+
+```{r studentized-tail-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'studentized_tails.png'))
+```
+
+This diagnostic instead uses the same all-five-method eligibility cohort and
+compares absolute errors divided by estimated SEs. The black dashed curve is
+the standard-normal benchmark. At 1.96, a calibrated normal Wald procedure
+would have about 5% exceedance; departures show that estimating a variance is
+not enough to establish normal tail calibration. The upper 25% of this error
+distribution is displayed, retaining all observed horizontal thresholds with
+log(1+x) spacing. **Bootstrap SD is the symmetric Wald comparator**, not the
+bootstrap percentile interval; a percentile interval cannot be diagnosed by
+assuming its resample SD defines a symmetric normal interval.
 
 ## Branches, leverage and exact deletion
 

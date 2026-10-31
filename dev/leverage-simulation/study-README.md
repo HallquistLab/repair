@@ -20,6 +20,7 @@ REPAIR_STUDY_WORKERS=2 Rscript run.R benchmark
 REPAIR_STUDY_WORKERS=12 Rscript run.R main
 REPAIR_STUDY_WORKERS=4 Rscript run.R sensitivity
 Rscript summarize.R
+Rscript check-plots.R
 Rscript validate.R
 Rscript audit_extremes.R
 Rscript -e 'rmarkdown::render("report.Rmd")'
@@ -30,6 +31,14 @@ Set `REPAIR_STUDY_LIB` to a matching library when rerunning elsewhere. The
 largest reported HC3/HC0 variance ratios at smaller steps, without replacing
 main estimates or changing thresholds. The main sensitivity subset remains
 the prespecified first three datasets/profile.
+
+`summarize.R` calls `plots.R`; the latter can also run on existing summaries
+without recomputing models. It exports bias, null/nonzero and common-eligible
+coverage, interval-width quantile/exceedance, and studentized-tail figures as
+PNG/PDF files, with plotted numerical inputs in CSV. Coverage views use 50–100%
+and include every Monte Carlo bound. `check-plots.R` verifies bias summaries,
+eligibility intersections, coverage, tail maxima and exact exceedance counts
+from the retained endpoints. It accounts for CSV rounding at empirical jumps.
 
 The
 generator/calibration and native bootstrap driver are sourced unchanged from

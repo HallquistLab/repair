@@ -97,5 +97,5 @@ text<-c('PASS 600 fresh main and 18 sensitivity checkpoints; no driver/API error
 writeLines(text,file.path(out,'validation.txt'));cat(paste(text,collapse='\n'),'\n')
 files<-c(main$files,sens$files,fresh_files,old_files)
 write.csv(data.frame(path=sub('^.*/repair_bootstrap_pilot/','',files),md5=unname(tools::md5sum(files))),file.path(out,'raw-manifest.csv'),row.names=FALSE)
-sources<-file.path(here,c('design.md','engine.R','run.R','summarize.R','validate.R'))
+sources<-file.path(here,c('design.md','engine.R','run.R','summarize.R','plots.R','check-plots.R','validate.R'))
 write.csv(data.frame(path=basename(sources),md5=unname(tools::md5sum(sources))),file.path(out,'analysis-source-manifest.csv'),row.names=FALSE)

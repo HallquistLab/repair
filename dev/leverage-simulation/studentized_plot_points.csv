@@ -1,0 +1,1821 @@
+"profile","rep","gamma","method","absolute_z"
+"high_control",1,0.4,"Delete-one Wald",0.15494596466684
+"high_control",1,0.4,"Full-system HC3 Wald",0.152535634662689
+"high_control",1,0.4,"Full IF Wald",0.16299048383533
+"high_control",1,0.4,"Bootstrap-SD Wald",0.152821206860293
+"high_control",1,0.4,"Conditional Wald",0.157163406364793
+"high_control",10,0.4,"Conditional Wald",0.352001334518954
+"high_control",10,0.4,"Full-system HC3 Wald",0.316089525937429
+"high_control",10,0.4,"Bootstrap-SD Wald",0.324571404871539
+"high_control",10,0.4,"Delete-one Wald",0.32121777110558
+"high_control",10,0.4,"Full IF Wald",0.349808550333031
+"high_control",100,0.4,"Full-system HC3 Wald",0.156153368845935
+"high_control",100,0.4,"Conditional Wald",0.163666384813798
+"high_control",100,0.4,"Bootstrap-SD Wald",0.154149801154424
+"high_control",100,0.4,"Full IF Wald",0.172583018028558
+"high_control",100,0.4,"Delete-one Wald",0.158744797733685
+"high_control",11,0.4,"Conditional Wald",0.274308136777256
+"high_control",11,0.4,"Full-system HC3 Wald",0.312899529003381
+"high_control",11,0.4,"Bootstrap-SD Wald",0.296479843244352
+"high_control",11,0.4,"Full IF Wald",0.338023025235412
+"high_control",11,0.4,"Delete-one Wald",0.317608836814292
+"high_control",12,0.4,"Conditional Wald",1.31544263730203
+"high_control",12,0.4,"Delete-one Wald",1.28177498552476
+"high_control",12,0.4,"Full IF Wald",1.38274896938864
+"high_control",12,0.4,"Bootstrap-SD Wald",1.15765750231411
+"high_control",12,0.4,"Full-system HC3 Wald",1.2629181536461
+"high_control",13,0.4,"Delete-one Wald",0.620620588426307
+"high_control",13,0.4,"Conditional Wald",0.62996479516825
+"high_control",13,0.4,"Full-system HC3 Wald",0.61043947055103
+"high_control",13,0.4,"Full IF Wald",0.650999797283425
+"high_control",13,0.4,"Bootstrap-SD Wald",0.592513370700004
+"high_control",14,0.4,"Full-system HC3 Wald",0.83474930004167
+"high_control",14,0.4,"Bootstrap-SD Wald",0.764467310839737
+"high_control",14,0.4,"Conditional Wald",0.839828644861562
+"high_control",14,0.4,"Delete-one Wald",0.847606613198165
+"high_control",14,0.4,"Full IF Wald",0.910783226798731
+"high_control",15,0.4,"Bootstrap-SD Wald",0.295558528088917
+"high_control",15,0.4,"Conditional Wald",0.309733359385332
+"high_control",15,0.4,"Full IF Wald",0.345978584069306
+"high_control",15,0.4,"Delete-one Wald",0.329868964300826
+"high_control",15,0.4,"Full-system HC3 Wald",0.324526500682975
+"high_control",16,0.4,"Bootstrap-SD Wald",0.217215181358986
+"high_control",16,0.4,"Conditional Wald",0.220407776720267
+"high_control",16,0.4,"Delete-one Wald",0.217076785892603
+"high_control",16,0.4,"Full-system HC3 Wald",0.21385564507351
+"high_control",16,0.4,"Full IF Wald",0.228716942255296
+"high_control",17,0.4,"Bootstrap-SD Wald",0.597090473533108
+"high_control",17,0.4,"Conditional Wald",0.637104094464489
+"high_control",17,0.4,"Full IF Wald",0.630759747561972
+"high_control",17,0.4,"Delete-one Wald",0.594115954362687
+"high_control",17,0.4,"Full-system HC3 Wald",0.584079826208661
+"high_control",18,0.4,"Full IF Wald",0.986195781896562
+"high_control",18,0.4,"Delete-one Wald",0.937199089412383
+"high_control",18,0.4,"Conditional Wald",0.890151751804295
+"high_control",18,0.4,"Bootstrap-SD Wald",0.864356755758911
+"high_control",18,0.4,"Full-system HC3 Wald",0.922315409958292
+"high_control",19,0.4,"Full IF Wald",0.874112540091069
+"high_control",19,0.4,"Full-system HC3 Wald",0.816088208199122
+"high_control",19,0.4,"Delete-one Wald",0.828206757261059
+"high_control",19,0.4,"Bootstrap-SD Wald",0.763983122616569
+"high_control",19,0.4,"Conditional Wald",0.896498525525466
+"high_control",2,0.4,"Delete-one Wald",0.155493985673521
+"high_control",2,0.4,"Full IF Wald",0.169885717826206
+"high_control",2,0.4,"Full-system HC3 Wald",0.153111618059025
+"high_control",2,0.4,"Bootstrap-SD Wald",0.15768612050442
+"high_control",2,0.4,"Conditional Wald",0.185870891773914
+"high_control",20,0.4,"Delete-one Wald",0.896801636617659
+"high_control",20,0.4,"Full-system HC3 Wald",0.883053672656013
+"high_control",20,0.4,"Conditional Wald",0.87352665008281
+"high_control",20,0.4,"Bootstrap-SD Wald",0.867891030510552
+"high_control",20,0.4,"Full IF Wald",0.952773299684425
+"high_control",21,0.4,"Bootstrap-SD Wald",1.19330440294595
+"high_control",21,0.4,"Delete-one Wald",1.15427451665314
+"high_control",21,0.4,"Conditional Wald",1.36021617293557
+"high_control",21,0.4,"Full-system HC3 Wald",1.13634359192483
+"high_control",21,0.4,"Full IF Wald",1.23367656064013
+"high_control",22,0.4,"Conditional Wald",0.087028262812082
+"high_control",22,0.4,"Full IF Wald",0.0860234434695265
+"high_control",22,0.4,"Delete-one Wald",0.082392249642014
+"high_control",22,0.4,"Bootstrap-SD Wald",0.078659867507417
+"high_control",22,0.4,"Full-system HC3 Wald",0.0811360371641202
+"high_control",23,0.4,"Delete-one Wald",3.00221946315393
+"high_control",23,0.4,"Bootstrap-SD Wald",3.0732840025141
+"high_control",23,0.4,"Full-system HC3 Wald",2.95411913481122
+"high_control",23,0.4,"Full IF Wald",3.13659723489537
+"high_control",23,0.4,"Conditional Wald",2.80010873879185
+"high_control",24,0.4,"Full-system HC3 Wald",1.90184003444592
+"high_control",24,0.4,"Bootstrap-SD Wald",2.02086800991963
+"high_control",24,0.4,"Full IF Wald",2.02816731993365
+"high_control",24,0.4,"Delete-one Wald",1.93086797887664
+"high_control",24,0.4,"Conditional Wald",1.87380716241849
+"high_control",25,0.4,"Full IF Wald",0.0832259618500724
+"high_control",25,0.4,"Full-system HC3 Wald",0.0772275911530903
+"high_control",25,0.4,"Conditional Wald",0.0850158419176364
+"high_control",25,0.4,"Bootstrap-SD Wald",0.0738997322578353
+"high_control",25,0.4,"Delete-one Wald",0.0784071678564074
+"high_control",26,0.4,"Bootstrap-SD Wald",0.561628138209466
+"high_control",26,0.4,"Conditional Wald",0.485832106731654
+"high_control",26,0.4,"Full IF Wald",0.648001255289346
+"high_control",26,0.4,"Delete-one Wald",0.617770582539267
+"high_control",26,0.4,"Full-system HC3 Wald",0.608180822355946
+"high_control",27,0.4,"Full IF Wald",1.28233104703908
+"high_control",27,0.4,"Bootstrap-SD Wald",1.25643764264239
+"high_control",27,0.4,"Conditional Wald",1.23241609232237
+"high_control",27,0.4,"Full-system HC3 Wald",1.12847721955199
+"high_control",27,0.4,"Delete-one Wald",1.1473584932989
+"high_control",28,0.4,"Full-system HC3 Wald",0.916268762333496
+"high_control",28,0.4,"Full IF Wald",0.986164032595384
+"high_control",28,0.4,"Delete-one Wald",0.929926354684347
+"high_control",28,0.4,"Bootstrap-SD Wald",0.952718210741798
+"high_control",28,0.4,"Conditional Wald",0.952253458219544
+"high_control",29,0.4,"Bootstrap-SD Wald",1.78186856987718
+"high_control",29,0.4,"Full-system HC3 Wald",1.65000757904736
+"high_control",29,0.4,"Conditional Wald",1.79046858428921
+"high_control",29,0.4,"Delete-one Wald",1.67579073735779
+"high_control",29,0.4,"Full IF Wald",1.75821513052647
+"high_control",3,0.4,"Bootstrap-SD Wald",1.09260447235166
+"high_control",3,0.4,"Full-system HC3 Wald",1.10226051027333
+"high_control",3,0.4,"Delete-one Wald",1.12061063085821
+"high_control",3,0.4,"Full IF Wald",1.17430912138762
+"high_control",3,0.4,"Conditional Wald",1.11451337008044
+"high_control",30,0.4,"Full IF Wald",0.21337681177117
+"high_control",30,0.4,"Conditional Wald",0.266023549792616
+"high_control",30,0.4,"Delete-one Wald",0.186743737691256
+"high_control",30,0.4,"Bootstrap-SD Wald",0.189164504430444
+"high_control",30,0.4,"Full-system HC3 Wald",0.18385313716718
+"high_control",31,0.4,"Full IF Wald",1.54733131780976
+"high_control",31,0.4,"Full-system HC3 Wald",1.46096640681297
+"high_control",31,0.4,"Delete-one Wald",1.48224902749854
+"high_control",31,0.4,"Bootstrap-SD Wald",1.39019115107702
+"high_control",31,0.4,"Conditional Wald",1.44125756552587
+"high_control",32,0.4,"Bootstrap-SD Wald",0.84268081246608
+"high_control",32,0.4,"Full IF Wald",0.913035071091553
+"high_control",32,0.4,"Delete-one Wald",0.85139889340506
+"high_control",32,0.4,"Full-system HC3 Wald",0.837948079377594
+"high_control",32,0.4,"Conditional Wald",0.926779426966715
+"high_control",33,0.4,"Full-system HC3 Wald",0.231297193386784
+"high_control",33,0.4,"Delete-one Wald",0.234910672436376
+"high_control",33,0.4,"Full IF Wald",0.24884252303023
+"high_control",33,0.4,"Bootstrap-SD Wald",0.232929222269167
+"high_control",33,0.4,"Conditional Wald",0.255432322819506
+"high_control",34,0.4,"Full-system HC3 Wald",1.08289447383077
+"high_control",34,0.4,"Delete-one Wald",1.09956613455228
+"high_control",34,0.4,"Conditional Wald",1.11995903282726
+"high_control",34,0.4,"Bootstrap-SD Wald",1.0414144931562
+"high_control",34,0.4,"Full IF Wald",1.161762816483
+"high_control",35,0.4,"Conditional Wald",0.564868330508973
+"high_control",35,0.4,"Full-system HC3 Wald",0.481041514709519
+"high_control",35,0.4,"Full IF Wald",0.522830444200939
+"high_control",35,0.4,"Delete-one Wald",0.488196999134602
+"high_control",35,0.4,"Bootstrap-SD Wald",0.489358705653192
+"high_control",36,0.4,"Bootstrap-SD Wald",0.44854682239499
+"high_control",36,0.4,"Delete-one Wald",0.449312551551485
+"high_control",36,0.4,"Full-system HC3 Wald",0.442134148482706
+"high_control",36,0.4,"Full IF Wald",0.477642203322778
+"high_control",36,0.4,"Conditional Wald",0.505686004962731
+"high_control",37,0.4,"Delete-one Wald",0.55197136051668
+"high_control",37,0.4,"Full-system HC3 Wald",0.543222828509429
+"high_control",37,0.4,"Full IF Wald",0.581477904904137
+"high_control",37,0.4,"Bootstrap-SD Wald",0.593832846058493
+"high_control",37,0.4,"Conditional Wald",0.627426747703345
+"high_control",38,0.4,"Conditional Wald",0.601358142226977
+"high_control",38,0.4,"Bootstrap-SD Wald",0.587236659543775
+"high_control",38,0.4,"Delete-one Wald",0.581632217585686
+"high_control",38,0.4,"Full IF Wald",0.6094211075822
+"high_control",38,0.4,"Full-system HC3 Wald",0.573116788186007
+"high_control",39,0.4,"Bootstrap-SD Wald",0.183312448545679
+"high_control",39,0.4,"Full IF Wald",0.207716065657793
+"high_control",39,0.4,"Conditional Wald",0.201794361230838
+"high_control",39,0.4,"Delete-one Wald",0.198551854682576
+"high_control",39,0.4,"Full-system HC3 Wald",0.195538668474226
+"high_control",4,0.4,"Bootstrap-SD Wald",1.22306060467834
+"high_control",4,0.4,"Conditional Wald",1.15449970298771
+"high_control",4,0.4,"Delete-one Wald",1.24849297470688
+"high_control",4,0.4,"Full IF Wald",1.30724848453544
+"high_control",4,0.4,"Full-system HC3 Wald",1.22883776149383
+"high_control",40,0.4,"Delete-one Wald",2.43834338170578
+"high_control",40,0.4,"Conditional Wald",2.52307570585812
+"high_control",40,0.4,"Full-system HC3 Wald",2.40088637157724
+"high_control",40,0.4,"Bootstrap-SD Wald",2.44815059618902
+"high_control",40,0.4,"Full IF Wald",2.55290264739888
+"high_control",41,0.4,"Conditional Wald",1.54844726705074
+"high_control",41,0.4,"Delete-one Wald",1.50064409166373
+"high_control",41,0.4,"Bootstrap-SD Wald",1.39774335780765
+"high_control",41,0.4,"Full IF Wald",1.60854578332102
+"high_control",41,0.4,"Full-system HC3 Wald",1.47656606013825
+"high_control",42,0.4,"Bootstrap-SD Wald",0.558629882516291
+"high_control",42,0.4,"Full-system HC3 Wald",0.559907770815698
+"high_control",42,0.4,"Full IF Wald",0.602284574676502
+"high_control",42,0.4,"Conditional Wald",0.574314887062612
+"high_control",42,0.4,"Delete-one Wald",0.568861341476948
+"high_control",43,0.4,"Full-system HC3 Wald",1.13319574134216
+"high_control",43,0.4,"Conditional Wald",1.08437207800267
+"high_control",43,0.4,"Full IF Wald",1.20246899394714
+"high_control",43,0.4,"Delete-one Wald",1.15060402763618
+"high_control",43,0.4,"Bootstrap-SD Wald",1.18829347380506
+"high_control",44,0.4,"Conditional Wald",0.060061071341063
+"high_control",44,0.4,"Full-system HC3 Wald",0.0547629514981794
+"high_control",44,0.4,"Bootstrap-SD Wald",0.053898439288979
+"high_control",44,0.4,"Delete-one Wald",0.0555764146041279
+"high_control",44,0.4,"Full IF Wald",0.0590775459224744
+"high_control",45,0.4,"Full IF Wald",0.403392296418009
+"high_control",45,0.4,"Full-system HC3 Wald",0.379864102564222
+"high_control",45,0.4,"Conditional Wald",0.360462135394433
+"high_control",45,0.4,"Bootstrap-SD Wald",0.382872519813858
+"high_control",45,0.4,"Delete-one Wald",0.386197358039471
+"high_control",46,0.4,"Conditional Wald",0.446292631520066
+"high_control",46,0.4,"Full-system HC3 Wald",0.412701477014063
+"high_control",46,0.4,"Full IF Wald",0.443616042352115
+"high_control",46,0.4,"Delete-one Wald",0.41905290185915
+"high_control",46,0.4,"Bootstrap-SD Wald",0.417816367747477
+"high_control",47,0.4,"Full IF Wald",0.00533032604605939
+"high_control",47,0.4,"Bootstrap-SD Wald",0.00483388968835164
+"high_control",47,0.4,"Conditional Wald",0.00460355569522423
+"high_control",47,0.4,"Delete-one Wald",0.00503378888009834
+"high_control",47,0.4,"Full-system HC3 Wald",0.00496082825117989
+"high_control",48,0.4,"Bootstrap-SD Wald",0.991484874178912
+"high_control",48,0.4,"Conditional Wald",1.01522376984121
+"high_control",48,0.4,"Full IF Wald",1.07816621461323
+"high_control",48,0.4,"Delete-one Wald",1.01202834432121
+"high_control",48,0.4,"Full-system HC3 Wald",0.996321797469882
+"high_control",49,0.4,"Full IF Wald",0.267115939446924
+"high_control",49,0.4,"Delete-one Wald",0.254721547604301
+"high_control",49,0.4,"Full-system HC3 Wald",0.250793237865453
+"high_control",49,0.4,"Bootstrap-SD Wald",0.249811884034798
+"high_control",49,0.4,"Conditional Wald",0.250482565371739
+"high_control",5,0.4,"Full-system HC3 Wald",0.297735626876221
+"high_control",5,0.4,"Full IF Wald",0.322429969779089
+"high_control",5,0.4,"Conditional Wald",0.325115640189069
+"high_control",5,0.4,"Bootstrap-SD Wald",0.303746757926709
+"high_control",5,0.4,"Delete-one Wald",0.302409358206664
+"high_control",50,0.4,"Conditional Wald",3.35231771836155
+"high_control",50,0.4,"Full IF Wald",3.86640068644971
+"high_control",50,0.4,"Delete-one Wald",3.67794541229623
+"high_control",50,0.4,"Bootstrap-SD Wald",3.5255505441637
+"high_control",50,0.4,"Full-system HC3 Wald",3.61864424255278
+"high_control",51,0.4,"Full IF Wald",0.423896686580447
+"high_control",51,0.4,"Delete-one Wald",0.396336947278455
+"high_control",51,0.4,"Full-system HC3 Wald",0.390211630619988
+"high_control",51,0.4,"Conditional Wald",0.439726730813052
+"high_control",51,0.4,"Bootstrap-SD Wald",0.396345317519392
+"high_control",52,0.4,"Delete-one Wald",1.23513156114824
+"high_control",52,0.4,"Bootstrap-SD Wald",1.27633751411026
+"high_control",52,0.4,"Full-system HC3 Wald",1.21613160044164
+"high_control",52,0.4,"Conditional Wald",1.27719689250123
+"high_control",52,0.4,"Full IF Wald",1.31052891713072
+"high_control",53,0.4,"Conditional Wald",0.962826955756141
+"high_control",53,0.4,"Bootstrap-SD Wald",0.855629851809993
+"high_control",53,0.4,"Delete-one Wald",0.878183526671004
+"high_control",53,0.4,"Full-system HC3 Wald",0.864870027762339
+"high_control",53,0.4,"Full IF Wald",0.93052788062115
+"high_control",54,0.4,"Delete-one Wald",1.20841001026014
+"high_control",54,0.4,"Full IF Wald",1.28339027880494
+"high_control",54,0.4,"Conditional Wald",1.40582419499689
+"high_control",54,0.4,"Bootstrap-SD Wald",1.24847220526018
+"high_control",54,0.4,"Full-system HC3 Wald",1.19066102660461
+"high_control",55,0.4,"Full IF Wald",0.227644136243594
+"high_control",55,0.4,"Full-system HC3 Wald",0.212968149949222
+"high_control",55,0.4,"Bootstrap-SD Wald",0.202774664684899
+"high_control",55,0.4,"Conditional Wald",0.244421747439564
+"high_control",55,0.4,"Delete-one Wald",0.216345052522709
+"high_control",56,0.4,"Bootstrap-SD Wald",0.781897386657037
+"high_control",56,0.4,"Full IF Wald",0.810033366048764
+"high_control",56,0.4,"Delete-one Wald",0.779552236059442
+"high_control",56,0.4,"Full-system HC3 Wald",0.767525896719831
+"high_control",56,0.4,"Conditional Wald",0.779720278255508
+"high_control",57,0.4,"Conditional Wald",0.438577369395744
+"high_control",57,0.4,"Delete-one Wald",0.337259681943379
+"high_control",57,0.4,"Full IF Wald",0.367668526041533
+"high_control",57,0.4,"Full-system HC3 Wald",0.332203809225627
+"high_control",57,0.4,"Bootstrap-SD Wald",0.34131435457312
+"high_control",58,0.4,"Bootstrap-SD Wald",0.812505304648057
+"high_control",58,0.4,"Full IF Wald",0.887027531075729
+"high_control",58,0.4,"Conditional Wald",0.646790525777594
+"high_control",58,0.4,"Delete-one Wald",0.850486289877058
+"high_control",58,0.4,"Full-system HC3 Wald",0.837260504558399
+"high_control",59,0.4,"Delete-one Wald",1.03313375585099
+"high_control",59,0.4,"Bootstrap-SD Wald",1.01297023636076
+"high_control",59,0.4,"Full IF Wald",1.07736458120223
+"high_control",59,0.4,"Full-system HC3 Wald",1.01697151914825
+"high_control",59,0.4,"Conditional Wald",1.0320891169622
+"high_control",6,0.4,"Delete-one Wald",3.32638003439996
+"high_control",6,0.4,"Full-system HC3 Wald",3.27667463932073
+"high_control",6,0.4,"Bootstrap-SD Wald",3.25524400089996
+"high_control",6,0.4,"Full IF Wald",3.50362439143841
+"high_control",6,0.4,"Conditional Wald",3.04464574918877
+"high_control",60,0.4,"Delete-one Wald",0.821065513497569
+"high_control",60,0.4,"Full-system HC3 Wald",0.808286122575902
+"high_control",60,0.4,"Conditional Wald",0.822687197464864
+"high_control",60,0.4,"Bootstrap-SD Wald",0.831497732073592
+"high_control",60,0.4,"Full IF Wald",0.876280460840164
+"high_control",61,0.4,"Full IF Wald",0.351732480788766
+"high_control",61,0.4,"Bootstrap-SD Wald",0.333628739172546
+"high_control",61,0.4,"Full-system HC3 Wald",0.332521489660528
+"high_control",61,0.4,"Conditional Wald",0.361570123947009
+"high_control",61,0.4,"Delete-one Wald",0.337881315277422
+"high_control",62,0.4,"Conditional Wald",0.939299016527894
+"high_control",62,0.4,"Full-system HC3 Wald",1.03529519733523
+"high_control",62,0.4,"Full IF Wald",1.09805832781938
+"high_control",62,0.4,"Delete-one Wald",1.05155748391168
+"high_control",62,0.4,"Bootstrap-SD Wald",0.997795382016054
+"high_control",63,0.4,"Full IF Wald",0.677694916329338
+"high_control",63,0.4,"Bootstrap-SD Wald",0.673347424597335
+"high_control",63,0.4,"Conditional Wald",0.695477205297125
+"high_control",63,0.4,"Delete-one Wald",0.637236616638832
+"high_control",63,0.4,"Full-system HC3 Wald",0.6275883308926
+"high_control",64,0.4,"Delete-one Wald",0.373947081476818
+"high_control",64,0.4,"Full-system HC3 Wald",0.367874829615259
+"high_control",64,0.4,"Bootstrap-SD Wald",0.345183223343353
+"high_control",64,0.4,"Full IF Wald",0.397449054791546
+"high_control",64,0.4,"Conditional Wald",0.409529273115879
+"high_control",65,0.4,"Full-system HC3 Wald",0.0374179084456924
+"high_control",65,0.4,"Conditional Wald",0.0368094063116459
+"high_control",65,0.4,"Full IF Wald",0.0398735246688971
+"high_control",65,0.4,"Bootstrap-SD Wald",0.0376764637240336
+"high_control",65,0.4,"Delete-one Wald",0.0380028660244396
+"high_control",66,0.4,"Conditional Wald",0.788460856860355
+"high_control",66,0.4,"Full-system HC3 Wald",0.720527800931721
+"high_control",66,0.4,"Bootstrap-SD Wald",0.714809273919909
+"high_control",66,0.4,"Delete-one Wald",0.730916159650135
+"high_control",66,0.4,"Full IF Wald",0.771622987795008
+"high_control",67,0.4,"Full IF Wald",0.327375875108953
+"high_control",67,0.4,"Bootstrap-SD Wald",0.300103558751586
+"high_control",67,0.4,"Full-system HC3 Wald",0.304101826461875
+"high_control",67,0.4,"Conditional Wald",0.318440609591065
+"high_control",67,0.4,"Delete-one Wald",0.308462489870094
+"high_control",68,0.4,"Delete-one Wald",2.24344564117886
+"high_control",68,0.4,"Bootstrap-SD Wald",1.96581332023013
+"high_control",68,0.4,"Full-system HC3 Wald",2.20740159056649
+"high_control",68,0.4,"Full IF Wald",2.34564056508346
+"high_control",68,0.4,"Conditional Wald",1.86310010096657
+"high_control",69,0.4,"Full-system HC3 Wald",0.106220529555554
+"high_control",69,0.4,"Delete-one Wald",0.107837018758403
+"high_control",69,0.4,"Full IF Wald",0.114551385292353
+"high_control",69,0.4,"Bootstrap-SD Wald",0.101284233866721
+"high_control",69,0.4,"Conditional Wald",0.116117028012935
+"high_control",7,0.4,"Conditional Wald",0.463412253694531
+"high_control",7,0.4,"Full IF Wald",0.584170342829878
+"high_control",7,0.4,"Bootstrap-SD Wald",0.556256553406048
+"high_control",7,0.4,"Delete-one Wald",0.556704058907476
+"high_control",7,0.4,"Full-system HC3 Wald",0.54773003906571
+"high_control",70,0.4,"Full-system HC3 Wald",1.59207556672086
+"high_control",70,0.4,"Bootstrap-SD Wald",1.67136038882133
+"high_control",70,0.4,"Delete-one Wald",1.61768520932892
+"high_control",70,0.4,"Full IF Wald",1.69957560489418
+"high_control",70,0.4,"Conditional Wald",1.47882824010642
+"high_control",71,0.4,"Conditional Wald",0.469865574148837
+"high_control",71,0.4,"Full IF Wald",0.502514293791472
+"high_control",71,0.4,"Delete-one Wald",0.478676173160992
+"high_control",71,0.4,"Bootstrap-SD Wald",0.460001498233849
+"high_control",71,0.4,"Full-system HC3 Wald",0.471338909566953
+"high_control",72,0.4,"Full-system HC3 Wald",2.14653893541588
+"high_control",72,0.4,"Bootstrap-SD Wald",2.09202261777424
+"high_control",72,0.4,"Delete-one Wald",2.17927069313
+"high_control",72,0.4,"Conditional Wald",1.81856321500397
+"high_control",72,0.4,"Full IF Wald",2.27862934039162
+"high_control",73,0.4,"Full IF Wald",0.188950252638329
+"high_control",73,0.4,"Bootstrap-SD Wald",0.165295033640065
+"high_control",73,0.4,"Conditional Wald",0.15954435580777
+"high_control",73,0.4,"Full-system HC3 Wald",0.178813945084763
+"high_control",73,0.4,"Delete-one Wald",0.181682457623206
+"high_control",74,0.4,"Full-system HC3 Wald",0.963455178078768
+"high_control",74,0.4,"Conditional Wald",1.18843023449736
+"high_control",74,0.4,"Delete-one Wald",0.979468876997566
+"high_control",74,0.4,"Full IF Wald",1.08184478364808
+"high_control",74,0.4,"Bootstrap-SD Wald",1.00599335638143
+"high_control",75,0.4,"Bootstrap-SD Wald",1.73064004529047
+"high_control",75,0.4,"Full-system HC3 Wald",1.73544797742814
+"high_control",75,0.4,"Full IF Wald",1.85796278696582
+"high_control",75,0.4,"Conditional Wald",1.61360484739336
+"high_control",75,0.4,"Delete-one Wald",1.76227535484687
+"high_control",76,0.4,"Bootstrap-SD Wald",1.05791090646288
+"high_control",76,0.4,"Delete-one Wald",1.04533902821102
+"high_control",76,0.4,"Conditional Wald",1.04829143939087
+"high_control",76,0.4,"Full IF Wald",1.1165559321036
+"high_control",76,0.4,"Full-system HC3 Wald",1.02949865604219
+"high_control",77,0.4,"Full-system HC3 Wald",0.793324343613353
+"high_control",77,0.4,"Delete-one Wald",0.806721407695096
+"high_control",77,0.4,"Conditional Wald",0.88585551849868
+"high_control",77,0.4,"Bootstrap-SD Wald",0.837863052705263
+"high_control",77,0.4,"Full IF Wald",0.860518315152185
+"high_control",78,0.4,"Full IF Wald",2.05814018825549
+"high_control",78,0.4,"Conditional Wald",2.05399261776475
+"high_control",78,0.4,"Delete-one Wald",1.96623469984704
+"high_control",78,0.4,"Bootstrap-SD Wald",2.04229099488662
+"high_control",78,0.4,"Full-system HC3 Wald",1.93895900759584
+"high_control",79,0.4,"Delete-one Wald",2.33344271197285
+"high_control",79,0.4,"Full IF Wald",2.43811258111747
+"high_control",79,0.4,"Bootstrap-SD Wald",2.26676067732713
+"high_control",79,0.4,"Conditional Wald",2.11778729323788
+"high_control",79,0.4,"Full-system HC3 Wald",2.29789779719162
+"high_control",8,0.4,"Full IF Wald",0.868728301837091
+"high_control",8,0.4,"Delete-one Wald",0.832756244871896
+"high_control",8,0.4,"Bootstrap-SD Wald",0.784673462003853
+"high_control",8,0.4,"Conditional Wald",0.778437314383523
+"high_control",8,0.4,"Full-system HC3 Wald",0.820407902102711
+"high_control",80,0.4,"Full-system HC3 Wald",0.349545122217808
+"high_control",80,0.4,"Conditional Wald",0.403736779803845
+"high_control",80,0.4,"Delete-one Wald",0.354869181964004
+"high_control",80,0.4,"Bootstrap-SD Wald",0.329557869209394
+"high_control",80,0.4,"Full IF Wald",0.380430301258176
+"high_control",81,0.4,"Conditional Wald",0.665804060925636
+"high_control",81,0.4,"Full-system HC3 Wald",0.750443364727781
+"high_control",81,0.4,"Bootstrap-SD Wald",0.707084210695652
+"high_control",81,0.4,"Delete-one Wald",0.761862898841332
+"high_control",81,0.4,"Full IF Wald",0.828498723509077
+"high_control",82,0.4,"Full-system HC3 Wald",0.464619712633372
+"high_control",82,0.4,"Conditional Wald",0.45774255585774
+"high_control",82,0.4,"Full IF Wald",0.501171032620374
+"high_control",82,0.4,"Delete-one Wald",0.47207807443442
+"high_control",82,0.4,"Bootstrap-SD Wald",0.463696377459765
+"high_control",83,0.4,"Full IF Wald",0.659937233989751
+"high_control",83,0.4,"Delete-one Wald",0.627924041523149
+"high_control",83,0.4,"Bootstrap-SD Wald",0.61255538482776
+"high_control",83,0.4,"Full-system HC3 Wald",0.618437775968811
+"high_control",83,0.4,"Conditional Wald",0.737267491522365
+"high_control",84,0.4,"Delete-one Wald",0.381597772231035
+"high_control",84,0.4,"Bootstrap-SD Wald",0.349144997989784
+"high_control",84,0.4,"Conditional Wald",0.412370022389588
+"high_control",84,0.4,"Full-system HC3 Wald",0.375767994243281
+"high_control",84,0.4,"Full IF Wald",0.402776598942002
+"high_control",85,0.4,"Delete-one Wald",0.614797285794752
+"high_control",85,0.4,"Full-system HC3 Wald",0.605224950850429
+"high_control",85,0.4,"Full IF Wald",0.644391062050467
+"high_control",85,0.4,"Conditional Wald",0.592090046467739
+"high_control",85,0.4,"Bootstrap-SD Wald",0.60696264738917
+"high_control",86,0.4,"Full-system HC3 Wald",0.955381049045137
+"high_control",86,0.4,"Full IF Wald",1.02806457604604
+"high_control",86,0.4,"Conditional Wald",1.03642321305857
+"high_control",86,0.4,"Delete-one Wald",0.969842615778856
+"high_control",86,0.4,"Bootstrap-SD Wald",0.977145930695517
+"high_control",87,0.4,"Delete-one Wald",0.943250874054614
+"high_control",87,0.4,"Bootstrap-SD Wald",0.909522723190065
+"high_control",87,0.4,"Full IF Wald",1.00758215765368
+"high_control",87,0.4,"Full-system HC3 Wald",0.929031941075457
+"high_control",87,0.4,"Conditional Wald",0.930563080489283
+"high_control",88,0.4,"Delete-one Wald",1.52204354005527
+"high_control",88,0.4,"Bootstrap-SD Wald",1.43400529026372
+"high_control",88,0.4,"Full IF Wald",1.64068799112754
+"high_control",88,0.4,"Full-system HC3 Wald",1.4985490305726
+"high_control",88,0.4,"Conditional Wald",1.49911801874216
+"high_control",89,0.4,"Delete-one Wald",1.96448876798418
+"high_control",89,0.4,"Full-system HC3 Wald",1.93344683282415
+"high_control",89,0.4,"Full IF Wald",2.05882887291094
+"high_control",89,0.4,"Conditional Wald",1.58786946113708
+"high_control",89,0.4,"Bootstrap-SD Wald",1.93627083100966
+"high_control",9,0.4,"Delete-one Wald",1.46865256449315
+"high_control",9,0.4,"Bootstrap-SD Wald",1.38789033979411
+"high_control",9,0.4,"Full IF Wald",1.553814820311
+"high_control",9,0.4,"Full-system HC3 Wald",1.44601487815156
+"high_control",9,0.4,"Conditional Wald",1.47844800364863
+"high_control",90,0.4,"Delete-one Wald",0.564824595102241
+"high_control",90,0.4,"Bootstrap-SD Wald",0.543534388135023
+"high_control",90,0.4,"Conditional Wald",0.492168974838784
+"high_control",90,0.4,"Full-system HC3 Wald",0.556197631062424
+"high_control",90,0.4,"Full IF Wald",0.590974243328746
+"high_control",91,0.4,"Conditional Wald",0.577791790130647
+"high_control",91,0.4,"Full IF Wald",0.61383342898599
+"high_control",91,0.4,"Delete-one Wald",0.586940299387484
+"high_control",91,0.4,"Full-system HC3 Wald",0.578050156589499
+"high_control",91,0.4,"Bootstrap-SD Wald",0.590389971430097
+"high_control",92,0.4,"Conditional Wald",0.919029505967345
+"high_control",92,0.4,"Full IF Wald",0.886632243405679
+"high_control",92,0.4,"Delete-one Wald",0.841509140756502
+"high_control",92,0.4,"Bootstrap-SD Wald",0.836903437952597
+"high_control",92,0.4,"Full-system HC3 Wald",0.828916238695555
+"high_control",93,0.4,"Full-system HC3 Wald",0.148826294614442
+"high_control",93,0.4,"Delete-one Wald",0.151107904250472
+"high_control",93,0.4,"Conditional Wald",0.194564545747242
+"high_control",93,0.4,"Bootstrap-SD Wald",0.147835776217849
+"high_control",93,0.4,"Full IF Wald",0.165332514449936
+"high_control",94,0.4,"Bootstrap-SD Wald",0.356964385944735
+"high_control",94,0.4,"Delete-one Wald",0.362593971132671
+"high_control",94,0.4,"Conditional Wald",0.447039807542898
+"high_control",94,0.4,"Full-system HC3 Wald",0.356718837887419
+"high_control",94,0.4,"Full IF Wald",0.393575260406522
+"high_control",95,0.4,"Conditional Wald",0.396370241341948
+"high_control",95,0.4,"Full-system HC3 Wald",0.367361045556836
+"high_control",95,0.4,"Delete-one Wald",0.372939963019195
+"high_control",95,0.4,"Full IF Wald",0.397674701482058
+"high_control",95,0.4,"Bootstrap-SD Wald",0.365926174942158
+"high_control",96,0.4,"Delete-one Wald",1.04953399016845
+"high_control",96,0.4,"Full-system HC3 Wald",1.0323368564399
+"high_control",96,0.4,"Bootstrap-SD Wald",0.847606552195559
+"high_control",96,0.4,"Conditional Wald",0.878076933398975
+"high_control",96,0.4,"Full IF Wald",1.10056902011706
+"high_control",97,0.4,"Full IF Wald",0.531068818065987
+"high_control",97,0.4,"Bootstrap-SD Wald",0.50225195080241
+"high_control",97,0.4,"Conditional Wald",0.537123071750862
+"high_control",97,0.4,"Delete-one Wald",0.503307911662636
+"high_control",97,0.4,"Full-system HC3 Wald",0.49643738017782
+"high_control",98,0.4,"Conditional Wald",0.216407169948555
+"high_control",98,0.4,"Full-system HC3 Wald",0.203069934104489
+"high_control",98,0.4,"Bootstrap-SD Wald",0.196642302698872
+"high_control",98,0.4,"Full IF Wald",0.219745227338344
+"high_control",98,0.4,"Delete-one Wald",0.206026377195228
+"high_control",99,0.4,"Bootstrap-SD Wald",2.3999472195426
+"high_control",99,0.4,"Conditional Wald",2.36020016948096
+"high_control",99,0.4,"Full-system HC3 Wald",2.38974832707093
+"high_control",99,0.4,"Full IF Wald",2.58484506468805
+"high_control",99,0.4,"Delete-one Wald",2.4263869501048
+"low_balanced",11,0.4,"Delete-one Wald",1.76696157055315
+"low_balanced",11,0.4,"Bootstrap-SD Wald",1.56355929769795
+"low_balanced",11,0.4,"Full IF Wald",2.04999262117581
+"low_balanced",11,0.4,"Conditional Wald",1.871468168656
+"low_balanced",11,0.4,"Full-system HC3 Wald",1.7026180690563
+"low_balanced",14,0.4,"Conditional Wald",0.730016300199017
+"low_balanced",14,0.4,"Delete-one Wald",0.950762476685742
+"low_balanced",14,0.4,"Bootstrap-SD Wald",1.03947097789796
+"low_balanced",14,0.4,"Full-system HC3 Wald",0.837843461500204
+"low_balanced",14,0.4,"Full IF Wald",1.06287850530938
+"low_balanced",15,0.4,"Conditional Wald",1.33741514450442
+"low_balanced",15,0.4,"Full IF Wald",2.40805111525614
+"low_balanced",15,0.4,"Delete-one Wald",2.34970496630393
+"low_balanced",15,0.4,"Full-system HC3 Wald",1.96290528579742
+"low_balanced",15,0.4,"Bootstrap-SD Wald",2.03650286956183
+"low_balanced",19,0.4,"Full-system HC3 Wald",0.258509017492409
+"low_balanced",19,0.4,"Bootstrap-SD Wald",0.435672134483964
+"low_balanced",19,0.4,"Delete-one Wald",0.266550847961452
+"low_balanced",19,0.4,"Conditional Wald",0.346344837792602
+"low_balanced",19,0.4,"Full IF Wald",0.365286578717825
+"low_balanced",2,0.4,"Bootstrap-SD Wald",0.715943217034044
+"low_balanced",2,0.4,"Delete-one Wald",0.508132928870797
+"low_balanced",2,0.4,"Full-system HC3 Wald",0.133029442764271
+"low_balanced",2,0.4,"Full IF Wald",0.474100720393536
+"low_balanced",2,0.4,"Conditional Wald",0.527431291460184
+"low_balanced",20,0.4,"Full IF Wald",1.06917653977278
+"low_balanced",20,0.4,"Bootstrap-SD Wald",1.95041038091224
+"low_balanced",20,0.4,"Full-system HC3 Wald",0.345270141277232
+"low_balanced",20,0.4,"Delete-one Wald",1.45508586528355
+"low_balanced",20,0.4,"Conditional Wald",1.28801144348468
+"low_balanced",21,0.4,"Bootstrap-SD Wald",0.59679304904879
+"low_balanced",21,0.4,"Conditional Wald",0.667528065809708
+"low_balanced",21,0.4,"Full IF Wald",0.588491066678183
+"low_balanced",21,0.4,"Delete-one Wald",0.353087257028265
+"low_balanced",21,0.4,"Full-system HC3 Wald",0.168740987289705
+"low_balanced",22,0.4,"Conditional Wald",1.15444107128987
+"low_balanced",22,0.4,"Bootstrap-SD Wald",1.23020705461679
+"low_balanced",22,0.4,"Full-system HC3 Wald",0.563542377403282
+"low_balanced",22,0.4,"Delete-one Wald",0.874908546692755
+"low_balanced",22,0.4,"Full IF Wald",1.10250974077426
+"low_balanced",28,0.4,"Full-system HC3 Wald",0.431002336004181
+"low_balanced",28,0.4,"Full IF Wald",0.616568444157737
+"low_balanced",28,0.4,"Conditional Wald",0.536529004166062
+"low_balanced",28,0.4,"Bootstrap-SD Wald",0.447893981707931
+"low_balanced",28,0.4,"Delete-one Wald",0.445241232951733
+"low_balanced",29,0.4,"Full-system HC3 Wald",0.423531347473663
+"low_balanced",29,0.4,"Delete-one Wald",0.427414692990845
+"low_balanced",29,0.4,"Bootstrap-SD Wald",0.693069242662675
+"low_balanced",29,0.4,"Conditional Wald",0.528097185501883
+"low_balanced",29,0.4,"Full IF Wald",0.62139959590317
+"low_balanced",3,0.4,"Bootstrap-SD Wald",0.203457612127372
+"low_balanced",3,0.4,"Conditional Wald",0.117228557097836
+"low_balanced",3,0.4,"Full-system HC3 Wald",0.00655503669198714
+"low_balanced",3,0.4,"Delete-one Wald",0.110743393139707
+"low_balanced",3,0.4,"Full IF Wald",0.113157930665442
+"low_balanced",30,0.4,"Full-system HC3 Wald",0.0583546143272112
+"low_balanced",30,0.4,"Delete-one Wald",0.135645467465342
+"low_balanced",30,0.4,"Full IF Wald",0.0570913706069262
+"low_balanced",30,0.4,"Bootstrap-SD Wald",0.245716739685896
+"low_balanced",30,0.4,"Conditional Wald",0.0991405573765403
+"low_balanced",35,0.4,"Full IF Wald",1.53143754843609
+"low_balanced",35,0.4,"Full-system HC3 Wald",1.10009651407873
+"low_balanced",35,0.4,"Bootstrap-SD Wald",1.50513593625551
+"low_balanced",35,0.4,"Conditional Wald",1.619178164649
+"low_balanced",35,0.4,"Delete-one Wald",1.14379729405198
+"low_balanced",36,0.4,"Full-system HC3 Wald",0.639616828185568
+"low_balanced",36,0.4,"Full IF Wald",1.13399921420043
+"low_balanced",36,0.4,"Conditional Wald",0.947662154709445
+"low_balanced",36,0.4,"Delete-one Wald",0.890956991424555
+"low_balanced",36,0.4,"Bootstrap-SD Wald",1.2654810297006
+"low_balanced",37,0.4,"Conditional Wald",1.74106010866834
+"low_balanced",37,0.4,"Full IF Wald",2.24591924844069
+"low_balanced",37,0.4,"Delete-one Wald",1.97562382688891
+"low_balanced",37,0.4,"Full-system HC3 Wald",1.89809614789924
+"low_balanced",37,0.4,"Bootstrap-SD Wald",1.53184567103491
+"low_balanced",39,0.4,"Full IF Wald",0.141556661483953
+"low_balanced",39,0.4,"Conditional Wald",0.111648274695571
+"low_balanced",39,0.4,"Delete-one Wald",0.128682691700933
+"low_balanced",39,0.4,"Bootstrap-SD Wald",0.199118906179819
+"low_balanced",39,0.4,"Full-system HC3 Wald",0.108455701387176
+"low_balanced",4,0.4,"Delete-one Wald",0.14993397341511
+"low_balanced",4,0.4,"Conditional Wald",0.178202949889743
+"low_balanced",4,0.4,"Full IF Wald",0.164413872276067
+"low_balanced",4,0.4,"Full-system HC3 Wald",0.0983003664712396
+"low_balanced",4,0.4,"Bootstrap-SD Wald",0.222170086281373
+"low_balanced",45,0.4,"Bootstrap-SD Wald",0.0586086380875241
+"low_balanced",45,0.4,"Conditional Wald",0.0283292256455825
+"low_balanced",45,0.4,"Full-system HC3 Wald",0.00338112754371323
+"low_balanced",45,0.4,"Delete-one Wald",0.0336415636592533
+"low_balanced",45,0.4,"Full IF Wald",0.0375029344132726
+"low_balanced",47,0.4,"Conditional Wald",0.433516412373406
+"low_balanced",47,0.4,"Delete-one Wald",0.439653641212855
+"low_balanced",47,0.4,"Full IF Wald",0.514796189303733
+"low_balanced",47,0.4,"Full-system HC3 Wald",0.425311639407019
+"low_balanced",47,0.4,"Bootstrap-SD Wald",0.651422440656633
+"low_balanced",49,0.4,"Conditional Wald",0.53995564098257
+"low_balanced",49,0.4,"Full-system HC3 Wald",1.32599913633375
+"low_balanced",49,0.4,"Full IF Wald",2.90573182900337
+"low_balanced",49,0.4,"Delete-one Wald",1.28436566811918
+"low_balanced",49,0.4,"Bootstrap-SD Wald",1.55752286826168
+"low_balanced",50,0.4,"Full-system HC3 Wald",1.50850327525356
+"low_balanced",50,0.4,"Bootstrap-SD Wald",1.54367917298346
+"low_balanced",50,0.4,"Conditional Wald",0.492817669710358
+"low_balanced",50,0.4,"Full IF Wald",2.74800822485729
+"low_balanced",50,0.4,"Delete-one Wald",2.10323291925283
+"low_balanced",53,0.4,"Delete-one Wald",0.190668807204763
+"low_balanced",53,0.4,"Full IF Wald",0.206670440327088
+"low_balanced",53,0.4,"Full-system HC3 Wald",0.0766891003536985
+"low_balanced",53,0.4,"Bootstrap-SD Wald",0.410965609375953
+"low_balanced",53,0.4,"Conditional Wald",0.22350691207292
+"low_balanced",56,0.4,"Delete-one Wald",0.624407549756018
+"low_balanced",56,0.4,"Bootstrap-SD Wald",0.796102100630189
+"low_balanced",56,0.4,"Conditional Wald",0.289460455513048
+"low_balanced",56,0.4,"Full-system HC3 Wald",0.269080381030231
+"low_balanced",56,0.4,"Full IF Wald",0.628380886720836
+"low_balanced",58,0.4,"Delete-one Wald",0.366776470705105
+"low_balanced",58,0.4,"Conditional Wald",0.566652635329354
+"low_balanced",58,0.4,"Full IF Wald",0.640951020824133
+"low_balanced",58,0.4,"Bootstrap-SD Wald",0.511305117728621
+"low_balanced",58,0.4,"Full-system HC3 Wald",0.362266998896173
+"low_balanced",59,0.4,"Full IF Wald",0.481912165723648
+"low_balanced",59,0.4,"Delete-one Wald",0.448405475754751
+"low_balanced",59,0.4,"Conditional Wald",0.35102369378012
+"low_balanced",59,0.4,"Bootstrap-SD Wald",0.602211361335557
+"low_balanced",59,0.4,"Full-system HC3 Wald",0.384919360531827
+"low_balanced",6,0.4,"Bootstrap-SD Wald",1.45286600282669
+"low_balanced",6,0.4,"Full IF Wald",1.05529042547853
+"low_balanced",6,0.4,"Conditional Wald",0.999138482873643
+"low_balanced",6,0.4,"Full-system HC3 Wald",0.652212850202736
+"low_balanced",6,0.4,"Delete-one Wald",0.945303434808177
+"low_balanced",61,0.4,"Delete-one Wald",0.556733056237243
+"low_balanced",61,0.4,"Full-system HC3 Wald",0.474703383878919
+"low_balanced",61,0.4,"Full IF Wald",0.588927130085886
+"low_balanced",61,0.4,"Conditional Wald",0.568043944973184
+"low_balanced",61,0.4,"Bootstrap-SD Wald",0.69325536220072
+"low_balanced",65,0.4,"Conditional Wald",0.758343608455377
+"low_balanced",65,0.4,"Full-system HC3 Wald",0.567479198391973
+"low_balanced",65,0.4,"Delete-one Wald",0.580907885120838
+"low_balanced",65,0.4,"Full IF Wald",0.837633099672122
+"low_balanced",65,0.4,"Bootstrap-SD Wald",0.801126525086315
+"low_balanced",66,0.4,"Bootstrap-SD Wald",0.2405587633532
+"low_balanced",66,0.4,"Full IF Wald",0.192921394041521
+"low_balanced",66,0.4,"Delete-one Wald",0.143223502800531
+"low_balanced",66,0.4,"Full-system HC3 Wald",0.0250015216160717
+"low_balanced",66,0.4,"Conditional Wald",0.275030781987573
+"low_balanced",67,0.4,"Full IF Wald",1.39954426217534
+"low_balanced",67,0.4,"Conditional Wald",0.360562000773502
+"low_balanced",67,0.4,"Bootstrap-SD Wald",0.846139267734573
+"low_balanced",67,0.4,"Full-system HC3 Wald",1.09781974232397
+"low_balanced",67,0.4,"Delete-one Wald",1.27639593591692
+"low_balanced",69,0.4,"Full-system HC3 Wald",0.118901376755275
+"low_balanced",69,0.4,"Delete-one Wald",1.0201457227327
+"low_balanced",69,0.4,"Conditional Wald",0.371033545426589
+"low_balanced",69,0.4,"Full IF Wald",0.357436565726905
+"low_balanced",69,0.4,"Bootstrap-SD Wald",1.32043046493279
+"low_balanced",7,0.4,"Bootstrap-SD Wald",0.87505116552812
+"low_balanced",7,0.4,"Delete-one Wald",0.464593949681709
+"low_balanced",7,0.4,"Conditional Wald",0.371318069154322
+"low_balanced",7,0.4,"Full-system HC3 Wald",0.314668761143106
+"low_balanced",7,0.4,"Full IF Wald",0.567772144785983
+"low_balanced",70,0.4,"Conditional Wald",2.19953073608837
+"low_balanced",70,0.4,"Delete-one Wald",2.2197869081847
+"low_balanced",70,0.4,"Full-system HC3 Wald",2.15629019168739
+"low_balanced",70,0.4,"Full IF Wald",2.63040535319387
+"low_balanced",70,0.4,"Bootstrap-SD Wald",1.93146164970479
+"low_balanced",72,0.4,"Conditional Wald",0.486482232653177
+"low_balanced",72,0.4,"Full IF Wald",1.51929555888813
+"low_balanced",72,0.4,"Bootstrap-SD Wald",1.34164577404576
+"low_balanced",72,0.4,"Delete-one Wald",1.36613856253085
+"low_balanced",72,0.4,"Full-system HC3 Wald",0.958293431955344
+"low_balanced",73,0.4,"Full-system HC3 Wald",0.0641709644292201
+"low_balanced",73,0.4,"Delete-one Wald",0.0888736439744848
+"low_balanced",73,0.4,"Conditional Wald",0.166149557778564
+"low_balanced",73,0.4,"Bootstrap-SD Wald",0.188453385679225
+"low_balanced",73,0.4,"Full IF Wald",0.171380076311507
+"low_balanced",75,0.4,"Full IF Wald",1.31658890878503
+"low_balanced",75,0.4,"Full-system HC3 Wald",0.844279884566952
+"low_balanced",75,0.4,"Conditional Wald",1.12257245742779
+"low_balanced",75,0.4,"Bootstrap-SD Wald",1.19414471481013
+"low_balanced",75,0.4,"Delete-one Wald",0.891158300057573
+"low_balanced",76,0.4,"Delete-one Wald",0.699119391006835
+"low_balanced",76,0.4,"Full IF Wald",0.879476880989019
+"low_balanced",76,0.4,"Bootstrap-SD Wald",0.660746719094514
+"low_balanced",76,0.4,"Conditional Wald",0.653485832745183
+"low_balanced",76,0.4,"Full-system HC3 Wald",0.668968346900739
+"low_balanced",78,0.4,"Full-system HC3 Wald",0.00603459710777618
+"low_balanced",78,0.4,"Full IF Wald",0.0702916702435386
+"low_balanced",78,0.4,"Conditional Wald",0.0847005204673908
+"low_balanced",78,0.4,"Bootstrap-SD Wald",0.210203216894731
+"low_balanced",78,0.4,"Delete-one Wald",0.129995375791946
+"low_balanced",79,0.4,"Delete-one Wald",1.12291767928042
+"low_balanced",79,0.4,"Bootstrap-SD Wald",1.6368081943429
+"low_balanced",79,0.4,"Conditional Wald",1.27242133268832
+"low_balanced",79,0.4,"Full IF Wald",1.25705378580939
+"low_balanced",79,0.4,"Full-system HC3 Wald",0.266473328128202
+"low_balanced",80,0.4,"Conditional Wald",0.172286055395907
+"low_balanced",80,0.4,"Full IF Wald",0.161034678576557
+"low_balanced",80,0.4,"Delete-one Wald",0.108225253762119
+"low_balanced",80,0.4,"Bootstrap-SD Wald",0.187032971128832
+"low_balanced",80,0.4,"Full-system HC3 Wald",0.107563024037331
+"low_balanced",82,0.4,"Bootstrap-SD Wald",0.573660174815423
+"low_balanced",82,0.4,"Conditional Wald",0.452062368504229
+"low_balanced",82,0.4,"Full-system HC3 Wald",0.320477856980147
+"low_balanced",82,0.4,"Full IF Wald",0.461116246469775
+"low_balanced",82,0.4,"Delete-one Wald",0.370656713097041
+"low_balanced",83,0.4,"Delete-one Wald",0.0732304130270851
+"low_balanced",83,0.4,"Bootstrap-SD Wald",0.0973688701760176
+"low_balanced",83,0.4,"Full-system HC3 Wald",0.0624673949725647
+"low_balanced",83,0.4,"Conditional Wald",0.0674174919322733
+"low_balanced",83,0.4,"Full IF Wald",0.0838715754862336
+"low_balanced",84,0.4,"Delete-one Wald",2.42849504308434
+"low_balanced",84,0.4,"Full IF Wald",2.39618128722738
+"low_balanced",84,0.4,"Conditional Wald",1.72777268653489
+"low_balanced",84,0.4,"Full-system HC3 Wald",1.81815551882191
+"low_balanced",84,0.4,"Bootstrap-SD Wald",3.99170444012317
+"low_balanced",85,0.4,"Full-system HC3 Wald",0.748337670502602
+"low_balanced",85,0.4,"Conditional Wald",1.29608443535846
+"low_balanced",85,0.4,"Delete-one Wald",0.812853541121818
+"low_balanced",85,0.4,"Bootstrap-SD Wald",1.32615745205638
+"low_balanced",85,0.4,"Full IF Wald",1.23198525624927
+"low_balanced",87,0.4,"Full IF Wald",2.98849108892559
+"low_balanced",87,0.4,"Bootstrap-SD Wald",2.77478686954862
+"low_balanced",87,0.4,"Delete-one Wald",2.4541115242075
+"low_balanced",87,0.4,"Full-system HC3 Wald",2.35534051535759
+"low_balanced",87,0.4,"Conditional Wald",2.82724482370966
+"low_balanced",88,0.4,"Full IF Wald",1.46062554557139
+"low_balanced",88,0.4,"Conditional Wald",0.469160902166458
+"low_balanced",88,0.4,"Full-system HC3 Wald",0.458077366946547
+"low_balanced",88,0.4,"Bootstrap-SD Wald",1.32379308087788
+"low_balanced",88,0.4,"Delete-one Wald",1.26949365495984
+"low_balanced",89,0.4,"Full IF Wald",2.39238377933776
+"low_balanced",89,0.4,"Bootstrap-SD Wald",2.3305396424394
+"low_balanced",89,0.4,"Full-system HC3 Wald",1.93685252044496
+"low_balanced",89,0.4,"Delete-one Wald",2.19852207964255
+"low_balanced",89,0.4,"Conditional Wald",0.578473247907369
+"low_balanced",90,0.4,"Delete-one Wald",0.795578816377437
+"low_balanced",90,0.4,"Full-system HC3 Wald",0.771323970389298
+"low_balanced",90,0.4,"Full IF Wald",0.936683295469703
+"low_balanced",90,0.4,"Bootstrap-SD Wald",0.673559383491213
+"low_balanced",90,0.4,"Conditional Wald",0.821964712735615
+"low_balanced",91,0.4,"Conditional Wald",0.676361777468692
+"low_balanced",91,0.4,"Full IF Wald",0.339540797426684
+"low_balanced",91,0.4,"Bootstrap-SD Wald",0.709007413635223
+"low_balanced",91,0.4,"Delete-one Wald",0.360285333456194
+"low_balanced",91,0.4,"Full-system HC3 Wald",0.13651715902412
+"low_balanced",92,0.4,"Full-system HC3 Wald",0.58129302401538
+"low_balanced",92,0.4,"Full IF Wald",0.72450916128874
+"low_balanced",92,0.4,"Bootstrap-SD Wald",0.57388699144249
+"low_balanced",92,0.4,"Delete-one Wald",0.610759060691921
+"low_balanced",92,0.4,"Conditional Wald",0.57315833517625
+"low_balanced",94,0.4,"Full IF Wald",1.57215701985526
+"low_balanced",94,0.4,"Bootstrap-SD Wald",1.89108921031464
+"low_balanced",94,0.4,"Delete-one Wald",1.25254471072807
+"low_balanced",94,0.4,"Conditional Wald",0.93435311944685
+"low_balanced",94,0.4,"Full-system HC3 Wald",0.131524277586536
+"low_balanced",96,0.4,"Conditional Wald",0.557739697632154
+"low_balanced",96,0.4,"Delete-one Wald",3.12962232750151
+"low_balanced",96,0.4,"Full-system HC3 Wald",2.05798449745126
+"low_balanced",96,0.4,"Bootstrap-SD Wald",1.66704532926899
+"low_balanced",96,0.4,"Full IF Wald",3.66849644003738
+"low_balanced",97,0.4,"Full IF Wald",0.5811399150504
+"low_balanced",97,0.4,"Conditional Wald",0.643247724371849
+"low_balanced",97,0.4,"Full-system HC3 Wald",0.24338457647784
+"low_balanced",97,0.4,"Bootstrap-SD Wald",1.42733182469858
+"low_balanced",97,0.4,"Delete-one Wald",0.841522047555502
+"low_larger",11,0.4,"Full-system HC3 Wald",0.484108748581733
+"low_larger",11,0.4,"Bootstrap-SD Wald",0.789382591912097
+"low_larger",11,0.4,"Delete-one Wald",0.528725360112082
+"low_larger",11,0.4,"Conditional Wald",0.705424714599701
+"low_larger",11,0.4,"Full IF Wald",0.717769014962835
+"low_larger",12,0.4,"Bootstrap-SD Wald",3.18842882374073
+"low_larger",12,0.4,"Conditional Wald",0.750398576467844
+"low_larger",12,0.4,"Full-system HC3 Wald",3.05346554915383
+"low_larger",12,0.4,"Full IF Wald",4.12295046606799
+"low_larger",12,0.4,"Delete-one Wald",3.96934827805194
+"low_larger",13,0.4,"Conditional Wald",0.809737286213434
+"low_larger",13,0.4,"Delete-one Wald",4.53788079893606
+"low_larger",13,0.4,"Bootstrap-SD Wald",3.53591631935682
+"low_larger",13,0.4,"Full-system HC3 Wald",2.78517830932831
+"low_larger",13,0.4,"Full IF Wald",4.74491272808911
+"low_larger",14,0.4,"Full IF Wald",0.701658300380458
+"low_larger",14,0.4,"Delete-one Wald",0.55400847397708
+"low_larger",14,0.4,"Conditional Wald",0.487739029213236
+"low_larger",14,0.4,"Bootstrap-SD Wald",0.768150770851044
+"low_larger",14,0.4,"Full-system HC3 Wald",0.419505481311329
+"low_larger",15,0.4,"Delete-one Wald",0.613945344152122
+"low_larger",15,0.4,"Full-system HC3 Wald",0.601050525631522
+"low_larger",15,0.4,"Conditional Wald",0.656297591529436
+"low_larger",15,0.4,"Bootstrap-SD Wald",0.509670711665161
+"low_larger",15,0.4,"Full IF Wald",0.736234100876457
+"low_larger",16,0.4,"Full IF Wald",0.417958824186462
+"low_larger",16,0.4,"Full-system HC3 Wald",0.311218710186709
+"low_larger",16,0.4,"Delete-one Wald",0.310639770086248
+"low_larger",16,0.4,"Conditional Wald",0.487183609824503
+"low_larger",16,0.4,"Bootstrap-SD Wald",0.537350097851223
+"low_larger",17,0.4,"Full-system HC3 Wald",0.0478697725258515
+"low_larger",17,0.4,"Delete-one Wald",0.1014773970496
+"low_larger",17,0.4,"Conditional Wald",0.134141163648571
+"low_larger",17,0.4,"Full IF Wald",0.127571500582475
+"low_larger",17,0.4,"Bootstrap-SD Wald",0.220335532143741
+"low_larger",19,0.4,"Full IF Wald",0.106503759467827
+"low_larger",19,0.4,"Delete-one Wald",0.103697707350999
+"low_larger",19,0.4,"Conditional Wald",0.100058314574818
+"low_larger",19,0.4,"Full-system HC3 Wald",0.063438183345721
+"low_larger",19,0.4,"Bootstrap-SD Wald",0.221870403011941
+"low_larger",20,0.4,"Conditional Wald",1.25094291148933
+"low_larger",20,0.4,"Full-system HC3 Wald",1.00180584418207
+"low_larger",20,0.4,"Full IF Wald",1.2225682221645
+"low_larger",20,0.4,"Bootstrap-SD Wald",0.988344927890464
+"low_larger",20,0.4,"Delete-one Wald",0.998590867669223
+"low_larger",21,0.4,"Conditional Wald",1.14749711465756
+"low_larger",21,0.4,"Bootstrap-SD Wald",1.25203773992302
+"low_larger",21,0.4,"Delete-one Wald",0.77048051696153
+"low_larger",21,0.4,"Full IF Wald",1.06664083241988
+"low_larger",21,0.4,"Full-system HC3 Wald",0.776614745414017
+"low_larger",22,0.4,"Full IF Wald",0.348285531468856
+"low_larger",22,0.4,"Bootstrap-SD Wald",0.4602516899429
+"low_larger",22,0.4,"Delete-one Wald",0.307577890825085
+"low_larger",22,0.4,"Conditional Wald",0.352773560556469
+"low_larger",22,0.4,"Full-system HC3 Wald",0.303228837177386
+"low_larger",24,0.4,"Delete-one Wald",1.64615967253265
+"low_larger",24,0.4,"Bootstrap-SD Wald",1.99500775344925
+"low_larger",24,0.4,"Full-system HC3 Wald",1.07953019197466
+"low_larger",24,0.4,"Conditional Wald",0.751361285156952
+"low_larger",24,0.4,"Full IF Wald",1.66820571535774
+"low_larger",26,0.4,"Bootstrap-SD Wald",1.08571370886385
+"low_larger",26,0.4,"Full-system HC3 Wald",1.08890919087165
+"low_larger",26,0.4,"Conditional Wald",0.430814776773827
+"low_larger",26,0.4,"Full IF Wald",1.57162307975056
+"low_larger",26,0.4,"Delete-one Wald",1.57095863126785
+"low_larger",27,0.4,"Bootstrap-SD Wald",1.46316673773368
+"low_larger",27,0.4,"Full-system HC3 Wald",1.04968383095466
+"low_larger",27,0.4,"Delete-one Wald",1.13227228994814
+"low_larger",27,0.4,"Conditional Wald",0.602213089336474
+"low_larger",27,0.4,"Full IF Wald",1.52091066701485
+"low_larger",28,0.4,"Conditional Wald",2.56927851877655
+"low_larger",28,0.4,"Bootstrap-SD Wald",1.56415283950094
+"low_larger",28,0.4,"Delete-one Wald",2.29371266026401
+"low_larger",28,0.4,"Full IF Wald",2.57636841183032
+"low_larger",28,0.4,"Full-system HC3 Wald",2.25829099662786
+"low_larger",31,0.4,"Conditional Wald",0.17488635565832
+"low_larger",31,0.4,"Delete-one Wald",0.115599298036798
+"low_larger",31,0.4,"Full IF Wald",0.175669933636737
+"low_larger",31,0.4,"Bootstrap-SD Wald",0.216254168043909
+"low_larger",31,0.4,"Full-system HC3 Wald",0.113046962139845
+"low_larger",33,0.4,"Delete-one Wald",0.396482783556391
+"low_larger",33,0.4,"Full-system HC3 Wald",0.361975866414604
+"low_larger",33,0.4,"Conditional Wald",0.429668996150153
+"low_larger",33,0.4,"Bootstrap-SD Wald",0.72915497387605
+"low_larger",33,0.4,"Full IF Wald",0.484908086598308
+"low_larger",35,0.4,"Delete-one Wald",0.884802183604363
+"low_larger",35,0.4,"Conditional Wald",1.22576945371921
+"low_larger",35,0.4,"Full-system HC3 Wald",0.871656153427363
+"low_larger",35,0.4,"Full IF Wald",1.04466059411532
+"low_larger",35,0.4,"Bootstrap-SD Wald",0.661676428789425
+"low_larger",37,0.4,"Delete-one Wald",0.443582834727915
+"low_larger",37,0.4,"Full IF Wald",0.518329414677429
+"low_larger",37,0.4,"Bootstrap-SD Wald",0.349737542645873
+"low_larger",37,0.4,"Full-system HC3 Wald",0.43959838014717
+"low_larger",37,0.4,"Conditional Wald",0.511914591924846
+"low_larger",38,0.4,"Delete-one Wald",0.72939807158982
+"low_larger",38,0.4,"Full-system HC3 Wald",0.588781567356667
+"low_larger",38,0.4,"Conditional Wald",0.963722279487841
+"low_larger",38,0.4,"Bootstrap-SD Wald",1.1564946591219
+"low_larger",38,0.4,"Full IF Wald",0.909096983941479
+"low_larger",39,0.4,"Full-system HC3 Wald",0.0568566349474944
+"low_larger",39,0.4,"Full IF Wald",0.0683034345933112
+"low_larger",39,0.4,"Bootstrap-SD Wald",0.0635992938935932
+"low_larger",39,0.4,"Delete-one Wald",0.0575184602445383
+"low_larger",39,0.4,"Conditional Wald",0.0653404867358605
+"low_larger",4,0.4,"Delete-one Wald",0.748308225663938
+"low_larger",4,0.4,"Conditional Wald",0.818085271747164
+"low_larger",4,0.4,"Bootstrap-SD Wald",1.32532630143898
+"low_larger",4,0.4,"Full-system HC3 Wald",0.680846318346073
+"low_larger",4,0.4,"Full IF Wald",0.814197446297938
+"low_larger",44,0.4,"Full-system HC3 Wald",0.918150912903528
+"low_larger",44,0.4,"Conditional Wald",0.93465922917167
+"low_larger",44,0.4,"Bootstrap-SD Wald",0.667973331955603
+"low_larger",44,0.4,"Full IF Wald",1.02752895339797
+"low_larger",44,0.4,"Delete-one Wald",0.935957981289998
+"low_larger",46,0.4,"Full IF Wald",0.610917390363923
+"low_larger",46,0.4,"Conditional Wald",0.629345956305367
+"low_larger",46,0.4,"Full-system HC3 Wald",0.513003221405769
+"low_larger",46,0.4,"Delete-one Wald",0.519734872703742
+"low_larger",46,0.4,"Bootstrap-SD Wald",0.753972958281686
+"low_larger",47,0.4,"Full-system HC3 Wald",0.505389712102928
+"low_larger",47,0.4,"Conditional Wald",0.529926114974571
+"low_larger",47,0.4,"Full IF Wald",0.58725696369746
+"low_larger",47,0.4,"Bootstrap-SD Wald",0.491625049728205
+"low_larger",47,0.4,"Delete-one Wald",0.507535383854197
+"low_larger",49,0.4,"Full IF Wald",0.110366885944486
+"low_larger",49,0.4,"Conditional Wald",0.0972720994466095
+"low_larger",49,0.4,"Delete-one Wald",0.0839926133560182
+"low_larger",49,0.4,"Bootstrap-SD Wald",0.0984979299030411
+"low_larger",49,0.4,"Full-system HC3 Wald",0.0818638948486854
+"low_larger",50,0.4,"Full IF Wald",2.32817733242686
+"low_larger",50,0.4,"Full-system HC3 Wald",1.7475398376803
+"low_larger",50,0.4,"Delete-one Wald",2.11340069144823
+"low_larger",50,0.4,"Bootstrap-SD Wald",2.18337522565425
+"low_larger",50,0.4,"Conditional Wald",0.837937659349357
+"low_larger",51,0.4,"Full IF Wald",0.173289506681439
+"low_larger",51,0.4,"Conditional Wald",0.180434200628809
+"low_larger",51,0.4,"Bootstrap-SD Wald",0.233545643131014
+"low_larger",51,0.4,"Full-system HC3 Wald",0.133950084420025
+"low_larger",51,0.4,"Delete-one Wald",0.134968161629548
+"low_larger",53,0.4,"Full-system HC3 Wald",0.0198403943599502
+"low_larger",53,0.4,"Bootstrap-SD Wald",0.330460837373919
+"low_larger",53,0.4,"Conditional Wald",0.145539168675975
+"low_larger",53,0.4,"Full IF Wald",0.150032541456555
+"low_larger",53,0.4,"Delete-one Wald",0.149072026602053
+"low_larger",55,0.4,"Delete-one Wald",0.422646881409317
+"low_larger",55,0.4,"Conditional Wald",0.48552086041882
+"low_larger",55,0.4,"Bootstrap-SD Wald",0.789771771376345
+"low_larger",55,0.4,"Full-system HC3 Wald",0.162412091933141
+"low_larger",55,0.4,"Full IF Wald",0.440566309643922
+"low_larger",56,0.4,"Conditional Wald",0.617770144412201
+"low_larger",56,0.4,"Full IF Wald",0.674335096080977
+"low_larger",56,0.4,"Delete-one Wald",0.562637732733814
+"low_larger",56,0.4,"Full-system HC3 Wald",0.564686735011246
+"low_larger",56,0.4,"Bootstrap-SD Wald",0.882326625731399
+"low_larger",58,0.4,"Full-system HC3 Wald",1.47262132204861
+"low_larger",58,0.4,"Delete-one Wald",1.49483782037442
+"low_larger",58,0.4,"Full IF Wald",1.6708345396706
+"low_larger",58,0.4,"Bootstrap-SD Wald",1.0271376349039
+"low_larger",58,0.4,"Conditional Wald",1.40623799841855
+"low_larger",59,0.4,"Bootstrap-SD Wald",0.0775822361537008
+"low_larger",59,0.4,"Full-system HC3 Wald",0.0443896463591118
+"low_larger",59,0.4,"Full IF Wald",0.0563096560082248
+"low_larger",59,0.4,"Delete-one Wald",0.0569800848167175
+"low_larger",59,0.4,"Conditional Wald",0.0554353507234062
+"low_larger",6,0.4,"Conditional Wald",1.11364877352144
+"low_larger",6,0.4,"Full-system HC3 Wald",0.687037092980626
+"low_larger",6,0.4,"Bootstrap-SD Wald",1.26102208488387
+"low_larger",6,0.4,"Full IF Wald",1.02959318647658
+"low_larger",6,0.4,"Delete-one Wald",0.977333984681036
+"low_larger",60,0.4,"Bootstrap-SD Wald",0.0211104320696505
+"low_larger",60,0.4,"Full-system HC3 Wald",0.0029264993511031
+"low_larger",60,0.4,"Conditional Wald",0.0140537131786423
+"low_larger",60,0.4,"Full IF Wald",0.0139650592200818
+"low_larger",60,0.4,"Delete-one Wald",0.0114982248513627
+"low_larger",61,0.4,"Full IF Wald",0.300556290153912
+"low_larger",61,0.4,"Full-system HC3 Wald",0.250202923889814
+"low_larger",61,0.4,"Bootstrap-SD Wald",0.489839274142565
+"low_larger",61,0.4,"Conditional Wald",0.32674497234583
+"low_larger",61,0.4,"Delete-one Wald",0.260029265616239
+"low_larger",62,0.4,"Delete-one Wald",0.108369245932778
+"low_larger",62,0.4,"Full-system HC3 Wald",0.0976112361085561
+"low_larger",62,0.4,"Bootstrap-SD Wald",0.241718987990581
+"low_larger",62,0.4,"Full IF Wald",0.133945878809341
+"low_larger",62,0.4,"Conditional Wald",0.144762429412741
+"low_larger",63,0.4,"Delete-one Wald",5.08062726024786
+"low_larger",63,0.4,"Full-system HC3 Wald",1.73100276019959
+"low_larger",63,0.4,"Conditional Wald",0.430008623923137
+"low_larger",63,0.4,"Bootstrap-SD Wald",2.09935047763438
+"low_larger",63,0.4,"Full IF Wald",6.61161071289957
+"low_larger",64,0.4,"Delete-one Wald",0.534616635294012
+"low_larger",64,0.4,"Bootstrap-SD Wald",0.612856946611704
+"low_larger",64,0.4,"Full-system HC3 Wald",0.507286847913573
+"low_larger",64,0.4,"Conditional Wald",0.574317103076089
+"low_larger",64,0.4,"Full IF Wald",0.587067462103028
+"low_larger",66,0.4,"Full IF Wald",0.125086562813104
+"low_larger",66,0.4,"Delete-one Wald",0.104430110117514
+"low_larger",66,0.4,"Full-system HC3 Wald",0.104051305393959
+"low_larger",66,0.4,"Bootstrap-SD Wald",0.0889706026496501
+"low_larger",66,0.4,"Conditional Wald",0.127987690120276
+"low_larger",68,0.4,"Conditional Wald",0.495938123486254
+"low_larger",68,0.4,"Delete-one Wald",0.943221120494181
+"low_larger",68,0.4,"Full-system HC3 Wald",0.355290561181595
+"low_larger",68,0.4,"Full IF Wald",0.57656442286699
+"low_larger",68,0.4,"Bootstrap-SD Wald",1.5277050508752
+"low_larger",69,0.4,"Delete-one Wald",0.757409847197263
+"low_larger",69,0.4,"Full-system HC3 Wald",0.378405063109839
+"low_larger",69,0.4,"Bootstrap-SD Wald",1.49430567463191
+"low_larger",69,0.4,"Conditional Wald",0.561973352994358
+"low_larger",69,0.4,"Full IF Wald",0.5520349357181
+"low_larger",7,0.4,"Full IF Wald",0.108765410506367
+"low_larger",7,0.4,"Conditional Wald",0.107764727674893
+"low_larger",7,0.4,"Delete-one Wald",0.100724694498273
+"low_larger",7,0.4,"Full-system HC3 Wald",0.0697795119551888
+"low_larger",7,0.4,"Bootstrap-SD Wald",0.207629790774258
+"low_larger",70,0.4,"Bootstrap-SD Wald",1.74040550900597
+"low_larger",70,0.4,"Delete-one Wald",2.49815610868596
+"low_larger",70,0.4,"Full IF Wald",2.82229974341482
+"low_larger",70,0.4,"Conditional Wald",2.69482459572744
+"low_larger",70,0.4,"Full-system HC3 Wald",2.46158286682508
+"low_larger",72,0.4,"Full IF Wald",0.705429822503565
+"low_larger",72,0.4,"Delete-one Wald",0.63493872323672
+"low_larger",72,0.4,"Bootstrap-SD Wald",0.630394960052134
+"low_larger",72,0.4,"Full-system HC3 Wald",0.629219720253883
+"low_larger",72,0.4,"Conditional Wald",0.662469894147915
+"low_larger",73,0.4,"Delete-one Wald",0.806333666630281
+"low_larger",73,0.4,"Full-system HC3 Wald",0.791506627077614
+"low_larger",73,0.4,"Full IF Wald",0.971725115693043
+"low_larger",73,0.4,"Bootstrap-SD Wald",0.586826605382898
+"low_larger",73,0.4,"Conditional Wald",1.07609810901748
+"low_larger",75,0.4,"Full IF Wald",2.69521415598469
+"low_larger",75,0.4,"Full-system HC3 Wald",2.28239705139011
+"low_larger",75,0.4,"Bootstrap-SD Wald",1.75759441643773
+"low_larger",75,0.4,"Delete-one Wald",2.31108263091659
+"low_larger",75,0.4,"Conditional Wald",2.29950345477645
+"low_larger",76,0.4,"Bootstrap-SD Wald",0.42911276249959
+"low_larger",76,0.4,"Full IF Wald",0.362026311095743
+"low_larger",76,0.4,"Conditional Wald",0.295610106877673
+"low_larger",76,0.4,"Delete-one Wald",0.30739047915068
+"low_larger",76,0.4,"Full-system HC3 Wald",0.30208996792002
+"low_larger",77,0.4,"Conditional Wald",0.0633706567361273
+"low_larger",77,0.4,"Full IF Wald",0.0647482643781764
+"low_larger",77,0.4,"Delete-one Wald",0.0639285458416798
+"low_larger",77,0.4,"Full-system HC3 Wald",0.030501009636859
+"low_larger",77,0.4,"Bootstrap-SD Wald",0.141385386150107
+"low_larger",78,0.4,"Full IF Wald",0.0760928809796557
+"low_larger",78,0.4,"Conditional Wald",0.0817093533541421
+"low_larger",78,0.4,"Bootstrap-SD Wald",0.0987676521547237
+"low_larger",78,0.4,"Full-system HC3 Wald",0.0530590877670045
+"low_larger",78,0.4,"Delete-one Wald",0.0523464184248493
+"low_larger",79,0.4,"Delete-one Wald",0.700969673636264
+"low_larger",79,0.4,"Bootstrap-SD Wald",0.83042905592872
+"low_larger",79,0.4,"Conditional Wald",0.800422360869918
+"low_larger",79,0.4,"Full-system HC3 Wald",0.119150963178896
+"low_larger",79,0.4,"Full IF Wald",0.876580987083367
+"low_larger",80,0.4,"Conditional Wald",0.357933998382365
+"low_larger",80,0.4,"Full-system HC3 Wald",0.251518807607657
+"low_larger",80,0.4,"Delete-one Wald",0.253235992384832
+"low_larger",80,0.4,"Full IF Wald",0.305368688353289
+"low_larger",80,0.4,"Bootstrap-SD Wald",0.388904940825488
+"low_larger",82,0.4,"Full IF Wald",0.0980408785463879
+"low_larger",82,0.4,"Bootstrap-SD Wald",0.0982001152919402
+"low_larger",82,0.4,"Full-system HC3 Wald",0.0831364222504413
+"low_larger",82,0.4,"Conditional Wald",0.0814426318164841
+"low_larger",82,0.4,"Delete-one Wald",0.0786903175675823
+"low_larger",83,0.4,"Delete-one Wald",0.477488217092517
+"low_larger",83,0.4,"Conditional Wald",0.602226324483421
+"low_larger",83,0.4,"Bootstrap-SD Wald",0.524124997291812
+"low_larger",83,0.4,"Full-system HC3 Wald",0.427626951443825
+"low_larger",83,0.4,"Full IF Wald",0.575579576511663
+"low_larger",85,0.4,"Conditional Wald",1.2483842781413
+"low_larger",85,0.4,"Bootstrap-SD Wald",0.838341445487867
+"low_larger",85,0.4,"Delete-one Wald",1.03912204678601
+"low_larger",85,0.4,"Full IF Wald",1.19414382004401
+"low_larger",85,0.4,"Full-system HC3 Wald",1.0191094313827
+"low_larger",87,0.4,"Conditional Wald",1.88339691012283
+"low_larger",87,0.4,"Bootstrap-SD Wald",1.54556307797438
+"low_larger",87,0.4,"Delete-one Wald",2.06190320266975
+"low_larger",87,0.4,"Full-system HC3 Wald",2.03664628426604
+"low_larger",87,0.4,"Full IF Wald",2.30835483908323
+"low_larger",89,0.4,"Full-system HC3 Wald",2.69840287893984
+"low_larger",89,0.4,"Conditional Wald",0.810105168741412
+"low_larger",89,0.4,"Delete-one Wald",3.37468223540957
+"low_larger",89,0.4,"Full IF Wald",3.47926825912683
+"low_larger",89,0.4,"Bootstrap-SD Wald",3.25632246702967
+"low_larger",90,0.4,"Full-system HC3 Wald",0.164270290742574
+"low_larger",90,0.4,"Full IF Wald",0.226129364181977
+"low_larger",90,0.4,"Conditional Wald",0.21777461509082
+"low_larger",90,0.4,"Bootstrap-SD Wald",0.290258600673931
+"low_larger",90,0.4,"Delete-one Wald",0.165118184402027
+"low_larger",91,0.4,"Delete-one Wald",0.135737575586051
+"low_larger",91,0.4,"Bootstrap-SD Wald",0.234450301250701
+"low_larger",91,0.4,"Full-system HC3 Wald",0.0995100487985552
+"low_larger",91,0.4,"Full IF Wald",0.20399055218958
+"low_larger",91,0.4,"Conditional Wald",0.246452249714213
+"low_larger",92,0.4,"Full-system HC3 Wald",0.432846426433411
+"low_larger",92,0.4,"Full IF Wald",0.468121940466048
+"low_larger",92,0.4,"Conditional Wald",0.373827381769778
+"low_larger",92,0.4,"Delete-one Wald",0.438513031152171
+"low_larger",92,0.4,"Bootstrap-SD Wald",0.293306923632199
+"low_larger",94,0.4,"Bootstrap-SD Wald",1.65873081969814
+"low_larger",94,0.4,"Full-system HC3 Wald",0.0651508698289629
+"low_larger",94,0.4,"Full IF Wald",0.696267617827447
+"low_larger",94,0.4,"Delete-one Wald",0.877105479540113
+"low_larger",94,0.4,"Conditional Wald",0.681346368240435
+"low_larger",97,0.4,"Full-system HC3 Wald",0.0270516729897773
+"low_larger",97,0.4,"Full IF Wald",0.105522930242048
+"low_larger",97,0.4,"Delete-one Wald",0.130345381030072
+"low_larger",97,0.4,"Bootstrap-SD Wald",0.293811025299572
+"low_larger",97,0.4,"Conditional Wald",0.110435348513251
+"low_negative",11,0.4,"Conditional Wald",2.01619626673164
+"low_negative",11,0.4,"Full IF Wald",2.16059463641514
+"low_negative",11,0.4,"Delete-one Wald",1.82587174473072
+"low_negative",11,0.4,"Bootstrap-SD Wald",1.53097325834664
+"low_negative",11,0.4,"Full-system HC3 Wald",1.76256342427842
+"low_negative",15,0.4,"Conditional Wald",0.283439520374244
+"low_negative",15,0.4,"Full IF Wald",0.394760455960021
+"low_negative",15,0.4,"Bootstrap-SD Wald",0.430141387905713
+"low_negative",15,0.4,"Full-system HC3 Wald",0.261894273996049
+"low_negative",15,0.4,"Delete-one Wald",0.316329722717647
+"low_negative",2,0.4,"Conditional Wald",0.233841668392965
+"low_negative",2,0.4,"Full IF Wald",0.511531503576552
+"low_negative",2,0.4,"Delete-one Wald",0.452651739926416
+"low_negative",2,0.4,"Bootstrap-SD Wald",0.537503819932905
+"low_negative",2,0.4,"Full-system HC3 Wald",0.18367162510172
+"low_negative",20,0.4,"Bootstrap-SD Wald",1.5349248865862
+"low_negative",20,0.4,"Conditional Wald",2.01927993428338
+"low_negative",20,0.4,"Delete-one Wald",1.51945676842635
+"low_negative",20,0.4,"Full IF Wald",1.91923992876165
+"low_negative",20,0.4,"Full-system HC3 Wald",1.48243977378292
+"low_negative",21,0.4,"Bootstrap-SD Wald",0.802498501181585
+"low_negative",21,0.4,"Delete-one Wald",0.633762938027508
+"low_negative",21,0.4,"Full-system HC3 Wald",0.525086054142455
+"low_negative",21,0.4,"Full IF Wald",1.03831858042205
+"low_negative",21,0.4,"Conditional Wald",1.01233512632109
+"low_negative",22,0.4,"Bootstrap-SD Wald",1.09226081378039
+"low_negative",22,0.4,"Full IF Wald",0.98690606728189
+"low_negative",22,0.4,"Full-system HC3 Wald",0.456276422328176
+"low_negative",22,0.4,"Delete-one Wald",0.754970699048488
+"low_negative",22,0.4,"Conditional Wald",1.07415408967364
+"low_negative",28,0.4,"Delete-one Wald",0.835611775605462
+"low_negative",28,0.4,"Full-system HC3 Wald",0.815383677254128
+"low_negative",28,0.4,"Conditional Wald",0.989641043235051
+"low_negative",28,0.4,"Bootstrap-SD Wald",0.726202121263328
+"low_negative",28,0.4,"Full IF Wald",1.07665745700115
+"low_negative",29,0.4,"Conditional Wald",1.23984187365024
+"low_negative",29,0.4,"Full-system HC3 Wald",1.22393577264497
+"low_negative",29,0.4,"Full IF Wald",1.62350819311154
+"low_negative",29,0.4,"Delete-one Wald",1.26517078417132
+"low_negative",29,0.4,"Bootstrap-SD Wald",1.39376957703804
+"low_negative",3,0.4,"Full IF Wald",0.830958145426568
+"low_negative",3,0.4,"Full-system HC3 Wald",0.109747574938171
+"low_negative",3,0.4,"Delete-one Wald",0.697094605422945
+"low_negative",3,0.4,"Conditional Wald",1.04245300114421
+"low_negative",3,0.4,"Bootstrap-SD Wald",1.16178323389156
+"low_negative",30,0.4,"Conditional Wald",0.0723419632653353
+"low_negative",30,0.4,"Full-system HC3 Wald",0.0105558295495918
+"low_negative",30,0.4,"Full IF Wald",0.0461894193612375
+"low_negative",30,0.4,"Bootstrap-SD Wald",0.108782306399042
+"low_negative",30,0.4,"Delete-one Wald",0.0628872949673846
+"low_negative",35,0.4,"Conditional Wald",1.63827801464554
+"low_negative",35,0.4,"Full IF Wald",1.5635816891346
+"low_negative",35,0.4,"Bootstrap-SD Wald",1.02628013653639
+"low_negative",35,0.4,"Full-system HC3 Wald",1.26296674207827
+"low_negative",35,0.4,"Delete-one Wald",1.29557489097193
+"low_negative",36,0.4,"Full IF Wald",1.22401043246006
+"low_negative",36,0.4,"Bootstrap-SD Wald",1.20442871385046
+"low_negative",36,0.4,"Full-system HC3 Wald",0.790254618212327
+"low_negative",36,0.4,"Delete-one Wald",0.809545966062685
+"low_negative",36,0.4,"Conditional Wald",1.29646544766194
+"low_negative",37,0.4,"Bootstrap-SD Wald",2.00229897256651
+"low_negative",37,0.4,"Delete-one Wald",2.36016676470754
+"low_negative",37,0.4,"Full IF Wald",2.71563120135532
+"low_negative",37,0.4,"Full-system HC3 Wald",2.25385931767266
+"low_negative",37,0.4,"Conditional Wald",2.6258078794641
+"low_negative",39,0.4,"Full IF Wald",0.624952616987369
+"low_negative",39,0.4,"Conditional Wald",0.13822104948808
+"low_negative",39,0.4,"Delete-one Wald",0.491523666140008
+"low_negative",39,0.4,"Bootstrap-SD Wald",0.463053848386027
+"low_negative",39,0.4,"Full-system HC3 Wald",0.302924975525773
+"low_negative",42,0.4,"Conditional Wald",0.322674908982329
+"low_negative",42,0.4,"Full-system HC3 Wald",0.0341571368975816
+"low_negative",42,0.4,"Bootstrap-SD Wald",0.45664584035416
+"low_negative",42,0.4,"Delete-one Wald",0.260019394926737
+"low_negative",42,0.4,"Full IF Wald",0.301010350924644
+"low_negative",45,0.4,"Bootstrap-SD Wald",0.724394145677863
+"low_negative",45,0.4,"Full IF Wald",0.887378731309634
+"low_negative",45,0.4,"Full-system HC3 Wald",0.704043346776055
+"low_negative",45,0.4,"Delete-one Wald",0.745702194521412
+"low_negative",45,0.4,"Conditional Wald",0.912380327569301
+"low_negative",47,0.4,"Full-system HC3 Wald",0.103756455314292
+"low_negative",47,0.4,"Conditional Wald",0.087655499135014
+"low_negative",47,0.4,"Delete-one Wald",0.10701042836802
+"low_negative",47,0.4,"Bootstrap-SD Wald",0.132536017029161
+"low_negative",47,0.4,"Full IF Wald",0.123151905624266
+"low_negative",52,0.4,"Full-system HC3 Wald",0.110242620135589
+"low_negative",52,0.4,"Delete-one Wald",0.612722701427897
+"low_negative",52,0.4,"Full IF Wald",0.589711409101046
+"low_negative",52,0.4,"Bootstrap-SD Wald",1.20839581084861
+"low_negative",52,0.4,"Conditional Wald",0.695318362507873
+"low_negative",53,0.4,"Delete-one Wald",0.246773129735209
+"low_negative",53,0.4,"Bootstrap-SD Wald",0.410767957091653
+"low_negative",53,0.4,"Full-system HC3 Wald",0.187226602777061
+"low_negative",53,0.4,"Conditional Wald",0.351103980852564
+"low_negative",53,0.4,"Full IF Wald",0.362740109012807
+"low_negative",54,0.4,"Delete-one Wald",0.200738021748365
+"low_negative",54,0.4,"Bootstrap-SD Wald",0.431391818701229
+"low_negative",54,0.4,"Full-system HC3 Wald",0.0157407558959652
+"low_negative",54,0.4,"Full IF Wald",0.171905751153474
+"low_negative",54,0.4,"Conditional Wald",0.247228583446765
+"low_negative",56,0.4,"Full IF Wald",0.348783175667717
+"low_negative",56,0.4,"Bootstrap-SD Wald",0.700213495142037
+"low_negative",56,0.4,"Full-system HC3 Wald",0.258974812437236
+"low_negative",56,0.4,"Delete-one Wald",0.306521295771566
+"low_negative",56,0.4,"Conditional Wald",0.268884524838911
+"low_negative",58,0.4,"Conditional Wald",2.34002989182071
+"low_negative",58,0.4,"Full-system HC3 Wald",1.28474809714195
+"low_negative",58,0.4,"Full IF Wald",2.09766770149783
+"low_negative",58,0.4,"Delete-one Wald",1.37465635591588
+"low_negative",58,0.4,"Bootstrap-SD Wald",1.29522423927252
+"low_negative",61,0.4,"Delete-one Wald",0.0822043292053801
+"low_negative",61,0.4,"Full-system HC3 Wald",0.0154625243901077
+"low_negative",61,0.4,"Conditional Wald",0.0337549463289484
+"low_negative",61,0.4,"Bootstrap-SD Wald",0.0885140622926876
+"low_negative",61,0.4,"Full IF Wald",0.0917114659494205
+"low_negative",65,0.4,"Bootstrap-SD Wald",1.67547403700542
+"low_negative",65,0.4,"Conditional Wald",0.746297385082553
+"low_negative",65,0.4,"Delete-one Wald",1.27446383638556
+"low_negative",65,0.4,"Full-system HC3 Wald",0.589255040267679
+"low_negative",65,0.4,"Full IF Wald",1.58205790507138
+"low_negative",67,0.4,"Delete-one Wald",1.46892745389712
+"low_negative",67,0.4,"Full-system HC3 Wald",1.20713193645499
+"low_negative",67,0.4,"Full IF Wald",1.53748682321109
+"low_negative",67,0.4,"Conditional Wald",0.515485877627615
+"low_negative",67,0.4,"Bootstrap-SD Wald",1.20868741332279
+"low_negative",69,0.4,"Delete-one Wald",0.104853181353932
+"low_negative",69,0.4,"Bootstrap-SD Wald",0.154655903972259
+"low_negative",69,0.4,"Conditional Wald",0.0612230741963743
+"low_negative",69,0.4,"Full IF Wald",0.0587465885210723
+"low_negative",69,0.4,"Full-system HC3 Wald",0.00745370894301584
+"low_negative",7,0.4,"Delete-one Wald",0.0301796559131844
+"low_negative",7,0.4,"Conditional Wald",0.0220768931053483
+"low_negative",7,0.4,"Full-system HC3 Wald",0.00553282838076137
+"low_negative",7,0.4,"Bootstrap-SD Wald",0.0519341297275846
+"low_negative",7,0.4,"Full IF Wald",0.023303367431391
+"low_negative",70,0.4,"Bootstrap-SD Wald",2.01251987790745
+"low_negative",70,0.4,"Full IF Wald",1.21420548474595
+"low_negative",70,0.4,"Full-system HC3 Wald",0.0559746367995745
+"low_negative",70,0.4,"Delete-one Wald",1.13514912284421
+"low_negative",70,0.4,"Conditional Wald",1.247982545812
+"low_negative",72,0.4,"Full IF Wald",0.139164075278141
+"low_negative",72,0.4,"Bootstrap-SD Wald",0.150546967864131
+"low_negative",72,0.4,"Full-system HC3 Wald",0.0957578964588816
+"low_negative",72,0.4,"Delete-one Wald",0.096642747026049
+"low_negative",72,0.4,"Conditional Wald",0.165283745422044
+"low_negative",73,0.4,"Delete-one Wald",0.462934678782597
+"low_negative",73,0.4,"Bootstrap-SD Wald",0.55396182125117
+"low_negative",73,0.4,"Full IF Wald",0.558064271922848
+"low_negative",73,0.4,"Full-system HC3 Wald",0.116758554634436
+"low_negative",73,0.4,"Conditional Wald",0.417595702818202
+"low_negative",75,0.4,"Bootstrap-SD Wald",1.13004912432987
+"low_negative",75,0.4,"Full-system HC3 Wald",1.30100807631017
+"low_negative",75,0.4,"Conditional Wald",1.41998096492792
+"low_negative",75,0.4,"Full IF Wald",1.61023007207527
+"low_negative",75,0.4,"Delete-one Wald",1.3278680388114
+"low_negative",76,0.4,"Conditional Wald",1.37788341369774
+"low_negative",76,0.4,"Bootstrap-SD Wald",1.54040994385629
+"low_negative",76,0.4,"Full IF Wald",1.29064043399434
+"low_negative",76,0.4,"Delete-one Wald",1.04244449613707
+"low_negative",76,0.4,"Full-system HC3 Wald",0.784678715185587
+"low_negative",78,0.4,"Delete-one Wald",0.234332851354091
+"low_negative",78,0.4,"Conditional Wald",0.139741421987897
+"low_negative",78,0.4,"Full IF Wald",0.243671875156693
+"low_negative",78,0.4,"Bootstrap-SD Wald",0.354572192229568
+"low_negative",78,0.4,"Full-system HC3 Wald",0.0830881452361661
+"low_negative",79,0.4,"Bootstrap-SD Wald",0.895419160707168
+"low_negative",79,0.4,"Conditional Wald",0.775283890240536
+"low_negative",79,0.4,"Full-system HC3 Wald",0.521110711984989
+"low_negative",79,0.4,"Delete-one Wald",0.575246535607434
+"low_negative",79,0.4,"Full IF Wald",0.733601652128782
+"low_negative",80,0.4,"Bootstrap-SD Wald",1.0937007086647
+"low_negative",80,0.4,"Full-system HC3 Wald",0.208710181158729
+"low_negative",80,0.4,"Delete-one Wald",0.758850420395163
+"low_negative",80,0.4,"Full IF Wald",0.873578436982509
+"low_negative",80,0.4,"Conditional Wald",0.689715454435245
+"low_negative",82,0.4,"Full IF Wald",0.420102112605448
+"low_negative",82,0.4,"Conditional Wald",0.377115653222543
+"low_negative",82,0.4,"Delete-one Wald",0.36215648817236
+"low_negative",82,0.4,"Bootstrap-SD Wald",0.480252072153684
+"low_negative",82,0.4,"Full-system HC3 Wald",0.343014511384239
+"low_negative",83,0.4,"Bootstrap-SD Wald",0.638700186359965
+"low_negative",83,0.4,"Delete-one Wald",0.699247987920524
+"low_negative",83,0.4,"Full IF Wald",0.794862109216275
+"low_negative",83,0.4,"Full-system HC3 Wald",0.559626806988618
+"low_negative",83,0.4,"Conditional Wald",0.229630625410579
+"low_negative",84,0.4,"Full IF Wald",2.81510957083752
+"low_negative",84,0.4,"Delete-one Wald",2.51544490530222
+"low_negative",84,0.4,"Bootstrap-SD Wald",3.29789503631872
+"low_negative",84,0.4,"Full-system HC3 Wald",1.0021026499183
+"low_negative",84,0.4,"Conditional Wald",2.14399491024883
+"low_negative",85,0.4,"Full IF Wald",2.30730711142579
+"low_negative",85,0.4,"Bootstrap-SD Wald",2.05192828807685
+"low_negative",85,0.4,"Conditional Wald",2.47259023287954
+"low_negative",85,0.4,"Full-system HC3 Wald",1.28163348433663
+"low_negative",85,0.4,"Delete-one Wald",1.36202238144439
+"low_negative",87,0.4,"Delete-one Wald",3.57346993931884
+"low_negative",87,0.4,"Full IF Wald",4.1397995043345
+"low_negative",87,0.4,"Bootstrap-SD Wald",2.62721804348842
+"low_negative",87,0.4,"Full-system HC3 Wald",3.46063960472357
+"low_negative",87,0.4,"Conditional Wald",4.14210136846461
+"low_negative",9,0.4,"Full IF Wald",1.81593879982256
+"low_negative",9,0.4,"Full-system HC3 Wald",1.28112518765958
+"low_negative",9,0.4,"Bootstrap-SD Wald",1.67367587389783
+"low_negative",9,0.4,"Delete-one Wald",1.4569307529165
+"low_negative",9,0.4,"Conditional Wald",1.80324107863875
+"low_negative",90,0.4,"Bootstrap-SD Wald",0.686927886054431
+"low_negative",90,0.4,"Delete-one Wald",0.819591509686424
+"low_negative",90,0.4,"Full-system HC3 Wald",0.800659966410705
+"low_negative",90,0.4,"Full IF Wald",0.992915993040159
+"low_negative",90,0.4,"Conditional Wald",0.889744325768135
+"low_negative",91,0.4,"Bootstrap-SD Wald",1.19788322844444
+"low_negative",91,0.4,"Delete-one Wald",0.7181386157416
+"low_negative",91,0.4,"Full-system HC3 Wald",0.626417934928921
+"low_negative",91,0.4,"Conditional Wald",1.55141220498308
+"low_negative",91,0.4,"Full IF Wald",1.3605486383598
+"low_negative",92,0.4,"Delete-one Wald",1.55499949924784
+"low_negative",92,0.4,"Full IF Wald",1.83583197319255
+"low_negative",92,0.4,"Conditional Wald",1.41629473094493
+"low_negative",92,0.4,"Bootstrap-SD Wald",1.16475945666066
+"low_negative",92,0.4,"Full-system HC3 Wald",1.49148028222348
+"low_negative",94,0.4,"Full IF Wald",1.42673720848672
+"low_negative",94,0.4,"Full-system HC3 Wald",0.871767535399325
+"low_negative",94,0.4,"Delete-one Wald",0.917173502607376
+"low_negative",94,0.4,"Conditional Wald",1.41353949870419
+"low_negative",94,0.4,"Bootstrap-SD Wald",0.848745592076927
+"low_negative",96,0.4,"Bootstrap-SD Wald",1.73188673424883
+"low_negative",96,0.4,"Full IF Wald",3.51987114333029
+"low_negative",96,0.4,"Conditional Wald",0.479781408300475
+"low_negative",96,0.4,"Full-system HC3 Wald",1.57876801512118
+"low_negative",96,0.4,"Delete-one Wald",1.6995896369981
+"low_negative",97,0.4,"Full IF Wald",0.429241873550557
+"low_negative",97,0.4,"Delete-one Wald",0.327854815838787
+"low_negative",97,0.4,"Bootstrap-SD Wald",0.490166206295264
+"low_negative",97,0.4,"Full-system HC3 Wald",0.324817905774899
+"low_negative",97,0.4,"Conditional Wald",0.378868270367792
+"low_unequal",1,0.4,"Bootstrap-SD Wald",0.961953735751697
+"low_unequal",1,0.4,"Full-system HC3 Wald",0.36903920851461
+"low_unequal",1,0.4,"Conditional Wald",1.29204292802941
+"low_unequal",1,0.4,"Delete-one Wald",0.799980249367108
+"low_unequal",1,0.4,"Full IF Wald",0.876519579660636
+"low_unequal",10,0.4,"Bootstrap-SD Wald",0.739839001117436
+"low_unequal",10,0.4,"Full-system HC3 Wald",0.167101067002466
+"low_unequal",10,0.4,"Conditional Wald",0.454688790880299
+"low_unequal",10,0.4,"Full IF Wald",0.330274305296781
+"low_unequal",10,0.4,"Delete-one Wald",0.34717321476473
+"low_unequal",11,0.4,"Full-system HC3 Wald",1.53072549714273
+"low_unequal",11,0.4,"Delete-one Wald",1.54650904516263
+"low_unequal",11,0.4,"Conditional Wald",2.60457948586357
+"low_unequal",11,0.4,"Bootstrap-SD Wald",1.47155052966311
+"low_unequal",11,0.4,"Full IF Wald",1.86847401176524
+"low_unequal",12,0.4,"Conditional Wald",0.77797541055253
+"low_unequal",12,0.4,"Bootstrap-SD Wald",1.92441581335881
+"low_unequal",12,0.4,"Delete-one Wald",1.97041074149724
+"low_unequal",12,0.4,"Full IF Wald",2.11839473218063
+"low_unequal",12,0.4,"Full-system HC3 Wald",1.81886711834018
+"low_unequal",13,0.4,"Bootstrap-SD Wald",1.81667269202077
+"low_unequal",13,0.4,"Full-system HC3 Wald",0.988154552967105
+"low_unequal",13,0.4,"Delete-one Wald",3.27389787793231
+"low_unequal",13,0.4,"Conditional Wald",1.24281912450488
+"low_unequal",13,0.4,"Full IF Wald",3.89039297047741
+"low_unequal",14,0.4,"Conditional Wald",0.825119227852358
+"low_unequal",14,0.4,"Full-system HC3 Wald",0.604005996807449
+"low_unequal",14,0.4,"Full IF Wald",0.887445757043293
+"low_unequal",14,0.4,"Bootstrap-SD Wald",0.904974856044543
+"low_unequal",14,0.4,"Delete-one Wald",0.72964572243842
+"low_unequal",15,0.4,"Conditional Wald",1.44610969654056
+"low_unequal",15,0.4,"Bootstrap-SD Wald",1.4872015188353
+"low_unequal",15,0.4,"Full IF Wald",1.98042793670421
+"low_unequal",15,0.4,"Delete-one Wald",1.5555873208584
+"low_unequal",15,0.4,"Full-system HC3 Wald",1.45186400938217
+"low_unequal",17,0.4,"Conditional Wald",0.637822018054027
+"low_unequal",17,0.4,"Full-system HC3 Wald",0.0383906228848966
+"low_unequal",17,0.4,"Delete-one Wald",1.31937999525527
+"low_unequal",17,0.4,"Full IF Wald",1.55471458913314
+"low_unequal",17,0.4,"Bootstrap-SD Wald",1.27404334166352
+"low_unequal",18,0.4,"Full-system HC3 Wald",0.273396891771514
+"low_unequal",18,0.4,"Conditional Wald",2.54747777218412
+"low_unequal",18,0.4,"Delete-one Wald",0.419427326366531
+"low_unequal",18,0.4,"Bootstrap-SD Wald",0.83097197186128
+"low_unequal",18,0.4,"Full IF Wald",0.490511786064486
+"low_unequal",19,0.4,"Full IF Wald",1.85976125809561
+"low_unequal",19,0.4,"Delete-one Wald",1.54525781694895
+"low_unequal",19,0.4,"Conditional Wald",0.615150523161624
+"low_unequal",19,0.4,"Full-system HC3 Wald",1.12781074117105
+"low_unequal",19,0.4,"Bootstrap-SD Wald",0.991337678462138
+"low_unequal",2,0.4,"Bootstrap-SD Wald",0.169453927044251
+"low_unequal",2,0.4,"Delete-one Wald",0.113692430164027
+"low_unequal",2,0.4,"Conditional Wald",0.154738738113129
+"low_unequal",2,0.4,"Full-system HC3 Wald",0.101481182899927
+"low_unequal",2,0.4,"Full IF Wald",0.150007078030792
+"low_unequal",21,0.4,"Conditional Wald",0.812785334151562
+"low_unequal",21,0.4,"Full IF Wald",0.618015664469578
+"low_unequal",21,0.4,"Bootstrap-SD Wald",0.804730949189857
+"low_unequal",21,0.4,"Delete-one Wald",0.4711995433941
+"low_unequal",21,0.4,"Full-system HC3 Wald",0.315127454446168
+"low_unequal",22,0.4,"Full-system HC3 Wald",0.11391262000742
+"low_unequal",22,0.4,"Bootstrap-SD Wald",0.696357631831049
+"low_unequal",22,0.4,"Conditional Wald",0.814056290157262
+"low_unequal",22,0.4,"Delete-one Wald",0.318131403168983
+"low_unequal",22,0.4,"Full IF Wald",0.286160944325623
+"low_unequal",24,0.4,"Conditional Wald",1.25517934742828
+"low_unequal",24,0.4,"Full IF Wald",2.53678951195885
+"low_unequal",24,0.4,"Bootstrap-SD Wald",2.55927593021881
+"low_unequal",24,0.4,"Delete-one Wald",2.40102735659434
+"low_unequal",24,0.4,"Full-system HC3 Wald",1.93666433906365
+"low_unequal",25,0.4,"Bootstrap-SD Wald",2.52430882631852
+"low_unequal",25,0.4,"Full-system HC3 Wald",2.46536782927151
+"low_unequal",25,0.4,"Full IF Wald",4.03198674193731
+"low_unequal",25,0.4,"Conditional Wald",3.24090592961947
+"low_unequal",25,0.4,"Delete-one Wald",3.46962650060256
+"low_unequal",26,0.4,"Bootstrap-SD Wald",0.932964442570152
+"low_unequal",26,0.4,"Full-system HC3 Wald",0.49852303722596
+"low_unequal",26,0.4,"Full IF Wald",1.48056796667146
+"low_unequal",26,0.4,"Delete-one Wald",0.614665450387988
+"low_unequal",26,0.4,"Conditional Wald",0.917713310950304
+"low_unequal",28,0.4,"Bootstrap-SD Wald",0.161049541378687
+"low_unequal",28,0.4,"Conditional Wald",0.170283372373916
+"low_unequal",28,0.4,"Full-system HC3 Wald",0.129441009264761
+"low_unequal",28,0.4,"Delete-one Wald",0.136199549760726
+"low_unequal",28,0.4,"Full IF Wald",0.156555737854708
+"low_unequal",29,0.4,"Bootstrap-SD Wald",0.875226933060908
+"low_unequal",29,0.4,"Full-system HC3 Wald",0.390784838750616
+"low_unequal",29,0.4,"Delete-one Wald",0.565022899877123
+"low_unequal",29,0.4,"Conditional Wald",1.59501847330104
+"low_unequal",29,0.4,"Full IF Wald",0.746902833996038
+"low_unequal",3,0.4,"Conditional Wald",0.117809986589715
+"low_unequal",3,0.4,"Bootstrap-SD Wald",0.102350428155522
+"low_unequal",3,0.4,"Delete-one Wald",0.0468729250061579
+"low_unequal",3,0.4,"Full-system HC3 Wald",0.0195131586018717
+"low_unequal",3,0.4,"Full IF Wald",0.0714453310866456
+"low_unequal",30,0.4,"Conditional Wald",0.531893203879716
+"low_unequal",30,0.4,"Delete-one Wald",1.08691586517792
+"low_unequal",30,0.4,"Full IF Wald",1.11253654980845
+"low_unequal",30,0.4,"Full-system HC3 Wald",0.127461097756359
+"low_unequal",30,0.4,"Bootstrap-SD Wald",1.04467564428578
+"low_unequal",32,0.4,"Full-system HC3 Wald",0.138141940705743
+"low_unequal",32,0.4,"Bootstrap-SD Wald",0.344405249566075
+"low_unequal",32,0.4,"Delete-one Wald",0.289193425872077
+"low_unequal",32,0.4,"Conditional Wald",0.251426606060185
+"low_unequal",32,0.4,"Full IF Wald",0.230957087465127
+"low_unequal",33,0.4,"Bootstrap-SD Wald",0.0279153169234953
+"low_unequal",33,0.4,"Full IF Wald",0.0207222631847564
+"low_unequal",33,0.4,"Full-system HC3 Wald",0.0152203858743451
+"low_unequal",33,0.4,"Conditional Wald",0.0308426133706021
+"low_unequal",33,0.4,"Delete-one Wald",0.020577707083539
+"low_unequal",36,0.4,"Delete-one Wald",1.06576785060093
+"low_unequal",36,0.4,"Conditional Wald",1.15879813812871
+"low_unequal",36,0.4,"Bootstrap-SD Wald",1.50521344548524
+"low_unequal",36,0.4,"Full IF Wald",1.30516147610466
+"low_unequal",36,0.4,"Full-system HC3 Wald",0.977149756108184
+"low_unequal",37,0.4,"Delete-one Wald",0.0105938468898816
+"low_unequal",37,0.4,"Conditional Wald",0.0151457967183809
+"low_unequal",37,0.4,"Bootstrap-SD Wald",0.014379597675583
+"low_unequal",37,0.4,"Full-system HC3 Wald",0.00913552135707013
+"low_unequal",37,0.4,"Full IF Wald",0.0116253081264283
+"low_unequal",38,0.4,"Full-system HC3 Wald",0.00780118329627582
+"low_unequal",38,0.4,"Conditional Wald",1.25396017352021
+"low_unequal",38,0.4,"Bootstrap-SD Wald",0.536075310437381
+"low_unequal",38,0.4,"Delete-one Wald",0.312955287412711
+"low_unequal",38,0.4,"Full IF Wald",0.275116251279871
+"low_unequal",42,0.4,"Bootstrap-SD Wald",0.820088845468932
+"low_unequal",42,0.4,"Full IF Wald",0.498424125340073
+"low_unequal",42,0.4,"Delete-one Wald",0.402651156586422
+"low_unequal",42,0.4,"Full-system HC3 Wald",0.113162657618803
+"low_unequal",42,0.4,"Conditional Wald",1.90759042298642
+"low_unequal",44,0.4,"Full IF Wald",1.86711228923411
+"low_unequal",44,0.4,"Delete-one Wald",1.55629156379682
+"low_unequal",44,0.4,"Full-system HC3 Wald",0.757465598620882
+"low_unequal",44,0.4,"Bootstrap-SD Wald",1.12364622338304
+"low_unequal",44,0.4,"Conditional Wald",1.92018118972555
+"low_unequal",47,0.4,"Full IF Wald",0.357375448123177
+"low_unequal",47,0.4,"Bootstrap-SD Wald",0.545242933771137
+"low_unequal",47,0.4,"Conditional Wald",0.572525662581344
+"low_unequal",47,0.4,"Delete-one Wald",0.229058573827038
+"low_unequal",47,0.4,"Full-system HC3 Wald",0.169621476820491
+"low_unequal",49,0.4,"Full IF Wald",1.6320578361937
+"low_unequal",49,0.4,"Delete-one Wald",1.50637234959755
+"low_unequal",49,0.4,"Full-system HC3 Wald",1.4696164967958
+"low_unequal",49,0.4,"Bootstrap-SD Wald",1.87244231675526
+"low_unequal",49,0.4,"Conditional Wald",1.38096709646681
+"low_unequal",53,0.4,"Delete-one Wald",0.172573121066599
+"low_unequal",53,0.4,"Full IF Wald",0.159864044578327
+"low_unequal",53,0.4,"Conditional Wald",1.01890021482843
+"low_unequal",53,0.4,"Full-system HC3 Wald",0.120709763197877
+"low_unequal",53,0.4,"Bootstrap-SD Wald",0.316768839324011
+"low_unequal",54,0.4,"Conditional Wald",0.275831056915682
+"low_unequal",54,0.4,"Bootstrap-SD Wald",0.411865852207925
+"low_unequal",54,0.4,"Full IF Wald",0.368475060372399
+"low_unequal",54,0.4,"Full-system HC3 Wald",0.253056047317704
+"low_unequal",54,0.4,"Delete-one Wald",0.35568960292736
+"low_unequal",55,0.4,"Full IF Wald",0.10633315445576
+"low_unequal",55,0.4,"Bootstrap-SD Wald",0.262596200557499
+"low_unequal",55,0.4,"Conditional Wald",0.163072535040581
+"low_unequal",55,0.4,"Full-system HC3 Wald",0.026436615854353
+"low_unequal",55,0.4,"Delete-one Wald",0.127097820516546
+"low_unequal",56,0.4,"Full IF Wald",0.345090550683886
+"low_unequal",56,0.4,"Conditional Wald",0.46027315704669
+"low_unequal",56,0.4,"Full-system HC3 Wald",0.128463843891431
+"low_unequal",56,0.4,"Bootstrap-SD Wald",0.830175373520014
+"low_unequal",56,0.4,"Delete-one Wald",0.455969456119955
+"low_unequal",58,0.4,"Full IF Wald",1.11957599858029
+"low_unequal",58,0.4,"Bootstrap-SD Wald",1.16046305436816
+"low_unequal",58,0.4,"Full-system HC3 Wald",0.921477377218715
+"low_unequal",58,0.4,"Conditional Wald",1.57244052999419
+"low_unequal",58,0.4,"Delete-one Wald",1.00538420191065
+"low_unequal",59,0.4,"Full IF Wald",1.23897177359551
+"low_unequal",59,0.4,"Conditional Wald",1.73568014667457
+"low_unequal",59,0.4,"Bootstrap-SD Wald",1.58006832686672
+"low_unequal",59,0.4,"Delete-one Wald",1.14020070721899
+"low_unequal",59,0.4,"Full-system HC3 Wald",0.892787592475414
+"low_unequal",6,0.4,"Full-system HC3 Wald",0.544813809938609
+"low_unequal",6,0.4,"Conditional Wald",1.65513812175538
+"low_unequal",6,0.4,"Delete-one Wald",1.21399351452274
+"low_unequal",6,0.4,"Bootstrap-SD Wald",1.80384761343086
+"low_unequal",6,0.4,"Full IF Wald",1.03898661962322
+"low_unequal",62,0.4,"Full IF Wald",0.357951667502583
+"low_unequal",62,0.4,"Bootstrap-SD Wald",0.437334462385141
+"low_unequal",62,0.4,"Full-system HC3 Wald",0.00838734669373589
+"low_unequal",62,0.4,"Conditional Wald",0.315466924654224
+"low_unequal",62,0.4,"Delete-one Wald",0.391728869349094
+"low_unequal",64,0.4,"Full-system HC3 Wald",0.829761145671485
+"low_unequal",64,0.4,"Bootstrap-SD Wald",1.09905443001786
+"low_unequal",64,0.4,"Delete-one Wald",0.97175972586874
+"low_unequal",64,0.4,"Conditional Wald",1.08964282873585
+"low_unequal",64,0.4,"Full IF Wald",1.21918467292977
+"low_unequal",65,0.4,"Delete-one Wald",0.682229255631212
+"low_unequal",65,0.4,"Conditional Wald",1.12569431391235
+"low_unequal",65,0.4,"Full-system HC3 Wald",0.377331095531815
+"low_unequal",65,0.4,"Full IF Wald",0.775033032257635
+"low_unequal",65,0.4,"Bootstrap-SD Wald",0.9230644857427
+"low_unequal",66,0.4,"Delete-one Wald",0.26322571218536
+"low_unequal",66,0.4,"Conditional Wald",0.543637345414074
+"low_unequal",66,0.4,"Full-system HC3 Wald",0.146523150122601
+"low_unequal",66,0.4,"Bootstrap-SD Wald",0.566527913605451
+"low_unequal",66,0.4,"Full IF Wald",0.396018655070778
+"low_unequal",67,0.4,"Full IF Wald",0.481842524895443
+"low_unequal",67,0.4,"Delete-one Wald",0.288821882089445
+"low_unequal",67,0.4,"Full-system HC3 Wald",0.237195751565935
+"low_unequal",67,0.4,"Conditional Wald",1.86137273168535
+"low_unequal",67,0.4,"Bootstrap-SD Wald",0.565615776651857
+"low_unequal",7,0.4,"Bootstrap-SD Wald",0.958844723682739
+"low_unequal",7,0.4,"Conditional Wald",0.619557685494874
+"low_unequal",7,0.4,"Full IF Wald",0.76305100597107
+"low_unequal",7,0.4,"Delete-one Wald",0.695488479323822
+"low_unequal",7,0.4,"Full-system HC3 Wald",0.47327787340482
+"low_unequal",71,0.4,"Conditional Wald",1.45402907618032
+"low_unequal",71,0.4,"Delete-one Wald",0.521686261592016
+"low_unequal",71,0.4,"Bootstrap-SD Wald",1.05707490509682
+"low_unequal",71,0.4,"Full-system HC3 Wald",0.743570534985326
+"low_unequal",71,0.4,"Full IF Wald",1.41549361318523
+"low_unequal",72,0.4,"Full-system HC3 Wald",0.795044306432155
+"low_unequal",72,0.4,"Bootstrap-SD Wald",1.44940829867089
+"low_unequal",72,0.4,"Full IF Wald",1.89183077982818
+"low_unequal",72,0.4,"Delete-one Wald",1.47434229122648
+"low_unequal",72,0.4,"Conditional Wald",2.03478811253923
+"low_unequal",74,0.4,"Delete-one Wald",4.27580215711119
+"low_unequal",74,0.4,"Bootstrap-SD Wald",3.70611722313139
+"low_unequal",74,0.4,"Full-system HC3 Wald",4.06078247950103
+"low_unequal",74,0.4,"Full IF Wald",4.87428421118973
+"low_unequal",74,0.4,"Conditional Wald",4.09040431910837
+"low_unequal",75,0.4,"Delete-one Wald",3.55173916451442
+"low_unequal",75,0.4,"Bootstrap-SD Wald",2.68865584586463
+"low_unequal",75,0.4,"Conditional Wald",0.970888653423328
+"low_unequal",75,0.4,"Full IF Wald",3.99811062289837
+"low_unequal",75,0.4,"Full-system HC3 Wald",2.75286885359164
+"low_unequal",77,0.4,"Full-system HC3 Wald",0.12141347045617
+"low_unequal",77,0.4,"Delete-one Wald",0.176513507105539
+"low_unequal",77,0.4,"Bootstrap-SD Wald",0.348252016768715
+"low_unequal",77,0.4,"Full IF Wald",0.177124437994485
+"low_unequal",77,0.4,"Conditional Wald",0.365082239568721
+"low_unequal",78,0.4,"Delete-one Wald",1.06478954219979
+"low_unequal",78,0.4,"Full IF Wald",1.33917913889795
+"low_unequal",78,0.4,"Full-system HC3 Wald",0.94273775648544
+"low_unequal",78,0.4,"Bootstrap-SD Wald",1.57559643886367
+"low_unequal",78,0.4,"Conditional Wald",1.54407819549612
+"low_unequal",79,0.4,"Full IF Wald",2.38208095519058
+"low_unequal",79,0.4,"Conditional Wald",1.67375397333375
+"low_unequal",79,0.4,"Bootstrap-SD Wald",1.58191233128846
+"low_unequal",79,0.4,"Delete-one Wald",1.64121087694051
+"low_unequal",79,0.4,"Full-system HC3 Wald",1.45524819743904
+"low_unequal",81,0.4,"Conditional Wald",1.55398464397488
+"low_unequal",81,0.4,"Full-system HC3 Wald",0.987175560529174
+"low_unequal",81,0.4,"Delete-one Wald",2.51758262093701
+"low_unequal",81,0.4,"Full IF Wald",2.73642708752067
+"low_unequal",81,0.4,"Bootstrap-SD Wald",2.27225269553336
+"low_unequal",85,0.4,"Full-system HC3 Wald",0.146835288744576
+"low_unequal",85,0.4,"Bootstrap-SD Wald",0.262410275143111
+"low_unequal",85,0.4,"Full IF Wald",0.158307521210055
+"low_unequal",85,0.4,"Delete-one Wald",0.145189547685548
+"low_unequal",85,0.4,"Conditional Wald",0.177623574829721
+"low_unequal",86,0.4,"Full IF Wald",1.22132843975544
+"low_unequal",86,0.4,"Full-system HC3 Wald",1.11801660723167
+"low_unequal",86,0.4,"Delete-one Wald",1.17163769144562
+"low_unequal",86,0.4,"Bootstrap-SD Wald",1.21598442817298
+"low_unequal",86,0.4,"Conditional Wald",0.777387373099281
+"low_unequal",88,0.4,"Delete-one Wald",1.95047431007349
+"low_unequal",88,0.4,"Conditional Wald",0.731899554798041
+"low_unequal",88,0.4,"Full-system HC3 Wald",1.74765402974533
+"low_unequal",88,0.4,"Bootstrap-SD Wald",1.71640301342373
+"low_unequal",88,0.4,"Full IF Wald",1.99466442409355
+"low_unequal",89,0.4,"Delete-one Wald",1.53875830440248
+"low_unequal",89,0.4,"Conditional Wald",1.41891919277544
+"low_unequal",89,0.4,"Full-system HC3 Wald",0.912793551576489
+"low_unequal",89,0.4,"Bootstrap-SD Wald",2.36553659748167
+"low_unequal",89,0.4,"Full IF Wald",1.23057275212603
+"low_unequal",90,0.4,"Full IF Wald",1.14785811199635
+"low_unequal",90,0.4,"Bootstrap-SD Wald",1.1532018194837
+"low_unequal",90,0.4,"Conditional Wald",1.32620820188799
+"low_unequal",90,0.4,"Full-system HC3 Wald",0.752818536684732
+"low_unequal",90,0.4,"Delete-one Wald",0.838582825771633
+"low_unequal",91,0.4,"Full IF Wald",0.649693052562334
+"low_unequal",91,0.4,"Conditional Wald",0.670153319028141
+"low_unequal",91,0.4,"Bootstrap-SD Wald",1.03409030218112
+"low_unequal",91,0.4,"Full-system HC3 Wald",0.344339826803998
+"low_unequal",91,0.4,"Delete-one Wald",0.612546276533566
+"low_unequal",92,0.4,"Full IF Wald",1.84849288294275
+"low_unequal",92,0.4,"Full-system HC3 Wald",1.1744719686878
+"low_unequal",92,0.4,"Bootstrap-SD Wald",1.24743640226288
+"low_unequal",92,0.4,"Conditional Wald",1.88158781377241
+"low_unequal",92,0.4,"Delete-one Wald",1.04511932248406
+"low_unequal",93,0.4,"Full IF Wald",0.202838527844934
+"low_unequal",93,0.4,"Bootstrap-SD Wald",0.289752022917113
+"low_unequal",93,0.4,"Conditional Wald",0.194400983351582
+"low_unequal",93,0.4,"Full-system HC3 Wald",0.00995970347607102
+"low_unequal",93,0.4,"Delete-one Wald",0.110991784716193
+"low_unequal",95,0.4,"Full IF Wald",0.208038978833334
+"low_unequal",95,0.4,"Full-system HC3 Wald",0.120944612139016
+"low_unequal",95,0.4,"Bootstrap-SD Wald",0.263633844681993
+"low_unequal",95,0.4,"Conditional Wald",0.289710002007882
+"low_unequal",95,0.4,"Delete-one Wald",0.14338784770612
+"low_unequal",96,0.4,"Full-system HC3 Wald",0.306793217420889
+"low_unequal",96,0.4,"Delete-one Wald",0.40133126338004
+"low_unequal",96,0.4,"Conditional Wald",0.362625421893113
+"low_unequal",96,0.4,"Full IF Wald",0.426030238880972
+"low_unequal",96,0.4,"Bootstrap-SD Wald",0.40990433222499
+"low_unequal",99,0.4,"Conditional Wald",1.49067999264863
+"low_unequal",99,0.4,"Full-system HC3 Wald",2.32784287858152
+"low_unequal",99,0.4,"Delete-one Wald",2.37429348985195
+"low_unequal",99,0.4,"Bootstrap-SD Wald",2.56403225578491
+"low_unequal",99,0.4,"Full IF Wald",2.58563331496498
+"small_short",1,0.4,"Full-system HC3 Wald",0.278210962583947
+"small_short",1,0.4,"Delete-one Wald",0.5750453522665
+"small_short",1,0.4,"Bootstrap-SD Wald",1.03552330063056
+"small_short",1,0.4,"Full IF Wald",0.786051314454756
+"small_short",1,0.4,"Conditional Wald",0.87736848478177
+"small_short",11,0.4,"Conditional Wald",0.819365891240573
+"small_short",11,0.4,"Full-system HC3 Wald",0.389969807558593
+"small_short",11,0.4,"Bootstrap-SD Wald",1.17121580938483
+"small_short",11,0.4,"Full IF Wald",0.719812287936431
+"small_short",11,0.4,"Delete-one Wald",0.716534892168675
+"small_short",12,0.4,"Bootstrap-SD Wald",1.01139314449989
+"small_short",12,0.4,"Full-system HC3 Wald",1.07785397139961
+"small_short",12,0.4,"Full IF Wald",1.43191380109914
+"small_short",12,0.4,"Conditional Wald",1.14630663508208
+"small_short",12,0.4,"Delete-one Wald",1.15642441237316
+"small_short",15,0.4,"Conditional Wald",1.98351320854383
+"small_short",15,0.4,"Delete-one Wald",2.49227990941502
+"small_short",15,0.4,"Full-system HC3 Wald",2.428825658831
+"small_short",15,0.4,"Full IF Wald",3.00275130555491
+"small_short",15,0.4,"Bootstrap-SD Wald",1.9304557340852
+"small_short",2,0.4,"Conditional Wald",0.815399114612233
+"small_short",2,0.4,"Full-system HC3 Wald",0.760382240182136
+"small_short",2,0.4,"Full IF Wald",1.0146011209096
+"small_short",2,0.4,"Bootstrap-SD Wald",0.924926076122731
+"small_short",2,0.4,"Delete-one Wald",0.86517676196363
+"small_short",21,0.4,"Bootstrap-SD Wald",0.0545379928072463
+"small_short",21,0.4,"Delete-one Wald",0.0604421589055383
+"small_short",21,0.4,"Full-system HC3 Wald",0.0526434908541693
+"small_short",21,0.4,"Full IF Wald",0.0641429408049264
+"small_short",21,0.4,"Conditional Wald",0.045534786452014
+"small_short",23,0.4,"Full-system HC3 Wald",0.206226035332654
+"small_short",23,0.4,"Bootstrap-SD Wald",0.477803854397695
+"small_short",23,0.4,"Full IF Wald",0.326913872028124
+"small_short",23,0.4,"Delete-one Wald",0.269391216110149
+"small_short",23,0.4,"Conditional Wald",0.329146524007856
+"small_short",25,0.4,"Full-system HC3 Wald",2.34431232561419
+"small_short",25,0.4,"Bootstrap-SD Wald",2.49524932865531
+"small_short",25,0.4,"Delete-one Wald",2.51559092585357
+"small_short",25,0.4,"Full IF Wald",3.00842269158741
+"small_short",25,0.4,"Conditional Wald",3.23505287223842
+"small_short",26,0.4,"Delete-one Wald",0.159938317109797
+"small_short",26,0.4,"Full-system HC3 Wald",0.0149560095620354
+"small_short",26,0.4,"Conditional Wald",0.168673391113903
+"small_short",26,0.4,"Bootstrap-SD Wald",0.300117573087531
+"small_short",26,0.4,"Full IF Wald",0.286849495663522
+"small_short",27,0.4,"Delete-one Wald",2.61789675236373
+"small_short",27,0.4,"Full IF Wald",3.12459152982222
+"small_short",27,0.4,"Full-system HC3 Wald",2.47026611075656
+"small_short",27,0.4,"Bootstrap-SD Wald",2.04340238484529
+"small_short",27,0.4,"Conditional Wald",2.66290613753413
+"small_short",28,0.4,"Delete-one Wald",2.45399480890798
+"small_short",28,0.4,"Bootstrap-SD Wald",3.20513042351253
+"small_short",28,0.4,"Conditional Wald",1.30760564210522
+"small_short",28,0.4,"Full-system HC3 Wald",0.373644531906449
+"small_short",28,0.4,"Full IF Wald",3.16770886288889
+"small_short",34,0.4,"Conditional Wald",0.812726180190278
+"small_short",34,0.4,"Full IF Wald",0.798389892950518
+"small_short",34,0.4,"Full-system HC3 Wald",0.387123249997364
+"small_short",34,0.4,"Delete-one Wald",0.491168302272637
+"small_short",34,0.4,"Bootstrap-SD Wald",0.871815149165972
+"small_short",35,0.4,"Delete-one Wald",0.696817519730656
+"small_short",35,0.4,"Conditional Wald",0.190885319063729
+"small_short",35,0.4,"Bootstrap-SD Wald",0.62529657670304
+"small_short",35,0.4,"Full-system HC3 Wald",0.245223273435218
+"small_short",35,0.4,"Full IF Wald",0.794341699336331
+"small_short",37,0.4,"Full IF Wald",1.29846812515337
+"small_short",37,0.4,"Bootstrap-SD Wald",1.21630671565471
+"small_short",37,0.4,"Full-system HC3 Wald",0.860766590465638
+"small_short",37,0.4,"Conditional Wald",1.39826540820309
+"small_short",37,0.4,"Delete-one Wald",0.893593159837151
+"small_short",39,0.4,"Delete-one Wald",0.565793414776791
+"small_short",39,0.4,"Bootstrap-SD Wald",0.860532664283208
+"small_short",39,0.4,"Conditional Wald",0.917394289483883
+"small_short",39,0.4,"Full IF Wald",0.807235447521413
+"small_short",39,0.4,"Full-system HC3 Wald",0.527298612205646
+"small_short",4,0.4,"Bootstrap-SD Wald",0.539518487593125
+"small_short",4,0.4,"Full IF Wald",0.911296618729123
+"small_short",4,0.4,"Delete-one Wald",0.632405331929836
+"small_short",4,0.4,"Full-system HC3 Wald",0.668063877335559
+"small_short",4,0.4,"Conditional Wald",0.677771455787143
+"small_short",41,0.4,"Conditional Wald",1.41000755365536
+"small_short",41,0.4,"Bootstrap-SD Wald",1.81392535733327
+"small_short",41,0.4,"Full IF Wald",1.91734364517417
+"small_short",41,0.4,"Full-system HC3 Wald",0.94790271573759
+"small_short",41,0.4,"Delete-one Wald",1.02943475646471
+"small_short",42,0.4,"Delete-one Wald",1.55693441972638
+"small_short",42,0.4,"Conditional Wald",2.17638979197673
+"small_short",42,0.4,"Full-system HC3 Wald",1.44503920762822
+"small_short",42,0.4,"Full IF Wald",2.11296621070352
+"small_short",42,0.4,"Bootstrap-SD Wald",1.98367336469676
+"small_short",43,0.4,"Bootstrap-SD Wald",0.35957887156215
+"small_short",43,0.4,"Full-system HC3 Wald",0.0999039889897153
+"small_short",43,0.4,"Conditional Wald",0.214315440604087
+"small_short",43,0.4,"Full IF Wald",0.222289707440506
+"small_short",43,0.4,"Delete-one Wald",0.22430285826471
+"small_short",47,0.4,"Full-system HC3 Wald",2.46910414914161
+"small_short",47,0.4,"Delete-one Wald",2.76353881067173
+"small_short",47,0.4,"Conditional Wald",2.1223372181871
+"small_short",47,0.4,"Bootstrap-SD Wald",2.96033495896271
+"small_short",47,0.4,"Full IF Wald",3.0085415805687
+"small_short",5,0.4,"Bootstrap-SD Wald",0.428080656061804
+"small_short",5,0.4,"Full-system HC3 Wald",0.337692371000223
+"small_short",5,0.4,"Full IF Wald",0.414328915334575
+"small_short",5,0.4,"Delete-one Wald",0.371349679781124
+"small_short",5,0.4,"Conditional Wald",0.35979653331867
+"small_short",53,0.4,"Conditional Wald",0.207774992303359
+"small_short",53,0.4,"Full IF Wald",0.249908312775667
+"small_short",53,0.4,"Full-system HC3 Wald",0.117520078303998
+"small_short",53,0.4,"Delete-one Wald",0.223938239609443
+"small_short",53,0.4,"Bootstrap-SD Wald",0.344923625161919
+"small_short",54,0.4,"Bootstrap-SD Wald",2.61710123808415
+"small_short",54,0.4,"Full IF Wald",2.45093664643072
+"small_short",54,0.4,"Conditional Wald",2.29457777323368
+"small_short",54,0.4,"Full-system HC3 Wald",1.90989058689851
+"small_short",54,0.4,"Delete-one Wald",2.28867828017298
+"small_short",56,0.4,"Full IF Wald",0.446566953031645
+"small_short",56,0.4,"Full-system HC3 Wald",0.0418532845694031
+"small_short",56,0.4,"Conditional Wald",0.217612609017619
+"small_short",56,0.4,"Delete-one Wald",0.363579405483338
+"small_short",56,0.4,"Bootstrap-SD Wald",0.600732792550482
+"small_short",58,0.4,"Full-system HC3 Wald",0.0750485484053743
+"small_short",58,0.4,"Bootstrap-SD Wald",0.195430121355799
+"small_short",58,0.4,"Full IF Wald",0.0944735798455729
+"small_short",58,0.4,"Delete-one Wald",0.113544781483501
+"small_short",58,0.4,"Conditional Wald",0.103336823095967
+"small_short",59,0.4,"Full IF Wald",1.25916100476475
+"small_short",59,0.4,"Full-system HC3 Wald",0.861255764006593
+"small_short",59,0.4,"Conditional Wald",1.17386772740773
+"small_short",59,0.4,"Bootstrap-SD Wald",1.07621258248157
+"small_short",59,0.4,"Delete-one Wald",0.89903894948451
+"small_short",64,0.4,"Full IF Wald",2.33306295215575
+"small_short",64,0.4,"Full-system HC3 Wald",1.48295592972677
+"small_short",64,0.4,"Delete-one Wald",1.60900322982811
+"small_short",64,0.4,"Bootstrap-SD Wald",2.07554449789975
+"small_short",64,0.4,"Conditional Wald",2.2135969191809
+"small_short",65,0.4,"Delete-one Wald",2.33126014974695
+"small_short",65,0.4,"Full-system HC3 Wald",0.203613785908523
+"small_short",65,0.4,"Bootstrap-SD Wald",2.92522886829952
+"small_short",65,0.4,"Full IF Wald",2.7856010297541
+"small_short",65,0.4,"Conditional Wald",1.30865173843273
+"small_short",73,0.4,"Delete-one Wald",0.585459927546736
+"small_short",73,0.4,"Conditional Wald",0.782574490445488
+"small_short",73,0.4,"Bootstrap-SD Wald",0.851497023404532
+"small_short",73,0.4,"Full-system HC3 Wald",0.397949782003261
+"small_short",73,0.4,"Full IF Wald",0.846674537500875
+"small_short",74,0.4,"Full-system HC3 Wald",2.99502209064903
+"small_short",74,0.4,"Bootstrap-SD Wald",3.29628537989363
+"small_short",74,0.4,"Full IF Wald",3.94816467124212
+"small_short",74,0.4,"Conditional Wald",3.83194983652853
+"small_short",74,0.4,"Delete-one Wald",4.34185060669251
+"small_short",79,0.4,"Conditional Wald",0.106327954458707
+"small_short",79,0.4,"Bootstrap-SD Wald",0.260009369966278
+"small_short",79,0.4,"Delete-one Wald",0.29241239109544
+"small_short",79,0.4,"Full IF Wald",0.320945284338817
+"small_short",79,0.4,"Full-system HC3 Wald",0.209680131185502
+"small_short",80,0.4,"Bootstrap-SD Wald",0.842985576089915
+"small_short",80,0.4,"Full-system HC3 Wald",0.585794429460685
+"small_short",80,0.4,"Delete-one Wald",0.755881419595834
+"small_short",80,0.4,"Conditional Wald",0.972698764534221
+"small_short",80,0.4,"Full IF Wald",0.871718307071838
+"small_short",83,0.4,"Conditional Wald",0.369712990130707
+"small_short",83,0.4,"Full-system HC3 Wald",0.391472275196486
+"small_short",83,0.4,"Delete-one Wald",0.508587423374866
+"small_short",83,0.4,"Full IF Wald",0.566539393845945
+"small_short",83,0.4,"Bootstrap-SD Wald",0.691702541520202
+"small_short",85,0.4,"Delete-one Wald",0.916221714138436
+"small_short",85,0.4,"Full IF Wald",1.10849220513295
+"small_short",85,0.4,"Full-system HC3 Wald",0.796382458563505
+"small_short",85,0.4,"Conditional Wald",0.421028878171032
+"small_short",85,0.4,"Bootstrap-SD Wald",1.01570645023896
+"small_short",86,0.4,"Bootstrap-SD Wald",0.826379020447991
+"small_short",86,0.4,"Full IF Wald",0.553095087227693
+"small_short",86,0.4,"Conditional Wald",0.445960504192046
+"small_short",86,0.4,"Full-system HC3 Wald",0.368771467551819
+"small_short",86,0.4,"Delete-one Wald",0.557352303436818
+"small_short",9,0.4,"Full IF Wald",2.57102376040081
+"small_short",9,0.4,"Bootstrap-SD Wald",2.30201139970367
+"small_short",9,0.4,"Conditional Wald",2.49155380017978
+"small_short",9,0.4,"Full-system HC3 Wald",0.978165024332634
+"small_short",9,0.4,"Delete-one Wald",2.11952668876116
+"small_short",90,0.4,"Full-system HC3 Wald",0.0487224990302328
+"small_short",90,0.4,"Delete-one Wald",0.343298047211463
+"small_short",90,0.4,"Full IF Wald",0.262492050346709
+"small_short",90,0.4,"Conditional Wald",0.353283592514272
+"small_short",90,0.4,"Bootstrap-SD Wald",0.648430326467293
+"small_short",91,0.4,"Full-system HC3 Wald",1.24890197533308
+"small_short",91,0.4,"Conditional Wald",0.399947483321648
+"small_short",91,0.4,"Bootstrap-SD Wald",0.863354604299726
+"small_short",91,0.4,"Full IF Wald",1.54275842158961
+"small_short",91,0.4,"Delete-one Wald",1.18109054802609
+"small_short",92,0.4,"Full-system HC3 Wald",0.466749197719306
+"small_short",92,0.4,"Delete-one Wald",0.488257319393409
+"small_short",92,0.4,"Conditional Wald",0.877401500874182
+"small_short",92,0.4,"Full IF Wald",0.739095211278253
+"small_short",92,0.4,"Bootstrap-SD Wald",0.922942950544686
+"small_short",96,0.4,"Full IF Wald",1.30114351833787
+"small_short",96,0.4,"Bootstrap-SD Wald",1.13440785781162
+"small_short",96,0.4,"Full-system HC3 Wald",0.655778847804579
+"small_short",96,0.4,"Delete-one Wald",0.717198698155671
+"small_short",96,0.4,"Conditional Wald",0.960656753538844
+"small_short",98,0.4,"Full IF Wald",2.35424324258514
+"small_short",98,0.4,"Bootstrap-SD Wald",1.97615116711784
+"small_short",98,0.4,"Full-system HC3 Wald",1.98914594377864
+"small_short",98,0.4,"Conditional Wald",1.61562625406322
+"small_short",98,0.4,"Delete-one Wald",2.15481623856816
