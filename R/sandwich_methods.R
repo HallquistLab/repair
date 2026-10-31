@@ -23,7 +23,7 @@ repair_sandwich_coefficients <- function(object, conf.level = .95, component = c
   data.frame(term = names(object$estimate), estimate = unname(object$estimate), std.error = unname(se),
     conf.low = unname(object$estimate - z * se), conf.high = unname(object$estimate + z * se),
     conf.level = conf.level, component = component,
-    inference = "Experimental person influence-function sandwich; local asymptotic normal inference", row.names = NULL)
+    inference = object$inference %||% "Experimental person influence-function sandwich; local asymptotic normal inference", row.names = NULL)
 }
 
 #' Methods for influence-function inference
@@ -77,13 +77,13 @@ summary.repair_sandwich <- function(object, ...) {
   table <- function(component) if (object$diagnostics[[paste0(component, "_available")]])
     repair_sandwich_coefficients(object, component = component) else NULL
   structure(list(coefficients = table("full"), stage2 = table("stage2"), diagnostics = object$diagnostics,
-    criterion = object$diagnostics$criterion, n_people = length(object$ids)), class = "summary_repair_sandwich")
+    criterion = object$diagnostics$criterion, n_people = length(object$ids), method = object$method), class = "summary_repair_sandwich")
 }
 
 #' @rdname repair-sandwich-methods
 #' @exportS3Method base::print
 print.summary_repair_sandwich <- function(x, ...) {
-  cat("REPAIR person influence-function sandwich (experimental)\n")
+  cat(x$method %||% "REPAIR person influence-function sandwich (experimental)", "\n", sep = "")
   cat("People:", x$n_people, "\n")
   if (!is.null(x$coefficients)) print(x$coefficients) else cat("Full unavailable:", x$diagnostics$full_reason, "\n")
   if (is.null(x$stage2)) cat("Stage2 unavailable:", x$diagnostics$stage2_reason, "\n")

@@ -86,7 +86,8 @@ repair_if_covariance <- function(person, pars, context, nuisance_only = FALSE) {
 # Returns exact Gaussian score and case-frequency derivatives of that score.
 # REML includes the derivative of log|sum_i f_i X_i' V_i^-1 X_i|; a plain
 # cluster ML score at a REML fit would not reproduce the fitted procedure.
-repair_if_likelihood <- function(context, psi, frequency = rep(1, length(context$people)), case_scores = FALSE) {
+repair_if_likelihood <- function(context, psi, frequency = rep(1, length(context$people)), case_scores = FALSE, deletions = FALSE) {
+  if (deletions && any(frequency != 1)) repair_error("Deletion scores require unit reference frequencies.")
   pars <- repair_if_parameters(context, psi); p <- context$beta_size
   q <- length(context$diagonal); n <- length(context$people)
   scores <- matrix(0, n, length(psi)); H <- matrix(0, p, p)
@@ -116,6 +117,7 @@ repair_if_likelihood <- function(context, psi, frequency = rep(1, length(context
     }
   }
   score <- colSums(scores * frequency)
+  deleted <- if (deletions) matrix(score, n, length(score), byrow = TRUE) - scores else NULL
   if (context$reml) {
     Hinv <- chol2inv(chol(H))
     loglik <- loglik + p * log(2 * pi) / 2 - sum(log(diag(chol(H))))
@@ -124,8 +126,13 @@ repair_if_likelihood <- function(context, psi, frequency = rep(1, length(context
       if (case_scores) for (i in seq_len(n)) scores[i, p + j] <- scores[i, p + j] +
         (sum(Hinv * Ds[[i]][[j]]) - sum((Hinv %*% Hs[[i]] %*% Hinv) * D[[j]])) / 2
     }
+    if (deletions) for (i in seq_len(n)) {
+      inverse <- chol2inv(chol(H - Hs[[i]]))
+      for (j in seq_len(q + 1L)) deleted[i, p + j] <- deleted[i, p + j] +
+        sum(inverse * (D[[j]] - Ds[[i]][[j]])) / 2
+    }
   }
-  list(loglik = loglik, score = score, case_scores = scores)
+  list(loglik = loglik, score = score, case_scores = scores, deletion_scores = deleted)
 }
 
 repair_if_inputs <- function(object, context, psi) {
