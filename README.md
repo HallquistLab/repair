@@ -306,6 +306,17 @@ nominal coverage or a bias correction. See
 `vignette("influence-inference")` for the covariance decomposition and
 boundaries.
 
+For experimental finite-sample comparisons, `repair_leverage(fit)`
+applies an HC3-style adjustment to the complete augmented
+measurement/M-MOM system.
+`repair_jackknife(fit, measurement_data, data)` refits after deleting
+each whole person. Both return separate results with unchanged original
+point estimates. The analytic method requires all deletion sensitivities
+to be usable; the jackknife requires every complete deletion fit, with
+no omitted failures. Normal Wald intervals are primary. See
+`vignette("finite-sample-inference")` for the explicit correction,
+extraction, failure policy and limitations.
+
 ## Connect two measurement processes
 
 Use model-qualified references when an equation draws on multiple fits:

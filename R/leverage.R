@@ -41,7 +41,7 @@ repair_lev_equations <- function(inputs, state, rows = repair_lev_rows(inputs)) 
   W <- repair_lev_unpack(state[m + e + seq_len(m)], k)
   F <- error_matrix(state[2L * m + e + seq_len(e)])
   average_weight <- exp(state[2L * (m + e) + 1L])
-  beta <- tail(state, p); index <- seq.int(2L, k)
+  beta <- utils::tail(state, p); index <- seq.int(2L, k)
   correction <- function(M, E, control) {
     lambda <- mmom_smallest_det_root(M, E)
     value <- if (control$correction == "none" || max(abs(E)) <= .Machine$double.eps) 1 else
