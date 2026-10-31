@@ -1,0 +1,889 @@
+"profile","rep","gamma","reason"
+"low_balanced",1,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",1,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",5,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",5,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",8,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",8,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",10,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",10,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",12,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",12,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",13,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",13,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",16,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",16,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",17,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",17,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",18,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",18,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",23,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",23,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",24,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",24,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",25,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",25,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",26,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",26,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",27,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",27,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",31,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",31,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",33,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",33,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",34,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",34,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",38,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",38,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",40,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",40,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",41,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",41,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",42,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",42,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",43,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",43,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",44,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",44,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",46,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",46,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",48,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",48,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",51,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",51,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",52,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",52,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",54,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",54,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",55,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",55,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",57,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",57,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",60,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",60,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",62,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",62,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",63,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",63,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",64,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",64,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",68,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",68,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",71,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",71,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",74,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",74,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",77,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",77,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",81,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",81,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",86,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",86,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",95,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",95,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",98,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",98,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",99,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",99,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",100,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_balanced",100,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",1,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",1,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",4,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",4,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",5,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",5,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",6,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",6,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",8,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",8,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",10,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",10,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",12,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",12,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",13,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",13,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",14,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",14,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",16,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",16,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",17,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",17,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",18,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",18,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",19,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",19,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",23,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",23,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",24,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",24,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",25,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",25,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",26,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",26,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",27,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",27,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",31,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",31,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",32,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",32,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",33,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",33,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",34,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",34,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",38,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",38,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",40,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",40,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",41,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",41,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",43,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",43,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",46,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",46,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",48,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",48,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",49,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",49,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",50,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",50,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",51,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",51,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",55,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",55,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",57,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",57,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",59,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",59,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",60,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",60,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",62,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",62,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",63,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",63,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",64,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",64,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",66,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",66,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",68,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",68,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",71,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",71,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",74,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",74,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",77,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",77,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",81,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",81,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",86,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",86,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",88,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",88,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",89,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",89,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",93,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",93,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",95,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",95,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",98,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",98,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",99,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",99,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",100,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_negative",100,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",3,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",3,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",6,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",6,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",7,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",7,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",8,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",8,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",10,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",10,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",13,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",13,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",14,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",14,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",16,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",16,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",17,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",17,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",19,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",19,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",20,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",20,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",24,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",24,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",29,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",29,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",30,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",30,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",31,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",31,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",32,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",32,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",33,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",33,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",36,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",36,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",38,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",38,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",40,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",40,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",44,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",44,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",45,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",45,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",46,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",46,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",48,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",48,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",49,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",49,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",51,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",51,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",52,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",52,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",55,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",55,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",57,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",57,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",60,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",60,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",61,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",61,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",62,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",62,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",63,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",63,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",66,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",66,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",67,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",67,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",68,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",68,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",69,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",69,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",70,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",70,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",71,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",71,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",72,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",72,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",75,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",75,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",76,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",76,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",77,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",77,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",78,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",78,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",81,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",81,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",82,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",82,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",84,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",84,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",87,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",87,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",88,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",88,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",89,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",89,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",93,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",93,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",95,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",95,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",97,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",97,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",99,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",99,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",100,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"small_short",100,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",1,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",1,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",2,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",2,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",3,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",3,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",5,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",5,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",8,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",8,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",9,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",9,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",10,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",10,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",18,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",18,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",23,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",23,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",25,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",25,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",30,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",30,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",32,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",32,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",34,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",34,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",36,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",36,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",40,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",40,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",41,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",41,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",42,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",42,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",43,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",43,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",45,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",45,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",48,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",48,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",52,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",52,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",54,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",54,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",57,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",57,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",67,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",67,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",71,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",71,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",74,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",74,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",81,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",81,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",84,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",84,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",86,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",86,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",88,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",88,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",93,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",93,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",95,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",95,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",96,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",96,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",98,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",98,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",99,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",99,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",100,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_larger",100,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",5,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",5,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",8,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",8,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",9,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",9,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",16,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",16,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",20,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",20,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",23,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",23,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",27,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",27,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",31,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",31,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",35,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",35,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",39,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",39,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",40,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",40,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",41,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",41,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",43,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",43,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",45,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",45,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",46,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",46,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",50,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",50,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",51,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",51,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",52,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",52,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",57,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",57,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",60,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",60,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",63,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",63,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",68,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",68,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",69,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",69,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",70,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",70,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",73,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",73,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",76,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",76,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",80,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",80,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",82,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",82,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",83,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",83,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",84,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",84,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",87,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",87,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",94,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",94,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",97,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",97,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",98,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",98,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",100,0,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."
+"low_unequal",100,0.4,"Full influence inference is unavailable at a singular random-effect
+covariance boundary."

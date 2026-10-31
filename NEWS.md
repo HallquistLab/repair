@@ -1,5 +1,20 @@
 # repair 0.0.0.9000
 
+* Add experimental `repair_leverage()` for a specified full-system HC3-style
+  correction, including all measurement/M-MOM nuisance equations and cross-stage
+  covariance. Normalize common weights to reproduce OLS HC3; retain the original
+  full-influence gate and require every deletion sensitivity to be usable.
+* Add `repair_jackknife()` for validated whole-person N-1 refitting, separate
+  coefficient/interval extraction, strict complete-vector failure handling,
+  optimizer diagnostics and diagnostic bias estimates. Original coefficients
+  remain unchanged. Normal intervals are primary; N-1 t intervals are optional
+  experimental sensitivity analyses.
+* Document a fresh independent-stream 600-dataset comparison. HC3-style
+  adjustment improves selected-case coverage over plain IF, with substantial
+  width tails; delete-one refits remain more widely available but their Wald
+  intervals often under-cover. Retain the frozen protocol, person-shift arrays,
+  endpoint-based verifier and full availability/precision tradeoffs under `dev/`.
+
 * Add experimental `repair_sandwich()` and separate coefficient/covariance/interval
   methods for full person-level influence inference. Propagate measurement
   estimation, preliminary/final M-MOM moments, estimated weights and regularization,

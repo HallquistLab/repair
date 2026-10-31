@@ -1,0 +1,153 @@
+---
+title: "Leverage correction and whole-person delete-one inference"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Leverage correction and whole-person delete-one inference}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+library(repair)
+knitr::opts_chunk$set(collapse=TRUE,comment='#>')
+```
+
+`repair_leverage()` and `repair_jackknife()` are experimental options for
+studying finite-sample uncertainty of a complete REPAIR analysis. Both retain
+the original coefficients. They return separate results and never overwrite
+the conditional covariance in the fitted analysis. Neither automatically fixes
+point bias or guarantees coverage at a regularization or covariance boundary.
+
+## Fit once, compare separate results
+
+```{r fit}
+data(repair_example)
+model <- repair_lmer_refitter(score ~ day + (day | person))(repair_example$repeated)
+fit <- repair(re("day") ~ practice, model, repair_example$people, "person")
+ordinary <- repair_sandwich(fit)
+adjusted <- repair_leverage(fit)
+summary(adjusted)
+```
+
+The leverage calculation uses the same single-Gaussian-lmer scope as the full
+[influence sandwich](influence-inference.html): independent target people,
+contained nuisance effects, supported pointwise measurement recipes, and matching
+measurement/analysis cohorts. It requires the original full influence calculation
+and every deleted-system sensitivity to be usable. An unavailable correction
+stays unavailable; it does not silently return ordinary influence covariance.
+
+```{r leverage-extraction}
+if (adjusted$diagnostics$full_available) {
+  repair_sandwich_coefficients(adjusted)
+  vcov(adjusted)
+  vcov(adjusted, component="cross")
+  head(adjusted$deletions)
+}
+```
+
+The returned class inherits from `repair_sandwich`, so its existing extractors
+apply. The inference label identifies the HC3-style correction. Person deletion
+shifts, scaled sensitivity conditioning, derivative agreement and the original
+HC0 identity check are retained in diagnostics. The HC3 outer products are
+**uncentered**: unlike ordinary centered influence rows, their mean need not be
+zero. Signed cross terms remain part of the full covariance.
+
+## What is adjusted?
+
+The augmented system contains measurement parameters, unweighted observed/error
+moments, weighted observed/error moments, a mean-weight normalization equation,
+and final corrected coefficient equations. Thus preliminary coefficients,
+residual variance, structural weights and both correction multipliers all
+participate in the sensitivity. Known error-free entries, including the
+intercept's error variance, remain fixed at zero.
+
+For each person, the calculation evaluates the deleted system's Jacobian at the
+original fitted parameters and solves for a one-step coefficient change. For
+REML the measurement block uses the exact deleted fixed-design determinant.
+The covariance is the sum of uncentered outer products of these coefficient
+changes. This reproduces OLS HC3 in its matching special case. No measurement
+model is optimized again, and original N and policy/alpha are held fixed in the
+analytic structural correction.
+
+This is an **explicitly specified HC3-style candidate for a nonlinear augmented
+system**, not a derived CR2 or Satterthwaite procedure. Nonlinear leverage
+corrections depend on the representation of the equations. Mean-weight
+normalization removes spurious sensitivity to a common weight in OLS; the
+complete system and normalization are documented in the source repository's
+`dev/leverage-jackknife-design.md`. Normal Wald intervals are the primary API.
+
+## Delete one complete person and refit
+
+```{r jackknife}
+deleted <- repair_jackknife(fit, repair_example$repeated, repair_example$people)
+summary(deleted)
+```
+
+Every deletion goes through validated `repair_refit()` replay. It removes all
+observations from one target person, rekeys retained target/contained nuisance
+groups, and fits the complete measurement and structural analysis on N-1 people.
+Finite-N moment corrections therefore update. The scope is the single-model
+deterministic draws supported by refitting, including supported nlme models;
+it is broader than the initial lmer-only analytic adapter.
+
+This requires N replacement analyses plus reference replay/validation work.
+Unlike random bootstrap sampling, no person draw is generated. The caller's
+standard RNG kind/state are preserved even if a callback uses RNG or fails.
+Callbacks must nevertheless be deterministic fitting recipes. Hidden-state
+Box-Muller and user-supplied RNGs cannot be restored and are rejected.
+
+```{r jackknife-extraction}
+head(deleted$diagnostics[,c("deleted_id","n_retained","usable","stage","measurement_singular")])
+if (all(deleted$diagnostics$usable)) {
+  repair_jackknife_coefficients(deleted)
+  vcov(deleted)
+  confint(deleted, level=.90)
+}
+```
+
+The jackknife covariance is (N-1)/N times the centered cross-product of the N
+delete-one coefficient vectors. Its estimated bias is reported separately and
+is **not subtracted** from coefficients or interval centers. `coef(deleted)` is
+the original estimate. Save either separate result with `saveRDS()`; extraction
+after reloading requires no original data bindings or callback.
+
+## Failure handling and reference distributions
+
+Every deletion is retained in the diagnostics, including warnings, messages,
+optimizer history, native singularity and moment corrections. Singular but
+converged measurement fits follow the existing refit policy. If any full
+coefficient vector fails, covariance and interval accessors stop explicitly.
+There is no successes-only jackknife option: omitting a deletion changes the
+jackknife design. Summaries and original coefficients remain inspectable.
+
+Normal intervals are the default for both methods. An optional jackknife
+`reference="t"` uses N-1 degrees of freedom as an **experimental heuristic**;
+it is not a coefficient-specific Satterthwaite derivation. It can be requested
+explicitly for sensitivity analysis:
+
+```{r t-reference, eval=FALSE}
+repair_jackknife_coefficients(deleted, reference="t")
+```
+
+The analytic correction can fail where a deleted sensitivity is weak or unstable.
+An actual delete-one fit can switch active floors/corrections or become singular.
+Those behaviors are part of the comparison, not reasons to hide inconvenient
+people or select a smaller SE. More measurement rows do not substitute for more
+independent people when assessing these uncertainty approximations.
+
+The [person bootstrap](person-bootstrap.html) refits the analysis on random
+N-person resamples and can describe asymmetric finite-sample distributions.
+Leverage and jackknife Wald intervals still use symmetric intervals about the
+original estimate. A new independent-stream six-profile simulation compares
+these options; its frozen protocol, results, denominators and reproducible
+evidence are archived under `dev/leverage-simulation/` in the source repository.
+
+In that fresh 600-dataset screen, full-system HC3 improved nonzero-effect
+coverage over plain IF in several difficult profiles, but its median matched
+interval widths were about 1.6–1.85 times bootstrap widths and its upper width
+tails were much larger. Both analytic methods returned 756/1,200 analyses;
+singular original measurement fits accounted for all refusals. Delete-one
+returned 1,192/1,200 but its difficult-profile Wald coverage remained about
+82–92%. Person-percentile returned 1,158/1,200 with condition-dependent coverage.
+These findings support inspecting bias, widths, detection and availability
+together, rather than treating a finite corrected SE as a coverage guarantee.

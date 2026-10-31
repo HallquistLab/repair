@@ -1,0 +1,429 @@
+---
+title: "Fresh REPAIR simulations: full-system leverage, delete-one refitting, and bootstrap"
+date: "2026-10-31"
+output:
+  html_document:
+    self_contained: true
+    toc: true
+    toc_depth: 2
+header-includes:
+  - |
+    <style>
+    .main-container { max-width: 1200px !important; }
+    table { display: block; max-width: 100%; overflow-x: auto; font-size: .9em; }
+    </style>
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE,warning=FALSE,message=FALSE)
+root<-if(dir.exists('results/summary'))'results/summary' else '.'
+s<-readRDS(file.path(root,'summary.rds'));p<-s$performance
+tab<-function(x,digits=3)knitr::kable(x,digits=digits,row.names=FALSE)
+primary<-c('Conditional Wald','Full IF Wald','Full-system HC3 Wald','Delete-one Wald','Person percentile')
+compact<-function(effect,methods=primary){
+ x<-p[p$gamma==effect & p$method%in%methods,]
+ x<-x[order(match(x$profile,s$profiles$profile),match(x$method,methods)),]
+ x<-x[,c('profile','method','available','coverage','rejection','median_width','p95_width')]
+ names(x)<-c('Profile','Method','Intervals / 100','Coverage','Zero exclusion','Median width','95th width percentile');x
+}
+```
+
+## Purpose and interpretation
+
+**The full-system correction improves coverage over plain IF in several weak-
+information conditions, but at a substantial and sometimes extreme width cost.
+It is not a general replacement for person bootstrap inference.** Actual
+delete-one refits are much more widely available than the analytic methods,
+yet their symmetric Wald intervals still under-cover in several profiles.
+
+Key fresh findings:
+
+- Full IF and HC3 each return **756/1,200** analyses. All 444 refusals are the
+  pre-existing singular-measurement gate; there are no additional HC3 sensitivity
+  refusals or driver/API errors. Delete-one returns **1,192/1,200**; person
+  percentile returns **1,158/1,200**. These are paired structural analyses, not
+  independent measurement-dataset counts.
+- At truth .40, hard-profile HC3 coverage is **86.7–95.8%**, versus **71.1–85.9%**
+  for plain IF on exactly the same 45–65 eligible datasets/profile. Paired gains
+  are about 10–16 percentage points in low balanced, negative-correlation,
+  small/short and unequal-information profiles; their unadjusted paired MC
+  intervals exclude zero. Low larger-N gains only 3.1 points (MC interval includes
+  zero). These are exploratory comparisons, not multiplicity-adjusted claims.
+- On common HC3/bootstrap datasets, the median ratio of HC3 to bootstrap width
+  is **1.62–1.85** in the hard profiles. HC3's 95th width percentiles are roughly
+  **8.7–28.0**, versus **1.0–1.64** for bootstrap on their respective returned
+  sets. No extreme intervals were capped or removed. Higher HC3 coverage often
+  trades off detection and precision; mean SE alone obscures these tails.
+- Delete-one effect coverage is **81.6–91.9%** in hard profiles, with 98–100
+  returned intervals/profile. Person-percentile coverage is **81.5–96.9%**,
+  with 92–98 intervals. The small/short point bias remains **−.178** at truth .40;
+  none of the variance methods changes the original coefficient.
+- Analytic deletion shifts closely match actual deletions in the high-reliability
+  control (median focal relative RMSE **.012**). Among common hard-profile
+  datasets with a singularity/floor/final-branch deletion transition, median
+  relative RMSE ranges **.55–1.33**. Without those transitions it is about
+  **.027–.201**. These selected-subset diagnostics are consistent with limitations
+  of local deletion approximations; they do not isolate a causal mechanism.
+- All six remote R-platform checks pass. Independent study validation checks
+  all endpoints, actual centered/uncentered covariance formulas, public APIs,
+  fresh inputs, source hashes and B prefixes. Half-step sensitivity changes no
+  availability decisions and changes matched covariance by at most **4.86e-7**.
+
+This study tests a specified full-system HC3-style correction and actual
+whole-person delete-one refitting on **fresh random-number streams**. It is a
+600-dataset exploratory validation screen: six profiles × 100 new measurement
+datasets, each with paired null and nonzero structural outcomes. Its purpose
+is to distinguish uncertainty propagation, leverage adjustment, refitting,
+interval construction, bias and numerical availability. It does not select a
+correction by maximizing observed coverage or claim uniform validity.
+
+The numerical implementation and protocol were frozen before main results.
+Earlier experiments remain unchanged. All methods retain the original REPAIR
+point estimate; neither jackknife bias nor a simulation-estimated bias is
+subtracted from the interval center.
+
+## Data-generating design and fresh samples
+
+```{r profiles}
+tab(s$profiles)
+```
+
+The design retains the earlier noisy-predictor experiment: within-person time
+is centered and sample-SD standardized; measurement
+Y=.5*time+b0+b1*time+eps; random intercept/slope SDs .9 and correlation +/−.5;
+Gaussian iid measurement errors calibrated to full-posterior slope reliability
+.25 or .8. The unequal profile assigns half the people to 3 and half to 17
+observations independently of latent effects/errors.
+
+The structural outcome is Z=1.5+.4*b0+(gamma/.9)*b1+eta, with Var(Z)=1,
+Gaussian homoskedastic eta and gamma=0/.40. Both recovered intercept and slope
+enter as noisy predictors. All focal coefficients, SEs and endpoints are
+multiplied by population SD .9. Gamma=0 is a null partial slope given the other
+noisy random coefficient, not necessarily a null marginal association.
+
+New L'Ecuyer-CMRG master seed **202610319** replaces the old 202610301; bootstrap
+seed is 340000000+replication. Independent outer streams are paired across
+profiles, and null/effect outcomes share measurement data/noise. This gives
+1,200 structural analyses, not 1,200 independent measurement datasets. The
+validation checks fresh input hashes against every old main-study input.
+
+Main uses B499. The first three datasets/profile extend to B1999 and halve the
+analytic derivative step; no subset was chosen by its results. Development
+replication 801/B9 is excluded. No failed dataset is regenerated or replaced.
+
+## What the methods estimate
+
+**Conditional Wald** retains ordinary model-based M-MOM SEs. **Full IF Wald**
+uses the existing complete influence-function sandwich, including measurement
+estimation, structural weights/corrections and signed cross-stage covariance.
+Both full-system methods use exact ML/REML measurement equations, with the global
+REML fixed-design determinant retained. No ML scores at a REML fit are substituted.
+
+**Full-system HC3 Wald** augments measurement parameters with unweighted observed/
+error moments, weighted observed/error moments, log mean case weight and final
+corrected coefficient equations. All preliminary coefficients, variance floors,
+weights and correction multipliers are differentiated. Known error-free entries
+remain fixed. The mean-weight equation normalizes the final coefficient equation,
+cancelling an irrelevant common weight in OLS. That normalization was specified
+during pre-main development after an OLS acceptance test detected a spurious
+common-weight leverage effect.
+
+For each person, solve the deleted augmented system's Jacobian at the original
+parameters, using the exact deleted REML determinant. Sum **uncentered** outer
+products of the resulting coefficient shifts. This recovers ordinary OLS HC3
+in the matching special case. No measurement model is refitted. Original N and
+policy/alpha remain fixed in this analytic structural correction. All deleted
+systems and the original full influence must be usable; failures are never
+silently replaced by HC0 or omitted. Sensitivities are centrally differentiated
+with half-step, one-sided and active-branch checks and scaled conditioning gates.
+
+This is an explicitly specified **HC3-style nonlinear-system candidate**;
+leverage adjustments depend on the equation representation. It is not a derived
+CR2/Satterthwaite procedure or a theorem of nominal finite-sample coverage.
+The full derivation is in dev/leverage-jackknife-design.md in the PR. The OLS
+anchor and augmented HC0/canonical IF identity check validate implementation,
+not a general finite-sample approximation theorem.
+
+**Delete-one Wald** refits each measurement and structural model on N-1 complete
+people, updating all finite-N corrections and weights. Its variance is (N-1)/N
+times the centered delete-one cross-product. Every complete coefficient vector
+is required; a failed deletion invalidates inference. Singular but converged
+native refits retain the existing replay policy and are recorded. Diagnostic
+jackknife bias is not subtracted. The analytic and actual deletion methods
+therefore differ in nonlinear re-estimation, finite-N updates, and HC3 versus
+centered jackknife scaling.
+
+**Person percentile** samples N complete people and fully refits measurement and
+structural models, using the original complete-vector failure gate and type-7
+percentile endpoints. **Bootstrap-SD Wald** instead uses the SD of those same
+bootstrap coefficients in a normal symmetric interval; it is not a percentile-t
+bootstrap. Frozen-measurement percentile and stage2 IF are diagnostic comparators.
+The unequal profile additionally retains a count-preserving stratified comparator.
+The earlier OLS-outcome stacked helper is not applied to this incompatible noisy-
+predictor estimand; OLS HC3 is checked independently in package tests.
+
+Normal reference intervals are primary. HC3 and delete-one t_(N−1) intervals
+are prespecified secondary heuristics, not fitted effective degrees of freedom.
+There is no data-selected multiplier or hidden finite-sample correction.
+
+## Bias and the sampling-error distribution
+
+```{r bias-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'bias.png'))
+```
+
+All methods retain the same original coefficient, so separate method-specific
+bias curves would duplicate the point estimator. This figure uses **all 100
+fresh datasets per profile and truth**, showing each signed estimation error
+and mean bias with its Monte Carlo uncertainty. It makes the negative bias in
+the small/short and negative-correlation conditions visible alongside the
+distribution's tails. The blue error bars concern the simulation mean bias;
+they are not the confidence intervals whose coverage is assessed below.
+
+Bias conditional on returning an interval can differ because eligibility
+selects different datasets; those eligible-set summaries remain in performance.csv.
+
+## Availability is part of the result
+
+```{r availability, out.width='100%'}
+knitr::include_graphics(file.path(root,'availability.png'))
+```
+
+```{r diagnostic-counts}
+tab(as.data.frame(with(s$diagnostics,table(singular,full_if,leverage,delete_one))))
+```
+
+Analytic inference refuses singular/weakly identified original measurement fits
+and unstable or weak deleted sensitivities. Actual refitting can remain usable
+at singular native covariances; that difference is explicit, not an error hidden
+by denominator changes. Every analytic refusal and native deletion failure is
+archived. Coverage and zero exclusion below use **available intervals only**;
+performance.csv also reports delivery-and-cover/detect per all 100 planned data.
+Unavailable intervals remain NA, never valid non-rejections.
+
+## Nonzero-effect coverage, detection and width
+
+```{r coverage, out.width='100%'}
+knitr::include_graphics(file.path(root,'coverage.png'))
+```
+
+```{r nonzero}
+tab(compact(.4))
+```
+
+Zero exclusion here is detection, not type-I error. Median width can conceal
+extreme intervals, so the 95th width percentile is also shown. All five methods
+share original coefficients; the CSV retains overall and eligible bias/SD and
+mean SEs rather than treating higher coverage alone as evidence of better inference.
+Coverage figures display **50–100%**, rather than starting at zero, and retain
+every plotted point and Monte Carlo bound. The dashed reference is 95%.
+
+## Null-effect coverage and rejection
+
+```{r null-coverage-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'coverage_null.png'))
+```
+
+```{r null}
+tab(compact(0))
+```
+
+At 100 planned datasets, a coverage near .95 has MC SE approximately .022.
+Smaller eligible subsets have wider uncertainty. Figure bars and the CSV give
+Wilson 95% Monte Carlo intervals; few-point changes do not establish superiority.
+
+## Comparisons on common eligible datasets
+
+```{r matched-coverage-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'coverage_matched.png'))
+```
+
+This figure uses the **intersection of the five primary methods' eligibility**,
+so each panel compares exactly the same datasets for every method. It is a
+selected-cohort comparison, not population-wide calibration. Its rates can
+differ from the method-specific returned-interval figures and from the pairwise
+comparisons below, whose intersections are defined for each method pair.
+
+```{r paired}
+x<-s$paired[s$paired$gamma==.4 & s$paired$metric=='covers' &
+ s$paired$method_a%in%c('Full-system HC3 Wald','Delete-one Wald'),]
+tab(x[,c('profile','method_a','method_b','n','difference','mc_low','mc_high','a_only','b_only')])
+```
+
+Differences are method A minus method B. Bounds use paired per-dataset decision
+differences and are exploratory, without multiplicity adjustment. No observed
+discordance is not proof of equivalence; such bounds are not asserted. These
+matched comparisons distinguish eligibility selection from interval construction.
+
+## Secondary references and interval construction
+
+```{r secondary}
+tab(compact(.4,c('Full-system HC3 Wald','Full-system HC3 t','Delete-one Wald','Delete-one t',
+                'Bootstrap-SD Wald','Person percentile')))
+```
+
+## Tail behavior: wide intervals and studentized errors
+
+```{r width-tail-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'width_tails.png'))
+```
+
+The width axis is logarithmic so typical intervals and extreme corrections
+remain visible together. Circles show medians, diamonds empirical 95th
+percentiles, and triangles the **largest observed intervals**. The full-system
+HC3 tail is much longer in the difficult profiles; the typical-width summary
+alone conceals that cost. Every returned interval contributes, and the maximum
+is never dropped or winsorized. These are empirical summaries from 45–100
+returned intervals per cell, not precise estimates of population-tail quantiles.
+
+```{r width-exceedance-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'width_exceedance.png'))
+```
+
+The step curves show the fraction of returned intervals wider than each
+threshold, focusing vertically on the **upper 20% of widths**. All observed
+thresholds remain on the logarithmic horizontal axis, and each curve reaches
+zero at its observed maximum. The horizontal 5% line helps locate the upper
+tail; finite-sample step locations need not equal interpolated type-7 quantiles
+exactly. Eligibility still differs here; the denominators are those shown in
+the method-specific coverage figures.
+
+```{r studentized-tail-figure, out.width='100%'}
+knitr::include_graphics(file.path(root,'studentized_tails.png'))
+```
+
+This diagnostic instead uses the same all-five-method eligibility cohort and
+compares absolute errors divided by estimated SEs. The black dashed curve is
+the standard-normal benchmark. At 1.96, a calibrated normal Wald procedure
+would have about 5% exceedance; departures show that estimating a variance is
+not enough to establish normal tail calibration. The upper 25% of this error
+distribution is displayed, retaining all observed horizontal thresholds with
+log(1+x) spacing. **Bootstrap SD is the symmetric Wald comparator**, not the
+bootstrap percentile interval; a percentile interval cannot be diagnosed by
+assuming its resample SD defines a symmetric normal interval.
+
+## Branches, leverage and exact deletion
+
+```{r branch-counts}
+x<-s$branch_performance[s$branch_performance$gamma==.4 & s$branch_performance$method%in%primary,]
+tab(x)
+```
+
+"Interior structural branch" means alpha:positive:alpha at a nonsingular original
+measurement fit. "Active correction/floor" includes the other structural branches;
+singular measurement fits have their own stratum. These are observational
+diagnostic strata with different sample selection, not randomized causal contrasts.
+Small strata are descriptive. Per-deletion floor/correction/singularity records
+are retained separately in deletion_diagnostics.rds.
+
+```{r deletion-switches}
+x<-s$deletion_statistics
+tab(aggregate(cbind(usable,singular_deletions,floor_switches,final_branch_switches)~profile+gamma,x,mean))
+```
+
+These counts refer to usable structural deletions (with their explicit counts)
+and actual singular native refits. Final-branch changes distinguish the root
+multiplier from the fixed-alpha multiplier using the declared minimum policy
+and updated N-1; changes merely caused by alpha/(N-1) are not called branch
+switches. Counts are descriptive and do not repair selection from failed fits.
+
+Medians of available HC3 covariance contributions and ratios:
+
+```{r components}
+if(nrow(s$components))tab(aggregate(cbind(full,direct,measurement,cross,to_hc0)~profile,s$components,median))
+```
+
+The cross contribution is signed and need not increase the total variance.
+Actual versus analytic deletion shifts on common available datasets:
+
+```{r exact}
+if(nrow(s$exact))tab(aggregate(cbind(relative_shift_rmse,focal_relative_shift_rmse,leverage_variance,jackknife_variance)~profile,
+                             s$exact,median))
+```
+
+The relative RMSE divides the sum of squared analytic-minus-actual shifts by
+the sum of squared actual shifts (with a small numerical floor). A discrepancy
+can reflect curvature, branch changes, finite-N policy updates and centering/
+scaling conventions; it is not automatically an implementation error. HC0
+identity and OLS HC3 tests provide independent implementation anchors.
+
+```{r exact-transition-strata}
+if(nrow(s$exact)){
+ x<-subset(s$exact,gamma==.4)
+ x$deletion_transition<-x$singular_deletion | x$floor_switch | x$final_branch_switch
+ a<-aggregate(focal_relative_shift_rmse~profile+deletion_transition,x,
+              function(z)c(n=length(z),median=median(z)))
+ tab(cbind(a[1:2],as.data.frame(a[[3]])))
+}
+```
+
+The transition label indicates at least one actual deletion becoming singular
+or changing floor/final-correction branch. These selected-subset comparisons
+describe approximation behavior and do not establish causal effects of a branch.
+
+## Prespecified sensitivity and independent validation
+
+```{r steps}
+tab(s$steps)
+```
+
+Availability changes under half steps and matched covariance differences are
+reported without choosing the better-performing step. The B1999 subset retains
+exact B499 prefixes; endpoint/availability changes are archived in
+bootstrap_sensitivity.csv. This small tail subset is not a high-precision
+coverage experiment.
+
+All 78 fixed-subset percentile intervals were available at B499; **six become
+unavailable at B1999** under the unchanged all-vector failure rule. Among the
+72 returned at both B values, coverage classification is unchanged (all cover).
+Median sums of absolute lower/upper endpoint changes are .0246 for person
+percentile, .0310 frozen, and .0326 stratified. The sensitivity comparison
+preserves those lost intervals; it does not silently condition the primary
+analysis on successes or replace failures with new draws.
+
+A **separate post hoc numerical audit**, motivated by the unusually wide tails,
+checked the 12 largest HC3/HC0 variance ratios at h/2 and h/4. All 24 comparisons
+remained available; the largest relative full-covariance change was **1.06e-4**
+(about .011%). This supports treating the large corrections as properties of
+the specified approximation rather than gross differencing error. It is not a
+prespecified coverage comparison or proof of exact numerical precision. No
+main estimate, step, threshold or interval was replaced. The rule and outputs
+are retained in audit_extremes.R and posthoc_extreme_audit.csv.
+
+The computational shortcut caches immutable individual OLS/design-inverse
+ingredients for this iid matching-design DGP. **Every bootstrap and delete-one
+measurement model is actually optimized**, with its fixed coefficients/sigma
+and all structural equations updated. Eligibility requires full coefficient
+vectors, not just a finite focal slope. Fixed subsets are verified against
+24 complete public B99 bootstraps and 12 complete public jackknives. No failed
+vector is replaced, trimmed or silently accepted.
+
+```{r validation, results='asis'}
+cat('```text\n',paste(readLines(file.path(root,'validation.txt')),collapse='\n'),'\n```\n',sep='')
+```
+
+## Reproducibility and limits
+
+Numerical baseline is repair cbffe31, built on PR #21 head 6bb14dc. Subsequent
+documentation and an explicit utils::tail qualification preserve the equations;
+the frozen installed simulation library is not overwritten. The protocol,
+drivers, source/library/reference hashes, sessions and full native histories
+are retained in the research workspace's leverage_fresh directory. The PR's
+dev/leverage-simulation bundle permits independent endpoint/rate verification
+without fitting hundreds of thousands of models. Its README explains the
+external research-source dependencies and distinguishes compact review evidence
+from a complete raw optimization archive.
+
+These results cover Gaussian iid measurement errors, six fixed reliability/
+schedule conditions and a particular noisy-predictor structural design. They
+do not validate informative missingness, misspecification, shared nuisance
+effects, multiple measurement models or uniform boundary coverage. Neither a
+finite interval nor an exact covariance decomposition establishes calibrated
+inference; point bias, width, power and availability remain part of the assessment.
+
+The package therefore retains both new methods as opt-in experimental tools.
+The leverage result is useful for inspecting the complete system's sensitivity;
+actual delete-one refits provide a complementary influence/branch diagnostic.
+These results do not support making either symmetric interval the default
+solution for weak noisy predictors. Bootstrap likewise remains imperfect,
+especially with short panels and boundary/convergence issues.

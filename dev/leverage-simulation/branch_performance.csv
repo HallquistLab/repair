@@ -1,0 +1,327 @@
+"profile","gamma","method","state","planned","available","coverage","rejection"
+"low_balanced",0,"Bootstrap-SD Wald","Active correction/floor",17,17,0.764705882352941,0.235294117647059
+"low_larger",0,"Bootstrap-SD Wald","Active correction/floor",6,6,0.666666666666667,0.333333333333333
+"low_negative",0,"Bootstrap-SD Wald","Active correction/floor",10,10,0.8,0.2
+"low_unequal",0,"Bootstrap-SD Wald","Active correction/floor",49,46,0.804347826086957,0.195652173913043
+"small_short",0,"Bootstrap-SD Wald","Active correction/floor",10,10,0.7,0.3
+"low_balanced",0.4,"Bootstrap-SD Wald","Active correction/floor",23,23,0.869565217391304,0.521739130434783
+"low_larger",0.4,"Bootstrap-SD Wald","Active correction/floor",9,9,0.333333333333333,0.777777777777778
+"low_negative",0.4,"Bootstrap-SD Wald","Active correction/floor",12,12,1,0.333333333333333
+"low_unequal",0.4,"Bootstrap-SD Wald","Active correction/floor",49,46,0.869565217391304,0.565217391304348
+"small_short",0.4,"Bootstrap-SD Wald","Active correction/floor",18,16,0.625,0.375
+"low_balanced",0,"Conditional Wald","Active correction/floor",17,17,1,0
+"low_larger",0,"Conditional Wald","Active correction/floor",6,6,1,0
+"low_negative",0,"Conditional Wald","Active correction/floor",10,10,1,0
+"low_unequal",0,"Conditional Wald","Active correction/floor",49,49,0.693877551020408,0.306122448979592
+"small_short",0,"Conditional Wald","Active correction/floor",10,10,1,0
+"low_balanced",0.4,"Conditional Wald","Active correction/floor",23,23,1,0.0434782608695652
+"low_larger",0.4,"Conditional Wald","Active correction/floor",9,9,1,0
+"low_negative",0.4,"Conditional Wald","Active correction/floor",12,12,1,0
+"low_unequal",0.4,"Conditional Wald","Active correction/floor",49,49,0.938775510204082,0.489795918367347
+"small_short",0.4,"Conditional Wald","Active correction/floor",18,18,0.833333333333333,0.111111111111111
+"low_balanced",0,"Delete-one t","Active correction/floor",17,16,0.8125,0.1875
+"low_larger",0,"Delete-one t","Active correction/floor",6,6,0.666666666666667,0.333333333333333
+"low_negative",0,"Delete-one t","Active correction/floor",10,9,0.888888888888889,0.111111111111111
+"low_unequal",0,"Delete-one t","Active correction/floor",49,49,0.877551020408163,0.122448979591837
+"small_short",0,"Delete-one t","Active correction/floor",10,10,0.8,0.2
+"low_balanced",0.4,"Delete-one t","Active correction/floor",23,21,0.761904761904762,0.380952380952381
+"low_larger",0.4,"Delete-one t","Active correction/floor",9,9,0.444444444444444,0.777777777777778
+"low_negative",0.4,"Delete-one t","Active correction/floor",12,11,1,0.363636363636364
+"low_unequal",0.4,"Delete-one t","Active correction/floor",49,49,0.877551020408163,0.36734693877551
+"small_short",0.4,"Delete-one t","Active correction/floor",18,18,0.666666666666667,0.277777777777778
+"low_balanced",0,"Delete-one Wald","Active correction/floor",17,16,0.8125,0.1875
+"low_larger",0,"Delete-one Wald","Active correction/floor",6,6,0.666666666666667,0.333333333333333
+"low_negative",0,"Delete-one Wald","Active correction/floor",10,9,0.777777777777778,0.222222222222222
+"low_unequal",0,"Delete-one Wald","Active correction/floor",49,49,0.877551020408163,0.122448979591837
+"small_short",0,"Delete-one Wald","Active correction/floor",10,10,0.8,0.2
+"low_balanced",0.4,"Delete-one Wald","Active correction/floor",23,21,0.761904761904762,0.380952380952381
+"low_larger",0.4,"Delete-one Wald","Active correction/floor",9,9,0.444444444444444,0.777777777777778
+"low_negative",0.4,"Delete-one Wald","Active correction/floor",12,11,1,0.363636363636364
+"low_unequal",0.4,"Delete-one Wald","Active correction/floor",49,49,0.857142857142857,0.36734693877551
+"small_short",0.4,"Delete-one Wald","Active correction/floor",18,18,0.666666666666667,0.277777777777778
+"low_balanced",0,"Frozen percentile","Active correction/floor",17,17,0.941176470588235,0.0588235294117647
+"low_larger",0,"Frozen percentile","Active correction/floor",6,6,0.833333333333333,0.166666666666667
+"low_negative",0,"Frozen percentile","Active correction/floor",10,10,0.9,0.1
+"low_unequal",0,"Frozen percentile","Active correction/floor",49,49,0.877551020408163,0.122448979591837
+"small_short",0,"Frozen percentile","Active correction/floor",10,10,0.9,0.1
+"low_balanced",0.4,"Frozen percentile","Active correction/floor",23,23,0.956521739130435,0.347826086956522
+"low_larger",0.4,"Frozen percentile","Active correction/floor",9,9,0.666666666666667,0.555555555555556
+"low_negative",0.4,"Frozen percentile","Active correction/floor",12,12,1,0.166666666666667
+"low_unequal",0.4,"Frozen percentile","Active correction/floor",49,49,0.938775510204082,0.408163265306122
+"small_short",0.4,"Frozen percentile","Active correction/floor",18,18,0.777777777777778,0.222222222222222
+"low_balanced",0,"Full IF Wald","Active correction/floor",17,17,0.823529411764706,0.176470588235294
+"low_larger",0,"Full IF Wald","Active correction/floor",6,6,0.5,0.5
+"low_negative",0,"Full IF Wald","Active correction/floor",10,10,0.8,0.2
+"low_unequal",0,"Full IF Wald","Active correction/floor",49,49,0.877551020408163,0.122448979591837
+"small_short",0,"Full IF Wald","Active correction/floor",10,10,0.7,0.3
+"low_balanced",0.4,"Full IF Wald","Active correction/floor",23,23,0.739130434782609,0.391304347826087
+"low_larger",0.4,"Full IF Wald","Active correction/floor",9,9,0.444444444444444,0.777777777777778
+"low_negative",0.4,"Full IF Wald","Active correction/floor",12,12,0.916666666666667,0.333333333333333
+"low_unequal",0.4,"Full IF Wald","Active correction/floor",49,49,0.795918367346939,0.387755102040816
+"small_short",0.4,"Full IF Wald","Active correction/floor",18,18,0.666666666666667,0.333333333333333
+"low_balanced",0,"Full-system HC3 t","Active correction/floor",17,17,0.88235294117647,0.117647058823529
+"low_larger",0,"Full-system HC3 t","Active correction/floor",6,6,0.666666666666667,0.333333333333333
+"low_negative",0,"Full-system HC3 t","Active correction/floor",10,10,1,0
+"low_unequal",0,"Full-system HC3 t","Active correction/floor",49,49,0.918367346938776,0.0816326530612245
+"small_short",0,"Full-system HC3 t","Active correction/floor",10,10,1,0
+"low_balanced",0.4,"Full-system HC3 t","Active correction/floor",23,23,0.956521739130435,0.304347826086957
+"low_larger",0.4,"Full-system HC3 t","Active correction/floor",9,9,0.666666666666667,0.777777777777778
+"low_negative",0.4,"Full-system HC3 t","Active correction/floor",12,12,1,0.25
+"low_unequal",0.4,"Full-system HC3 t","Active correction/floor",49,49,0.938775510204082,0.224489795918367
+"small_short",0.4,"Full-system HC3 t","Active correction/floor",18,18,0.944444444444444,0.222222222222222
+"low_balanced",0,"Full-system HC3 Wald","Active correction/floor",17,17,0.823529411764706,0.176470588235294
+"low_larger",0,"Full-system HC3 Wald","Active correction/floor",6,6,0.666666666666667,0.333333333333333
+"low_negative",0,"Full-system HC3 Wald","Active correction/floor",10,10,1,0
+"low_unequal",0,"Full-system HC3 Wald","Active correction/floor",49,49,0.918367346938776,0.0816326530612245
+"small_short",0,"Full-system HC3 Wald","Active correction/floor",10,10,1,0
+"low_balanced",0.4,"Full-system HC3 Wald","Active correction/floor",23,23,0.91304347826087,0.304347826086957
+"low_larger",0.4,"Full-system HC3 Wald","Active correction/floor",9,9,0.666666666666667,0.777777777777778
+"low_negative",0.4,"Full-system HC3 Wald","Active correction/floor",12,12,1,0.25
+"low_unequal",0.4,"Full-system HC3 Wald","Active correction/floor",49,49,0.938775510204082,0.224489795918367
+"small_short",0.4,"Full-system HC3 Wald","Active correction/floor",18,18,0.888888888888889,0.222222222222222
+"low_balanced",0,"Person percentile","Active correction/floor",17,17,0.941176470588235,0.0588235294117647
+"low_larger",0,"Person percentile","Active correction/floor",6,6,0.833333333333333,0.166666666666667
+"low_negative",0,"Person percentile","Active correction/floor",10,10,0.9,0.1
+"low_unequal",0,"Person percentile","Active correction/floor",49,46,0.869565217391304,0.130434782608696
+"small_short",0,"Person percentile","Active correction/floor",10,10,0.9,0.1
+"low_balanced",0.4,"Person percentile","Active correction/floor",23,23,0.956521739130435,0.391304347826087
+"low_larger",0.4,"Person percentile","Active correction/floor",9,9,0.777777777777778,0.555555555555556
+"low_negative",0.4,"Person percentile","Active correction/floor",12,12,1,0.166666666666667
+"low_unequal",0.4,"Person percentile","Active correction/floor",49,46,0.934782608695652,0.41304347826087
+"small_short",0.4,"Person percentile","Active correction/floor",18,16,0.6875,0.1875
+"low_balanced",0,"Stage2 IF Wald","Active correction/floor",17,17,0.823529411764706,0.176470588235294
+"low_larger",0,"Stage2 IF Wald","Active correction/floor",6,6,0.5,0.5
+"low_negative",0,"Stage2 IF Wald","Active correction/floor",10,10,0.8,0.2
+"low_unequal",0,"Stage2 IF Wald","Active correction/floor",49,49,0.877551020408163,0.122448979591837
+"small_short",0,"Stage2 IF Wald","Active correction/floor",10,10,0.6,0.4
+"low_balanced",0.4,"Stage2 IF Wald","Active correction/floor",23,23,0.739130434782609,0.391304347826087
+"low_larger",0.4,"Stage2 IF Wald","Active correction/floor",9,9,0.444444444444444,0.777777777777778
+"low_negative",0.4,"Stage2 IF Wald","Active correction/floor",12,12,0.916666666666667,0.333333333333333
+"low_unequal",0.4,"Stage2 IF Wald","Active correction/floor",49,49,0.795918367346939,0.36734693877551
+"small_short",0.4,"Stage2 IF Wald","Active correction/floor",18,18,0.611111111111111,0.333333333333333
+"low_unequal",0,"Stratified percentile","Active correction/floor",49,47,0.872340425531915,0.127659574468085
+"low_unequal",0.4,"Stratified percentile","Active correction/floor",49,47,0.936170212765957,0.404255319148936
+"high_control",0,"Bootstrap-SD Wald","Interior structural branch",100,100,0.9,0.1
+"low_balanced",0,"Bootstrap-SD Wald","Interior structural branch",39,38,1,0
+"low_larger",0,"Bootstrap-SD Wald","Interior structural branch",58,56,0.928571428571429,0.0714285714285714
+"low_negative",0,"Bootstrap-SD Wald","Interior structural branch",38,38,1,0
+"low_unequal",0,"Bootstrap-SD Wald","Interior structural branch",16,15,1,0
+"small_short",0,"Bootstrap-SD Wald","Interior structural branch",35,31,0.967741935483871,0.032258064516129
+"high_control",0.4,"Bootstrap-SD Wald","Interior structural branch",100,100,0.9,0.93
+"low_balanced",0.4,"Bootstrap-SD Wald","Interior structural branch",33,32,0.96875,0.15625
+"low_larger",0.4,"Bootstrap-SD Wald","Interior structural branch",55,53,1,0.207547169811321
+"low_negative",0.4,"Bootstrap-SD Wald","Interior structural branch",36,36,0.861111111111111,0.0833333333333333
+"low_unequal",0.4,"Bootstrap-SD Wald","Interior structural branch",16,15,0.933333333333333,0.0666666666666667
+"small_short",0.4,"Bootstrap-SD Wald","Interior structural branch",27,25,0.8,0.12
+"high_control",0,"Conditional Wald","Interior structural branch",100,100,0.92,0.08
+"low_balanced",0,"Conditional Wald","Interior structural branch",39,39,0.974358974358974,0.0256410256410256
+"low_larger",0,"Conditional Wald","Interior structural branch",58,58,0.982758620689655,0.0172413793103448
+"low_negative",0,"Conditional Wald","Interior structural branch",38,38,1,0
+"low_unequal",0,"Conditional Wald","Interior structural branch",16,16,1,0
+"small_short",0,"Conditional Wald","Interior structural branch",35,35,1,0
+"high_control",0.4,"Conditional Wald","Interior structural branch",100,100,0.93,0.94
+"low_balanced",0.4,"Conditional Wald","Interior structural branch",33,33,0.93939393939394,0.0606060606060606
+"low_larger",0.4,"Conditional Wald","Interior structural branch",55,55,0.945454545454545,0.0727272727272727
+"low_negative",0.4,"Conditional Wald","Interior structural branch",36,36,0.805555555555556,0
+"low_unequal",0.4,"Conditional Wald","Interior structural branch",16,16,0.875,0
+"small_short",0.4,"Conditional Wald","Interior structural branch",27,27,0.740740740740741,0.0740740740740741
+"high_control",0,"Delete-one t","Interior structural branch",100,100,0.92,0.08
+"low_balanced",0,"Delete-one t","Interior structural branch",39,38,0.973684210526316,0.0263157894736842
+"low_larger",0,"Delete-one t","Interior structural branch",58,58,0.982758620689655,0.0172413793103448
+"low_negative",0,"Delete-one t","Interior structural branch",38,38,1,0
+"low_unequal",0,"Delete-one t","Interior structural branch",16,16,1,0
+"small_short",0,"Delete-one t","Interior structural branch",35,35,0.971428571428571,0.0285714285714286
+"high_control",0.4,"Delete-one t","Interior structural branch",100,100,0.92,0.92
+"low_balanced",0.4,"Delete-one t","Interior structural branch",33,33,0.93939393939394,0.0606060606060606
+"low_larger",0.4,"Delete-one t","Interior structural branch",55,55,0.927272727272727,0.0545454545454545
+"low_negative",0.4,"Delete-one t","Interior structural branch",36,36,0.916666666666667,0.0277777777777778
+"low_unequal",0.4,"Delete-one t","Interior structural branch",16,16,0.9375,0
+"small_short",0.4,"Delete-one t","Interior structural branch",27,27,0.814814814814815,0.037037037037037
+"high_control",0,"Delete-one Wald","Interior structural branch",100,100,0.9,0.1
+"low_balanced",0,"Delete-one Wald","Interior structural branch",39,38,0.973684210526316,0.0263157894736842
+"low_larger",0,"Delete-one Wald","Interior structural branch",58,58,0.982758620689655,0.0172413793103448
+"low_negative",0,"Delete-one Wald","Interior structural branch",38,38,1,0
+"low_unequal",0,"Delete-one Wald","Interior structural branch",16,16,1,0
+"small_short",0,"Delete-one Wald","Interior structural branch",35,35,0.971428571428571,0.0285714285714286
+"high_control",0.4,"Delete-one Wald","Interior structural branch",100,100,0.9,0.92
+"low_balanced",0.4,"Delete-one Wald","Interior structural branch",33,33,0.909090909090909,0.0909090909090909
+"low_larger",0.4,"Delete-one Wald","Interior structural branch",55,55,0.927272727272727,0.0545454545454545
+"low_negative",0.4,"Delete-one Wald","Interior structural branch",36,36,0.916666666666667,0.0277777777777778
+"low_unequal",0.4,"Delete-one Wald","Interior structural branch",16,16,0.9375,0
+"small_short",0.4,"Delete-one Wald","Interior structural branch",27,27,0.814814814814815,0.111111111111111
+"high_control",0,"Frozen percentile","Interior structural branch",100,100,0.9,0.1
+"low_balanced",0,"Frozen percentile","Interior structural branch",39,39,0.974358974358974,0.0256410256410256
+"low_larger",0,"Frozen percentile","Interior structural branch",58,58,0.948275862068966,0.0517241379310345
+"low_negative",0,"Frozen percentile","Interior structural branch",38,38,1,0
+"low_unequal",0,"Frozen percentile","Interior structural branch",16,16,1,0
+"small_short",0,"Frozen percentile","Interior structural branch",35,35,1,0
+"high_control",0.4,"Frozen percentile","Interior structural branch",100,100,0.89,0.93
+"low_balanced",0.4,"Frozen percentile","Interior structural branch",33,33,0.93939393939394,0.121212121212121
+"low_larger",0.4,"Frozen percentile","Interior structural branch",55,55,0.981818181818182,0.218181818181818
+"low_negative",0.4,"Frozen percentile","Interior structural branch",36,36,0.916666666666667,0.0555555555555556
+"low_unequal",0.4,"Frozen percentile","Interior structural branch",16,16,0.9375,0.1875
+"small_short",0.4,"Frozen percentile","Interior structural branch",27,27,0.851851851851852,0.111111111111111
+"high_control",0,"Full IF Wald","Interior structural branch",100,100,0.89,0.11
+"low_balanced",0,"Full IF Wald","Interior structural branch",39,39,0.974358974358974,0.0256410256410256
+"low_larger",0,"Full IF Wald","Interior structural branch",58,58,0.982758620689655,0.0172413793103448
+"low_negative",0,"Full IF Wald","Interior structural branch",38,38,1,0
+"low_unequal",0,"Full IF Wald","Interior structural branch",16,16,1,0
+"small_short",0,"Full IF Wald","Interior structural branch",35,35,1,0
+"high_control",0.4,"Full IF Wald","Interior structural branch",100,100,0.89,0.95
+"low_balanced",0.4,"Full IF Wald","Interior structural branch",33,33,0.878787878787879,0.0909090909090909
+"low_larger",0.4,"Full IF Wald","Interior structural branch",55,55,0.927272727272727,0.127272727272727
+"low_negative",0.4,"Full IF Wald","Interior structural branch",36,36,0.833333333333333,0.0277777777777778
+"low_unequal",0.4,"Full IF Wald","Interior structural branch",16,16,0.9375,0
+"small_short",0.4,"Full IF Wald","Interior structural branch",27,27,0.740740740740741,0.185185185185185
+"high_control",0,"Full-system HC3 t","Interior structural branch",100,100,0.92,0.08
+"low_balanced",0,"Full-system HC3 t","Interior structural branch",39,39,0.974358974358974,0.0256410256410256
+"low_larger",0,"Full-system HC3 t","Interior structural branch",58,58,0.982758620689655,0.0172413793103448
+"low_negative",0,"Full-system HC3 t","Interior structural branch",38,38,1,0
+"low_unequal",0,"Full-system HC3 t","Interior structural branch",16,16,1,0
+"small_short",0,"Full-system HC3 t","Interior structural branch",35,35,1,0
+"high_control",0.4,"Full-system HC3 t","Interior structural branch",100,100,0.92,0.92
+"low_balanced",0.4,"Full-system HC3 t","Interior structural branch",33,33,0.93939393939394,0.0303030303030303
+"low_larger",0.4,"Full-system HC3 t","Interior structural branch",55,55,0.927272727272727,0.0545454545454545
+"low_negative",0.4,"Full-system HC3 t","Interior structural branch",36,36,0.944444444444444,0.0277777777777778
+"low_unequal",0.4,"Full-system HC3 t","Interior structural branch",16,16,0.9375,0
+"small_short",0.4,"Full-system HC3 t","Interior structural branch",27,27,0.851851851851852,0.0740740740740741
+"high_control",0,"Full-system HC3 Wald","Interior structural branch",100,100,0.92,0.08
+"low_balanced",0,"Full-system HC3 Wald","Interior structural branch",39,39,0.974358974358974,0.0256410256410256
+"low_larger",0,"Full-system HC3 Wald","Interior structural branch",58,58,0.982758620689655,0.0172413793103448
+"low_negative",0,"Full-system HC3 Wald","Interior structural branch",38,38,1,0
+"low_unequal",0,"Full-system HC3 Wald","Interior structural branch",16,16,1,0
+"small_short",0,"Full-system HC3 Wald","Interior structural branch",35,35,1,0
+"high_control",0.4,"Full-system HC3 Wald","Interior structural branch",100,100,0.92,0.92
+"low_balanced",0.4,"Full-system HC3 Wald","Interior structural branch",33,33,0.93939393939394,0.0303030303030303
+"low_larger",0.4,"Full-system HC3 Wald","Interior structural branch",55,55,0.927272727272727,0.0545454545454545
+"low_negative",0.4,"Full-system HC3 Wald","Interior structural branch",36,36,0.944444444444444,0.0277777777777778
+"low_unequal",0.4,"Full-system HC3 Wald","Interior structural branch",16,16,0.9375,0
+"small_short",0.4,"Full-system HC3 Wald","Interior structural branch",27,27,0.851851851851852,0.0740740740740741
+"high_control",0,"Person percentile","Interior structural branch",100,100,0.9,0.1
+"low_balanced",0,"Person percentile","Interior structural branch",39,38,0.973684210526316,0.0263157894736842
+"low_larger",0,"Person percentile","Interior structural branch",58,56,0.946428571428571,0.0535714285714286
+"low_negative",0,"Person percentile","Interior structural branch",38,38,1,0
+"low_unequal",0,"Person percentile","Interior structural branch",16,15,1,0
+"small_short",0,"Person percentile","Interior structural branch",35,31,0.967741935483871,0.032258064516129
+"high_control",0.4,"Person percentile","Interior structural branch",100,100,0.89,0.93
+"low_balanced",0.4,"Person percentile","Interior structural branch",33,32,0.96875,0.125
+"low_larger",0.4,"Person percentile","Interior structural branch",55,53,0.981132075471698,0.226415094339623
+"low_negative",0.4,"Person percentile","Interior structural branch",36,36,0.916666666666667,0.0555555555555556
+"low_unequal",0.4,"Person percentile","Interior structural branch",16,15,1,0.2
+"small_short",0.4,"Person percentile","Interior structural branch",27,25,0.88,0.08
+"high_control",0,"Stage2 IF Wald","Interior structural branch",100,100,0.89,0.11
+"low_balanced",0,"Stage2 IF Wald","Interior structural branch",39,39,0.974358974358974,0.0256410256410256
+"low_larger",0,"Stage2 IF Wald","Interior structural branch",58,58,0.982758620689655,0.0172413793103448
+"low_negative",0,"Stage2 IF Wald","Interior structural branch",38,38,1,0
+"low_unequal",0,"Stage2 IF Wald","Interior structural branch",16,16,1,0
+"small_short",0,"Stage2 IF Wald","Interior structural branch",35,35,1,0
+"high_control",0.4,"Stage2 IF Wald","Interior structural branch",100,100,0.89,0.95
+"low_balanced",0.4,"Stage2 IF Wald","Interior structural branch",33,33,0.878787878787879,0.0909090909090909
+"low_larger",0.4,"Stage2 IF Wald","Interior structural branch",55,55,0.927272727272727,0.127272727272727
+"low_negative",0.4,"Stage2 IF Wald","Interior structural branch",36,36,0.833333333333333,0.0277777777777778
+"low_unequal",0.4,"Stage2 IF Wald","Interior structural branch",16,16,0.9375,0
+"small_short",0.4,"Stage2 IF Wald","Interior structural branch",27,27,0.740740740740741,0.185185185185185
+"low_unequal",0,"Stratified percentile","Interior structural branch",16,16,1,0
+"low_unequal",0.4,"Stratified percentile","Interior structural branch",16,16,0.9375,0.1875
+"low_balanced",0,"Bootstrap-SD Wald","Singular measurement",44,42,0.80952380952381,0.19047619047619
+"low_larger",0,"Bootstrap-SD Wald","Singular measurement",36,34,0.823529411764706,0.176470588235294
+"low_negative",0,"Bootstrap-SD Wald","Singular measurement",52,50,0.92,0.08
+"low_unequal",0,"Bootstrap-SD Wald","Singular measurement",35,35,0.8,0.2
+"small_short",0,"Bootstrap-SD Wald","Singular measurement",55,51,0.843137254901961,0.156862745098039
+"low_balanced",0.4,"Bootstrap-SD Wald","Singular measurement",44,42,0.785714285714286,0.452380952380952
+"low_larger",0.4,"Bootstrap-SD Wald","Singular measurement",36,34,0.852941176470588,0.352941176470588
+"low_negative",0.4,"Bootstrap-SD Wald","Singular measurement",52,50,0.86,0.34
+"low_unequal",0.4,"Bootstrap-SD Wald","Singular measurement",35,35,0.885714285714286,0.314285714285714
+"small_short",0.4,"Bootstrap-SD Wald","Singular measurement",55,51,0.764705882352941,0.254901960784314
+"low_balanced",0,"Conditional Wald","Singular measurement",44,44,1,0
+"low_larger",0,"Conditional Wald","Singular measurement",36,36,1,0
+"low_negative",0,"Conditional Wald","Singular measurement",52,52,1,0
+"low_unequal",0,"Conditional Wald","Singular measurement",35,35,0.857142857142857,0.142857142857143
+"small_short",0,"Conditional Wald","Singular measurement",55,55,0.981818181818182,0.0181818181818182
+"low_balanced",0.4,"Conditional Wald","Singular measurement",44,44,0.931818181818182,0
+"low_larger",0.4,"Conditional Wald","Singular measurement",36,36,1,0.0277777777777778
+"low_negative",0.4,"Conditional Wald","Singular measurement",52,52,0.903846153846154,0.0192307692307692
+"low_unequal",0.4,"Conditional Wald","Singular measurement",35,35,0.828571428571429,0.171428571428571
+"small_short",0.4,"Conditional Wald","Singular measurement",55,55,0.963636363636364,0.0545454545454545
+"low_balanced",0,"Delete-one t","Singular measurement",44,44,0.795454545454545,0.204545454545455
+"low_larger",0,"Delete-one t","Singular measurement",36,36,0.777777777777778,0.222222222222222
+"low_negative",0,"Delete-one t","Singular measurement",52,52,0.942307692307692,0.0576923076923077
+"low_unequal",0,"Delete-one t","Singular measurement",35,35,0.857142857142857,0.142857142857143
+"small_short",0,"Delete-one t","Singular measurement",55,54,0.888888888888889,0.111111111111111
+"low_balanced",0.4,"Delete-one t","Singular measurement",44,44,0.772727272727273,0.318181818181818
+"low_larger",0.4,"Delete-one t","Singular measurement",36,36,0.75,0.305555555555556
+"low_negative",0.4,"Delete-one t","Singular measurement",52,52,0.903846153846154,0.25
+"low_unequal",0.4,"Delete-one t","Singular measurement",35,35,0.885714285714286,0.228571428571429
+"small_short",0.4,"Delete-one t","Singular measurement",55,54,0.87037037037037,0.222222222222222
+"low_balanced",0,"Delete-one Wald","Singular measurement",44,44,0.795454545454545,0.204545454545455
+"low_larger",0,"Delete-one Wald","Singular measurement",36,36,0.777777777777778,0.222222222222222
+"low_negative",0,"Delete-one Wald","Singular measurement",52,52,0.942307692307692,0.0576923076923077
+"low_unequal",0,"Delete-one Wald","Singular measurement",35,35,0.828571428571429,0.171428571428571
+"small_short",0,"Delete-one Wald","Singular measurement",55,54,0.87037037037037,0.12962962962963
+"low_balanced",0.4,"Delete-one Wald","Singular measurement",44,44,0.772727272727273,0.318181818181818
+"low_larger",0.4,"Delete-one Wald","Singular measurement",36,36,0.75,0.305555555555556
+"low_negative",0.4,"Delete-one Wald","Singular measurement",52,52,0.903846153846154,0.25
+"low_unequal",0.4,"Delete-one Wald","Singular measurement",35,35,0.885714285714286,0.228571428571429
+"small_short",0.4,"Delete-one Wald","Singular measurement",55,54,0.87037037037037,0.222222222222222
+"low_balanced",0,"Frozen percentile","Singular measurement",44,44,0.931818181818182,0.0681818181818182
+"low_larger",0,"Frozen percentile","Singular measurement",36,36,0.972222222222222,0.0277777777777778
+"low_negative",0,"Frozen percentile","Singular measurement",52,52,0.961538461538462,0.0384615384615385
+"low_unequal",0,"Frozen percentile","Singular measurement",35,35,0.942857142857143,0.0571428571428571
+"small_short",0,"Frozen percentile","Singular measurement",55,55,1,0
+"low_balanced",0.4,"Frozen percentile","Singular measurement",44,44,0.931818181818182,0.272727272727273
+"low_larger",0.4,"Frozen percentile","Singular measurement",36,36,1,0.194444444444444
+"low_negative",0.4,"Frozen percentile","Singular measurement",52,52,0.961538461538462,0.115384615384615
+"low_unequal",0.4,"Frozen percentile","Singular measurement",35,35,0.942857142857143,0.114285714285714
+"small_short",0.4,"Frozen percentile","Singular measurement",55,55,0.818181818181818,0.163636363636364
+"low_balanced",0,"Full IF Wald","Singular measurement",44,0,NA,NA
+"low_larger",0,"Full IF Wald","Singular measurement",36,0,NA,NA
+"low_negative",0,"Full IF Wald","Singular measurement",52,0,NA,NA
+"low_unequal",0,"Full IF Wald","Singular measurement",35,0,NA,NA
+"small_short",0,"Full IF Wald","Singular measurement",55,0,NA,NA
+"low_balanced",0.4,"Full IF Wald","Singular measurement",44,0,NA,NA
+"low_larger",0.4,"Full IF Wald","Singular measurement",36,0,NA,NA
+"low_negative",0.4,"Full IF Wald","Singular measurement",52,0,NA,NA
+"low_unequal",0.4,"Full IF Wald","Singular measurement",35,0,NA,NA
+"small_short",0.4,"Full IF Wald","Singular measurement",55,0,NA,NA
+"low_balanced",0,"Full-system HC3 t","Singular measurement",44,0,NA,NA
+"low_larger",0,"Full-system HC3 t","Singular measurement",36,0,NA,NA
+"low_negative",0,"Full-system HC3 t","Singular measurement",52,0,NA,NA
+"low_unequal",0,"Full-system HC3 t","Singular measurement",35,0,NA,NA
+"small_short",0,"Full-system HC3 t","Singular measurement",55,0,NA,NA
+"low_balanced",0.4,"Full-system HC3 t","Singular measurement",44,0,NA,NA
+"low_larger",0.4,"Full-system HC3 t","Singular measurement",36,0,NA,NA
+"low_negative",0.4,"Full-system HC3 t","Singular measurement",52,0,NA,NA
+"low_unequal",0.4,"Full-system HC3 t","Singular measurement",35,0,NA,NA
+"small_short",0.4,"Full-system HC3 t","Singular measurement",55,0,NA,NA
+"low_balanced",0,"Full-system HC3 Wald","Singular measurement",44,0,NA,NA
+"low_larger",0,"Full-system HC3 Wald","Singular measurement",36,0,NA,NA
+"low_negative",0,"Full-system HC3 Wald","Singular measurement",52,0,NA,NA
+"low_unequal",0,"Full-system HC3 Wald","Singular measurement",35,0,NA,NA
+"small_short",0,"Full-system HC3 Wald","Singular measurement",55,0,NA,NA
+"low_balanced",0.4,"Full-system HC3 Wald","Singular measurement",44,0,NA,NA
+"low_larger",0.4,"Full-system HC3 Wald","Singular measurement",36,0,NA,NA
+"low_negative",0.4,"Full-system HC3 Wald","Singular measurement",52,0,NA,NA
+"low_unequal",0.4,"Full-system HC3 Wald","Singular measurement",35,0,NA,NA
+"small_short",0.4,"Full-system HC3 Wald","Singular measurement",55,0,NA,NA
+"low_balanced",0,"Person percentile","Singular measurement",44,42,0.928571428571429,0.0714285714285714
+"low_larger",0,"Person percentile","Singular measurement",36,34,1,0
+"low_negative",0,"Person percentile","Singular measurement",52,50,0.96,0.04
+"low_unequal",0,"Person percentile","Singular measurement",35,35,0.942857142857143,0.0571428571428571
+"small_short",0,"Person percentile","Singular measurement",55,51,1,0
+"low_balanced",0.4,"Person percentile","Singular measurement",44,42,0.928571428571429,0.285714285714286
+"low_larger",0.4,"Person percentile","Singular measurement",36,34,1,0.205882352941176
+"low_negative",0.4,"Person percentile","Singular measurement",52,50,0.96,0.1
+"low_unequal",0.4,"Person percentile","Singular measurement",35,35,0.942857142857143,0.114285714285714
+"small_short",0.4,"Person percentile","Singular measurement",55,51,0.823529411764706,0.156862745098039
+"low_balanced",0,"Stage2 IF Wald","Singular measurement",44,44,0.795454545454545,0.204545454545455
+"low_larger",0,"Stage2 IF Wald","Singular measurement",36,36,0.75,0.25
+"low_negative",0,"Stage2 IF Wald","Singular measurement",52,52,0.923076923076923,0.0769230769230769
+"low_unequal",0,"Stage2 IF Wald","Singular measurement",35,35,0.828571428571429,0.171428571428571
+"small_short",0,"Stage2 IF Wald","Singular measurement",55,55,0.854545454545454,0.145454545454545
+"low_balanced",0.4,"Stage2 IF Wald","Singular measurement",44,44,0.727272727272727,0.340909090909091
+"low_larger",0.4,"Stage2 IF Wald","Singular measurement",36,36,0.75,0.305555555555556
+"low_negative",0.4,"Stage2 IF Wald","Singular measurement",52,52,0.884615384615385,0.326923076923077
+"low_unequal",0.4,"Stage2 IF Wald","Singular measurement",35,35,0.857142857142857,0.314285714285714
+"small_short",0.4,"Stage2 IF Wald","Singular measurement",55,55,0.763636363636364,0.254545454545455
+"low_unequal",0,"Stratified percentile","Singular measurement",35,35,0.942857142857143,0.0571428571428571
+"low_unequal",0.4,"Stratified percentile","Singular measurement",35,35,0.914285714285714,0.171428571428571
