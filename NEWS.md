@@ -1,5 +1,22 @@
 # repair 0.0.0.9000
 
+* Add experimental `repair_sandwich()` and separate coefficient/covariance/interval
+  methods for full person-level influence inference. Propagate measurement
+  estimation, preliminary/final M-MOM moments, estimated weights and regularization,
+  including signed cross-stage covariance. Retain the original point estimates
+  and ordinary conditional inference. Report frozen-measurement influence
+  separately and withhold unstable/boundary full inference explicitly.
+* Implement exact Gaussian ML/REML scores with the REML determinant's
+  case-frequency derivative, validated numerical sensitivities, ID-aligned
+  influences and covariance decomposition. Initial support is one Gaussian lmer,
+  including contained nuisance groups, weights and offsets; nlme/multiple-model
+  derivatives remain unsupported.
+* Document a paired 600-dataset comparison with person bootstrap and the existing
+  research OLS-outcome stacked HC0–HC3 SEs. Full influence results were available
+  for 1,351/2,400 structural analyses; difficult noisy-predictor coverage remained
+  below nominal and did not improve on bootstrap. Preserve endpoint-based review
+  evidence and matched Monte Carlo comparisons under `dev/influence-simulation`.
+
 * Add opt-in `repair_lmer_refitter()` for deterministic, likelihood-checked
   nloptwrap-initialized BOBYQA fitting and bounded retries. Retain every attempt,
   convergence warning, likelihood and singularity diagnostic. Persist the recipe

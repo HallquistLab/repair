@@ -1,0 +1,185 @@
+---
+title: "Influence-function inference across REPAIR stages"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Influence-function inference across REPAIR stages}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse=TRUE,comment='#>')
+library(repair)
+```
+
+`repair_sandwich()` estimates uncertainty of the complete fitted two-stage
+procedure through person-level influence functions. It returns a separate result:
+ordinary REPAIR estimates and conditional SEs keep their existing meaning.
+The method is **experimental** and uses a validated local linearization, not a
+claim of nominal finite-sample coverage.
+
+## Fit and inspect
+
+```{r fit}
+data(repair_example)
+fitter <- repair_lmer_refitter(score ~ day + (day | person))
+model <- fitter(repair_example$repeated)
+fit <- repair(re("day") ~ practice, model, repair_example$people, "person")
+inf <- repair_sandwich(fit)
+summary(inf)
+```
+
+The measurement fitting recipe is the one used by the supplied model: this
+function neither refits it with another optimizer nor changes the structural
+estimator. Both ML and REML are supported. The robust fitting helper is optional;
+it can help obtain a well-converged original fit before estimating influences.
+
+```{r table}
+coef(inf)  # exactly the original coefficient vector
+nobs(inf)  # independent analysis people
+if (inf$diagnostics$full_available) {
+  repair_sandwich_coefficients(inf)
+  confint(inf, level=.90)
+}
+```
+
+Intervals are normal Wald intervals around the original point estimates. Their
+SEs are empirical influence SDs divided by the square root of the person count.
+They are neither bootstrap percentile intervals nor sums of conditional and
+bootstrap variances. Existing `repair_coefficients(fit)` and `vcov(fit)` remain
+conditional, model-based results.
+
+## What is propagated?
+
+For each person, the calculation follows both their direct contribution to the
+structural estimator and their contribution to estimating measurement parameters.
+The structural calculation updates every preliminary/final corrected moment,
+structural residual variance, inverse case-variance weight and data-dependent
+regularization multiplier. The user-chosen policy/custom alpha remains fixed.
+
+Let T denote that complete structural pipeline, psi the measurement parameters,
+and N the person count. Frequency perturbations are
+f_j(epsilon;i) = 1 + epsilon*(I[j=i] - 1/N), so the total count remains N.
+
+- U_i = N times the derivative of T with respect to that perturbation, holding
+  measurement parameters fixed. This **re-estimates** structural weights and
+  corrections; it is not the ordinary conditional model-based covariance.
+- H is minus the average measurement score Jacobian. The measurement parameter
+  influence is H^{-1} times the centered case-frequency derivative of its score.
+- D is the derivative of the complete structural pipeline with respect to psi.
+- The total influence is U_i + D*IF_psi,i. Its empirical outer product divided
+  by N^2 gives the full covariance, including both cross-stage covariance terms.
+
+Gaussian measurement scores are analytic. Score Jacobians and structural
+sensitivities use central numerical differences with step halving, one-sided
+agreement and active-branch checks. This is an influence-function sandwich, not
+resampling and not an entirely symbolic closed-form derivative implementation.
+
+For REML, the measurement calculation includes the global fixed-design
+information determinant and its case-frequency derivative. Substituting
+cluster ML scores at a REML fit would propagate the wrong finite-sample fitting
+procedure. Person sampling can also change the total number of measurement rows
+under unequal schedules; those contributions remain in the marginal likelihood.
+
+## Inspect cross-stage covariance
+
+```{r covariance}
+if (inf$diagnostics$full_available) {
+  V_full <- vcov(inf)
+  V_stage2 <- vcov(inf, component="stage2")
+  V_measurement <- vcov(inf, component="measurement")
+  V_cross <- vcov(inf, component="cross")
+  stopifnot(isTRUE(all.equal(V_full,V_stage2+V_measurement+V_cross)))
+  V_cross
+}
+```
+
+The cross contribution can have negative diagonal entries. It is a signed
+contribution to the **full** covariance, not a standalone covariance or a set of
+SEs. Adding only the positive measurement contribution would omit dependence
+between stages. All influence matrices retain the same person-ID order.
+
+```{r influence-rows}
+head(inf$influence$stage2)
+inf$diagnostics
+```
+
+Save the separate result with `saveRDS()` and reload after loading repair.
+Extraction needs no original data bindings or fitting callback. The result
+retains numerical influences/scores, derivative agreement, covariance components,
+branch/availability reasons, criterion and versions. Keep original fitting code,
+data and session information separately for rerunning the calculation.
+
+## Availability and interpretation
+
+The initial adapter supports **one Gaussian lmer model** with independent target
+people, including target-contained nuisance effects, prior weights, offsets and
+stored factor coding. Measurement and analyzed cohorts must coincide. Shared
+nuisance levels, nlme and multiple-model derivatives are rejected explicitly.
+Measurement formulas and weight/offset recipes must be supported pointwise
+expressions or explicit data columns. Recomputed `scale()`, `sd()`, adaptive
+knots/bases and position-specific literal weight vectors require additional
+sampling derivatives and are rejected. A transformation precomputed as an
+observed column is treated as fixed input, as in ordinary REPAIR; its original
+construction uncertainty is not inferred automatically.
+
+Full inference is withheld for a singular measurement covariance, non-centered
+measurement estimating equations, weak/indefinite sensitivity matrices, or
+unstable/branch-crossing derivatives. `summary(inf)` stays inspectable. Accessing
+unavailable covariance/intervals stops with its reason; it never substitutes
+stage2 or the ordinary conditional result silently. Stage2 influence inference
+may remain available separately:
+
+```{r stage2}
+if (inf$diagnostics$stage2_available)
+  repair_sandwich_coefficients(inf, component="stage2")
+```
+
+A stable active residual-variance floor or regularization branch is reported.
+It does not establish uniform asymptotic validity near a boundary. No automatic
+HC1/HC2/HC3 correction is added. If the model is smooth and well identified,
+changing `step` modestly should leave the covariance stable; instability is a
+reason to investigate the fit, not to select the smallest SE.
+
+```{r step, eval=FALSE}
+smaller <- repair_sandwich(fit, step=5e-5)
+summary(smaller)
+```
+
+An influence SE can improve uncertainty propagation while leaving point bias
+untouched. Weak identification, measurement-model misspecification, few people,
+regularization transitions and informative missingness remain substantive
+limitations. Availability itself is part of a method comparison.
+
+## Relation to the older stacked sandwich and the bootstrap
+
+The earlier research helper stacks a mixed-model score with **OLS of a recovered
+random-slope outcome on an observed predictor**. That is a valuable special-case
+comparator, but its structural equation does not represent noisy-predictor
+M-MOM. In an iid matching-design OLS-outcome model, subtracting the same estimated
+fixed slope from every recovered outcome changes the structural intercept but
+leaves its focal slope unchanged. With balanced information, M-MOM's error-free-
+predictor weights are constant, yielding an exact OLS/HC0 special-case check.
+Under unequal information, M-MOM estimates precision weights and legacy OLS
+remains unweighted: the population slope target can agree while the estimators
+and SEs differ. The research comparator's HC1 scaling and t critical values also
+differ from the present primary HC0/normal convention.
+
+The [person bootstrap](person-bootstrap.html) samples complete people and refits
+the entire estimator. A frozen-measurement cases comparator and stage2 influences
+both condition on measurement quantities while re-estimating structural weights.
+For the same smooth, regular estimator and sampling design, full influences and
+full cases bootstrapping target the same first-order sampling covariance.
+Their finite-sample distribution approximations and interval constructions differ.
+The bootstrap likewise provides no universal solution to bias or boundary issues.
+
+In the package's six-profile exploratory screen (100 datasets/profile), full
+influence inference was often unavailable at singular low-reliability measurement
+fits. Where available, its nonzero noisy-predictor coverage was 73–83% in the
+difficult profiles, versus 79–96% for person bootstrap intervals. The balanced
+random-slope-outcome variance reproduced the older OLS HC0 result. These
+findings support the method as an experimental propagation/diagnostic tool;
+they do not establish improved finite-sample coverage over the bootstrap.
+The source repository's `dev/influence-sandwich-design.md` and
+`dev/influence-simulation/` retain the design, detailed results, denominators,
+paired Monte Carlo comparisons and endpoint-based verifier.

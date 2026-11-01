@@ -19,6 +19,9 @@ behavior. A design draft does not make its proposed functions available.
 
 ## Implementation evidence
 
+- [Full influence-function inference](influence-sandwich-design.md): estimator,
+  REML and cross-stage derivation, numerical audit, bootstrap/legacy comparison,
+  availability limits and [verifiable study evidence](influence-simulation/README.md).
 - [Design audit](design-audit.md): original workflow corrections and follow-ups.
 - [nlme validation](nlme-validation.md): effective rows, residual covariance,
   independent scoring and end-to-end reference checks.

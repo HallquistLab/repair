@@ -1,0 +1,11 @@
+PASS 600 main and 18 sensitivity comparison checkpoints, no driver/public-API errors.
+PASS frozen analysis/comparator/library hashes and all original native-bootstrap file hashes.
+PASS 172 method/profile/arm/effect summaries independently recomputed from 17,200 interval endpoints.
+PASS unavailable intervals remain NA; not counted as valid non-rejections.
+PASS all original noisy-predictor bootstrap intervals and person draws reproduced.
+PASS 24 complete public outcome-bootstrap calls / 2376 attempts; maximum focal coefficient error 6.66e-16.
+PASS 1351 full / 2400 stage2 influence results; covariance decomposition max relative error 1.45e-16.
+PASS centered, correctly aligned person influences; maximum stage2 mean 1.12e-15.
+PASS 1000 balanced OLS comparisons; max point gap 5.55e-16 / IF-HC0 variance gap 6.09e-08.
+PASS B499 prefixes of B1999 outcome bootstraps: draws, finite-vector decisions, focal estimates and frozen estimates.
+Derivative-step sensitivity: full availability changes 0, stage2 changes 0, max matched full relative covariance change 1.35e-07 / stage2 1.19e-07.

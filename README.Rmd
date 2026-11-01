@@ -168,6 +168,28 @@ availability from 1–53% to 95–100%, with mixed coverage gains and persistent
 small/short-panel undercoverage. See the [audit and simulation results](https://github.com/HallquistLab/repair/blob/2dda7622ae7dceb24d726ff2c3aeb56db390083f/dev/robust-refit-audit.md)
 and `vignette("person-bootstrap")` for scope, usage and limitations.
 
+## Experimental influence-function inference
+
+`repair_sandwich(fit)` provides a separate, local influence-function calculation
+for one Gaussian lmer measurement model. It propagates uncertainty through
+measurement scoring/error covariance, preliminary estimates, case weights and
+moment regularization, including covariance between stages. The original
+`coef(fit)`, `vcov(fit)` and conditional coefficient table stay unchanged.
+
+```{r influence}
+inf <- repair_sandwich(fit)
+summary(inf)
+```
+
+When available, use `repair_sandwich_coefficients(inf)` or `vcov(inf)` for full
+inference. `vcov(inf, component = "stage2")` gives the distinct empirical
+frozen-measurement influence calculation. Full inference is explicitly
+unavailable at singular/weakly identified measurement fits or unstable local
+derivatives; `summary()` reports the reason without silently switching methods.
+These are experimental normal intervals computed with validated numerical
+sensitivities, not a guarantee of nominal coverage or a bias correction. See
+`vignette("influence-inference")` for the covariance decomposition and boundaries.
+
 ## Connect two measurement processes
 
 Use model-qualified references when an equation draws on multiple fits:

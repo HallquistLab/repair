@@ -10,7 +10,9 @@ Description: Implements the REPAIR modified method-of-moments estimator for
     models. Extracts likelihood-only scores and sampling-error covariances,
     aligns them with person-level data by identifier, and reports conditional
     model-based inference and analysis diagnostics, with experimental whole-person
-    bootstrap sampling and percentile intervals for complete refitted analyses.
+    bootstrap sampling and percentile intervals for complete refitted analyses,
+    and experimental person-level influence-function covariance with cross-stage
+    uncertainty propagation.
 URL: https://hallquistlab.github.io/repair/, https://github.com/HallquistLab/repair
 BugReports: https://github.com/HallquistLab/repair/issues
 License: MIT + file LICENSE

@@ -27,6 +27,7 @@ articles:
   - repair-workflow
   - refitting
   - person-bootstrap
+  - influence-inference
   - support-and-troubleshooting
   - extracting-results
   - reliability-diagnostics
@@ -48,6 +49,7 @@ reference:
   - repair_refit
   - repair_lmer_refitter
   - repair_bootstrap
+  - repair_sandwich
   - re
   - repair_effects
   - repair_data
@@ -56,6 +58,8 @@ reference:
 - contents:
   - repair_coefficients
   - repair_bootstrap_coefficients
+  - repair_sandwich_coefficients
+  - repair-sandwich-methods
   - repair_bootstrap_diagnostics
   - repair-bootstrap-methods
   - repair_scores
