@@ -35,7 +35,8 @@ repair_bootstrap_metadata <- function(value, object, method) {
 #' Experimental serial cases bootstrap: sample people with replacement, copy
 #' their complete effective histories with fresh target/nuisance IDs, and rerun
 #' [repair_refit()]. Estimate uncertainty of the fitted procedure, including
-#' measurement-model estimation. Coverage has not yet been established by simulation.
+#' measurement-model estimation. General coverage validity remains unestablished;
+#' targeted simulation screens show condition-dependent performance.
 #' @inheritParams repair_refit
 #' @param B Positive integer number of attempted resamples; default 1999.
 #'   Failed attempts are retained and never replaced. One attempt is permitted
@@ -60,8 +61,10 @@ repair_bootstrap_metadata <- function(value, object, method) {
 #'   not promised. Callbacks must be deterministic recipes as in [repair_refit()].
 #'
 #'   Errors invalidate the entire coefficient vector. Informational warnings and
-#'   singular-but-usable lmer fits are recorded and retained. No retries, trimming,
-#'   silent omissions, or replacement attempts are made. Inference is withheld
+#'   singular-but-usable lmer fits are recorded and retained. No trimming, silent
+#'   omissions, or replacement bootstrap attempts are made. A recorded measurement
+#'   recipe such as [repair_lmer_refitter()] may retry numerical optimization
+#'   within an attempt; every internal fit is audited. Inference is withheld
 #'   when any attempt fails unless `allow_failed = TRUE` is explicitly passed to
 #'   an inference accessor; that changes the interpretation to conditional on
 #'   successful replicates. It does not make failure selection ignorable.
@@ -83,6 +86,8 @@ repair_bootstrap_metadata <- function(value, object, method) {
 #'   [repair_bootstrap_coefficients()] and [repair_bootstrap_diagnostics()] for
 #'   stable tables; `coef()`, `vcov()`, `confint()`, `nobs()`, `summary()` and
 #'   `print()` are supported. See `vignette("person-bootstrap", package = "repair")`.
+#'   For models fitted with [repair_lmer_refitter()], replicate diagnostics contain
+#'   an `optimization` list-column with the internal attempt history and selection.
 #' @examples
 #' data(repair_example)
 #' model <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
@@ -173,6 +178,7 @@ repair_bootstrap <- function(object, measurement_data, data, id = NULL,
       n_analyzed = n_analyzed, measurement_singular = singular, controls = controls,
       preliminary_multiplier = preliminary, final_multiplier = final,
       elapsed = proc.time()[[3L]] - started,
+      optimization = I(list(if (ok) audit$optimization$replacement else result$repair_optimization)),
       warnings = I(list(as.character(warnings))), messages = I(list(as.character(messages))),
       stringsAsFactors = FALSE)
   }

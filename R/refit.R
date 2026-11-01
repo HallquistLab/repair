@@ -207,6 +207,7 @@ repair_refit_configuration <- function(model) {
   if (inherits(model, "lmerMod")) {
     out$optimizer <- model@optinfo$optimizer
     out$optimizer_control <- model@optinfo$control
+    out$refitting_recipe <- attr(model, "repair_lmer_recipe")
   } else {
     cs <- model$modelStruct$corStruct; vs <- model$modelStruct$varStruct
     out$random_class <- lapply(model$modelStruct$reStruct, class)
@@ -237,19 +238,24 @@ repair_refit_at <- function(stage, expr, warnings = character(), messages = char
 
 repair_refit_stage <- function(fitter, data, original, stage, tolerance) {
   warnings <- messages <- character()
+  optimization <- NULL
   tryCatch({
     before <- repair_refit_configuration(original)
     declared_control <- repair_refit_control_declaration(original)
     model <- tryCatch(withCallingHandlers(fitter(data),
       warning = function(w) { warnings <<- c(warnings, conditionMessage(w)); invokeRestart("muffleWarning") },
       message = function(m) { messages <<- c(messages, conditionMessage(m)); invokeRestart("muffleMessage") }),
-      error = function(e) repair_error("{stage} measurement refit failed: {conditionMessage(e)}"))
+      error = function(e) {
+        optimization <<- e$repair_optimization
+        repair_error("{stage} measurement refit failed: {conditionMessage(e)}")
+      })
     if (!(inherits(model, "lmerMod") || (inherits(model, "lme") && !inherits(model, "nlme"))))
       repair_error("{stage} refitter must return a supported Gaussian lmer or linear lme model.")
     if (!identical(repair_refit_rows(model), rownames(data)))
       repair_error("{stage} refit changed effective observations or their order. Supply exactly the intended effective rows; implicit subset/omission is not allowed.")
-    if (inherits(model, "lmerMod") &&
-        (any(unlist(model@optinfo$conv$opt) != 0) || any(unlist(model@optinfo$conv$lme4$code) != 0)))
+    optimization <- attr(model, "repair_lmer_optimization")
+    if (!repair_measurement_converged(model, warnings) ||
+        (!is.null(optimization) && !isTRUE(optimization$usable)))
       repair_error("{stage} measurement optimizer did not converge.")
     if (any(grepl("convergence error|iteration limit|maximum number of iterations|nlminb problem", warnings, ignore.case = TRUE)))
       repair_error("{stage} measurement optimizer did not converge: {paste(warnings, collapse = '; ')}")
@@ -259,12 +265,13 @@ repair_refit_stage <- function(fitter, data, original, stage, tolerance) {
       repair_error("{stage} refit changed the recorded optimizer control recipe.")
     if (!isTRUE(all.equal(before, after, tolerance = 0)))
       repair_error("{stage} refit changed the measurement specification, optimizer controls, or coefficient schema.")
-    list(model = model, warnings = warnings, messages = messages,
+    list(model = model, warnings = warnings, messages = messages, optimization = optimization,
       controls = if (!is.null(declared_control)) "recorded_recipe" else if (inherits(original, "lmerMod"))
         "recorded_optimizer" else "callback_declared")
   }, error = function(e) {
     e$repair_warnings <- warnings
     e$repair_messages <- messages
+    if (exists("optimization", inherits = FALSE)) e$repair_optimization <- optimization
     stop(e)
   })
 }
@@ -423,9 +430,11 @@ repair_refit <- function(object, measurement_data, data, new_measurement_data = 
   positions <- match(rows, rownames(supplied))
   if (anyNA(positions)) repair_error("Reference measurement data lack fitted observation row names; restore the original row identities.")
   reference <- supplied[positions, , drop = FALSE]
-  spec <- repair_refit_at("reference_recipe", if (is.null(refitter))
+  robust_recipe <- attr(original, "repair_lmer_recipe")
+  spec <- repair_refit_at("reference_recipe", if (is.null(refitter) && is.null(robust_recipe))
     a@diagnostics$refit$spec %||% repair_refit_spec(original, reference) else NULL)
-  fitter <- if (is.null(refitter)) function(d) repair_refit_native(spec, d) else refitter
+  fitter <- if (!is.null(refitter)) refitter else if (!is.null(robust_recipe))
+    function(d) repair_lmer_fit(d, robust_recipe) else function(d) repair_refit_native(spec, d)
   controls <- object@struc_fit@diagnostics
   preliminary <- controls$preliminary_moment_control; final <- controls$final_moment_control
   if (!identical(preliminary, final)) repair_error("Replay requires matching preliminary/final regularization controls from `repair()`.")
@@ -457,6 +466,7 @@ repair_refit <- function(object, measurement_data, data, new_measurement_data = 
   checks <- data.frame(stage = "reference", n_measurement = nrow(reference),
     n_requested = a@diagnostics$n_requested, n_analyzed = length(a@ids), controls = baseline$controls, verified = TRUE)
   warning_log <- list(reference = c(baseline$warnings, structural_warnings$reference)); message_log <- list(reference = baseline$messages)
+  optimization_log <- list(reference = baseline$optimization)
   if (replacement) {
     d <- if (is.null(new_measurement_data)) reference else repair_refit_frame(new_measurement_data, name)
     people <- if (is.null(new_data)) data else new_data
@@ -474,9 +484,10 @@ repair_refit <- function(object, measurement_data, data, new_measurement_data = 
     checks <- rbind(checks, data.frame(stage = "replacement", n_measurement = nrow(d),
       n_requested = nrow(people), n_analyzed = stats::nobs(result), controls = changed$controls, verified = TRUE))
     warning_log$replacement <- c(changed$warnings, structural_warnings$replacement); message_log$replacement <- changed$messages
+    optimization_log$replacement <- changed$optimization
   }
   audit <- list(mode = if (replacement) "replacement" else "identity", adapter = if (is.null(refitter)) "native" else "callback",
-    tolerance = tolerance, checks = checks, warnings = warning_log, messages = message_log,
+    tolerance = tolerance, checks = checks, warnings = warning_log, messages = message_log, optimization = optimization_log,
     draw = mapping, reference_excluded_rows = setdiff(rownames(supplied), rows),
     versions = list(R = R.version.string, repair = as.character(utils::packageVersion("repair")),
       measurement = as.character(utils::packageVersion(if (inherits(original, "lmerMod")) "lme4" else "nlme"))),

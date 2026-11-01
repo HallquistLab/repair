@@ -54,12 +54,15 @@ raw datasets are not retained. The original fit is unchanged. Use
 \code{\link[=repair_bootstrap_coefficients]{repair_bootstrap_coefficients()}} and \code{\link[=repair_bootstrap_diagnostics]{repair_bootstrap_diagnostics()}} for
 stable tables; \code{coef()}, \code{vcov()}, \code{confint()}, \code{nobs()}, \code{summary()} and
 \code{print()} are supported. See \code{vignette("person-bootstrap", package = "repair")}.
+For models fitted with \code{\link[=repair_lmer_refitter]{repair_lmer_refitter()}}, replicate diagnostics contain
+an \code{optimization} list-column with the internal attempt history and selection.
 }
 \description{
 Experimental serial cases bootstrap: sample people with replacement, copy
 their complete effective histories with fresh target/nuisance IDs, and rerun
 \code{\link[=repair_refit]{repair_refit()}}. Estimate uncertainty of the fitted procedure, including
-measurement-model estimation. Coverage has not yet been established by simulation.
+measurement-model estimation. General coverage validity remains unestablished;
+targeted simulation screens show condition-dependent performance.
 }
 \details{
 Supports the single-model scope of \code{\link[=repair_refit]{repair_refit()}}, including
@@ -77,8 +80,10 @@ same numerical environment. Cross-version/optimizer bitwise equivalence is
 not promised. Callbacks must be deterministic recipes as in \code{\link[=repair_refit]{repair_refit()}}.
 
 Errors invalidate the entire coefficient vector. Informational warnings and
-singular-but-usable lmer fits are recorded and retained. No retries, trimming,
-silent omissions, or replacement attempts are made. Inference is withheld
+singular-but-usable lmer fits are recorded and retained. No trimming, silent
+omissions, or replacement bootstrap attempts are made. A recorded measurement
+recipe such as \code{\link[=repair_lmer_refitter]{repair_lmer_refitter()}} may retry numerical optimization
+within an attempt; every internal fit is audited. Inference is withheld
 when any attempt fails unless \code{allow_failed = TRUE} is explicitly passed to
 an inference accessor; that changes the interpretation to conditional on
 successful replicates. It does not make failure selection ignorable.

@@ -255,8 +255,22 @@ replaced, and inference is withheld after any failure unless explicitly
 requested conditional on successful replicates. The [bootstrap
 guide](vignettes/person-bootstrap.Rmd) explains diagnostics, RNG
 restoration, supported single-model cohorts, and saved results. This
-feature is experimental: scientific coverage validation remains
+feature is experimental: broader independent coverage validation remains
 outstanding.
+
+For repeated measurement convergence problems, `repair_lmer_refitter()`
+provides an opt-in, deterministic fitting recipe with likelihood-checked
+BOBYQA and bounded optimizer retries. Use it to rebuild the original
+measurement model and REPAIR analysis first; saved models then carry the
+same strategy into reference and bootstrap refits. Inspect the retained
+internal attempts with
+`repair_bootstrap_diagnostics(boot)$optimization`. The default
+failed-sample gate is unchanged. A six-profile simulation screen
+improved default interval availability from 1–53% to 95–100%, with mixed
+coverage gains and persistent small/short-panel undercoverage. See the
+[audit and simulation
+results](https://github.com/HallquistLab/repair/blob/2dda7622ae7dceb24d726ff2c3aeb56db390083f/dev/robust-refit-audit.md)
+and `vignette("person-bootstrap")` for scope, usage and limitations.
 
 ## Connect two measurement processes
 
