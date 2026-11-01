@@ -10,14 +10,16 @@ export(repair_coefficients)
 export(repair_data)
 export(repair_diagnostics)
 export(repair_effects)
+export(repair_prediction_covariance)
+export(repair_predictions)
 export(repair_ranef_gls)
 export(repair_refit)
 export(repair_reliability)
-export(repair_score_covariance)
-export(repair_scores)
 importFrom(Rcpp,evalCpp)
-importFrom(stats,coef)
-importFrom(stats,confint)
-importFrom(stats,nobs)
-importFrom(stats,vcov)
+importFrom(stats,
+  coef,
+  confint,
+  nobs,
+  vcov
+)
 useDynLib(repair, .registration = TRUE)

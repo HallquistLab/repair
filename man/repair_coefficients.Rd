@@ -26,10 +26,10 @@ internal S7 properties. No fitting or reliability computation is performed.
 }
 \details{
 Estimates retain their input scale. Standard errors, two-sided p-values,
-and normal confidence intervals condition on fitted measurement-model quantities
+and normal confidence intervals condition on fitted MLM quantities
 and any supplied cross-model error covariance. Changing \code{conf.level} changes
 interval endpoints only. Failed structural fits stop with an informative error;
-inspect \code{\link[=repair_diagnostics]{repair_diagnostics()}} for their status and measurement diagnostics.
+inspect \code{\link[=repair_diagnostics]{repair_diagnostics()}} for their status and MLM diagnostics.
 }
 \examples{
 growth <- lme4::lmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)

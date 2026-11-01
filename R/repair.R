@@ -1,10 +1,10 @@
-#' Fit a REPAIR structural regression from measurement models
+#' Fit a REPAIR structural regression from MLMs
 #'
 #' Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
 #' accounts for sampling error when estimated random coefficients are used as
 #' predictors, the outcome, or both in a second-stage regression.
 #'
-#' Select random coefficients with [re()], match them to person-level data by
+#' Select random coefficients with [re()], match them to unit-level data by
 #' ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
 #' models are fitted beforehand so that their fitting choices remain explicit.
 #' @inheritParams repair_data
@@ -18,18 +18,18 @@
 #'   Effects may come from multiple Gaussian lmer or linear lme models, each with
 #'   one target grouping factor. Gaussian lmer models may have nuisance groups
 #'   entirely contained within targets; shared nuisance levels are rejected.
-#'   Full within-person score-error covariance is retained.
+#'   Full within-unit prediction-error covariance is retained.
 #'   Multiple models require an explicit `cross_model_error` policy; separate
-#'   fits do not establish independent scoring errors. See [repair_data()].
+#'   fits do not establish independent prediction errors. See [repair_data()].
 #'   Observed variables are treated as measured without error. Scores are random
 #'   deviations, not fixed-plus-random individual coefficients. For nlme fits,
 #'   supported residual structures and stored-data requirements are described
 #'   in [repair_ranef_gls()]. Use [repair_refit()] to verify and replay one
-#'   measurement model with explicit reference/replacement data.
+#'   MLM with explicit reference/replacement data.
 #'
-#'   Standard errors condition on fitted measurement-model quantities and use
+#'   Standard errors condition on fitted MLM quantities and use
 #'   the modified final predictor moment (the manuscript M-MOM calculation).
-#'   They assume the model-based normal-error covariance; measurement-model
+#'   They assume the model-based normal-error covariance; MLM
 #'   parameter uncertainty is not propagated. Intervals and tests use normal
 #'   reference distributions. Numerical fitting failures return a result with
 #'   `@struc_fit@converged = FALSE` and issue a warning.

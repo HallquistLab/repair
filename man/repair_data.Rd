@@ -22,7 +22,7 @@ be numeric or a random coefficient. An intercept is always included.}
 model, or named list. Select one target grouping factor per model. Gaussian
 lmer models may also contain nuisance groups whose every fitted level belongs
 to exactly one target level; nlme models must have one grouping factor.
-Grouping column names may differ, but their values must identify the same people.}
+Grouping column names may differ, but their values must identify the same units.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
 structural variables. Its ID values must match the model's grouping levels.}
@@ -30,19 +30,19 @@ structural variables. Its ID values must match the model's grouping levels.}
 \item{id}{Name of the ID column in \code{data}; need not equal the grouping name.}
 
 \item{na_action}{\code{"fail"} (default) or \code{"omit"}. Omission covers missing or
-nonfinite observed values, unmatched IDs, and failed score blocks; it warns
+nonfinite observed values, unmatched IDs, and failed prediction blocks; it warns
 and records every excluded ID and reason.}
 
-\item{cross_model_error}{Cross-model score-error covariance policy. Default
+\item{cross_model_error}{Cross-model prediction-error covariance policy. Default
 \code{NULL} is valid only when the formula references one model. For multiple
-models, use \code{"independent"} to explicitly assume zero cross-model scoring
+models, use \code{"independent"} to explicitly assume zero cross-model prediction extraction
 error covariance, or a list of blocks, one for every unordered model pair.
 Each block is \code{list(models = c("a", "b"), covariance = array(...))}.
 The numeric array must have three named dimensions: coefficient names from
-model a, coefficient names from model b, and person IDs. Term names must
+model a, coefficient names from model b, and unit IDs. Term names must
 exactly cover the effects selected from those models. Every retained ID
 must be present; extra IDs are allowed. Order does not matter. Values are
-covariances of likelihood-only scoring errors, not latent coefficients or
+covariances of likelihood-only prediction errors, not latent coefficients or
 raw observations. The assembled covariance must be positive semidefinite.
 Missing/invalid supplied blocks are errors even with \code{na_action = "omit"}.}
 }
@@ -51,14 +51,14 @@ An S7 analysis-data object. Use \verb{@ids}, \verb{@outcome}, \verb{@predictors}
 \verb{@err_x}, \verb{@err_y}, \verb{@err_xy}, \verb{@effects}, and \verb{@diagnostics} to inspect it.
 Error arrays are ordered predictor by predictor by ID. Observed variables
 have zero sampling error. Scores are deviations from fitted fixed effects.
-\verb{@scores} holds a score object for one referenced model, or a named list for
-multiple models. \verb{@diagnostics$measurement_models} always provides diagnostics
+\verb{@predictions} holds a prediction object for one referenced model, or a named list for
+multiple models. \verb{@diagnostics$mlm_models} always provides diagnostics
 by model, including the verified \code{nuisance_groups};
 \verb{@diagnostics$cross_model_error} records the applied policy and blocks.
 }
 \description{
-Match likelihood-only scores and their full within-person error covariance
-to a person-level data frame by ID. The data frame defines the analysis cohort
+Match likelihood-only predictions and their full within-unit error covariance
+to a unit-level data frame by ID. The data frame defines the analysis scope
 and its order. No aggregation, row-order matching, or silent omission occurs.
 }
 \details{
@@ -69,11 +69,11 @@ observations before structural omission; shared nuisance levels are rejected
 even when only one of their target people is requested. Group names alone
 do not establish nesting. Nested random intercepts/slopes and multiple
 nuisance groups are allowed, provided every nuisance group passes the check.
-Target-specific scoring-error covariance includes every nuisance contribution.
+Target-specific prediction-error covariance includes every nuisance contribution.
 See \code{vignette("nested-nuisance", package = "repair")} for a complete example.
 
 Within-model covariance always comes from the scorer and cannot be
-overridden. Supplied blocks are conditional on the fitted measurement models;
+overridden. Supplied blocks are conditional on the fitted MLMs;
 uncertainty in their estimation is not propagated. Independent errors do not
 imply independent latent processes. The package does not estimate cross-model
 covariance from separate fits. See \code{vignette("multiple-models", package = "repair")}.
@@ -83,6 +83,6 @@ data(repair_example)
 growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
 analysis <- repair_data(re("day") ~ practice, growth, repair_example$people, "person")
 analysis
-head(repair_scores(analysis))
-head(repair_score_covariance(analysis))
+head(repair_predictions(analysis))
+head(repair_prediction_covariance(analysis))
 }

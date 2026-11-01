@@ -14,7 +14,7 @@ home:
   title: Measurement-error-corrected regression of random coefficients in R
   description: >
     Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
-    estimates relationships involving person-specific change and other processes
+    estimates relationships involving unit-specific change and other processes
     from mixed models, accounting for shrinkage and sampling error in their
     predictions.
 
@@ -38,8 +38,8 @@ articles:
   - support-and-troubleshooting
   - extracting-results
   - reliability-diagnostics
-- title: Measurement models and reproduction
-  navbar: Measurement models
+- title: MLMs and reproduction
+  navbar: MLMs
   contents:
   - nested-nuisance
   - multiple-models
@@ -50,7 +50,7 @@ reference:
 - contents:
   - repair_example
 - title: Fit and inspect an analysis
-  desc: Discover random coefficients, specify a structural equation, and inspect the analysis cohort before fitting.
+  desc: Discover random coefficients, specify a structural equation, and inspect the analysis scope before fitting.
 - contents:
   - repair
   - repair_refit
@@ -61,8 +61,8 @@ reference:
   desc: Use stable data frames for reports and joins, or familiar R generics for fitted models.
 - contents:
   - repair_coefficients
-  - repair_scores
-  - repair_score_covariance
+  - repair_predictions
+  - repair_prediction_covariance
   - repair-methods
 - title: Assess reliability and diagnostics
 - contents:

@@ -13,7 +13,7 @@ A list with three elements:
 \item{people}{A data frame with one row per \code{person} and numeric \code{practice}
 (simulated prior practice hours per week, between zero and ten).}
 \item{truth}{Generating constants and a \code{random_effects} data frame with
-person IDs, intercept deviations, and slope deviations. For teaching
+unit IDs, intercept deviations, and slope deviations. For teaching
 comparisons only; these values must not enter an empirical REPAIR fit.}
 }
 }
@@ -27,8 +27,8 @@ numerical reference fixtures used to test the implementation.
 repair_example
 }
 \description{
-A completely simulated example of 60 people with 8--12 daily learning scores
-and a person-level measure of prior practice. These are teaching data, not
+A completely simulated example of 60 people with 8--12 daily learning predictions
+and a unit-level measure of prior practice. These are teaching data, not
 measurements from real participants or a dataset used in the REPAIR paper.
 }
 \details{
@@ -39,12 +39,12 @@ where z0 and z1 are independent standard normal variables. Practice is
 generated independently from a uniform distribution and rounded to one
 decimal place. The population association of slope deviation with one
 extra hour of practice is 0.18 score units per day. One finite sample need
-not recover this constant exactly. Fitted scores are deviations from the
+not recover this constant exactly. Fitted predictions are deviations from the
 estimated fixed effects, so their intercept/centering can differ from the
 generating population coefficients.
 
 IDs are shared between the two tables. Observation counts vary, and each
-person has an identifiable intercept/slope design. Loading the saved data
+unit has an identifiable intercept/slope design. Loading the saved data
 does not generate random numbers or require the companion research repository.
 }
 \examples{

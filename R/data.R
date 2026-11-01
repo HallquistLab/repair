@@ -1,7 +1,7 @@
 #' Synthetic practice and learning data for a REPAIR analysis
 #'
-#' A completely simulated example of 60 people with 8--12 daily learning scores
-#' and a person-level measure of prior practice. These are teaching data, not
+#' A completely simulated example of 60 people with 8--12 daily learning predictions
+#' and a unit-level measure of prior practice. These are teaching data, not
 #' measurements from real participants or a dataset used in the REPAIR paper.
 #' @format A list with three elements:
 #' \describe{
@@ -11,7 +11,7 @@
 #'   \item{people}{A data frame with one row per `person` and numeric `practice`
 #'     (simulated prior practice hours per week, between zero and ten).}
 #'   \item{truth}{Generating constants and a `random_effects` data frame with
-#'     person IDs, intercept deviations, and slope deviations. For teaching
+#'     unit IDs, intercept deviations, and slope deviations. For teaching
 #'     comparisons only; these values must not enter an empirical REPAIR fit.}
 #' }
 #' @details The generating model is
@@ -21,12 +21,12 @@
 #'   generated independently from a uniform distribution and rounded to one
 #'   decimal place. The population association of slope deviation with one
 #'   extra hour of practice is 0.18 score units per day. One finite sample need
-#'   not recover this constant exactly. Fitted scores are deviations from the
+#'   not recover this constant exactly. Fitted predictions are deviations from the
 #'   estimated fixed effects, so their intercept/centering can differ from the
 #'   generating population coefficients.
 #'
 #'   IDs are shared between the two tables. Observation counts vary, and each
-#'   person has an identifiable intercept/slope design. Loading the saved data
+#'   unit has an identifiable intercept/slope design. Loading the saved data
 #'   does not generate random numbers or require the companion research repository.
 #' @source Generated with base R using seed 20261029, Mersenne-Twister/Inversion/
 #'   Rejection RNG settings. The source repository contains the complete

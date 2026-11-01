@@ -91,7 +91,7 @@ repair_refit_rows <- function(model) {
 repair_refit_frame <- function(data, name) {
   if (is.list(data) && !is.data.frame(data)) {
     if (!identical(names(data), name) || length(data) != 1L)
-      repair_error("Supply a data frame or a one-element measurement-data list named {.val {name}}.")
+      repair_error("Supply a data frame or a one-element MLM-data list named {.val {name}}.")
     data <- data[[1L]]
   }
   if (!is.data.frame(data) || !nrow(data) || anyDuplicated(names(data)) ||
@@ -240,15 +240,15 @@ repair_refit_stage <- function(fitter, data, original, stage, tolerance) {
     repair_error("{stage} refit changed effective observations or their order. Supply exactly the intended effective rows; implicit subset/omission is not allowed.")
   if (inherits(model, "lmerMod") &&
       (any(unlist(model@optinfo$conv$opt) != 0) || any(unlist(model@optinfo$conv$lme4$code) != 0)))
-    repair_error("{stage} measurement optimizer did not converge.")
+    repair_error("{stage} MLM optimizer did not converge.")
   if (any(grepl("convergence error|iteration limit|maximum number of iterations|nlminb problem", warnings, ignore.case = TRUE)))
-    repair_error("{stage} measurement optimizer did not converge: {paste(warnings, collapse = '; ')}")
+    repair_error("{stage} MLM optimizer did not converge: {paste(warnings, collapse = '; ')}")
   after <- repair_refit_configuration(model)
   if (!is.null(declared_control) && !isTRUE(all.equal(declared_control,
       repair_refit_control_declaration(model), tolerance = 0)))
     repair_error("{stage} refit changed the recorded optimizer control recipe.")
   if (!isTRUE(all.equal(before, after, tolerance = 0)))
-    repair_error("{stage} refit changed the measurement specification, optimizer controls, or coefficient schema.")
+    repair_error("{stage} refit changed the MLM specification, optimizer controls, or coefficient schema.")
   list(model = model, warnings = warnings, messages = messages,
     controls = if (!is.null(declared_control)) "recorded_recipe" else if (inherits(original, "lmerMod"))
       "recorded_optimizer" else "callback_declared")
@@ -258,36 +258,36 @@ repair_refit_identity <- function(original, replay, tolerance) {
   before <- repair_get_mlm_elements(original@mlm_fit[[1L]])
   after <- repair_get_mlm_elements(replay@mlm_fit[[1L]])
   for (field in c("response", "fixed_design", "offset", "observation_weights", "random_design", "grouping", "random_covariance"))
-    repair_refit_close(S7::prop(before, field), S7::prop(after, field), tolerance, paste("measurement", field))
+    repair_refit_close(S7::prop(before, field), S7::prop(after, field), tolerance, paste("all", field))
   if (!identical(before@group_levels, after@group_levels) ||
       !identical(lapply(before@grouping, as.character), lapply(after@grouping, as.character)))
-    repair_error("Reference replay changed measurement IDs or grouping membership.")
+    repair_error("Reference replay changed MLM IDs or grouping membership.")
   group <- original@analysis_data@effects$group[1L]
   for (id in before@group_levels[[group]]) {
     rows <- before@group_rows[[group]][[id]]
     repair_refit_close(get_ranef_target_covariance(before, group, rows),
-      get_ranef_target_covariance(after, group, rows), tolerance, "measurement residual/nuisance covariance")
+      get_ranef_target_covariance(after, group, rows), tolerance, "MLM residual/nuisance covariance")
   }
   a <- original@analysis_data; b <- replay@analysis_data
   if (!identical(a@ids, b@ids) || !identical(a@effects, b@effects) ||
       !identical(a@diagnostics$excluded, b@diagnostics$excluded) || a@diagnostics$n_requested != b@diagnostics$n_requested)
-    repair_error("Reference replay changed effect identities or the requested/analyzed cohort.")
+    repair_error("Reference replay changed effect identities or the requested/structural scope.")
   for (field in c("outcome", "predictors", "err_x", "err_y", "err_xy"))
     repair_refit_close(S7::prop(a, field), S7::prop(b, field), tolerance, paste("structural", field))
-  repair_refit_close(repair_scores(original, "measurement"), repair_scores(replay, "measurement"), tolerance, "scores")
+  repair_refit_close(repair_predictions(original, "all"), repair_predictions(replay, "all"), tolerance, "predictions")
   repair_refit_close(stats::coef(original), stats::coef(replay), tolerance, "coefficients")
   repair_refit_close(stats::vcov(original), stats::vcov(replay), tolerance, "coefficient covariance")
 }
 
 # No random draws are made here. Re-key each requested copy of a complete person.
-repair_refit_draw <- function(object, measurement, people, id, draw) {
+repair_refit_draw <- function(object, mlm_data, units, id, draw) {
   a <- object@analysis_data; group <- a@effects$group[1L]
   if (!is.character(draw) || !length(draw) || anyNA(draw) || any(!draw %in% a@ids))
     repair_error("`draw` must be a nonempty character vector of analyzed source IDs; repeats are allowed.")
   e <- repair_get_mlm_elements(object@mlm_fit[[1L]])
   if (!setequal(e@group_levels[[group]], a@ids))
-    repair_error("Deterministic draws require the measurement and analyzed cohorts to coincide; first create an explicit restricted reference fit.")
-  if (!group %in% names(measurement)) repair_error("Draws require a bare target grouping column; use explicit replacement data for computed targets.")
+    repair_error("Deterministic draws require the MLM and structural scopes to coincide; first create an explicit restricted reference fit.")
+  if (!group %in% names(mlm_data)) repair_error("Draws require a bare target grouping column; use explicit replacement data for computed targets.")
   model <- object@mlm_fit[[1L]]
   forbidden <- if (inherits(model, "lmerMod")) all.vars(stats::formula(stats::terms(model, fixed.only = TRUE))) else
     all.vars(stats::formula(model))
@@ -312,41 +312,42 @@ repair_refit_draw <- function(object, measurement, people, id, draw) {
   nuisance <- setdiff(names(e@grouping), group)
   rekey <- character()
   for (n in nuisance) {
-    vars <- if (n %in% names(measurement)) n else tryCatch(all.vars(str2lang(n)),
+    vars <- if (n %in% names(mlm_data)) n else tryCatch(all.vars(str2lang(n)),
       error = function(e) repair_error("Computed nuisance groups require explicit replacement data."))
     if (group %in% vars) next
-    if (!n %in% names(measurement) || n %in% forbidden)
+    if (!n %in% names(mlm_data) || n %in% forbidden)
       repair_error("Draws require nuisance grouping expressions containing the target ID or bare nuisance ID columns unused as covariates; otherwise supply explicit replacement data.")
     rekey <- c(rekey, n)
   }
   mapping <- data.frame(draw = seq_along(draw), source_id = draw,
     refit_id = sprintf("r%07d", seq_along(draw)), stringsAsFactors = FALSE)
   blocks <- lapply(seq_along(draw), function(i) {
-    block <- measurement[as.character(measurement[[group]]) == draw[i], , drop = FALSE]
+    block <- mlm_data[as.character(mlm_data[[group]]) == draw[i], , drop = FALSE]
     block[[group]] <- mapping$refit_id[i]
     for (n in rekey) block[[n]] <- paste(mapping$refit_id[i], as.character(block[[n]]), sep = "::")
     block
   })
-  measurement <- do.call(rbind, blocks); rownames(measurement) <- sprintf("observation%09d", seq_len(nrow(measurement)))
-  people <- people[match(draw, as.character(people[[id]])), , drop = FALSE]
-  people[[id]] <- mapping$refit_id; rownames(people) <- NULL
-  list(measurement = measurement, people = people, mapping = mapping)
+  mlm_data <- do.call(rbind, blocks)
+  rownames(mlm_data) <- sprintf("observation%09d", seq_len(nrow(mlm_data)))
+  units <- units[match(draw, as.character(units[[id]])), , drop = FALSE]
+  units[[id]] <- mapping$refit_id; rownames(units) <- NULL
+  list(mlm = mlm_data, units = units, mapping = mapping)
 }
 
 #' Refit a REPAIR analysis after verifying its reference data
 #'
-#' Replay one measurement model and the complete structural analysis using explicit
-#' reference inputs. Optional replacement inputs or a deterministic whole-person
+#' Replay one MLM and the complete structural analysis using explicit
+#' reference inputs. Optional replacement inputs or a deterministic whole-unit
 #' draw are fitted only after identity replay succeeds. This is a refitting tool,
 #' not a bootstrap inference engine.
-#' @param object A converged [repair()] fit using one measurement model.
-#' @param measurement_data Reference repeated-observation data, as a data frame or
+#' @param object A converged [repair()] fit using one MLM.
+#' @param mlm_data Reference repeated-observation data, as a data frame or
 #'   one-element list named like the fitted model. Retain original fitted row names.
-#'   Rows excluded from the original measurement fit are filtered by those names.
-#' @param data Original person-level data, including requested/excluded rows.
-#' @param new_measurement_data Optional replacement effective repeated observations.
+#'   Rows excluded from the original MLM fit are filtered by those names.
+#' @param data Original unit-level data, including requested/excluded unit rows.
+#' @param new_mlm_data Optional replacement effective repeated observations.
 #'   Every supplied row must be used; implicit subset or omission is rejected.
-#' @param new_data Optional replacement person-level data. Every requested person
+#' @param new_data Optional replacement unit-level data. Every requested unit
 #'   must be complete; the original coefficient schema must remain estimable.
 #' @param id Structural ID column; defaults to the original ID column and must match it.
 #' @param refitter Optional deterministic function of one data frame returning a
@@ -356,7 +357,7 @@ repair_refit_draw <- function(object, measurement, people, id, draw) {
 #'   allowed. Copy whole people and assign fresh target/nuisance identities. Cannot
 #'   be combined with replacement data; no randomness or intervals are generated.
 #' @param tolerance Positive finite numerical tolerance for identity replay;
-#'   default 1e-6. Identity/schema/cohort checks are exact.
+#'   default 1e-6. Identity/schema/scope checks are exact.
 #' @details Native adapters rebuild supported Gaussian lmer and single-group lme
 #'   fits using data-only formulas, weights/offsets, literal fitting constructors,
 #'   recorded ML/REML, and fixed factor coding. They do not evaluate original data
@@ -368,13 +369,13 @@ repair_refit_draw <- function(object, measurement, people, id, draw) {
 #'   declaration, identified as `callback_declared` in the audit.
 #'
 #'   Original-data replay checks effective observations, designs, weights/offsets,
-#'   covariance, scores, structural inputs, coefficients and their covariance.
+#'   covariance, predictions, structural inputs, coefficients and their covariance.
 #'   Measurement convergence, specification, and coefficient identities are checked
-#'   again for replacements. Singular but usable measurement fits are retained.
+#'   again for replacements. Singular but usable MLM fits are retained.
 #'   Warnings/messages are recorded in `summary(result)$refit`; fitting errors stop.
 #'   Original structural formula, regularization and computation backend are retained.
 #'
-#'   `draw` requires matching measurement/analyzed cohorts and a bare target ID.
+#'   `draw` requires matching MLM/structural scopes and a bare target ID.
 #'   Nuisance IDs must be bare columns or grouping expressions containing that ID.
 #'   Shared nuisance groups are rejected by the ordinary structural validator.
 #'   See `vignette("refitting", package = "repair")` for scope and examples.
@@ -389,24 +390,24 @@ repair_refit_draw <- function(object, measurement, people, id, draw) {
 #' repair_coefficients(replay)
 #' summary(replay)$refit$checks
 #' @export
-repair_refit <- function(object, measurement_data, data, new_measurement_data = NULL,
+repair_refit <- function(object, mlm_data, data, new_mlm_data = NULL,
                          new_data = NULL, id = NULL, refitter = NULL, draw = NULL,
                          tolerance = 1e-6) {
   repair_require_model(object); repair_require_fit(object)
-  if (length(object@mlm_fit) != 1L) repair_error("Initial refitting supports one measurement model; multiple-model covariance replay is not yet supported.")
+  if (length(object@mlm_fit) != 1L) repair_error("Initial refitting supports one MLM; multiple-model covariance replay is not yet supported.")
   if (!is.numeric(tolerance) || length(tolerance) != 1L || !is.finite(tolerance) || tolerance <= 0)
     repair_error("`tolerance` must be one positive finite number.")
   if (!is.null(refitter) && !is.function(refitter)) repair_error("`refitter` must be a function of one data frame.")
-  if (!is.data.frame(data) || !nrow(data)) repair_error("`data` must contain the original person-level reference rows.")
-  if (!is.null(draw) && (!is.null(new_measurement_data) || !is.null(new_data)))
+  if (!is.data.frame(data) || !nrow(data)) repair_error("`data` must contain the original unit-level reference rows.")
+  if (!is.null(draw) && (!is.null(new_mlm_data) || !is.null(new_data)))
     repair_error("Use either `draw` or explicit replacement data, not both.")
   a <- object@analysis_data; name <- names(object@mlm_fit); original <- object@mlm_fit[[1L]]
   if (is.null(id)) id <- a@diagnostics$id_column
   if (!identical(id, a@diagnostics$id_column)) repair_error("Use the original structural ID column.")
-  supplied <- repair_refit_frame(measurement_data, name)
+  supplied <- repair_refit_frame(mlm_data, name)
   rows <- repair_refit_rows(original)
   positions <- match(rows, rownames(supplied))
-  if (anyNA(positions)) repair_error("Reference measurement data lack fitted observation row names; restore the original row identities.")
+  if (anyNA(positions)) repair_error("Reference MLM data lack fitted observation row names; restore the original row identities.")
   reference <- supplied[positions, , drop = FALSE]
   spec <- if (is.null(refitter)) a@diagnostics$refit$spec %||% repair_refit_spec(original, reference) else NULL
   fitter <- if (is.null(refitter)) function(d) repair_refit_native(spec, d) else refitter
@@ -430,17 +431,17 @@ repair_refit <- function(object, measurement_data, data, new_measurement_data = 
   replay <- structural(baseline$model, data, a@diagnostics$na_action, "reference")
   repair_refit_identity(object, replay, tolerance)
   if (!length(factors)) factors <- replay@analysis_data@diagnostics$structural_factors
-  replacement <- !is.null(draw) || !is.null(new_measurement_data) || !is.null(new_data)
+  replacement <- !is.null(draw) || !is.null(new_mlm_data) || !is.null(new_data)
   mapping <- NULL; result <- replay
-  checks <- data.frame(stage = "reference", n_measurement = nrow(reference),
+  checks <- data.frame(stage = "reference", n_rows = nrow(reference),
     n_requested = a@diagnostics$n_requested, n_analyzed = length(a@ids), controls = baseline$controls, verified = TRUE)
   warning_log <- list(reference = c(baseline$warnings, structural_warnings$reference)); message_log <- list(reference = baseline$messages)
   if (replacement) {
-    d <- if (is.null(new_measurement_data)) reference else repair_refit_frame(new_measurement_data, name)
+    d <- if (is.null(new_mlm_data)) reference else repair_refit_frame(new_mlm_data, name)
     people <- if (is.null(new_data)) data else new_data
     if (!is.null(draw)) {
       copied <- repair_refit_draw(object, reference, data, id, draw)
-      d <- copied$measurement; people <- copied$people; mapping <- copied$mapping
+      d <- copied$mlm; people <- copied$units; mapping <- copied$mapping
     }
     people <- repair_refit_factor_data(people, factors)
     changed <- repair_refit_stage(fitter, d, original, "Replacement", tolerance)
@@ -448,7 +449,7 @@ repair_refit <- function(object, measurement_data, data, new_measurement_data = 
     if (!identical(names(stats::coef(object)), names(stats::coef(result))) ||
         !identical(a@effects, result@analysis_data@effects))
       repair_error("Replacement refit changed the structural coefficient/effect schema.")
-    checks <- rbind(checks, data.frame(stage = "replacement", n_measurement = nrow(d),
+    checks <- rbind(checks, data.frame(stage = "replacement", n_rows = nrow(d),
       n_requested = nrow(people), n_analyzed = stats::nobs(result), controls = changed$controls, verified = TRUE))
     warning_log$replacement <- c(changed$warnings, structural_warnings$replacement); message_log$replacement <- changed$messages
   }
@@ -456,7 +457,7 @@ repair_refit <- function(object, measurement_data, data, new_measurement_data = 
     tolerance = tolerance, checks = checks, warnings = warning_log, messages = message_log,
     draw = mapping, reference_excluded_rows = setdiff(rownames(supplied), rows),
     versions = list(R = R.version.string, repair = as.character(utils::packageVersion("repair")),
-      measurement = as.character(utils::packageVersion(if (inherits(original, "lmerMod")) "lme4" else "nlme"))),
+      mlm = as.character(utils::packageVersion(if (inherits(original, "lmerMod")) "lme4" else "nlme"))),
     spec = spec)
   result@analysis_data@diagnostics$refit <- audit
   result

@@ -2,7 +2,7 @@
 % Please edit documentation in R/formulas.R
 \name{re}
 \alias{re}
-\title{Refer to a measurement-model random coefficient}
+\title{Refer to a MLM random coefficient}
 \usage{
 re(term, model = NULL, group = NULL)
 }

@@ -1,9 +1,9 @@
 test_that("structural diagnostics reconstruct moments and identify analysis weights", {
   fit <- reliability_example(); a <- fit@analysis_data; d <- repair_diagnostics(fit)
-  expect_equal(d$cohort$n_analyzed, nobs(fit))
-  expect_equal(d$measurement$backend, "lme4")
-  expect_equal(d$error_variances$variance[d$error_variances$role == "outcome"], unname(a@err_y))
-  expect_true(all(d$error_variances$variance[d$error_variances$term == "x"] == 0))
+  expect_equal(d$scope$n_analyzed, nobs(fit))
+  expect_equal(d$mlm$backend, "lme4")
+  expect_equal(d$prediction_error_variances$variance[d$prediction_error_variances$role == "outcome"], unname(a@err_y))
+  expect_true(all(d$prediction_error_variances$variance[d$prediction_error_variances$term == "x"] == 0))
   # Independent weighted predictor moments, full unscaled error subtraction.
   design <- cbind(1, a@predictors)
   for (step in c("preliminary", "final")) {
@@ -31,23 +31,23 @@ test_that("disabled regularization is distinct from disabled measurement correct
   d <- repair_diagnostics(fit)
   expect_equal(d$regularization$subtraction_multiplier, c(1, 1))
   expect_false(any(d$regularization$regularized))
-  expect_true(any(d$error_variances$variance > 0))
+  expect_true(any(d$prediction_error_variances$variance > 0))
   expect_equal(d$weight_summary$weight_equivalent_n, 18, tolerance = 1e-10)
 })
 
-test_that("failed structural fits still expose measurement and cohort diagnostics", {
+test_that("failed structural fits still expose measurement and scope diagnostics", {
   ex <- workflow_example(); ex$data$x <- 0
   expect_warning(fit <- repair(x ~ re("Days"), ex$models, ex$data, "person"), "Structural fit failed")
   d <- repair_diagnostics(fit)
   expect_false(d$status$converged); expect_equal(d$status$step, "case_weights")
   for (table in c("weights", "weight_summary", "conditioning", "regularization")) expect_equal(nrow(d[[table]]), 0L)
   expect_true(all(is.finite(d$reliability$reliability)))
-  expect_equal(d$cohort$n_analyzed, 18L)
+  expect_equal(d$scope$n_analyzed, 18L)
   expect_output(print(fit), "Structural fit FAILED")
   expect_error(repair_diagnostics(list()), "repair")
 })
 
-test_that("unequal analysis weights follow IDs through cohort permutation", {
+test_that("unequal analysis weights follow IDs through scope permutation", {
   skip_if_not_installed("nlme")
   case <- readRDS(system.file("extdata", "nlme-workflow-reference.rds", package = "repair"))$cases$outcome_unbalanced
   model <- nlme::lme(y ~ z, random = ~ z | id, data = case$data)

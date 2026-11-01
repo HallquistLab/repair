@@ -40,11 +40,11 @@ claims. Refresh the checks on the actual release candidate.
 
 | Increment | Outcome | Evidence and boundaries |
 |---|---|---|
-| [PR #1](https://github.com/zacharyvig/repair/pull/1): scoring and inference correction | Likelihood-only scoring and the M-MOM covariance calculation were corrected and reconciled with independent references | Six frozen structural-input cases, both R/Rcpp backends, intermediate matrices/weights, and the weak-information variance regression test in `tests/testthat/test-repair-reference.R` |
-| [PR #2](https://github.com/zacharyvig/repair/pull/2): coherent workflow | `repair_effects()`, `re()`, `repair_data()`, and `repair()` form a usable discovery/assembly/fitting path with ID-based alignment and explicit omissions | [Design audit](design-audit.md), formula/cohort tests, generic methods, and the main workflow vignette |
+| [PR #1](https://github.com/zacharyvig/repair/pull/1): prediction extraction and inference correction | Likelihood-only prediction extraction and the M-MOM covariance calculation were corrected and reconciled with independent references | Six frozen structural-input cases, both R/Rcpp backends, intermediate matrices/weights, and the weak-information variance regression test in `tests/testthat/test-repair-reference.R` |
+| [PR #2](https://github.com/zacharyvig/repair/pull/2): coherent workflow | `repair_effects()`, `re()`, `repair_data()`, and `repair()` form a usable discovery/assembly/fitting path with ID-based alignment and explicit omissions | [Design audit](design-audit.md), formula/scope tests, generic methods, and the main workflow vignette |
 | [PR #3](https://github.com/zacharyvig/repair/pull/3): nlme support | Validated single-group linear lme extraction, including supported correlated/heterogeneous residual structures | [nlme audit](nlme-validation.md); three observation-to-inference reference datasets and analytical GLS checks |
-| [PR #4](https://github.com/zacharyvig/repair/pull/4): multiple models | Model-qualified effects and explicit cross-model scoring-error policies, with full within-model covariance retained | [Multiple-model audit](multimodel-validation.md); independent and supplied cross-covariance cases, paired-model ID/covariance validation |
-| [PR #5](https://github.com/zacharyvig/repair/pull/5): reliability and diagnostics | Manuscript-defined posterior reliability, cohort accounting, numerical/weight diagnostics, plots, and summary integration | [Reliability audit](reliability-validation.md); independent person-level and aggregated references |
+| [PR #4](https://github.com/zacharyvig/repair/pull/4): multiple models | Model-qualified effects and explicit cross-model prediction-error policies, with full within-model covariance retained | [Multiple-model audit](multimodel-validation.md); independent and supplied cross-covariance cases, paired-model ID/covariance validation |
+| [PR #5](https://github.com/zacharyvig/repair/pull/5): reliability and diagnostics | Manuscript-defined posterior reliability, scope accounting, numerical/weight diagnostics, plots, and summary integration | [Reliability audit](reliability-validation.md); independent unit-level and aggregated references |
 | [PR #6](https://github.com/zacharyvig/repair/pull/6): stable extractors | Plain coefficient, ID-keyed score, covariance, and diagnostic tables with documented schemas | [Extractor contracts](extractor-contracts.md); ordering, failure, covariance reconstruction, and table serialization tests |
 | [PR #7](https://github.com/zacharyvig/repair/pull/7): package automation | Six OS/R configurations, installed tests/examples/vignettes, README execution, artifacts, and a stable aggregate check | [CI guide](ci-checks.md); strict warning policy passed on hosted runners |
 | [PR #8](https://github.com/zacharyvig/repair/pull/8): website, still open | pkgdown home page, task-based reference, five executable guides, search, NEWS, preview artifacts, and main-branch deployment workflow | Build verified; merge, Pages configuration, and first public deployment remain outstanding |
@@ -53,7 +53,7 @@ The main numerical achievement is implementation agreement with independently
 produced reference calculations, including the production simulation estimator
 and algebra audit. Tests cover predictor, outcome, joint/correlated,
 heterogeneous-error, and weak-information inputs. End-to-end cases refit
-measurement models from repeated observations. Fixtures are bundled and normal
+MLMs from repeated observations. Fixtures are bundled and normal
 tests do not require the companion repository.
 
 This does not mean the package reproduces the entire published Monte Carlo study
@@ -133,7 +133,7 @@ a Value section. This is a discoverability/documentation gap despite the five
 executable guides and does not mean those functions lack implementation tests.
 
 Add small executable examples where users seek help: `repair_effects()`,
-`repair_data()`, `repair_scores()`, `repair_score_covariance()`,
+`repair_data()`, `repair_predictions()`, `repair_prediction_covariance()`,
 `repair_reliability()`, and `repair_diagnostics()` first. Reuse one compact setup;
 show what the returned object means, not only how to print it. Also cover `re()`,
 `fit_mmom()`, and `repair_ranef_gls()` appropriately. Update roxygen sources, then
@@ -142,7 +142,7 @@ regenerate Rd rather than editing generated files directly.
 Decide whether the exported S7 class is a supported constructor or an advanced
 implementation detail. Document it accordingly without removing an export
 casually. Clearly distinguish stable high-level functions/tables, advanced
-estimation interfaces, internal slots, and experimental multi-group scoring.
+estimation interfaces, internal slots, and experimental multi-group prediction extraction.
 Document error/failure behavior and future compatibility promises for each tier.
 
 Acceptance: a new user can complete fit/inspect/report operations from installed
@@ -165,11 +165,11 @@ tests and the final manuscript reference before freezing the release.
 
 Keep these distinctions prominent:
 
-- Likelihood-only score error, posterior reliability, and structural coefficient
+- Likelihood-only prediction error, posterior reliability, and structural coefficient
   uncertainty are different quantities.
 - Scores are random deviations; observed structural predictors are assumed
   measured without error; reported coefficients retain input scale.
-- Conditional normal intervals do not propagate measurement-model estimation or
+- Conditional normal intervals do not propagate MLM estimation or
   uncertainty in estimated supplied cross-model blocks.
 - Minimum regularization stabilizes an estimator; it is not a guarantee against
   weak information or poor coverage. `none` still corrects measurement error.
@@ -183,8 +183,8 @@ nominal coverage.
 
 | Priority | Addition | Why it helps | Bounded acceptance criterion |
 |---|---|---|---|
-| High | One documented synthetic example with repeated observations and meaningful person-level variables | The beginner sleepstudy example deliberately invents a predictor; existing bundled RDS files are reference fixtures rather than an obvious teaching dataset | A simple discoverable dataset/list and a short fit-inspect-report example, with known simulation provenance and no suggestion that invented variables are real measurements |
-| High | A troubleshooting guide tied to existing diagnostics | Users will encounter missing IDs, rank-deficient person designs, singular measurement fits, weak corrected moments, and concentrated weights | Each common message points to a diagnostic/action; never recommend arbitrary exclusion, variance deletion, or covariance-policy changes just to make a fit succeed |
+| High | One documented synthetic example with repeated observations and meaningful unit-level variables | The beginner sleepstudy example deliberately invents a predictor; existing bundled RDS files are reference fixtures rather than an obvious teaching dataset | A simple discoverable dataset/list and a short fit-inspect-report example, with known simulation provenance and no suggestion that invented variables are real measurements |
+| High | A troubleshooting guide tied to existing diagnostics | Users will encounter missing IDs, rank-deficient person designs, singular MLM fits, weak corrected moments, and concentrated weights | Each common message points to a diagnostic/action; never recommend arbitrary exclusion, variance deletion, or covariance-policy changes just to make a fit succeed |
 | Medium | Clean-session fitted-object persistence check | Existing extractor tests round-trip plain tables through RDS, but there is no corresponding explicit saved-fit/fresh-process test in the inspected suite | Save/read a fit in a new R process, load repair, and verify summary/generics/table outputs; document that cross-version S7 object compatibility is not automatically promised |
 | Medium | Installation metadata/dependency review | Source installation uses C++20 and BLAS/LAPACK/Fortran via Makevars; DESCRIPTION has no SystemRequirements field and mostly unversioned dependency requirements | Review appropriate toolchain metadata and genuinely required package API minima; test any claimed minima instead of inventing version constraints |
 | Medium | Clear bundled-data provenance index | `inst/extdata/README.md` describes nlme data, whereas the directory also contains multimodel and reliability references; the test fixture README has fuller coverage | Installed-data documentation identifies every fixture, its role, source revision, and regeneration policy |
@@ -197,10 +197,10 @@ model-selection interface is not needed to make the current workflow usable.
 
 ## What to defer
 
-- Person bootstrap/refit inference until its replay, cohort, failure, and
+- Person bootstrap/refit inference until its replay, scope, failure, and
   scientific-validation contracts are implemented: see the separate design draft.
 - Multi-group/crossed structural dependence and cross-person covariance support.
-- Automatic estimation of cross-model scoring-error covariance.
+- Automatic estimation of cross-model prediction-error covariance.
 - Random-coefficient interactions, nonlinear transformations, joint equations,
   and automated standardization without explicit error-propagation contracts.
 - Prediction/fitted-value APIs until the target is specified (latent outcome,

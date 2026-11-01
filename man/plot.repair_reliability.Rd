@@ -2,12 +2,12 @@
 % Please edit documentation in R/reliability.R
 \name{plot.repair_reliability}
 \alias{plot.repair_reliability}
-\title{Plot person-specific posterior reliability}
+\title{Plot unit-specific posterior reliability}
 \usage{
 \method{plot}{repair_reliability}(x, type = c("distribution", "observations"), ...)
 }
 \arguments{
-\item{x}{A person-level result from \code{\link[=repair_reliability]{repair_reliability()}}.}
+\item{x}{A unit-level result from \code{\link[=repair_reliability]{repair_reliability()}}.}
 
 \item{type}{\code{"distribution"} for histograms or \code{"observations"} for reliability
 against effective observation count. Each model/effect/measure gets a panel.}
@@ -18,7 +18,7 @@ against effective observation count. Each model/effect/measure gets a panel.}
 The plotted data frame invisibly. Graphics parameters are restored.
 }
 \description{
-Plot person-specific posterior reliability
+Plot unit-specific posterior reliability
 }
 \details{
 Undefined rows are omitted from drawing and counted in panel subtitles.

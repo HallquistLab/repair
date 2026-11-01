@@ -1,8 +1,8 @@
 ---
-title: "Validated nlme scoring and end-to-end REPAIR reproduction"
+title: "Validated nlme prediction extraction and end-to-end REPAIR reproduction"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Validated nlme scoring and end-to-end REPAIR reproduction}
+  %\VignetteIndexEntry{Validated nlme prediction extraction and end-to-end REPAIR reproduction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,9 +13,9 @@ library(repair)
 stopifnot(requireNamespace("nlme", quietly = TRUE))
 ```
 
-## Fit an nlme measurement model
+## Fit an nlme MLM
 
-The paper uses `nlme` for its primary measurement models.
+The paper uses `nlme` for its primary MLMs.
 The public workflow for Random-Effect Prediction Adjustment for Inference in
 Regression (REPAIR) accepts a fitted, single-group linear `nlme::lme()` model:
 
@@ -33,13 +33,13 @@ summary(fit)
 ```
 
 `repair_effects()` lists scalar random coefficients; `repair_data()` computes
-and aligns their likelihood-only scores and error covariance by person ID;
+and aligns their likelihood-only predictions and error covariance by person ID;
 `repair()` performs that assembly and fits M-MOM. These functions have the same
 interface for lmer and lme inputs. Scores remain deviations from fixed effects,
 and observed structural variables are treated as error-free.
 
-The summary identifies the measurement backend. For nlme, singularity is not
-assessed using lme4's criterion. Inspect the measurement fit and warnings issued
+The summary identifies the MLM backend. For nlme, singularity is not
+assessed using lme4's criterion. Inspect the MLM fit and warnings issued
 when fitting it. An available nlme `apVar` failure message is retained as a
 variance-parameter uncertainty diagnostic; its absence is not a convergence test.
 
@@ -47,7 +47,7 @@ variance-parameter uncertainty diagnostic; its absence is not a convergence test
 
 | Component | Supported |
 |---|---|
-| Measurement model | Linear Gaussian lme, one grouping factor |
+| MLM | Linear Gaussian lme, one grouping factor |
 | Residual correlation | Independent, `corAR1`, `corCAR1` |
 | Residual variance | Constant, `varIdent`, `varPower` |
 | Combined structures | Supported correlation plus supported variance function |
@@ -80,12 +80,12 @@ Do not remove or edit the model's retained data. If it was fitted with
 `keep.data = FALSE`, refit with retained data. The extractor does not re-evaluate
 the original data expression or subset in the current workspace. Structural
 omission is still a separate decision: `na_action = "omit"` refers to people in
-the structural cohort and retains their exclusion reasons.
+the structural scope and retains their exclusion reasons.
 
 ## Reproduce reference results from repeated observations
 
 The package bundles three deterministic synthetic datasets. Expected results
-come from the paper's production scoring and M-MOM functions, cross-checked
+come from the paper's production prediction extraction and M-MOM functions, cross-checked
 against an independent algebra implementation. No repair functions were used to
 generate these expectations. These are per-dataset agreement checks, not the
 paper's published simulation tables or evidence of Monte Carlo coverage.
@@ -100,8 +100,8 @@ names(reference$cases)
 ```
 
 The balanced predictor case starts with raw repeated observations, fits the
-measurement model, and predicts an observed distal outcome from its intercept
-and slope scores:
+MLM, and predicts an observed distal outcome from its intercept
+and slope predictions:
 
 ```{r reproduce}
 case <- reference$cases$predictor_balanced
@@ -159,10 +159,10 @@ stopifnot(isTRUE(all.equal(reported, case$reported_focal, tolerance = 1e-5)))
 
 Estimates, SEs, and both CI endpoints must be scaled together. An empirical
 application does not have a known generating population SD; do not substitute
-the SD of noisy scores without defining the intended estimand. The package
+the SD of noisy predictions without defining the intended estimand. The package
 performs no automatic standardization.
 
-All inference here remains conditional on fitted measurement-model parameters,
+All inference here remains conditional on fitted MLM parameters,
 uses the model-based normal-error covariance, and assumes independent analysis
 people. Adding nlme support does not change those assumptions or propagate
 first-stage parameter uncertainty. Provenance and regeneration instructions are

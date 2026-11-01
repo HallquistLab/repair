@@ -1,8 +1,8 @@
 ---
-title: "REPAIR across multiple measurement models"
+title: "REPAIR across multiple MLMs"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{REPAIR across multiple measurement models}
+  %\VignetteIndexEntry{REPAIR across multiple MLMs}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,18 +15,18 @@ stopifnot(requireNamespace("nlme", quietly = TRUE))
 
 ## Fit a relationship between two processes
 
-Each measurement model estimates a person's random coefficients from repeated
+Each MLM estimates a person's random coefficients from repeated
 observations. Random-Effect Prediction Adjustment for Inference in Regression
 (REPAIR) fits a structural regression using their likelihood-only
-scores and sampling-error covariance. For example, one process's slope can
+predictions and sampling-error covariance. For example, one process's slope can
 predict another process's slope, adjusting for the first process's intercept.
-The two measurement models may use different occasions and grouping column names.
-Their ID values must identify the same people; REPAIR cannot infer an ID crosswalk.
+The two MLMs may use different occasions and grouping column names.
+Their ID values must identify the same units; REPAIR cannot infer an ID crosswalk.
 
 This example uses packaged synthetic observations and frozen reference results
 from the paper's simulation functions. It reproduces the dual-process computation,
 not the published Monte Carlo tables. Ordinary use supplies your own fitted
-models and person-level data; no fixture is needed.
+models and unit-level data; no fixture is needed.
 
 ```{r models}
 reference <- readRDS(system.file("extdata", "multimodel-workflow-reference.rds",
@@ -47,21 +47,21 @@ summary(fit)
 `re("z", "growth")` selects the growth model's random slope for `z`; it is a
 deviation from its fixed slope. `repair_effects()` lists available scalar names.
 `repair_data()` performs the same assembly as `repair()` without fitting the
-structural regression, allowing you to inspect scores and error inputs first.
+structural regression, allowing you to inspect predictions and error inputs first.
 
-## Choose a scoring-error assumption
+## Choose a prediction-error assumption
 
 The `cross_model_error` argument is required when the formula references multiple
 models. It is not required merely because an unused model is in the supplied list.
 
-- `"independent"` sets all **between-model scoring-error covariances** to zero.
+- `"independent"` sets all **between-model prediction-error covariances** to zero.
   It retains all within-model covariances, including intercept/slope covariance.
 - A list of named covariance blocks supplies the between-model covariances.
   Every unordered pair of referenced models must have a block, even if it is zero.
 - `NULL`, the default, is accepted only for a single referenced model.
 
-Correlated latent slopes do not necessarily have correlated scoring errors.
-Conversely, separate measurement fits do not establish independent errors.
+Correlated latent slopes do not necessarily have correlated prediction errors.
+Conversely, separate MLM fits do not establish independent errors.
 Shared occasion-level disturbances or overlapping measurements can correlate the
 errors. Choose the policy from the measurement design and a defensible covariance
 model. The package cannot estimate that covariance from separate fitted models.
@@ -76,12 +76,12 @@ this estimator. Models may mix supported lmer and single-group lme backends.
 
 Each block has `models = c("a", "b")` and a numeric `covariance` array with
 three dimensions: selected coefficient names from a, selected coefficient names
-from b, and person IDs. All dimensions must be named. These are covariances in
-**score units**, not correlations, BLUP posterior covariances, or raw residual
-covariances. Names come from `repair_effects()` and the person-level ID column.
+from b, and unit IDs. All dimensions must be named. These are covariances in
+**prediction units**, not correlations, BLUP posterior covariances, or raw residual
+covariances. Names come from `repair_effects()` and the unit-level ID column.
 
-For linear scoring operators L_a and L_b, an externally justified residual
-cross-covariance R_ab gives score covariance L_a R_ab L_b-transpose. Deriving
+For linear prediction extraction operators L_a and L_b, an externally justified residual
+cross-covariance R_ab gives prediction covariance L_a R_ab L_b-transpose. Deriving
 R_ab and matching the repeated observations is an analyst responsibility. This
 fixture uses a known residual correlation of 0.25 and fitted marginal residual
 scales; its generator performs that propagation independently of this package.
@@ -116,13 +116,13 @@ checking pairs separately would be insufficient for three or more models.
 The policy and original supplied blocks remain in
 `fit@analysis_data@diagnostics$cross_model_error` and `summary(fit)$cross_model_error`.
 The estimator's final aligned inputs are `@err_x`, `@err_y`, and `@err_xy`.
-Standard errors condition on the measurement fits and supplied covariance; they
+Standard errors condition on the MLM fits and supplied covariance; they
 do not propagate uncertainty in estimating either.
 
 ## Check matching and exclusions
 
-The person-level data frame defines the cohort and output order. Each model's
-scores are matched to it by ID. By default an absent ID, failed score, or
+The unit-level data frame defines the scope and output order. Each model's
+predictions are matched to it by ID. By default an absent ID, failed prediction, or
 missing/nonfinite observed structural variable stops assembly. With
 `na_action = "omit"`, REPAIR warns and records the ID and all applicable reasons,
 including the responsible model names. It never matches by row position.
@@ -131,20 +131,20 @@ Invalid covariance specifications are errors even with omission enabled.
 ```{r diagnostics}
 a <- fit@analysis_data
 a@diagnostics$excluded
-lapply(a@diagnostics$measurement_models, function(x) x$unused_score_ids)
-names(a@scores)  # named by model for multiple-model analyses
-head(a@scores$growth@predictions$id)
+lapply(a@diagnostics$mlm_models, function(x) x$unused_prediction_ids)
+names(a@predictions)  # named by model for multiple-model analyses
+head(a@predictions$growth@predictions$id)
 ```
 
-For single-model analyses, `@scores` remains the original score object.
-`@diagnostics$measurement_models` is always a named list, giving a consistent
+For single-model analyses, `@predictions` remains the original prediction object.
+`@diagnostics$mlm_models` is always a named list, giving a consistent
 way to inspect grouping names, backend, unused IDs, singularity, and fit messages.
 
 ## Reproduce coefficients, standard errors, and intervals
 
 The frozen expectations were produced without loading `repair`, using the paper's
-production scoring helper, full M-MOM implementation, primary dual-process
-estimator, and independent algebra audit. Tests refit both measurement models
+production prediction extraction helper, full M-MOM implementation, primary dual-process
+estimator, and independent algebra audit. Tests refit both MLMs
 from observations and compare both R and C++ computation backends.
 
 ```{r reproduce}
@@ -155,7 +155,7 @@ stopifnot(isTRUE(all.equal(unname(vcov(fit)), unname(case$vcov),
 stopifnot(isTRUE(all.equal(unname(confint(fit)),
   unname(as.matrix(case$coefficients[, c("ci_low", "ci_high")])), tolerance = 1e-5)))
 # The simulation reports a standardized focal slope using a population SD ratio.
-# This known generating ratio is NOT the SD ratio of noisy estimated scores.
+# This known generating ratio is NOT the SD ratio of noisy estimated predictions.
 focal <- tail(fit@struc_fit@coefficients, 1)[, c("estimate", "se", "ci_low", "ci_high")]
 rownames(focal) <- NULL
 reported <- focal * case$reporting_scale

@@ -2,15 +2,15 @@
 % Please edit documentation in R/diagnostics.R
 \name{repair_diagnostics}
 \alias{repair_diagnostics}
-\title{Inspect REPAIR sample, scoring, and numerical diagnostics}
+\title{Inspect REPAIR sample, prediction extraction, and numerical diagnostics}
 \usage{
 repair_diagnostics(object, table = NULL)
 }
 \arguments{
 \item{object}{A fitted \code{\link[=repair]{repair()}} result, including a numerical failure.}
 
-\item{table}{Optional exact table name: \code{"status"}, \code{"cohort"}, \code{"excluded"},
-\code{"measurement"}, \code{"score_failures"}, \code{"error_variances"}, \code{"regularization"},
+\item{table}{Optional exact table name: \code{"status"}, \code{"scope"}, \code{"excluded"},
+\code{"mlm"}, \code{"prediction_failures"}, \code{"prediction_error_variances"}, \code{"regularization"},
 \code{"conditioning"}, \code{"weights"}, \code{"weight_summary"}, or \code{"reliability"}.
 Default NULL returns the existing list. A table name returns a plain data
 frame with automatic row names, including typed zero-row tables on failure.
@@ -18,17 +18,17 @@ Reliability is computed only for NULL or \code{"reliability"}. The cross-model
 covariance policy is metadata in the list, not a selectable table.}
 }
 \value{
-With \code{table = NULL}, a list with data frames \code{status}, \code{cohort}, \code{excluded}, \code{measurement},
-\code{score_failures}, \code{error_variances}, \code{regularization}, \code{conditioning},
+With \code{table = NULL}, a list with data frames \code{status}, \code{scope}, \code{excluded}, \code{mlm},
+\code{prediction_failures}, \code{prediction_error_variances}, \code{regularization}, \code{conditioning},
 \code{weights}, \code{weight_summary}, and \code{reliability}. Reliability uses the analyzed
-cohort and the definitions in \code{\link[=repair_reliability]{repair_reliability()}}. \code{cross_model_error}
+scope and the definitions in \code{\link[=repair_reliability]{repair_reliability()}}. \code{cross_model_error}
 records the covariance policy and original supplied blocks.
 }
 \description{
 Assemble readable tables without refitting or changing the estimator.
 }
 \details{
-Error variances describe likelihood-only scores on the structural
+Error variances describe likelihood-only predictions on the structural
 input scale; they are not posterior variances. Observed variables have zero
 error under the model's assumptions. Weight fractions are normalized inverse
 case-variance weights. \code{weight_equivalent_n = 1 / sum(fraction^2)} describes
@@ -42,16 +42,16 @@ The subtraction multiplier equals one for full measurement-error subtraction;
 it is not a measure of the amount of measurement error. \code{regularized} indicates
 that the multiplier differs from one beyond numerical tolerance (1e-8).
 
-Scoring failures include failures outside the analyzed cohort and identify
-their measurement model and inclusion status. Exclusions retain all reasons.
-On numerical structural failure, measurement diagnostics remain available,
+Prediction extraction failures include failures outside the structural scope and identify
+their MLM and inclusion status. Exclusions retain all reasons.
+On numerical structural failure, MLM diagnostics remain available,
 while unavailable structural tables have zero rows and \code{status} records why.
 }
 \examples{
 data(repair_example)
 growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
 fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
-repair_diagnostics(fit, table = "cohort")
+repair_diagnostics(fit, table = "scope")
 repair_diagnostics(fit, table = "weight_summary")
 repair_diagnostics(fit, table = "excluded")
 }

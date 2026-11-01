@@ -21,7 +21,7 @@ class_repair_mod(
 \item{call}{The original call.}
 }
 \value{
-An S7 object containing measurement fits, the structural fit,
+An S7 object containing MLM fits, the structural fit,
 assembled analysis data, and the original call. Manually supplying these
 properties does not perform the statistical validation done by \code{\link[=repair]{repair()}}.
 }

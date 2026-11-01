@@ -41,11 +41,11 @@ reference fixtures are unchanged.
 
 Same-fit analytical tests construct covariance from residual scale, AR
 coefficients/time distances, and variance multipliers (or the authoritative
-fitted weights for fitted-value varPower). GLS scores and covariance are computed
+fitted weights for fitted-value varPower). GLS predictions and covariance are computed
 with base matrix solves, independently of package extraction. Tests include
 unequal cluster sizes, shuffled observations, unused factor levels, subset,
 na.omit/na.exclude, fitted contrasts, changed caller data, all admitted residual
-classes, intercept-only scoring, rank failure and structural omission. Finer
+classes, intercept-only prediction extraction, rank failure and structural omission. Finer
 correlation groups and unsupported structures are rejection tests.
 
 Three bundled fixtures start from raw synthetic repeated observations and refit

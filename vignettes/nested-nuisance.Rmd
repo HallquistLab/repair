@@ -12,17 +12,17 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 library(repair)
 ```
 
-A measurement model can include person-level random intercepts/slopes and
+A MLM can include unit-level random intercepts/slopes and
 additional random effects for occasions within each person. REPAIR can target
 the person coefficients while incorporating these **nuisance effects** into
-their scoring-error covariance. This extension currently applies to Gaussian
+their prediction-error covariance. This extension currently applies to Gaussian
 `lme4::lmer()` fits.
 
 ## Fit a person and day model
 
 The bundled reference contains synthetic data for 48 people, each with multiple
 days and repeated observations within each day. Practice is a simulated
-person-level predictor. Day numbers are local to each person. These are
+unit-level predictor. Day numbers are local to each person. These are
 implementation reference datasets, not real participant data or the paper's
 published simulation results.
 
@@ -43,7 +43,7 @@ repair_effects(models)
 
 `person` is the target grouping factor; `person:day` is a nuisance grouping factor.
 The fitted model's weights, offsets, fixed effects, and effective observations
-are retained. Check measurement-model adequacy and optimizer messages with the
+are retained. Check MLM adequacy and optimizer messages with the
 usual lme4 tools before structural analysis.
 
 ## Select one target group per model
@@ -57,26 +57,26 @@ A unique term can still be selected without a group qualifier.
 equation <- re("x", model = "growth", group = "person") ~
   re("(Intercept)", model = "growth", group = "person") + practice
 analysis <- repair_data(equation, models, example$people, id = "person")
-head(repair_scores(analysis))
-head(repair_score_covariance(analysis))
+head(repair_predictions(analysis))
+head(repair_prediction_covariance(analysis))
 
 fit <- repair(equation, models, example$people, id = "person")
 repair_coefficients(fit)
-summary(fit)$measurement_models$growth
+summary(fit)$mlm_models$growth
 ```
 
 This regresses the latent person slope deviation on the person intercept
 deviation and practice. Scores remain deviations from fitted fixed effects.
-The selected intercept/slope scoring-error covariance is retained. Nuisance
+The selected intercept/slope prediction-error covariance is retained. Nuisance
 coefficients do not become structural predictors or outcomes: all references to
-one measurement model must select the same target group.
+one MLM must select the same target group.
 
 Reported effect labels include the group for models with multiple groups. The
 stable tables retain their existing schemas and explicit model/group/term/ID
 keys. The structural summary identifies the verified nuisance groups; their
-names are also in `summary(fit)$measurement_models$growth$nuisance_groups`.
+names are also in `summary(fit)$mlm_models$growth$nuisance_groups`.
 
-## What enters scoring and reliability?
+## What enters prediction extraction and reliability?
 
 For person j, the target-specific covariance is
 
@@ -87,7 +87,7 @@ R_{T,j} = R_{e,j} + \sum_{g\ne T} Z_{g,j}G_gZ_{g,j}^{\mathsf T}.
 Ordinary residual covariance includes the fitted residual scale and prior
 weights. The nuisance contributions include all day effects for that person.
 Person random effects are excluded from this covariance because they are the
-target signal. GLS supplies a joint score and error covariance
+target signal. GLS supplies a joint prediction and error covariance
 `(Z_T' R_T^-1 Z_T)^-1`. Adding only a day variance to the diagonal would lose the
 covariance between observations sharing a day.
 
@@ -96,9 +96,9 @@ covariance G added for the posterior calculation. Ignoring nuisance variance in
 reliability would overstate available information.
 
 ```{r reliability}
-repair_reliability(fit)[, c("term", "measure", "reliability", "n_people")]
-repair_diagnostics(fit, table = "cohort")
-repair_diagnostics(fit, table = "measurement")
+repair_reliability(fit)[, c("term", "measure", "reliability", "n_units")]
+repair_diagnostics(fit, table = "scope")
+repair_diagnostics(fit, table = "mlm")
 ```
 
 The fitted lmer model supplies mutually independent random-effect blocks and
@@ -127,7 +127,7 @@ repair_coefficients(fit2)
 ```
 
 Separate random-effect blocks for the target, such as `(x || person)`, are also
-supported. Several measurement models can each have eligible nuisance groups;
+supported. Several MLMs can each have eligible nuisance groups;
 combining them still requires the explicit cross-model error policy in
 `vignette("multiple-models")`.
 
@@ -136,7 +136,7 @@ combining them still requires the explicit cross-model error policy in
 Containment is verified from **all effective fitted observations**: each nuisance
 level must occur in exactly one target person. This is a membership check, not a
 check of whether a name contains a colon. Globally unique visit IDs can qualify
-without a colon. The check precedes structural cohort selection, so omission or
+without a colon. The check precedes structural scope selection, so omission or
 requesting just one person per school cannot bypass it. An estimated zero
 nuisance variance does not waive the membership rule.
 
@@ -145,12 +145,12 @@ people. `(1 | person:day)` represents distinct effects for each person's days.
 Choose the grouping specification from the scientific design: do not split a
 truly shared school, item, or calendar-day effect merely to pass validation.
 
-If people j and k share a nuisance effect, their scoring errors can have
+If people j and k share a nuisance effect, their prediction errors can have
 nonzero cross-person covariance. The current structural estimator accepts
-within-person blocks and cannot account for that dependence. Shared nuisance
+within-unit blocks and cannot account for that dependence. Shared nuisance
 levels therefore produce an explicit error, even with `na_action = "omit"`.
 Targeting days while treating their shared person effect as nuisance also fails
-this rule. Lower-level scoring of shared structures remains experimental and
+this rule. Lower-level prediction extraction of shared structures remains experimental and
 is not an alternative route to validated structural inference.
 
 Multilevel nlme fits remain unsupported. For current model and inference limits,
@@ -158,11 +158,11 @@ see `vignette("support-and-troubleshooting")`.
 
 ## Validation and reproducibility
 
-The tests refit both models from observations and compare scores, complete
-within-person covariance, posterior reliability, structural estimates, SEs,
+The tests refit both models from observations and compare predictions, complete
+within-unit covariance, posterior reliability, structural estimates, SEs,
 coefficient covariance, and normal intervals with independent frozen references.
 Both R and C++ estimation backends are checked. Reference GLS/posterior matrices
-are calculated directly from fitted measurement quantities without loading
+are calculated directly from fitted MLM quantities without loading
 repair; the structural estimates are cross-checked against the companion
 production estimator and algebra audit. The generator and source provenance are
 in `dev/generate_nested_fixtures.R` and the bundled reference's `provenance`.

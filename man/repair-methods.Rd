@@ -19,13 +19,13 @@
 \description{
 Standard extraction methods operate on \code{\link[=repair]{repair()}} results. \code{summary()} returns
 a list containing a coefficient table, effect sources, sample accounting,
-regularization, measurement-model messages, posterior reliability, weight
+regularization, MLM messages, posterior reliability, weight
 concentration, and the inference convention. See \code{\link[=repair_reliability]{repair_reliability()}} and
 \code{\link[=repair_diagnostics]{repair_diagnostics()}} for definitions and individual diagnostic tables.
 Use \code{\link[=repair_coefficients]{repair_coefficients()}} for a plain coefficient table with a chosen
-confidence level, and \code{\link[=repair_scores]{repair_scores()}} for ID-keyed measurement scores.
+confidence level, and \code{\link[=repair_predictions]{repair_predictions()}} for ID-keyed MLM predictions.
 Results from \code{\link[=repair_refit]{repair_refit()}} also expose the replay audit in \code{summary(fit)$refit}.
-\code{nobs()} counts analyzed people, not repeated observations. \code{confint()} uses
+\code{nobs()} counts analyzed units, not repeated observations. \code{confint()} uses
 normal quantiles and supports named or integer coefficient selection.
 Failed numerical fits remain inspectable with \code{summary()}; coefficient and
 covariance accessors stop rather than presenting failed estimates.

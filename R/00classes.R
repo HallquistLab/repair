@@ -10,7 +10,7 @@
 #'   exported class remains available for type checks and advanced integration;
 #'   its property layout is not the stable reporting interface. Use the public
 #'   generics and table extractors for routine analysis.
-#' @return An S7 object containing measurement fits, the structural fit,
+#' @return An S7 object containing MLM fits, the structural fit,
 #'   assembled analysis data, and the original call. Manually supplying these
 #'   properties does not perform the statistical validation done by [repair()].
 #' @examples
@@ -38,7 +38,7 @@ class_repair_data <- S7::new_class(
     formula = S7::class_any, ids = S7::class_character,
     outcome = S7::class_numeric, predictors = S7::class_any,
     err_x = S7::class_any, err_y = S7::class_numeric, err_xy = S7::class_any,
-    effects = S7::class_data.frame, scores = S7::class_any,
+    effects = S7::class_data.frame, predictions = S7::class_any,
     diagnostics = S7::class_list
   ),
   validator = function(self) {
@@ -177,7 +177,7 @@ class_repair_ranef <- S7::new_class(
   properties = list(
     success = S7::class_logical,
     predictions = S7::class_any,
-    error_covariance = S7::class_any,
+    prediction_error_covariance = S7::class_any,
     method = S7::class_character,
     group = S7::class_any,
     levels = S7::class_any,

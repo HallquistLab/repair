@@ -6,20 +6,20 @@
 \usage{
 repair_reliability(
   object,
-  level = c("summary", "person"),
-  cohort = c("analyzed", "measurement"),
+  detail = c("summary", "unit"),
+  scope = c("structural", "all"),
   type = c("both", "marginal", "residualized")
 )
 }
 \arguments{
 \item{object}{A fitted \code{\link[=repair]{repair()}} result, including a numerical structural failure.}
 
-\item{level}{\code{"summary"} (default) gives equally weighted cohort summaries;
-\code{"person"} gives one row per person, selected effect, and reliability measure.}
+\item{detail}{\code{"summary"} (default) gives equally weighted scope summaries;
+\code{"person"} gives one row per unit, selected effect, and reliability measure.}
 
-\item{cohort}{\code{"analyzed"} (default) uses the structural analysis IDs for every
-model. \code{"measurement"} uses all effective grouping levels separately for each
-referenced model, including people excluded from structural analysis.}
+\item{scope}{\code{"structural"} (default) uses the structural analysis IDs for every
+model. \code{"all"} uses all effective grouping levels separately for each
+referenced model, including units excluded from structural analysis.}
 
 \item{type}{\code{"both"} (default), \code{"marginal"}, or \code{"residualized"}. Residualized
 reliability is available for a selected slope only in a two-coefficient
@@ -28,10 +28,10 @@ with an explicit not-applicable status when this measure is requested alone.}
 }
 \value{
 A data frame of class \code{repair_reliability}, with model, group, selected
-term, structural role, measure, cohort, reliability, and denominator/status
+term, structural role, measure, scope, reliability, and denominator/status
 columns. Person rows also include ID, effective observation count, prior and
 posterior variance, and a reason for undefined results. Summary rows include
-\code{n_people}, \code{n_defined}, \code{n_undefined}, \code{mean_defined}, and distribution summaries.
+\code{n_units}, \code{n_defined}, \code{n_undefined}, \code{mean_defined}, and distribution summaries.
 }
 \description{
 Report plug-in posterior reliability using the manuscript's marginal and
@@ -43,7 +43,7 @@ marginal reliability of coefficient k is \code{1 - V_i[k,k] / G[k,k]}.
 Posterior covariance is computed as
 \verb{G - G Z_i' (R_i + Z_i G Z_i')^-1 Z_i G} using fitted effective observations
 and target-specific residual covariance. For nested lmer models, R_i includes
-every nuisance-group covariance contribution, as in likelihood scoring.
+every nuisance-group covariance contribution, as in likelihood prediction extraction.
 This supports singular G without inverting G.
 
 For a slope residualized on the intercept, the contrast is
@@ -51,8 +51,8 @@ For a slope residualized on the intercept, the contrast is
 \verb{1 - (a' V_i a) / (a' G a)}. This uses the full covariance, not just diagonals.
 It does not residualize on observed structural predictors or other models.
 
-Cohort reliability is the equally weighted mean across people, matching the
-manuscript. If any requested person has undefined reliability, the overall
+Cohort reliability is the equally weighted mean across units, matching the
+manuscript. If any requested unit has undefined reliability, the overall
 \code{reliability} is NA; \code{mean_defined} summarizes only defined values and the
 counts make that denominator explicit. Zero or numerically degenerate contrast
 variance is undefined, not zero reliability. Singular G does not itself make
@@ -60,11 +60,11 @@ all marginal reliabilities undefined. Tiny boundary deviations within 1e-8
 are rounded to the interval from zero to one; larger invalid values receive an explanatory status.
 
 Posterior reliability describes uncertainty reduction under the fitted
-measurement model. It is distinct from the likelihood-only scoring-error
+MLM. It is distinct from the likelihood-only prediction-error
 covariance used by REPAIR. A rank-deficient cluster can have defined posterior
-reliability while failing likelihood-only scoring. Reliability is calculated
-within each measurement model, without borrowing information across models
-or applying the cross-model scoring-error policy. It conditions on fitted
+reliability while failing likelihood-only prediction extraction. Reliability is calculated
+within each MLM, without borrowing information across models
+or applying the cross-model prediction-error policy. It conditions on fitted
 parameters and supplies no confidence interval or automatic adequacy cutoff.
 }
 \examples{
@@ -72,7 +72,7 @@ data(repair_example)
 growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
 fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
 repair_reliability(fit)
-head(repair_reliability(fit, level = "person"))
+head(repair_reliability(fit, detail = "unit"))
 }
 \seealso{
 \code{\link[=repair_diagnostics]{repair_diagnostics()}}, \code{\link[=plot.repair_reliability]{plot.repair_reliability()}}

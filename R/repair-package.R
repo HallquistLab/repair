@@ -4,7 +4,7 @@
 #' estimates relationships involving person- or cluster-specific processes
 #' represented by random intercepts and slopes. Extracted predictions contain
 #' sampling error, and shrunken BLUPs can distort relationships in a subsequent
-#' regression. REPAIR uses likelihood-only scores and their sampling-error
+#' regression. REPAIR uses likelihood-only predictions and their sampling-error
 #' covariances in a modified method-of-moments regression.
 #'
 #' Discover effects with [repair_effects()], inspect matched inputs with
@@ -13,7 +13,7 @@
 #'
 #' The supported workflow uses Gaussian lmer models with one target group and
 #' optional nuisance groups contained within targets, or supported single-group
-#' linear lme models. Standard errors are conditional on fitted measurement quantities.
+#' linear lme models. Standard errors are conditional on fitted MLM quantities.
 #' See `vignette("support-and-troubleshooting", package = "repair")` for the
 #' support matrix, inference boundaries, diagnostics, and saved-fit guidance.
 #' Use [repair_refit()] for verified single-model replay.

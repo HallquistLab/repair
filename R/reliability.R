@@ -1,5 +1,5 @@
 # Posterior covariance uses the marginal observation covariance, avoiding G^-1.
-# This permits singular G and rank-deficient within-person designs.
+# This permits singular G and rank-deficient within-unit designs.
 repair_posterior_covariance <- function(g, z, r) {
   zg <- z %*% g
   ch <- chol(r + tcrossprod(zg, z))
@@ -18,11 +18,11 @@ repair_require_model <- function(object) {
 #' Report plug-in posterior reliability using the manuscript's marginal and
 #' intercept-residualized definitions. These diagnostics do not change the fit.
 #' @param object A fitted [repair()] result, including a numerical structural failure.
-#' @param level `"summary"` (default) gives equally weighted cohort summaries;
-#'   `"person"` gives one row per person, selected effect, and reliability measure.
-#' @param cohort `"analyzed"` (default) uses the structural analysis IDs for every
-#'   model. `"measurement"` uses all effective grouping levels separately for each
-#'   referenced model, including people excluded from structural analysis.
+#' @param detail `"summary"` (default) gives equally weighted scope summaries;
+#'   `"person"` gives one row per unit, selected effect, and reliability measure.
+#' @param scope `"structural"` (default) uses the structural analysis IDs for every
+#'   model. `"all"` uses all effective grouping levels separately for each
+#'   referenced model, including units excluded from structural analysis.
 #' @param type `"both"` (default), `"marginal"`, or `"residualized"`. Residualized
 #'   reliability is available for a selected slope only in a two-coefficient
 #'   random-intercept/random-slope model. Other selected effects are returned
@@ -32,7 +32,7 @@ repair_require_model <- function(object) {
 #'   Posterior covariance is computed as
 #'   `G - G Z_i' (R_i + Z_i G Z_i')^-1 Z_i G` using fitted effective observations
 #'   and target-specific residual covariance. For nested lmer models, R_i includes
-#'   every nuisance-group covariance contribution, as in likelihood scoring.
+#'   every nuisance-group covariance contribution, as in likelihood prediction extraction.
 #'   This supports singular G without inverting G.
 #'
 #'   For a slope residualized on the intercept, the contrast is
@@ -40,8 +40,8 @@ repair_require_model <- function(object) {
 #'   `1 - (a' V_i a) / (a' G a)`. This uses the full covariance, not just diagonals.
 #'   It does not residualize on observed structural predictors or other models.
 #'
-#'   Cohort reliability is the equally weighted mean across people, matching the
-#'   manuscript. If any requested person has undefined reliability, the overall
+#'   Cohort reliability is the equally weighted mean across units, matching the
+#'   manuscript. If any requested unit has undefined reliability, the overall
 #'   `reliability` is NA; `mean_defined` summarizes only defined values and the
 #'   counts make that denominator explicit. Zero or numerically degenerate contrast
 #'   variance is undefined, not zero reliability. Singular G does not itself make
@@ -49,30 +49,30 @@ repair_require_model <- function(object) {
 #'   are rounded to the interval from zero to one; larger invalid values receive an explanatory status.
 #'
 #'   Posterior reliability describes uncertainty reduction under the fitted
-#'   measurement model. It is distinct from the likelihood-only scoring-error
+#'   MLM. It is distinct from the likelihood-only prediction-error
 #'   covariance used by REPAIR. A rank-deficient cluster can have defined posterior
-#'   reliability while failing likelihood-only scoring. Reliability is calculated
-#'   within each measurement model, without borrowing information across models
-#'   or applying the cross-model scoring-error policy. It conditions on fitted
+#'   reliability while failing likelihood-only prediction extraction. Reliability is calculated
+#'   within each MLM, without borrowing information across models
+#'   or applying the cross-model prediction-error policy. It conditions on fitted
 #'   parameters and supplies no confidence interval or automatic adequacy cutoff.
 #' @return A data frame of class `repair_reliability`, with model, group, selected
-#'   term, structural role, measure, cohort, reliability, and denominator/status
+#'   term, structural role, measure, scope, reliability, and denominator/status
 #'   columns. Person rows also include ID, effective observation count, prior and
 #'   posterior variance, and a reason for undefined results. Summary rows include
-#'   `n_people`, `n_defined`, `n_undefined`, `mean_defined`, and distribution summaries.
+#'   `n_units`, `n_defined`, `n_undefined`, `mean_defined`, and distribution summaries.
 #' @seealso [repair_diagnostics()], [plot.repair_reliability()]
 #' @examples
 #' data(repair_example)
 #' growth <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
 #' fit <- repair(re("day") ~ practice, growth, repair_example$people, "person")
 #' repair_reliability(fit)
-#' head(repair_reliability(fit, level = "person"))
+#' head(repair_reliability(fit, detail = "unit"))
 #' @export
-repair_reliability <- function(object, level = c("summary", "person"),
-                               cohort = c("analyzed", "measurement"),
+repair_reliability <- function(object, detail = c("summary", "unit"),
+                               scope = c("structural", "all"),
                                type = c("both", "marginal", "residualized")) {
   repair_require_model(object)
-  level <- match.arg(level); cohort <- match.arg(cohort); type <- match.arg(type)
+  detail <- match.arg(detail); scope <- match.arg(scope); type <- match.arg(type)
   effects <- object@analysis_data@effects
   rows <- list()
   for (name in unique(effects$model)) {
@@ -83,7 +83,7 @@ repair_reliability <- function(object, level = c("summary", "person"),
     terms <- elements@random_terms[[group]]
     k <- length(terms)
     g <- as.matrix(elements@random_covariance[[group]][seq_len(k), seq_len(k), drop = FALSE])
-    ids <- if (cohort == "analyzed") object@analysis_data@ids else elements@group_levels[[group]]
+    ids <- if (scope == "structural") object@analysis_data@ids else elements@group_levels[[group]]
     posterior <- lapply(ids, function(id) {
       obs <- elements@group_rows[[group]][[id]]
       tryCatch(list(v = repair_posterior_covariance(g,
@@ -127,26 +127,26 @@ repair_reliability <- function(object, level = c("summary", "person"),
             }
           }
           rows[[length(rows) + 1L]] <- data.frame(model = name, group = group, term = term,
-            role = selected$role[j], measure = measure, cohort = cohort, id = ids[i],
+            role = selected$role[j], measure = measure, scope = scope, id = ids[i],
             n_observations = posterior[[i]]$n, prior_variance = prior,
             posterior_variance = post, reliability = value, status = s, reason = why)
         }
       }
     }
   }
-  person <- do.call(rbind, rows)
-  result <- if (level == "person") person else repair_summarize_reliability(person)
-  structure(result, class = c("repair_reliability", "data.frame"), level = level, cohort = cohort)
+  units <- do.call(rbind, rows)
+  result <- if (detail == "unit") units else repair_summarize_reliability(units)
+  structure(result, class = c("repair_reliability", "data.frame"), detail = detail, scope = scope)
 }
 
-repair_summarize_reliability <- function(person) {
-  keys <- unique(person[c("model", "group", "term", "role", "measure", "cohort")])
+repair_summarize_reliability <- function(units) {
+  keys <- unique(units[c("model", "group", "term", "role", "measure", "scope")])
   do.call(rbind, lapply(seq_len(nrow(keys)), function(i) {
     key <- keys[i, , drop = FALSE]
-    selected <- Reduce(`&`, lapply(names(key), function(n) person[[n]] == key[[n]]))
-    p <- person[selected, , drop = FALSE]; ok <- is.finite(p$reliability)
+    selected <- Reduce(`&`, lapply(names(key), function(n) units[[n]] == key[[n]]))
+    p <- units[selected, , drop = FALSE]; ok <- is.finite(p$reliability)
     values <- p$reliability[ok]
-    data.frame(key, n_people = nrow(p), n_defined = sum(ok), n_undefined = sum(!ok),
+    data.frame(key, n_units = nrow(p), n_defined = sum(ok), n_undefined = sum(!ok),
       reliability = if (all(ok)) mean(values) else NA_real_,
       mean_defined = if (any(ok)) mean(values) else NA_real_,
       min = if (any(ok)) min(values) else NA_real_,
@@ -157,8 +157,8 @@ repair_summarize_reliability <- function(person) {
   }))
 }
 
-#' Plot person-specific posterior reliability
-#' @param x A person-level result from [repair_reliability()].
+#' Plot unit-specific posterior reliability
+#' @param x A unit-level result from [repair_reliability()].
 #' @param type `"distribution"` for histograms or `"observations"` for reliability
 #'   against effective observation count. Each model/effect/measure gets a panel.
 #' @param ... Graphical parameters passed to `hist()` or `plot()`.
@@ -169,7 +169,7 @@ repair_summarize_reliability <- function(person) {
 #' @exportS3Method graphics::plot
 plot.repair_reliability <- function(x, type = c("distribution", "observations"), ...) {
   type <- match.arg(type)
-  if (!identical(attr(x, "level"), "person")) repair_error("Plot person-level reliability: use `repair_reliability(fit, level = \"person\")`.")
+  if (!identical(attr(x, "detail"), "unit")) repair_error("Plot unit-level reliability: use `repair_reliability(fit, detail = \"unit\")`.")
   if (!nrow(x)) repair_error("No reliability rows to plot.")
   keys <- unique(x[c("model", "term", "measure")])
   old <- graphics::par(no.readonly = TRUE)
@@ -183,7 +183,7 @@ plot.repair_reliability <- function(x, type = c("distribution", "observations"),
     p <- x[x$model == keys$model[i] & x$term == keys$term[i] & x$measure == keys$measure[i], ]
     keep <- is.finite(p$reliability)
     title <- paste0(keys$model[i], ": ", keys$term[i], "\n", keys$measure[i])
-    subtitle <- paste(sum(keep), "defined /", nrow(p), "people;", attr(x, "cohort"), "cohort")
+    subtitle <- paste(sum(keep), "defined /", nrow(p), "units;", attr(x, "scope"), "scope")
     if (!any(keep)) {
       graphics::plot.new(); graphics::title(main = title, sub = subtitle)
       graphics::text(.5, .5, "Reliability undefined; inspect status/reason")

@@ -1,5 +1,6 @@
 
 # repair
+
 # repair <a href="https://hallquistlab.github.io/repair/"><img src="man/figures/logo.png" align="right" height="139" alt="repair website" /></a></a>
 
 [![R-CMD-check](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml)
@@ -15,8 +16,8 @@ Do people who improve more rapidly during treatment have better
 subsequent outcomes? Does a person’s response to stress predict their
 symptoms? Are rates of change measured in two different tasks related?
 These questions concern individual differences in processes, such as
-change over time or within-person associations, and how those
-differences relate to other variables.
+change over time or within-unit associations, and how those differences
+relate to other variables.
 
 Multilevel (mixed) models describe these differences using random
 intercepts and slopes. A common next step is to extract the predicted
@@ -32,20 +33,20 @@ scientific goal is to learn about relationships among the underlying
 processes, rather than just relationships among their predicted values.
 
 REPAIR carries information about measurement precision into that second
-regression. It first obtains **likelihood-only scores** and their
-person-specific sampling-error covariances from fitted Gaussian mixed
-models. These scores remove shrinkage but remain noisy estimates. It
-then uses a **modified method-of-moments (M-MOM)** regression to account
-for their sampling error when random coefficients serve as predictors,
-the outcome, or both.
+regression. It first obtains **likelihood-only predictions** and their
+unit-specific sampling-error covariances from fitted Gaussian mixed
+models. These predictions remove shrinkage but remain noisy estimates.
+It then uses a **modified method-of-moments (M-MOM)** regression to
+account for their sampling error when random coefficients serve as
+predictors, the outcome, or both.
 
 This workflow is useful when you want to connect processes measured
-across different tasks, settings, or timescales while keeping the
-measurement models separate from the regression of interest. The same
-principle applies to other clusters, such as students nested within
-classrooms. The motivation follows Vig and Hallquist’s *Regression among
-random effects* manuscript; run `citation("repair")` for the method and
-software references.
+across different tasks, settings, or timescales while keeping the MLMs
+separate from the regression of interest. The same principle applies to
+other clusters, such as students nested within classrooms. The
+motivation follows Vig and Hallquist’s *Regression among random effects*
+manuscript; run `citation("repair")` for the method and software
+references.
 
 ## Supported analyses
 
@@ -54,9 +55,8 @@ workflow is an additive regression with an intercept, using random
 coefficients from **fitted `lme4::lmer()` or linear `nlme::lme()`
 models**. Select one target grouping factor per model; lmer models can
 also have nuisance groups contained within each target person. Random
-coefficients may be
-predictors, the outcome, or both. Numeric, logical, and factor observed
-predictors are supported. See the [workflow
+coefficients may be predictors, the outcome, or both. Numeric, logical,
+and factor observed predictors are supported. See the [workflow
 guide](vignettes/repair-workflow.Rmd) for matching, omission,
 interpretation, and current limits.
 
@@ -80,10 +80,10 @@ for your R installation.
 
 ## Fit, inspect, and summarize
 
-Fit the measurement model using its usual `lmer()` or `lme()` interface.
-Its weights, offsets, contrasts, estimation choices, and effective
-observations remain under your control. Supply structural variables in a
-separate data frame containing one row per analysis ID.
+Fit the MLM using its usual `lmer()` or `lme()` interface. Its weights,
+offsets, contrasts, estimation choices, and effective observations
+remain under your control. Supply structural variables in a separate
+data frame containing one row per analysis ID.
 
 ``` r
 library(repair)
@@ -104,17 +104,17 @@ fit <- repair(
 summary(fit)
 #> REPAIR structural regression
 #> re("day", model = "growth") ~ practice
-#> People: 60 analyzed / 60 requested; 0 excluded
-#> Measurement model: growth (lme4; group person; 0 IDs outside cohort)
-#> Cross-model scoring errors: not applicable (one model)
+#> Units: 60 analyzed / 60 requested; 0 excluded
+#> MLM: growth (lme4; group person; 0 IDs outside scope)
+#> Cross-model prediction errors: not applicable (one model)
 #> Scores: likelihood-only random deviations
 #>   model  group term    role
 #>  growth person  day outcome
 #>
-#> Posterior reliability (analyzed cohort; equal person weights):
-#>   model term    role      measure reliability n_people n_defined
-#>  growth  day outcome     marginal       0.943       60        60
-#>  growth  day outcome residualized       0.897       60        60
+#> Posterior reliability (structural scope; equal unit weights):
+#>   model term    role      measure reliability n_units n_defined
+#>  growth  day outcome     marginal       0.943      60        60
+#>  growth  day outcome residualized       0.897      60        60
 #>
 #>             estimate      se  zstat      pval  ci_low ci_high
 #> (Intercept)  -0.7895 0.11473 -6.882 5.905e-12 -1.0144 -0.5647
@@ -123,8 +123,8 @@ summary(fit)
 #> Regularization (preliminary / final): minimum / minimum
 #> Error-moment subtraction multipliers: 0.95 / 0.95
 #> Largest analysis-weight fraction: 0.0179 ; weight-equivalent count: 59.8
-#> Moment conditioning and individual weights: repair_diagnostics(fit).
-#> Conditional on fitted measurement-model parameters; model-based normal SEs and intervals.
+#> Moment conditioning and unit weights: repair_diagnostics(fit).
+#> Conditional on fitted MLM parameters; model-based normal SEs and intervals.
 ```
 
 The marker `re("day", model = "growth")` selects the random slope for
@@ -156,22 +156,22 @@ analysis
 #> Excluded: 0 of 60 requested IDs
 #>   model  group term                       label    role
 #>  growth person  day re("day", model = "growth") outcome
-head(repair_scores(analysis))
-#>     id  model  group term                       label    role      score
+head(repair_predictions(analysis))
+#>     id  model  group term                       label    role prediction
 #> 1 P001 growth person  day re("day", model = "growth") outcome  0.4451909
 #> 2 P002 growth person  day re("day", model = "growth") outcome  0.4105728
 #> 3 P003 growth person  day re("day", model = "growth") outcome -0.4013259
 #> 4 P004 growth person  day re("day", model = "growth") outcome  0.6289102
 #> 5 P005 growth person  day re("day", model = "growth") outcome  0.6052267
 #> 6 P006 growth person  day re("day", model = "growth") outcome -1.2120879
-#>   std.error error.variance   cohort analyzed status reason
-#> 1 0.1401763     0.01964941 analyzed     TRUE     ok
-#> 2 0.1401763     0.01964941 analyzed     TRUE     ok
-#> 3 0.2268540     0.05146273 analyzed     TRUE     ok
-#> 4 0.1618617     0.02619921 analyzed     TRUE     ok
-#> 5 0.1401763     0.01964941 analyzed     TRUE     ok
-#> 6 0.2268540     0.05146273 analyzed     TRUE     ok
-head(repair_score_covariance(analysis))
+#>   std.error prediction.error.variance      scope analyzed status reason
+#> 1 0.1401763                0.01964941 structural     TRUE     ok
+#> 2 0.1401763                0.01964941 structural     TRUE     ok
+#> 3 0.2268540                0.05146273 structural     TRUE     ok
+#> 4 0.1618617                0.02619921 structural     TRUE     ok
+#> 5 0.1401763                0.01964941 structural     TRUE     ok
+#> 6 0.2268540                0.05146273 structural     TRUE     ok
+head(repair_prediction_covariance(analysis))
 #>     id model1 group1 term1                      label1   role1 model2 group2
 #> 1 P001 growth person   day re("day", model = "growth") outcome growth person
 #> 2 P002 growth person   day re("day", model = "growth") outcome growth person
@@ -189,10 +189,10 @@ head(repair_score_covariance(analysis))
 ```
 
 IDs determine alignment; data-frame row order never determines a match.
-The person-level data frame defines the requested cohort.
-Missing/nonfinite values, unmatched IDs, and failed scores stop by
-default. Use `na_action = "omit"` to explicitly exclude them with a
-warning and an ID/reason audit trail.
+The unit-level data frame defines the requested scope. Missing/nonfinite
+values, unmatched IDs, and failed predictions stop by default. Use
+`na_action = "omit"` to explicitly exclude them with a warning and an
+ID/reason audit trail.
 
 Use public table extractors for reporting, joins, and export:
 
@@ -204,68 +204,66 @@ repair_coefficients(fit, conf.level = .95)
 #>   conf.level
 #> 1       0.95
 #> 2       0.95
-head(repair_scores(fit))
-#>     id  model  group term                       label    role      score
+head(repair_predictions(fit))
+#>     id  model  group term                       label    role prediction
 #> 1 P001 growth person  day re("day", model = "growth") outcome  0.4451909
 #> 2 P002 growth person  day re("day", model = "growth") outcome  0.4105728
 #> 3 P003 growth person  day re("day", model = "growth") outcome -0.4013259
 #> 4 P004 growth person  day re("day", model = "growth") outcome  0.6289102
 #> 5 P005 growth person  day re("day", model = "growth") outcome  0.6052267
 #> 6 P006 growth person  day re("day", model = "growth") outcome -1.2120879
-#>   std.error error.variance   cohort analyzed status reason
-#> 1 0.1401763     0.01964941 analyzed     TRUE     ok
-#> 2 0.1401763     0.01964941 analyzed     TRUE     ok
-#> 3 0.2268540     0.05146273 analyzed     TRUE     ok
-#> 4 0.1618617     0.02619921 analyzed     TRUE     ok
-#> 5 0.1401763     0.01964941 analyzed     TRUE     ok
-#> 6 0.2268540     0.05146273 analyzed     TRUE     ok
+#>   std.error prediction.error.variance      scope analyzed status reason
+#> 1 0.1401763                0.01964941 structural     TRUE     ok
+#> 2 0.1401763                0.01964941 structural     TRUE     ok
+#> 3 0.2268540                0.05146273 structural     TRUE     ok
+#> 4 0.1618617                0.02619921 structural     TRUE     ok
+#> 5 0.1401763                0.01964941 structural     TRUE     ok
+#> 6 0.2268540                0.05146273 structural     TRUE     ok
 repair_diagnostics(fit, table = "excluded")
 #> [1] id     reason
 #> <0 rows> (or 0-length row.names)
 ```
 
-`repair_score_covariance(fit)` preserves the assembled within- and
-cross-model scoring-error covariance. It differs from `vcov(fit)`, which
-describes structural coefficient uncertainty. These ordinary data frames
-have explicit ID columns and the same schema for one or multiple
-measurement models. See the [extractor
-guide](vignettes/extracting-results.Rmd) for column contracts, cohort
-selection, covariance reconstruction, and safe joins. Internal S7
-properties remain available for advanced inspection; custom estimation
-uses `fit_mmom()`.
+`repair_prediction_covariance(fit)` preserves the assembled within- and
+cross-model prediction-error covariance. It differs from `vcov(fit)`,
+which describes structural coefficient uncertainty. These ordinary data
+frames have explicit ID columns and the same schema for one or multiple
+MLMs. See the [extractor guide](vignettes/extracting-results.Rmd) for
+column contracts, scope selection, covariance reconstruction, and safe
+joins. Internal S7 properties remain available for advanced inspection;
+custom estimation uses `fit_mmom()`.
 
 ## Include occasions nested within people
 
-A measurement model such as
-`y ~ x + (1 + x | person) + (1 | person:day)` can supply person
-coefficients to REPAIR. Use `group = "person"` in `re()` when names such
-as `(Intercept)` occur in both groups. Scoring and posterior reliability
-include all nested nuisance covariance. Every fitted nuisance level must
-belong to one target person; shared school, item, or calendar-day
-effects remain rejected, even after structural omissions. See the
-executable [nested-nuisance guide](vignettes/nested-nuisance.Rmd) for
-discovery, fitting, multiple nuisance groups, and independent numerical
-references.
+A MLM such as `y ~ x + (1 + x | person) + (1 | person:day)` can supply
+person coefficients to REPAIR. Use `group = "person"` in `re()` when
+names such as `(Intercept)` occur in both groups. Prediction extraction
+and posterior reliability include all nested nuisance covariance. Every
+fitted nuisance level must belong to one target person; shared school,
+item, or calendar-day effects remain rejected, even after structural
+omissions. See the executable [nested-nuisance
+guide](vignettes/nested-nuisance.Rmd) for discovery, fitting, multiple
+nuisance groups, and independent numerical references.
 
 ## Verify and refit an analysis
 
 `repair_refit()` first replays an analysis using explicit reference
-measurement and person-level data. Separate `new_measurement_data` and
-`new_data` arguments supply changes only after the reference checks
-pass. One supported lmer or lme measurement model can be rebuilt,
-retaining the structural equation and controls:
+measurement and unit-level data. Separate `new_mlm_data` and `new_data`
+arguments supply changes only after the reference checks pass. One
+supported lmer or lme MLM can be rebuilt, retaining the structural
+equation and controls:
 
 ``` r
-replayed <- repair_refit(fit, measurement_data = list(growth = repair_example$repeated),
+replayed <- repair_refit(fit, mlm_data = list(growth = repair_example$repeated),
   data = people)
 summary(replayed)$refit$checks
-#>       stage n_measurement n_requested n_analyzed           controls verified
-#> 1 reference           586          60         60 recorded_optimizer     TRUE
+#>       stage n_rows n_requested n_analyzed           controls verified
+#> 1 reference    586          60         60 recorded_optimizer     TRUE
 ```
 
 The [refitting guide](vignettes/refitting.Rmd) covers native fitting
 recipes, callbacks, factor-schema checks, revised cohorts, and
-deterministic whole-person draws with fresh target/nuisance IDs. This
+deterministic whole-unit draws with fresh target/nuisance IDs. This
 provides replay machinery for a future bootstrap; current SEs remain
 conditional model-based SEs.
 
@@ -282,30 +280,30 @@ fit <- repair(
 )
 ```
 
-This explicitly assumes zero **cross-model scoring-error covariance**;
-latent processes can still be correlated. Separate model fits alone do
-not justify the assumption. If the scoring errors are correlated, supply
-per-person covariance blocks instead. Omitting the policy is an error
-for multiple referenced models. Within-model covariance is always
-retained. See the executable [multiple-model
+This explicitly assumes zero **cross-model prediction-error
+covariance**; latent processes can still be correlated. Separate model
+fits alone do not justify the assumption. If the prediction errors are
+correlated, supply per-person covariance blocks instead. Omitting the
+policy is an error for multiple referenced models. Within-model
+covariance is always retained. See the executable [multiple-model
 guide](vignettes/multiple-models.Rmd) for both policies, ID matching,
 and a dual-process reproduction against the paper’s simulation code.
 
 ## Reliability and diagnostics
 
 Assess the selected random coefficients using the manuscript’s posterior
-reliability definitions. The default uses analyzed people with equal
+reliability definitions. The default uses analyzed units with equal
 weights:
 
 ``` r
-repair_reliability(fit)[, c("term", "role", "measure", "reliability", "n_people", "n_defined")]
-#>   term    role      measure reliability n_people n_defined
-#> 1  day outcome     marginal   0.9433813       60        60
-#> 2  day outcome residualized   0.8967932       60        60
+repair_reliability(fit)[, c("term", "role", "measure", "reliability", "n_units", "n_defined")]
+#>   term    role      measure reliability n_units n_defined
+#> 1  day outcome     marginal   0.9433813      60        60
+#> 2  day outcome residualized   0.8967932      60        60
 diagnostics <- repair_diagnostics(fit)
 diagnostics$weight_summary
-#>   n_people max_fraction weight_equivalent_n
-#> 1       60   0.01788085            59.82168
+#>   n_units max_fraction weight_equivalent_n
+#> 1      60   0.01788085            59.82168
 diagnostics$conditioning
 #>          step dimension min_eigenvalue max_eigenvalue condition_number
 #> 1 preliminary         2       17.52838       1747.322         99.68531
@@ -313,17 +311,17 @@ diagnostics$conditioning
 ```
 
 ``` r
-person_reliability <- repair_reliability(fit, level = "person")
+person_reliability <- repair_reliability(fit, detail = "unit")
 plot(person_reliability)
 plot(person_reliability, type = "observations")
 ```
 
-Posterior reliability is distinct from the likelihood-only scoring-error
-covariance used by the estimator. Undefined values retain reasons and
-explicit denominators; diagnostics do not impose automatic adequacy
-cutoffs. See the [reliability and diagnostics
+Posterior reliability is distinct from the likelihood-only
+prediction-error covariance used by the estimator. Undefined values
+retain reasons and explicit denominators; diagnostics do not impose
+automatic adequacy cutoffs. See the [reliability and diagnostics
 guide](vignettes/reliability-diagnostics.Rmd) for marginal versus
-intercept-residualized reliability, cohort selection, and interpretation
+intercept-residualized reliability, scope selection, and interpretation
 of numerical and weight diagnostics.
 
 ## Support, troubleshooting, and citation
@@ -332,7 +330,7 @@ The [support guide](vignettes/support-and-troubleshooting.Rmd)
 consolidates the supported model/inference matrix, a complete
 `repair_example` analysis, common diagnostic messages, and saved-fit
 guidance. The teaching data include both repeated observations and
-meaningful synthetic person-level variables.
+meaningful synthetic unit-level variables.
 
 Run `citation("repair")` for separate software and method references.
 Zachary A. Vig and Michael N. Hallquist are authors and co-maintainers;
@@ -341,11 +339,11 @@ Zach is the primary R package maintainer contact. The package version is
 
 ## Interpretation and limits
 
-- Standard errors are model-based and conditional on estimated
-  measurement-model quantities. They use the modified final predictor
-  moment, consistent with the manuscript and primary simulation
-  estimator. Measurement-model parameter uncertainty is not propagated;
-  intervals and tests use a normal reference.
+- Standard errors are model-based and conditional on estimated MLM
+  quantities. They use the modified final predictor moment, consistent
+  with the manuscript and primary simulation estimator.
+  Measurement-model parameter uncertainty is not propagated; intervals
+  and tests use a normal reference.
 - `regularization = "minimum"` is the default. `"none"` disables
   stabilization but **still corrects for measurement error**. Custom
   settings require `alpha`.
@@ -361,9 +359,9 @@ Zach is the primary R package maintainer contact. The package version is
   reproduction guide](vignettes/nlme-workflow.Rmd).
 - lmer nuisance groups must be contained within the selected target
   group on all effective fitted rows. Shared nuisance effects remain
-  rejected because their cross-person score errors cannot enter this
-  structural estimator. Lower-level scoring of shared structures remains
-  experimental. Multilevel nlme fits are rejected.
+  rejected because their cross-person prediction errors cannot enter
+  this structural estimator. Lower-level prediction extraction of shared
+  structures remains experimental. Multilevel nlme fits are rejected.
 
 ## Development and reproducibility
 

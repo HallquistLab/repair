@@ -10,16 +10,16 @@ remains a later increment.
 | Finding | Decision | Evidence |
 |---|---|---|
 | An original fitted call can refer to missing or mutable external objects | Require explicit reference inputs; reconstruct native data-only recipes or accept an explicit fitting callback | Missing original bindings and fresh-process replay tests; nonliteral recipe rejection |
-| Replacement data alone cannot establish identity with the original estimator | Separate reference `measurement_data`/`data` from `new_measurement_data`/`new_data`; verify the former before fitting the latter | Deliberately changed reference observations, structural values, and cohort order fail |
+| Replacement data alone cannot establish identity with the original estimator | Separate reference `mlm_data`/`data` from `new_mlm_data`/`new_data`; verify the former before fitting the latter | Deliberately changed reference observations, structural values, and scope order fail |
 | Original subsets and NA padding are not a safe replay recipe | Select original effective measurement rows by fitted row names; require all replacement rows to be used | Excluded/shuffled observation cases; callback row-drop and replacement NA rejection |
 | Contrasts can change with global options or lost factor levels | Record structural factor matrices at assembly, freeze native fixed-factor coding, and require stable coefficient schemas | Changed contrast defaults, sum coding, absent/new levels, and random-effect identity tests |
 | Covariance/control choices are not all retained as complete backend metadata | Compare recorded recipes and observable configuration; distinguish retained optimizer checks from explicitly declared callback recipes | Optimizer/ML/REML/covariance/contrasts checks; symbolic control and callback tests |
-| Duplicate source people can merge target or nuisance levels | Add deterministic whole-person copying with fresh target/nuisance IDs and an explicit source map | Person:day, nuisance slopes, multiple nuisance groups, and standalone visit-ID tests; manual-refit agreement |
+| Duplicate source people can merge target or nuisance levels | Add deterministic whole-unit copying with fresh target/nuisance IDs and an explicit source map | Person:day, nuisance slopes, multiple nuisance groups, and standalone visit-ID tests; manual-refit agreement |
 | Successful refits need provenance and actionable failure handling | Return an ordinary REPAIR object with a summary audit; stop on unusable stages and retain informational warnings/messages | Failure-code, callback error, singular-but-usable, warning and persistence tests |
 
 ## Concrete interface
 
-`repair_refit(object, measurement_data, data, new_measurement_data = NULL,
+`repair_refit(object, mlm_data, data, new_mlm_data = NULL,
 new_data = NULL, id = NULL, refitter = NULL, draw = NULL, tolerance = 1e-6)`.
 
 The two unprefixed data arguments always describe the original reference fit.
@@ -30,7 +30,7 @@ This avoids storing another full reference dataset in the structural object or
 inferring a historical raw dataset from a call. Native refitted measurement
 models retain their explicit fitting data in a private formula environment.
 
-Initial scope is one referenced measurement model: Gaussian lmer (including
+Initial scope is one referenced MLM: Gaussian lmer (including
 contained nuisance groups) or supported single-group linear lme. Multiple-model
 joint sampling and supplied cross-model covariance replay remain deferred.
 Regularization policy/custom alpha, structural formula, and actual computation
@@ -39,7 +39,7 @@ backend come from the fitted result, not from evaluation of the original call.
 ## Identity, settings, and data contract
 
 Reference validation compares effective rows and grouping identities; fixed/random
-designs; responses, weights and offsets; covariance; measurement-cohort scores;
+designs; responses, weights and offsets; covariance; MLM-scope predictions;
 structural inputs and exclusions; coefficients and their covariance. Numeric
 agreement uses a documented positive tolerance. Cohort/effect identity and
 specification/schema checks are exact. Reference fitting precedes replacements.

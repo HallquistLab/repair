@@ -32,6 +32,6 @@ fixture <- list(provenance = list(source_commit = system2("git", c("-C", shQuote
   source_path = path, source_md5 = unname(tools::md5sum(file.path(root, path))),
   source_fixture_md5 = unname(tools::md5sum("inst/extdata/nlme-workflow-reference.rds")),
   R_version = R.version.string, nlme_version = as.character(packageVersion("nlme")),
-  definition = "Manuscript empirical marginal and intercept-residualized posterior reliability; equal person weights"), cases = cases)
+  definition = "Manuscript empirical marginal and intercept-residualized posterior reliability; equal unit weights"), cases = cases)
 saveRDS(fixture, "inst/extdata/reliability-reference.rds", version = 2)
 cat("Saved", length(cases), "independent reliability references.\n")

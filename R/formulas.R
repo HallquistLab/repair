@@ -1,4 +1,4 @@
-#' Refer to a measurement-model random coefficient
+#' Refer to a MLM random coefficient
 #'
 #' Use only inside the structural formula passed to [repair()] or
 #' [repair_data()]. Each reference selects one scalar coefficient, not a
