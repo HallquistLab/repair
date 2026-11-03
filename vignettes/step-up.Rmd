@@ -1,0 +1,99 @@
+---
+title: "Adaptive step-up regularization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Adaptive step-up regularization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+REPAIR's modified method of moments subtracts sampling-error moments from the
+observed moments. Weak predictor information can make the corrected system
+poorly conditioned. The manuscript's step-up variant (M-MOMS) selects two
+regularization constants sequentially, using numerical conditioning criteria.
+The default remains fixed minimum regularization.
+
+```{r fit}
+data(repair_example)
+model <- lme4::lmer(score ~ day + (day | person), repair_example$repeated)
+fit <- repair(practice ~ re("day"), model, repair_example$people, "person",
+  regularization = "step_up")
+repair_coefficients(fit)
+repair_diagnostics(fit, table = "regularization")
+```
+
+The preliminary search starts at `q + 2`, with q predictor columns excluding
+the intercept. It chooses a preliminary alpha, recomputes residual variance and
+inverse case-variance weights, and then chooses the final alpha. The two alphas
+can differ. `regularization = "none"` still subtracts measurement error; it only
+disables regularization.
+
+Each search uses nine equally spaced candidates up to `N` or `N * lambda - 1`,
+according to the determinant-root branch. The upper bound stops the search from
+turning subtraction into addition when a nonnegative multiplier is attainable
+above the minimum. A missing root or upper bound below the minimum leaves only
+the minimum-alpha candidate. After finding a passing candidate, at most 12
+bisections refine the interval from the preceding failing candidate, stopping at
+an alpha gap of 0.005. The selected value is the smallest passing value evaluated.
+
+A candidate must produce a usable complete fit. The corrected predictor block,
+excluding the intercept, must have minimum eigenvalue at least
+`sqrt(.Machine$double.eps)`, corrected-minimum/observed-maximum eigenvalue ratio
+at least .05, and condition number at most 100,000. Preliminary moments are
+divided by N; final weighted moments are sums, matching the research algorithm.
+These criteria depend on predictor units and are not a coverage guarantee.
+
+```{r search}
+search <- summary(fit)$diagnostics$step_up
+search$preliminary$selected
+search$final$selected
+head(search$preliminary$candidates)
+```
+
+If no candidate passes, the algorithm returns the minimum-alpha fit and marks
+`fallback = TRUE`, `met_criteria = FALSE`. If that fit also fails numerically,
+the returned result remains a numerical failure. A converged fallback must not
+be described as satisfying the conditioning criteria. `summary(fit)` reports
+this distinction.
+
+Search settings can be supplied explicitly. Choose them as part of the analysis
+specification; changing a threshold changes the estimator.
+
+```{r controls}
+stricter <- repair(practice ~ re("day"), model, repair_example$people, "person",
+  regularization = "step_up",
+  step_up_control = list(min_relative_eigenvalue = .999))
+repair_diagnostics(stricter, table = "regularization")
+lapply(summary(stricter)$diagnostics$step_up,
+  function(x) x[c("alpha", "met_criteria", "fallback", "reason")])
+```
+
+See `?fit_mmom` for all settings. Advanced callers can give separate preliminary
+and final policies using `list(correction = "step_up", step_up = list(...))` in
+the corresponding `fit_mmom()` controls. The conditional covariance calculation
+uses the selected moments and weights. It does not account for first-stage
+parameter estimation or establish post-selection coverage.
+
+`repair_refit()` and `repair_bootstrap()` preserve the requested search policy
+and reselect both alphas on every new dataset. They do not freeze the original
+selected constants. Bootstrap diagnostics retain each attempt's selected alphas
+and conditioning/fallback indicators, along with the existing failure audit.
+
+```{r bootstrap}
+# Three attempts demonstrate the interface, not adequate tail precision.
+boot <- repair_bootstrap(fit, repair_example$repeated, repair_example$people,
+  B = 3, seed = 41)
+repair_bootstrap_diagnostics(boot)[, c("replicate", "usable",
+  "preliminary_alpha", "final_alpha", "preliminary_criteria_met",
+  "final_criteria_met", "preliminary_fallback", "final_fallback")]
+```
+
+The bootstrap is experimental and retains its strict default failure policy.
+See `vignette("person-bootstrap")` for its scope, percentile intervals, and
+success-conditional inference. No influence-function, leverage, or delete-one
+inference methods are included in this release.

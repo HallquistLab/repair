@@ -3,8 +3,11 @@
 #' @param data_list Either a list of per-person lists with fields `outcome`,
 #'   `predictors`, `err_x`, `err_y`, and `err_xy`, or a matrix-style list with
 #'   those same named fields. See Details for their dimensions.
-#' @param preliminary_moment_control Correction controls with `correction` and `alpha`.
-#' @param final_moment_control Correction controls with `correction` and `alpha`.
+#' @param preliminary_moment_control Correction controls with `correction`
+#'   (`"minimum"`, `"none"`, `"custom"`, or `"step_up"`), `alpha` for custom
+#'   correction, and optional `step_up` search settings described below.
+#' @param final_moment_control Controls for the final moment; same format as
+#'   `preliminary_moment_control`. Each stage can use a different policy.
 #' @param backend Computation backend: `"auto"`, `"r"`, or `"rcpp"`.
 #' @details Inputs must be likelihood-only predictions with additive sampling-error
 #'   covariances, not BLUPs with posterior covariances. Observed error-free
@@ -20,7 +23,40 @@
 #'   covariance and conditions on fitted first-stage quantities. Measurement-
 #'   model parameter uncertainty is not propagated. Reported intervals are
 #'   normal-based 95% intervals. `correction = "none"` disables regularization,
-#'   not measurement-error subtraction. `step_up` is not implemented.
+#'   not measurement-error subtraction.
+#'
+#'   **Step-up (M-MOMS):** select the preliminary alpha, then recompute weights
+#'   and select the final alpha. Each search starts at `q + 2`, where q is the
+#'   number of predictor columns excluding the intercept. The upper bound is N
+#'   when the determinant root exceeds `1 + 1/N`, and `N * lambda - 1`
+#'   otherwise. A missing root or an upper bound below the minimum leaves only
+#'   the minimum candidate. The default grid has nine equally spaced candidates.
+#'   Refine between the first passing candidate and its preceding failing
+#'   candidate by at most 12 bisections, stopping at an alpha gap of 0.005.
+#'   This finds the smallest passing alpha evaluated, not a global optimum.
+#'
+#'   A candidate must produce a usable complete fit. Its corrected predictor
+#'   block (excluding the structural intercept) must have minimum eigenvalue at
+#'   least `sqrt(.Machine$double.eps)`, ratio of minimum corrected eigenvalue to
+#'   maximum observed eigenvalue at least 0.05, and condition number at most 1e5.
+#'   Following the research algorithm, preliminary moments are divided by N;
+#'   final weighted moments are unnormalized sums. These are numerical search
+#'   criteria, not guarantees of inferential validity or invariance to predictor
+#'   scaling. If no candidate passes, retain the minimum-alpha fit, including
+#'   its numerical failure if any, and explicitly mark the fallback. A returned
+#'   fit need not meet the conditioning criteria.
+#'
+#'   The optional `step_up` list in either control accepts `coarse_grid_size`,
+#'   `search_tolerance`, `max_refinements`, `min_eigenvalue`,
+#'   `min_relative_eigenvalue`, `max_condition_number`, and `candidate_alphas`.
+#'   Defaults are the values above and NULL for `candidate_alphas`. An explicit
+#'   candidate vector is sorted, deduplicated, clipped to the search bounds, and
+#'   augmented with the minimum; bisection still applies unless disabled.
+#'   [repair()] accepts these settings in `step_up_control`. Requested policies
+#'   remain in the saved controls; selected constants are `alpha_prelim` and
+#'   `alpha_final` in diagnostics. `diagnostics$step_up` records each stage's
+#'   bounds, selected candidate, all candidate checks, settings, and fallback.
+#'   Refitting and bootstrapping rerun selection on each new dataset.
 #' @return An S7 `class_mmom_fit` object. Numerical failures use the same class.
 #' @examples
 #' data(repair_example)
@@ -47,12 +83,29 @@ fit_mmom <- function(data_list,
   # Normalize inputs once so all three steps share the same matrices.
   backend <- mmom_backend(backend)
   inputs <- mmom_prepare(data_list, preliminary_moment_control, final_moment_control, backend)
+  if (any(vapply(list(inputs$preliminary_moment_control, inputs$final_moment_control),
+                 function(x) x$correction == "step_up", logical(1)))) {
+    return(mmom_step_up(inputs))
+  }
+  mmom_fit_prepared(inputs)
+}
+
+# Canonical fixed-alpha estimator, also used to evaluate every step-up candidate.
+mmom_fit_prepared <- function(inputs) {
+  context <- list(nobs = inputs$nobs, npredictors = inputs$npredictors,
+    backend = inputs$backend, preliminary_moment_control = inputs$preliminary_moment_control,
+    final_moment_control = inputs$final_moment_control)
+  failed <- function(fit) {
+    fit@diagnostics <- utils::modifyList(context, fit@diagnostics)
+    fit
+  }
 
   # Stop at the first numerical failure and return it as an mmom_fit.
   step1 <- mmom_step1(inputs)
   if (mmom_is_failure(step1)) {
-    return(step1)
+    return(failed(step1))
   }
+  context$lambda_prelim <- step1@lambda_prelim
   step2 <- mmom_step2(
     inputs,
     coef0 = step1@coef0,
@@ -60,15 +113,16 @@ fit_mmom <- function(data_list,
     lambda_prelim = step1@lambda_prelim
   )
   if (mmom_is_failure(step2)) {
-    return(step2)
+    return(failed(step2))
   }
   step3 <- mmom_step3(inputs, case_weight = step2@case_weight)
   if (mmom_is_failure(step3)) {
-    return(step3)
+    return(failed(step3))
   }
+  context$lambda_final <- step3@lambda_final
   step_se <- mmom_step_se(inputs, step1, step2, step3)
   if (mmom_is_failure(step_se)) {
-    return(step_se)
+    return(failed(step_se))
   }
   # return mmom fit object
   construct_mmom_fit(inputs, step1, step2, step3, step_se)
@@ -111,7 +165,7 @@ mmom_step1 <- function(inputs) {
     fail <- mmom_failure(
       "prelim_coef_solve",
       coef0_solve@message,
-      diagnostics = coef0_solve@diagnostics
+      diagnostics = c(coef0_solve@diagnostics, list(lambda_prelim = lambda_prelim))
     )
     return(fail)
   }
@@ -249,7 +303,7 @@ mmom_step3 <- function(inputs, case_weight) {
     fail <- mmom_failure(
       "final_coef_solve",
       coef_solve@message,
-      diagnostics = coef_solve@diagnostics
+      diagnostics = c(coef_solve@diagnostics, list(lambda_final = lambda_final))
     )
     return(fail)
   }

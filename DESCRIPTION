@@ -13,7 +13,9 @@ Description: Implements Random-Effect Prediction Adjustment for Inference in
     Uses a modified method-of-moments correction for sampling error in these
     estimated random coefficients. Extracts likelihood-only predictions and sampling-error
     covariances, aligns them with unit-level data by identifier, and reports conditional
-    model-based inference and analysis diagnostics.
+    model-based inference and analysis diagnostics. Supports adaptive step-up
+    regularization and whole-unit bootstrap sampling with percentile intervals
+    for complete refitted analyses.
 URL: https://hallquistlab.github.io/repair/, https://github.com/HallquistLab/repair
 BugReports: https://github.com/HallquistLab/repair/issues
 License: MIT + file LICENSE
@@ -22,6 +24,7 @@ LazyData: true
 Depends:
     R (>= 4.3.0)
 Imports:
+    parallel,
     geigen,
     Rcpp,
     S7,

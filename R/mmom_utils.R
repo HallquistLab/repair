@@ -17,16 +17,14 @@ mmom_control <- function(control, npredictors, label) {
     repair_error("{label} must be a list.")
   }
   correction <- control$correction %||% "minimum"
-  if (!correction %in% c("none", "minimum", "step_up", "custom")) {
+  if (!is.character(correction) || length(correction) != 1L || is.na(correction) ||
+      !correction %in% c("none", "minimum", "step_up", "custom")) {
     repair_error("{label}$correction must be one of `none`, `minimum`, `step_up`, or `custom`.")
   }
 
-  if (identical(correction, "step_up")) {
-    repair_error("`step_up` regularization is not implemented; choose minimum, none, or custom.")
-  }
   if (identical(correction, "none")) {
     alpha <- NULL
-  } else if (identical(correction, "minimum")) {
+  } else if (correction %in% c("minimum", "step_up")) {
     alpha <- npredictors + 2L
   } else if (identical(correction, "custom")) {
     alpha <- control$alpha %||% (npredictors + 2L)
@@ -38,10 +36,12 @@ mmom_control <- function(control, npredictors, label) {
       repair_error("{label}$alpha must be greater than or equal to `npredictors + 2`.")
     }
   }
-  list(
+  result <- list(
     correction = correction,
     alpha = alpha
   )
+  if (correction == "step_up") result$step_up <- mmom_step_up_control(control$step_up %||% list())
+  result
 }
 
 mmom_prepare <- function(

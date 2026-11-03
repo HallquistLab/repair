@@ -73,3 +73,15 @@ Source commit/hashes, generator hash, R/lme4 versions, and settings are embedded
 in `provenance`. Refit comparisons use tolerance 1e-5 for optimizer/platform
 variation; frozen expectations are never generated from repair. These are
 per-dataset implementation references, not a coverage simulation.
+
+## Step-up reference
+
+`step-up-reference.rds` reuses the six independent structural-input cases above
+and adds stricter two-stage selection and impossible-guard fallback cases.
+`dev/generate_step_up_fixtures.R` obtains expectations from the separate research
+`fit_fuller_dual_alpha_stepdown()` implementation with internal scaling disabled,
+and confirms its selected-alpha results against its fixed-alpha core. The RDS
+records the research source hash, revision, settings and R version. Neither the
+generator nor normal tests obtain expected values from repair. These are
+per-dataset algorithm comparisons, not coverage guarantees. Existing fixtures
+are not changed.

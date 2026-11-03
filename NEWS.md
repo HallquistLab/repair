@@ -1,18 +1,45 @@
-# repair 0.5.0
+# repair 0.5.0 (2026-11-03)
+
+* Implement sequential step-up (M-MOMS) alpha selection, candidate checks, and
+  explicit minimum-alpha fallbacks. Preserve selected constants and search histories;
+  rerun selection during refitting and whole-unit bootstrap sampling.
+* Integrate bootstrap and robust refitting into the release branch alongside the
+  current likelihood-only prediction API. Exclude experimental influence-function,
+  leverage, and delete-one inference from this release.
 
 * Introduce Random-Effect Prediction Adjustment for Inference in Regression
   (REPAIR) by its full name in the landing page, workflow guide, and method
   reference documentation. Explain the applied motivation, shrinkage, and
   sampling error before introducing the technical workflow.
 
-# repair 0.0.0.9000
+
+* Add opt-in `repair_lmer_refitter()` for deterministic, likelihood-checked
+  nloptwrap-initialized BOBYQA fitting and bounded retries. Retain every attempt,
+  convergence warning, likelihood and singularity diagnostic. Persist the recipe
+  for automatic original/reference/replacement replay and saved-result auditing.
+  Do not disable convergence checks or change the bootstrap failed-attempt gate.
+* Document a paired six-profile simulation screen: default ordinary-bootstrap
+  interval availability improved from 1--53% to 95--100%, with condition-dependent
+  coverage and persistent small/short-panel bias. Include compact evidence and
+  an independent interval-summary verifier under `dev/`; broader validation
+  remains outstanding.
+
+
+* Add experimental `repair_bootstrap()` for serial whole-person sampling through
+  `repair_refit()`, with separate saved RNG streams, complete attempt accounting,
+  fresh target/nuisance IDs, and unchanged original conditional inference.
+* Add a separate bootstrap result class, coefficient and attempt/draw table
+  extractors, empirical covariance and percentile intervals. Withhold inference
+  after failed attempts unless explicitly requested conditional on success.
+* Add independent manual-loop, RNG, failure, nested/nlme and saved-result tests,
+  structured refit failure stages, an executable user guide, and a design audit.
+  Scientific coverage validation and multiple-model sampling remain future work.
 
 * Add `repair_refit()` for identity-verified replay of one supported lmer/lme
   MLM and its structural analysis, with explicit reference and
   replacement inputs, factor/row/schema checks, and recorded fitting recipes.
 * Add deterministic whole-unit draws with fresh target/nuisance identities,
-  audited warnings and controls, and explicit scope restrictions. This is
-  refitting groundwork; bootstrap inference is not yet implemented.
+  audited warnings and controls, and explicit scope restrictions. The same machinery powers complete-analysis bootstrap inference.
 * Record structural factor coding for reproducible replay and add a refit audit
   to summaries. Add tests against manual refits and fresh-process replay, and an
   executable refitting guide.
@@ -38,7 +65,7 @@
   and index all installed reference datasets. Credit Michael N. Hallquist as an
   author and co-maintainer, with Zachary A. Vig remaining primary maintainer.
 * Document the release-preparation workflow and outstanding publication checks;
-  the package remains a development version.
+  the initial release includes the supported workflow and teaching data.
 
 * Add a pkgdown documentation website with a guided home page, task-oriented
   reference, all five executable guides, search, and release notes. Build and
@@ -107,7 +134,7 @@
   including lme4 `||` syntax, with level/term/covariance alignment.
 * Remove the shadowed legacy prediction extraction function and correct the documented S7
   prediction extraction interface. Reject non-Gaussian prediction extraction and incomplete fixed-effect
-  matches; reject the unimplemented step-up regularization option immediately.
+  matches; validate regularization controls explicitly.
 * Document estimator assumptions, supported formula grammar, experimental
   backend boundaries, and design decisions in an executable README, vignette,
   audit, and implementation plan. Preserve REPAIR numerical reference fixtures.

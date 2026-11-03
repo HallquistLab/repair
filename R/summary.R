@@ -114,7 +114,7 @@ print.summary_repair <- function(x, ...) {
       " (", x$refit$adapter, ")\n", sep = "")
     if (length(unlist(x$refit$warnings))) cat("Refit warnings recorded: inspect summary(fit)$refit$warnings.\n")
   }
-  cat("Scores: likelihood-only random deviations\n")
+  cat("Predictions: likelihood-only random deviations\n")
   print(x$effects[, c("model", "group", "term", "role"), drop = FALSE], row.names = FALSE)
   cat("\nPosterior reliability (structural scope; equal unit weights):\n")
   print(as.data.frame(x$reliability)[, c("model", "term", "role", "measure", "reliability",
@@ -132,6 +132,14 @@ print.summary_repair <- function(x, ...) {
     cat("Error-moment subtraction multipliers:",
       format(x$regularization$correction_prelim, digits = 4), "/",
       format(x$regularization$correction_final, digits = 4), "\n")
+    if (length(x$diagnostics$step_up)) {
+      for (stage in names(x$diagnostics$step_up)) {
+        search <- x$diagnostics$step_up[[stage]]
+        cat("Step-up ", stage, ": alpha = ", format(search$alpha, digits = 5),
+          if (search$met_criteria) "; conditioning criteria met" else
+            "; fallback to minimum alpha, conditioning criteria not met", "\n", sep = "")
+      }
+    }
     weight <- x$structural_diagnostics$weight_summary
     cat("Largest analysis-weight fraction:", format(weight$max_fraction, digits = 3),
         "; weight-equivalent count:", format(weight$weight_equivalent_n, digits = 3), "\n")

@@ -10,7 +10,7 @@ and [checkout action](https://github.com/actions/checkout).
 
 | Runner | R version | Purpose |
 |---|---|---|
-| Ubuntu | release | Main integration check and executable README |
+| Ubuntu | release | Full CRAN check including PDF manual, incoming checks, and executable README |
 | macOS | release | Apple compiler, BLAS, and platform behavior |
 | Windows | release | Rtools/C++20 and Windows package behavior |
 | Ubuntu | oldrel-1 | Previous R release compatibility |
@@ -42,12 +42,14 @@ rcmdcheck::rcmdcheck(
 
 Examples, installed-package tests, and all vignettes are enabled. Existing tests
 explicitly exercise both R and Rcpp estimator backends; the workflow does not
-substitute an R-only test run or regenerate frozen expectations. PDF manual
-creation is the only intentionally omitted documentation build. Errors and
+substitute an R-only test run or regenerate frozen expectations. Ubuntu/release
+installs TinyTeX and manual fonts, omits `--no-manual` from both build and check,
+and explicitly enables `_R_CHECK_CRAN_INCOMING_=true`. Other matrix members
+retain the faster `--no-manual` check above. Errors and
 warnings fail the job. Notes remain visible but are not automatic failures;
-this is a development package, and CRAN submission checks can emit contextual
-notes. The r-lib check action disables CRAN incoming checks by default; this is
-package CI, not a substitute for a CRAN submission.
+new-package incoming checks can emit contextual notes that require review.
+The final submission must still be made from the exact reviewed tarball, with
+its dated check results recorded in `cran-comments.md`.
 
 The Ubuntu/release job additionally executes README.Rmd against the package
 installed in `check/repair.Rcheck`, rather than a development namespace or an

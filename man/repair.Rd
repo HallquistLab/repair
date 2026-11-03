@@ -10,10 +10,11 @@ repair(
   data,
   id,
   na_action = c("fail", "omit"),
-  regularization = c("minimum", "none", "custom"),
+  regularization = c("minimum", "none", "step_up", "custom"),
   alpha = NULL,
   backend = c("auto", "r", "rcpp"),
-  cross_model_error = NULL
+  cross_model_error = NULL,
+  step_up_control = list()
 )
 }
 \arguments{
@@ -37,7 +38,7 @@ nonfinite observed values, unmatched IDs, and failed prediction blocks; it warns
 and records every excluded ID and reason.}
 
 \item{regularization}{Moment regularization: \code{"minimum"} (default), \code{"none"},
-or \code{"custom"}. \code{"none"} still subtracts measurement error; it disables only
+\code{"step_up"}, or \code{"custom"}. \code{"none"} still subtracts measurement error; it disables only
 stabilization. The same setting is used for preliminary and final moments.}
 
 \item{alpha}{Custom regularization constant, at least the number of structural
@@ -57,6 +58,10 @@ must be present; extra IDs are allowed. Order does not matter. Values are
 covariances of likelihood-only prediction errors, not latent coefficients or
 raw observations. The assembled covariance must be positive semidefinite.
 Missing/invalid supplied blocks are errors even with \code{na_action = "omit"}.}
+
+\item{step_up_control}{Named list of search settings for \code{regularization = "step_up"}.
+See \code{\link[=fit_mmom]{fit_mmom()}} for defaults, guards, and fallback behavior. The same search
+settings are used in both stages; the selected alphas can differ.}
 }
 \value{
 An S7 \code{class_repair_mod} with \verb{@mlm_fit}, \verb{@struc_fit}, and

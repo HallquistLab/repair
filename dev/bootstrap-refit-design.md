@@ -1,6 +1,10 @@
 # Person-level bootstrap and refitting: future-version design draft
 
 Status: proposal for discussion, not an implemented or approved public API.
+Historical draft: the single-model refitter and experimental serial person
+bootstrap are now implemented. See [the refit audit](refitting-validation.md) and
+[bootstrap audit](person-bootstrap-validation.md) for the actual API and remaining
+validation. Broader multiple-model/inference proposals below remain future work.
 Recorded: 2026-10-29. Baseline: main at `150e56f` (package checks merged).
 This document preserves the design discussed after the stable extractors and
 website work. It does not commit the first release to bootstrap inference.

@@ -210,7 +210,10 @@ rank-deficient structural design fails with a message before fitting M-MOM.
 moment steps. `"none"` sets the error-moment subtraction multiplier to one: it
 disables stabilization but still corrects measurement error. `"custom"` requires
 `alpha >= q + 2`. The summary reports the resulting subtraction multipliers;
-these need not equal the input regularization constant.
+these need not equal the input regularization constant. `"step_up"` selects
+preliminary and final alphas sequentially and records every candidate and any
+fallback to minimum alpha; see `vignette("step-up")`. Refits and bootstrap samples
+repeat the selection rather than freezing selected alphas.
 
 To choose different controls at the two moment steps, or to supply validated
 sampling-error inputs from another source, use `fit_mmom()`:
@@ -239,7 +242,8 @@ the row-wise M-MOM contract. Multilevel nlme fits remain unsupported.
 `repair_refit()` verifies the original calculation before rebuilding one supported
 MLM on replacement data. It retains structural controls and reports
 a replay audit; see `vignette("refitting")` for inputs, coding and deterministic
-draw restrictions. This interface does not yet provide bootstrap inference.
+draw restrictions. For experimental person-level sampling and percentile intervals,
+use `repair_bootstrap()` separately; see `vignette("person-bootstrap")`.
 
 ## Deliberate boundaries
 

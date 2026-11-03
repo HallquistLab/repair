@@ -1,6 +1,6 @@
 #' Synthetic practice and learning data for a REPAIR analysis
 #'
-#' A completely simulated example of 60 people with 8--12 daily learning predictions
+#' A completely simulated example of 60 people with 8--12 daily learning scores
 #' and a unit-level measure of prior practice. These are teaching data, not
 #' measurements from real participants or a dataset used in the REPAIR paper.
 #' @format A list with three elements:

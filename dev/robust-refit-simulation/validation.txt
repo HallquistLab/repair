@@ -1,0 +1,13 @@
+PASS: 600 main and 18 sensitivity measurement datasets; no driver/validation errors.
+PASS: source, reference, installed-library and snapshot digests unchanged across phases.
+PASS: 100 independent outer streams, deliberately shared across six profiles and paired effects.
+PASS: complete-person clones and unequal-profile stratification preserve all requested rows/counts.
+PASS: all original cached coefficient/SE checks; max absolute error:
+4.52970994047e-14
+PASS: 24 public ordinary-bootstrap runs / 2376 attempts; same draws and complete-vector decisions.
+PASS: public percentile intervals/SDs and default failure gate match independent calculations.
+PASS: robust saved-model recipe replays in a fresh R process without the original fitting closure.
+PASS: 20 stratified public-refit checks; maximum scaled coefficient error 1.28e-15 / SE error 1.28e-15.
+PASS: B=499 prefixes match B=1999 data, draws, decisions, coefficients, SEs and frozen estimates.
+PASS: primary availability/coverage/rejection independently recalculated from raw fits.
+Main distinct native measurement attempts: 349300; failures: 27 (0.008%).

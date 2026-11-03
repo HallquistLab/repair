@@ -1,0 +1,110 @@
+"profile","rep","mode","draw","cause","best_objective","selected_objective","reason"
+"low_balanced",18,"ordinary",311,"no converged BOBYQA candidate",3166.04110083981,3166.04110083981,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting."
+"low_balanced",63,"ordinary",341,"likelihood gate",3102.51372608925,3102.51372608925,"boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_negative",33,"ordinary",244,"likelihood gate",3127.53043366748,3127.53043366748,"Model failed to converge with max|grad| = 0.00290197 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.; Model failed to converge with max|grad| = 0.00290197 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"
+"low_negative",43,"ordinary",235,"likelihood gate",3053.60139238554,3053.60139238554,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | boundary (singular) fit: see help('isSingular')"
+"low_negative",52,"ordinary",20,"likelihood gate",3161.28534453193,3161.28534453193,"boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_negative",52,"ordinary",489,"likelihood gate",3146.80941813532,3146.80941813532,"boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_negative",76,"ordinary",8,"no converged BOBYQA candidate",3103.77838831094,3103.77838831094,"Model failed to converge with max|grad| = 0.00253916 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.; Model failed to converge with max|grad| = 0.00253916 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_negative",97,"ordinary",386,"likelihood gate",3060.75956743318,3060.75956743318,"boundary (singular) fit: see help('isSingular') | unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"small_short",46,"ordinary",341,"likelihood gate",414.170333521134,414.170333521134,"Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"
+"small_short",62,"ordinary",32,"no converged BOBYQA candidate",427.897139492607,427.897139492607,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"small_short",62,"ordinary",107,"likelihood gate",420.684346372981,420.684346372981,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"
+"small_short",91,"ordinary",463,"likelihood gate",423.50430039692,423.50430039692,"boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_larger",12,"ordinary",245,"no converged BOBYQA candidate",6155.32749855519,6155.32749855519,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_larger",36,"ordinary",182,"likelihood gate",6092.65430922216,6092.65430922216,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_larger",82,"ordinary",459,"likelihood gate",6098.58902799989,6098.58902799989,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_larger",87,"ordinary",141,"likelihood gate",6225.21851018247,6225.21851018247,"Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"
+"low_unequal",9,"ordinary",86,"likelihood gate",2873.19943210027,2873.19943210027,"boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_unequal",9,"stratified",290,"likelihood gate",2951.76006845831,2951.76006845831,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | boundary (singular) fit: see help('isSingular')"
+"low_unequal",34,"stratified",219,"no converged BOBYQA candidate",3057.3589533033,3057.3589533033,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_unequal",36,"stratified",181,"likelihood gate",3038.62355218767,3038.62355218767,"boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_unequal",55,"ordinary",93,"likelihood gate",3350.24767028276,3350.24767028276,"Model failed to converge with max|grad| = 0.0040039 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.; Model failed to converge with max|grad| = 0.0040039 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"
+"low_unequal",55,"stratified",488,"likelihood gate",3001.96725840962,3001.96725840962,"Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"
+"low_unequal",64,"stratified",84,"no converged BOBYQA candidate",2988.53060726436,2988.53060726436,"boundary (singular) fit: see help('isSingular') | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting."
+"low_unequal",66,"stratified",481,"likelihood gate",3013.06173719767,3013.06173719767,"Model failed to converge with max|grad| = 0.0117597 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.; Model failed to converge with max|grad| = 0.0117597 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"
+"low_unequal",82,"stratified",358,"no converged BOBYQA candidate",2995.02570785749,2995.02570785749,"Model failed to converge with max|grad| = 0.00736085 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.; Model failed to converge with max|grad| = 0.00736085 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_unequal",87,"stratified",358,"no converged BOBYQA candidate",2997.41424211054,2997.41424211054,"unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting.; unable to evaluate scaled gradient; Model failed to converge: degenerate  Hessian with 1 negative eigenvalues
+  See ?lme4::convergence and ?lme4::troubleshooting. | Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?"
+"low_unequal",87,"stratified",488,"likelihood gate",2971.60082595179,2971.60082595179,"Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables?; Model is nearly unidentifiable: large eigenvalue ratio
+ - Rescale variables? | boundary (singular) fit: see help('isSingular')"

@@ -157,7 +157,7 @@ test_that("summaries and accessors expose inference and failure without silent N
   expect_error(coef(failed), "did not converge")
   expect_error(vcov(failed), "did not converge")
   expect_error(confint(failed), "did not converge")
-  expect_error(mmom_control(list(correction = "step_up"), 1, "control"), "not implemented")
+  expect_equal(mmom_control(list(correction = "step_up"), 1, "control")$alpha, 3)
 })
 
 test_that("Gaussian and independent-group boundaries are enforced", {

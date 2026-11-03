@@ -207,6 +207,7 @@ repair_refit_configuration <- function(model) {
   if (inherits(model, "lmerMod")) {
     out$optimizer <- model@optinfo$optimizer
     out$optimizer_control <- model@optinfo$control
+    out$refitting_recipe <- attr(model, "repair_lmer_recipe")
   } else {
     cs <- model$modelStruct$corStruct; vs <- model$modelStruct$varStruct
     out$random_class <- lapply(model$modelStruct$reStruct, class)
@@ -226,32 +227,53 @@ repair_refit_configuration <- function(model) {
   out
 }
 
+repair_refit_at <- function(stage, expr, warnings = character(), messages = character()) {
+  tryCatch(expr, error = function(e) {
+    e$repair_stage <- stage
+    e$repair_warnings <- c(warnings, e$repair_warnings)
+    e$repair_messages <- c(messages, e$repair_messages)
+    stop(e)
+  })
+}
+
 repair_refit_stage <- function(fitter, data, original, stage, tolerance) {
-  before <- repair_refit_configuration(original)
-  declared_control <- repair_refit_control_declaration(original)
   warnings <- messages <- character()
-  model <- tryCatch(withCallingHandlers(fitter(data),
-    warning = function(w) { warnings <<- c(warnings, conditionMessage(w)); invokeRestart("muffleWarning") },
-    message = function(m) { messages <<- c(messages, conditionMessage(m)); invokeRestart("muffleMessage") }),
-    error = function(e) repair_error("{stage} measurement refit failed: {conditionMessage(e)}"))
-  if (!(inherits(model, "lmerMod") || (inherits(model, "lme") && !inherits(model, "nlme"))))
-    repair_error("{stage} refitter must return a supported Gaussian lmer or linear lme model.")
-  if (!identical(repair_refit_rows(model), rownames(data)))
-    repair_error("{stage} refit changed effective observations or their order. Supply exactly the intended effective rows; implicit subset/omission is not allowed.")
-  if (inherits(model, "lmerMod") &&
-      (any(unlist(model@optinfo$conv$opt) != 0) || any(unlist(model@optinfo$conv$lme4$code) != 0)))
-    repair_error("{stage} MLM optimizer did not converge.")
-  if (any(grepl("convergence error|iteration limit|maximum number of iterations|nlminb problem", warnings, ignore.case = TRUE)))
-    repair_error("{stage} MLM optimizer did not converge: {paste(warnings, collapse = '; ')}")
-  after <- repair_refit_configuration(model)
-  if (!is.null(declared_control) && !isTRUE(all.equal(declared_control,
-      repair_refit_control_declaration(model), tolerance = 0)))
-    repair_error("{stage} refit changed the recorded optimizer control recipe.")
-  if (!isTRUE(all.equal(before, after, tolerance = 0)))
-    repair_error("{stage} refit changed the MLM specification, optimizer controls, or coefficient schema.")
-  list(model = model, warnings = warnings, messages = messages,
-    controls = if (!is.null(declared_control)) "recorded_recipe" else if (inherits(original, "lmerMod"))
-      "recorded_optimizer" else "callback_declared")
+  optimization <- NULL
+  tryCatch({
+    before <- repair_refit_configuration(original)
+    declared_control <- repair_refit_control_declaration(original)
+    model <- tryCatch(withCallingHandlers(fitter(data),
+      warning = function(w) { warnings <<- c(warnings, conditionMessage(w)); invokeRestart("muffleWarning") },
+      message = function(m) { messages <<- c(messages, conditionMessage(m)); invokeRestart("muffleMessage") }),
+      error = function(e) {
+        optimization <<- e$repair_optimization
+        repair_error("{stage} measurement refit failed: {conditionMessage(e)}")
+      })
+    if (!(inherits(model, "lmerMod") || (inherits(model, "lme") && !inherits(model, "nlme"))))
+      repair_error("{stage} refitter must return a supported Gaussian lmer or linear lme model.")
+    if (!identical(repair_refit_rows(model), rownames(data)))
+      repair_error("{stage} refit changed effective observations or their order. Supply exactly the intended effective rows; implicit subset/omission is not allowed.")
+    optimization <- attr(model, "repair_lmer_optimization")
+    if (!repair_measurement_converged(model, warnings) ||
+        (!is.null(optimization) && !isTRUE(optimization$usable)))
+      repair_error("{stage} measurement optimizer did not converge.")
+    if (any(grepl("convergence error|iteration limit|maximum number of iterations|nlminb problem", warnings, ignore.case = TRUE)))
+      repair_error("{stage} measurement optimizer did not converge: {paste(warnings, collapse = '; ')}")
+    after <- repair_refit_configuration(model)
+    if (!is.null(declared_control) && !isTRUE(all.equal(declared_control,
+        repair_refit_control_declaration(model), tolerance = 0)))
+      repair_error("{stage} refit changed the recorded optimizer control recipe.")
+    if (!isTRUE(all.equal(before, after, tolerance = 0)))
+      repair_error("{stage} refit changed the measurement specification, optimizer controls, or coefficient schema.")
+    list(model = model, warnings = warnings, messages = messages, optimization = optimization,
+      controls = if (!is.null(declared_control)) "recorded_recipe" else if (inherits(original, "lmerMod"))
+        "recorded_optimizer" else "callback_declared")
+  }, error = function(e) {
+    e$repair_warnings <- warnings
+    e$repair_messages <- messages
+    if (exists("optimization", inherits = FALSE)) e$repair_optimization <- optimization
+    stop(e)
+  })
 }
 
 repair_refit_identity <- function(original, replay, tolerance) {
@@ -409,52 +431,66 @@ repair_refit <- function(object, mlm_data, data, new_mlm_data = NULL,
   positions <- match(rows, rownames(supplied))
   if (anyNA(positions)) repair_error("Reference MLM data lack fitted observation row names; restore the original row identities.")
   reference <- supplied[positions, , drop = FALSE]
-  spec <- if (is.null(refitter)) a@diagnostics$refit$spec %||% repair_refit_spec(original, reference) else NULL
-  fitter <- if (is.null(refitter)) function(d) repair_refit_native(spec, d) else refitter
+  robust_recipe <- attr(original, "repair_lmer_recipe")
+  spec <- repair_refit_at("reference_recipe", if (is.null(refitter) && is.null(robust_recipe))
+    a@diagnostics$refit$spec %||% repair_refit_spec(original, reference) else NULL)
+  fitter <- if (!is.null(refitter)) refitter else if (!is.null(robust_recipe))
+    function(d) repair_lmer_fit(d, robust_recipe) else function(d) repair_refit_native(spec, d)
   controls <- object@struc_fit@diagnostics
   preliminary <- controls$preliminary_moment_control; final <- controls$final_moment_control
   if (!identical(preliminary, final)) repair_error("Replay requires matching preliminary/final regularization controls from `repair()`.")
   factors <- a@diagnostics$structural_factors %||% list()
   structural_warnings <- list()
   structural <- function(model, people, action, stage) {
-    models <- stats::setNames(list(model), name)
-    assembled <- withCallingHandlers(repair_assemble(a@formula, models, people, id, na_action = action,
-      structural_contrasts = lapply(factors, `[[`, "contrasts")), warning = function(w) {
-        structural_warnings[[stage]] <<- c(structural_warnings[[stage]], conditionMessage(w))
-        invokeRestart("muffleWarning")
-      })
-    fitted <- run_struc(assembled, preliminary$correction, preliminary$alpha, controls$backend)
-    if (!isTRUE(fitted@converged)) repair_error("Structural refit failed: {fitted@message}")
-    class_repair_mod(mlm_fit = models, struc_fit = fitted, analysis_data = assembled, call = match.call())
+    tryCatch({
+      models <- stats::setNames(list(model), name)
+      assembled <- withCallingHandlers(repair_assemble(a@formula, models, people, id, na_action = action,
+        structural_contrasts = lapply(factors, `[[`, "contrasts")), warning = function(w) {
+          structural_warnings[[stage]] <<- c(structural_warnings[[stage]], conditionMessage(w))
+          invokeRestart("muffleWarning")
+        })
+      fitted <- run_struc(assembled, preliminary$correction,
+        if (preliminary$correction == "custom") preliminary$alpha else NULL,
+        controls$backend, preliminary$step_up %||% list())
+      if (!isTRUE(fitted@converged)) repair_error("Structural refit failed: {fitted@message}")
+      class_repair_mod(mlm_fit = models, struc_fit = fitted, analysis_data = assembled, call = match.call())
+    }, error = function(e) {
+      e$repair_warnings <- structural_warnings[[stage]]
+      stop(e)
+    })
   }
-  baseline <- repair_refit_stage(fitter, reference, original, "Reference", tolerance)
-  replay <- structural(baseline$model, data, a@diagnostics$na_action, "reference")
-  repair_refit_identity(object, replay, tolerance)
+  baseline <- repair_refit_at("reference_measurement", repair_refit_stage(fitter, reference, original, "Reference", tolerance))
+  replay <- repair_refit_at("reference_structural", structural(baseline$model, data, a@diagnostics$na_action, "reference"),
+    baseline$warnings, baseline$messages)
+  repair_refit_at("reference_validation", repair_refit_identity(object, replay, tolerance))
   if (!length(factors)) factors <- replay@analysis_data@diagnostics$structural_factors
   replacement <- !is.null(draw) || !is.null(new_mlm_data) || !is.null(new_data)
   mapping <- NULL; result <- replay
   checks <- data.frame(stage = "reference", n_rows = nrow(reference),
     n_requested = a@diagnostics$n_requested, n_analyzed = length(a@ids), controls = baseline$controls, verified = TRUE)
   warning_log <- list(reference = c(baseline$warnings, structural_warnings$reference)); message_log <- list(reference = baseline$messages)
+  optimization_log <- list(reference = baseline$optimization)
   if (replacement) {
     d <- if (is.null(new_mlm_data)) reference else repair_refit_frame(new_mlm_data, name)
     people <- if (is.null(new_data)) data else new_data
     if (!is.null(draw)) {
-      copied <- repair_refit_draw(object, reference, data, id, draw)
+      copied <- repair_refit_at("draw", repair_refit_draw(object, reference, data, id, draw))
       d <- copied$mlm; people <- copied$units; mapping <- copied$mapping
     }
-    people <- repair_refit_factor_data(people, factors)
-    changed <- repair_refit_stage(fitter, d, original, "Replacement", tolerance)
-    result <- structural(changed$model, people, "fail", "replacement")
+    people <- repair_refit_at("replacement_data", repair_refit_factor_data(people, factors))
+    changed <- repair_refit_at("replacement_measurement", repair_refit_stage(fitter, d, original, "Replacement", tolerance))
+    result <- repair_refit_at("replacement_structural", structural(changed$model, people, "fail", "replacement"),
+      changed$warnings, changed$messages)
     if (!identical(names(stats::coef(object)), names(stats::coef(result))) ||
         !identical(a@effects, result@analysis_data@effects))
       repair_error("Replacement refit changed the structural coefficient/effect schema.")
     checks <- rbind(checks, data.frame(stage = "replacement", n_rows = nrow(d),
       n_requested = nrow(people), n_analyzed = stats::nobs(result), controls = changed$controls, verified = TRUE))
     warning_log$replacement <- c(changed$warnings, structural_warnings$replacement); message_log$replacement <- changed$messages
+    optimization_log$replacement <- changed$optimization
   }
   audit <- list(mode = if (replacement) "replacement" else "identity", adapter = if (is.null(refitter)) "native" else "callback",
-    tolerance = tolerance, checks = checks, warnings = warning_log, messages = message_log,
+    tolerance = tolerance, checks = checks, warnings = warning_log, messages = message_log, optimization = optimization_log,
     draw = mapping, reference_excluded_rows = setdiff(rownames(supplied), rows),
     versions = list(R = R.version.string, repair = as.character(utils::packageVersion("repair")),
       mlm = as.character(utils::packageVersion(if (inherits(original, "lmerMod")) "lme4" else "nlme"))),

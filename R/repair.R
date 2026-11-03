@@ -9,11 +9,14 @@
 #' models are fitted beforehand so that their fitting choices remain explicit.
 #' @inheritParams repair_data
 #' @param regularization Moment regularization: `"minimum"` (default), `"none"`,
-#'   or `"custom"`. `"none"` still subtracts measurement error; it disables only
+#'   `"step_up"`, or `"custom"`. `"none"` still subtracts measurement error; it disables only
 #'   stabilization. The same setting is used for preliminary and final moments.
 #' @param alpha Custom regularization constant, at least the number of structural
 #'   predictor columns plus two. Required for `regularization = "custom"`.
 #' @param backend M-MOM computation backend: `"auto"`, `"r"`, or `"rcpp"`.
+#' @param step_up_control Named list of search settings for `regularization = "step_up"`.
+#'   See [fit_mmom()] for defaults, guards, and fallback behavior. The same search
+#'   settings are used in both stages; the selected alphas can differ.
 #' @details The supported structural grammar is additive with an intercept.
 #'   Effects may come from multiple Gaussian lmer or linear lme models, each with
 #'   one target grouping factor. Gaussian lmer models may have nuisance groups
@@ -47,16 +50,17 @@
 #' confint(fit)
 #' @export
 repair <- function(formula, models, data, id, na_action = c("fail", "omit"),
-                   regularization = c("minimum", "none", "custom"),
+                   regularization = c("minimum", "none", "step_up", "custom"),
                    alpha = NULL, backend = c("auto", "r", "rcpp"),
-                   cross_model_error = NULL) {
+                   cross_model_error = NULL, step_up_control = list()) {
   regularization <- match.arg(regularization)
   if (regularization == "custom" && is.null(alpha)) repair_error("Supply `alpha` for custom regularization.")
   if (regularization != "custom" && !is.null(alpha)) repair_error("`alpha` is used only with custom regularization.")
+  if (regularization != "step_up" && length(step_up_control)) repair_error("`step_up_control` is used only with step-up regularization.")
   models <- normalize_repair_models(models)
   analysis_data <- repair_data(formula, models, data, id, na_action,
                               cross_model_error = cross_model_error)
-  struc_fit <- run_struc(analysis_data, regularization, alpha, backend)
+  struc_fit <- run_struc(analysis_data, regularization, alpha, backend, step_up_control)
   if (!isTRUE(struc_fit@converged)) repair_warn("Structural fit failed: {struc_fit@message}")
   class_repair_mod(mlm_fit = models[analysis_data@diagnostics$model],
     struc_fit = struc_fit, analysis_data = analysis_data, call = match.call())

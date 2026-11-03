@@ -1,7 +1,5 @@
 
-# repair
-
-# repair <a href="https://hallquistlab.github.io/repair/"><img src="man/figures/logo.png" align="right" height="139" alt="repair website" /></a></a>
+# repair <a href="https://hallquistlab.github.io/repair/"><img src="man/figures/logo.png" align="right" height="139" alt="repair website" /></a>
 
 [![R-CMD-check](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml/badge.svg?branch=main)](https://github.com/HallquistLab/repair/actions/workflows/R-CMD-check.yaml)
 
@@ -107,7 +105,7 @@ summary(fit)
 #> Units: 60 analyzed / 60 requested; 0 excluded
 #> MLM: growth (lme4; group person; 0 IDs outside scope)
 #> Cross-model prediction errors: not applicable (one model)
-#> Scores: likelihood-only random deviations
+#> Predictions: likelihood-only random deviations
 #>   model  group term    role
 #>  growth person  day outcome
 #>
@@ -263,9 +261,69 @@ summary(replayed)$refit$checks
 
 The [refitting guide](vignettes/refitting.Rmd) covers native fitting
 recipes, callbacks, factor-schema checks, revised cohorts, and
-deterministic whole-unit draws with fresh target/nuisance IDs. This
-provides replay machinery for a future bootstrap; current SEs remain
-conditional model-based SEs.
+deterministic whole-person draws with fresh target/nuisance IDs. This
+provides deterministic replay for the experimental bootstrap below;
+ordinary refit SEs remain conditional model-based SEs.
+
+## Adaptive step-up regularization
+
+`regularization = "step_up"` enables the manuscript’s M-MOMS search. It
+selects the preliminary and final alphas separately and records the
+search, conditioning criteria, and any fallback to minimum alpha. Refits
+and bootstrap samples rerun the selection. See the [step-up
+guide](vignettes/step-up.Rmd).
+
+``` r
+adaptive <- repair(practice ~ re("day"), growth, people, "person",
+  regularization = "step_up")
+repair_diagnostics(adaptive, table = "regularization")
+#>          step  policy alpha subtraction_multiplier regularized
+#> 1 preliminary step_up     3                   0.95        TRUE
+#> 2       final step_up     3                   0.95        TRUE
+```
+
+## Experimental person-level bootstrap
+
+`repair_bootstrap()` samples whole people with replacement and reruns
+`repair_refit()`, including measurement fitting, scoring covariance, and
+structural estimation. Repeated source people receive fresh target and
+nuisance IDs.
+
+``` r
+# Five attempts exercise the API; use many more and assess Monte Carlo stability.
+boot <- repair_bootstrap(fit, repair_example$repeated, people, B = 5, seed = 41)
+repair_bootstrap_coefficients(boot, conf.level = .90)
+#>          term   estimate  std.error   conf.low  conf.high conf.level     method
+#> 1 (Intercept) -0.7895289 0.15787603 -0.9447660 -0.6092946        0.9 percentile
+#> 2    practice  0.1754854 0.03381545  0.1337869  0.2111553        0.9 percentile
+#>   attempted usable failed conditional_on_success                     inference
+#> 1         5      5      0                  FALSE Experimental person bootstrap
+#> 2         5      5      0                  FALSE Experimental person bootstrap
+```
+
+Results are separate from the original fit. `confint(boot)` gives
+percentile intervals; `vcov(boot)` gives empirical covariance. Every
+attempt and source-ID map is retained. Failed samples are never
+replaced, and inference is withheld after any failure unless explicitly
+requested conditional on successful replicates. The [bootstrap
+guide](vignettes/person-bootstrap.Rmd) explains diagnostics, RNG
+restoration, supported single-model cohorts, and saved results. This
+feature is experimental: broader independent coverage validation remains
+outstanding.
+
+For repeated measurement convergence problems, `repair_lmer_refitter()`
+provides an opt-in, deterministic fitting recipe with likelihood-checked
+BOBYQA and bounded optimizer retries. Use it to rebuild the original
+measurement model and REPAIR analysis first; saved models then carry the
+same strategy into reference and bootstrap refits. Inspect the retained
+internal attempts with
+`repair_bootstrap_diagnostics(boot)$optimization`. The default
+failed-sample gate is unchanged. A six-profile simulation screen
+improved default interval availability from 1–53% to 95–100%, with mixed
+coverage gains and persistent small/short-panel undercoverage. See the
+[audit and simulation
+results](https://github.com/HallquistLab/repair/blob/2dda7622ae7dceb24d726ff2c3aeb56db390083f/dev/robust-refit-audit.md)
+and `vignette("person-bootstrap")` for scope, usage and limitations.
 
 ## Connect two measurement processes
 

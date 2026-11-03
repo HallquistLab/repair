@@ -1,8 +1,10 @@
 # Preparing the first release
 
-This checklist is preparation guidance, not a claim that a release or CRAN
-submission exists. Current development version: `0.0.0.9000`. Proposed first
-GitHub release: `0.1.0`, subject to the maintainers' release decision.
+Candidate: `0.5.0`, prepared November 3, 2026. Scope: core REPAIR, conditional
+inference, sequential step-up regularization, whole-unit bootstrap sampling and
+its deterministic robust lmer refitter. PRs 21 and 22 (full influence, leverage,
+and delete-one inference) are excluded. Submission and release publication have
+not been performed by this checklist.
 
 ## Freeze the intended scope and identity
 
@@ -42,8 +44,34 @@ its tag and release notes for the tested commit/artifact. The site tracks main,
 so say explicitly whether readers are viewing development or release docs.
 This hardening PR does not tag, publish a release, or submit to CRAN.
 
-For a later CRAN submission, perform the additional incoming, PDF manual,
-URL/spelling, package-name, dependency/toolchain, and external-platform checks
-against current CRAN policy. Replace `cran-comments.md` with dated results from
-that actual submission candidate. Current development CI alone is not a complete
-CRAN submission rehearsal.
+Before submitting, review the dated results and candidate hash in
+`cran-comments.md`. The Ubuntu/release CI job now includes the PDF manual and
+CRAN incoming checks; retain all six platform/R checks and the documentation
+workflow on the final revision. Review any new warning or significant note
+against current CRAN policy. Submit the tested source tarball through the CRAN
+form only after the designated maintainer reviews the candidate.
+
+## November 3, 2026 candidate evidence
+
+The bootstrap/refitter branch is integrated without PRs 21 and 22. The merge
+retains the current prediction extractors, `mlm_data` refit API, and unit-copy
+schema. Step-up is available through `repair()` and `fit_mmom()`; the default
+minimum estimator and existing reference fixtures are unchanged. Each bootstrap
+attempt reselects adaptive constants and retains the chosen alphas and guard/
+fallback indicators. See `vignette("step-up")` and the independent generator
+`dev/generate_step_up_fixtures.R` for algorithm settings and provenance.
+
+The final tarball passed full `R CMD check --as-cran` on R 4.5.2/macOS arm64
+with GCC 16.2.0, PDF and HTML manual checks, and network/incoming checks enabled:
+zero errors, zero warnings, one new-submission note; 2,308 assertions passed
+without failures, warnings or skips. Local validation used a temporary TeX font
+tree, HTML Tidy 5.8.0, and a temporary Makevars selecting GCC. No package compiler
+flags or diagnostics were suppressed. The earlier Apple-clang/R-header warning
+is toolchain-specific; it is not hidden by the package.
+
+The README executes against the installed candidate and pkgdown validates all
+47 HTML pages, internal links/assets, and search targets. Candidate hashes and
+dated check counts are in `cran-comments.md`; the tarball and logs are retained
+locally under ignored `check/cran/`. The automated matrix additionally checks
+Linux release/oldrel/devel/R 4.3, macOS, and Windows on the integrated revision.
+The release CI now includes PDF-manual and incoming checks on Linux release.

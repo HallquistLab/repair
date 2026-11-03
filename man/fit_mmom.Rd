@@ -16,9 +16,12 @@ fit_mmom(
 \code{predictors}, \code{err_x}, \code{err_y}, and \code{err_xy}, or a matrix-style list with
 those same named fields. See Details for their dimensions.}
 
-\item{preliminary_moment_control}{Correction controls with \code{correction} and \code{alpha}.}
+\item{preliminary_moment_control}{Correction controls with \code{correction}
+(\code{"minimum"}, \code{"none"}, \code{"custom"}, or \code{"step_up"}), \code{alpha} for custom
+correction, and optional \code{step_up} search settings described below.}
 
-\item{final_moment_control}{Correction controls with \code{correction} and \code{alpha}.}
+\item{final_moment_control}{Controls for the final moment; same format as
+\code{preliminary_moment_control}. Each stage can use a different policy.}
 
 \item{backend}{Computation backend: \code{"auto"}, \code{"r"}, or \code{"rcpp"}.}
 }
@@ -43,7 +46,40 @@ case-variance weights. Inference assumes the model-based normal-error
 covariance and conditions on fitted first-stage quantities. Measurement-
 model parameter uncertainty is not propagated. Reported intervals are
 normal-based 95\% intervals. \code{correction = "none"} disables regularization,
-not measurement-error subtraction. \code{step_up} is not implemented.
+not measurement-error subtraction.
+
+\strong{Step-up (M-MOMS):} select the preliminary alpha, then recompute weights
+and select the final alpha. Each search starts at \code{q + 2}, where q is the
+number of predictor columns excluding the intercept. The upper bound is N
+when the determinant root exceeds \code{1 + 1/N}, and \code{N * lambda - 1}
+otherwise. A missing root or an upper bound below the minimum leaves only
+the minimum candidate. The default grid has nine equally spaced candidates.
+Refine between the first passing candidate and its preceding failing
+candidate by at most 12 bisections, stopping at an alpha gap of 0.005.
+This finds the smallest passing alpha evaluated, not a global optimum.
+
+A candidate must produce a usable complete fit. Its corrected predictor
+block (excluding the structural intercept) must have minimum eigenvalue at
+least \code{sqrt(.Machine$double.eps)}, ratio of minimum corrected eigenvalue to
+maximum observed eigenvalue at least 0.05, and condition number at most 1e5.
+Following the research algorithm, preliminary moments are divided by N;
+final weighted moments are unnormalized sums. These are numerical search
+criteria, not guarantees of inferential validity or invariance to predictor
+scaling. If no candidate passes, retain the minimum-alpha fit, including
+its numerical failure if any, and explicitly mark the fallback. A returned
+fit need not meet the conditioning criteria.
+
+The optional \code{step_up} list in either control accepts \code{coarse_grid_size},
+\code{search_tolerance}, \code{max_refinements}, \code{min_eigenvalue},
+\code{min_relative_eigenvalue}, \code{max_condition_number}, and \code{candidate_alphas}.
+Defaults are the values above and NULL for \code{candidate_alphas}. An explicit
+candidate vector is sorted, deduplicated, clipped to the search bounds, and
+augmented with the minimum; bisection still applies unless disabled.
+\code{\link[=repair]{repair()}} accepts these settings in \code{step_up_control}. Requested policies
+remain in the saved controls; selected constants are \code{alpha_prelim} and
+\code{alpha_final} in diagnostics. \code{diagnostics$step_up} records each stage's
+bounds, selected candidate, all candidate checks, settings, and fallback.
+Refitting and bootstrapping rerun selection on each new dataset.
 }
 \examples{
 data(repair_example)

@@ -198,8 +198,9 @@ repair_assemble <- function(formula, models, data, id, na_action = c("fail", "om
   )
 }
 
-run_struc <- function(struc_data, regularization, alpha, backend) {
+run_struc <- function(struc_data, regularization, alpha, backend, step_up_control = list()) {
   control <- list(correction = regularization, alpha = alpha)
+  if (regularization == "step_up") control$step_up <- step_up_control
   fit_mmom(list(outcome = struc_data@outcome, predictors = struc_data@predictors,
     err_x = struc_data@err_x, err_y = struc_data@err_y, err_xy = struc_data@err_xy),
     preliminary_moment_control = control, final_moment_control = control, backend = backend)

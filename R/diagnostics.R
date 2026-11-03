@@ -80,7 +80,7 @@ repair_diagnostics <- function(object, table = NULL) {
       role = "predictor", variance = a@err_x[j, j, ], row.names = NULL))
   }
   result <- c(list(status = data.frame(converged = isTRUE(object@struc_fit@converged),
-       step = object@struc_fit@diagnostics$step %||% "complete", message = object@struc_fit@message),
+       step = object@struc_fit@diagnostics[["step", exact = TRUE]] %||% "complete", message = object@struc_fit@message),
     scope = data.frame(n_requested = d$n_requested, n_analyzed = length(a@ids),
                         n_excluded = nrow(d$excluded)),
     excluded = d$excluded, mlm = mlm, prediction_failures = failures,
@@ -113,7 +113,8 @@ repair_structural_diagnostics <- function(object) {
       control <- fit@diagnostics[[paste0(step, "_moment_control")]]
       multiplier <- if (step == "preliminary") fit@diagnostics$correction_prelim else fit@diagnostics$correction_final
       regularization <- rbind(regularization, data.frame(step = step, policy = control$correction,
-        alpha = control$alpha %||% NA_real_, subtraction_multiplier = multiplier,
+        alpha = fit@diagnostics[[if (step == "preliminary") "alpha_prelim" else "alpha_final"]] %||%
+          control$alpha %||% NA_real_, subtraction_multiplier = multiplier,
         regularized = abs(multiplier - 1) > 1e-8))
       m <- matrices[[step]]
       values <- eigen((m + t(m)) / 2, symmetric = TRUE, only.values = TRUE)$values

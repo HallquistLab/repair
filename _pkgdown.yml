@@ -34,7 +34,9 @@ articles:
   navbar: Start and report
   contents:
   - repair-workflow
+  - step-up
   - refitting
+  - person-bootstrap
   - support-and-troubleshooting
   - extracting-results
   - reliability-diagnostics
@@ -54,6 +56,8 @@ reference:
 - contents:
   - repair
   - repair_refit
+  - repair_lmer_refitter
+  - repair_bootstrap
   - re
   - repair_effects
   - repair_data
@@ -63,6 +67,9 @@ reference:
   - repair_coefficients
   - repair_predictions
   - repair_prediction_covariance
+  - repair_bootstrap_coefficients
+  - repair_bootstrap_diagnostics
+  - repair-bootstrap-methods
   - repair-methods
 - title: Assess reliability and diagnostics
 - contents:

@@ -100,6 +100,7 @@ and executable examples. Familiar `summary()`, `coef()`, `vcov()`, `confint()`, 
 |---|---|
 | Check supported models or diagnose a problem | [Supported analyses and troubleshooting](articles/support-and-troubleshooting.html) |
 | Refit or revise an analysis with reference verification | [Validated refitting](articles/refitting.html) |
+| Sample whole people and inspect experimental intervals | [Person bootstrap](articles/person-bootstrap.html) |
 | Run and understand a complete analysis | [A structural regression with REPAIR](articles/repair-workflow.html) |
 | Create reporting tables, join by ID, or export results | [Extracting tables for reporting and reuse](articles/extracting-results.html) |
 | Assess marginal and intercept-residualized reliability | [Reliability and analysis diagnostics](articles/reliability-diagnostics.html) |
@@ -129,3 +130,9 @@ and model structures. The [changelog](news/index.html) records implementation
 changes. For reproducibility and design decisions, see the repository's
 [design audit](https://github.com/HallquistLab/repair/blob/main/dev/design-audit.md)
 and [fixture provenance](https://github.com/HallquistLab/repair/blob/main/tests/testthat/fixtures/README.md).
+
+## Adaptive regularization
+
+Use `regularization = "step_up"` for the manuscript M-MOMS search. The
+[step-up guide](articles/step-up.html) explains candidate checks, selected
+constants, fallback diagnostics, and reselection during bootstrap refitting.
