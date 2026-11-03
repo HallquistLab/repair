@@ -48,7 +48,9 @@ jobs:
         if: matrix.config.manual
       - name: Install PDF-manual fonts
         if: matrix.config.manual
-        run: tlmgr install inconsolata collection-fontsrecommended
+        run: |
+          tlmgr update --self
+          tlmgr install inconsolata collection-fontsrecommended
         shell: bash
       - uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
