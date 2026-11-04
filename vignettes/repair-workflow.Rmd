@@ -72,6 +72,19 @@ slope may expand into several coefficients: select each by its actual name.
 Model names resolve ambiguous coefficient names across fits. The optional
 `group` argument resolves coefficient names shared by several groups within a
 model; select one target group per model.
+For an unambiguous coefficient, `re(Days)` and `re("Days")` are equivalent and
+`model` can be omitted, including with one named or unnamed MLM. A single MLM
+can still have the same coefficient name in several grouping factors; supply
+`group` in that case. The error message identifies matching model/group/term
+combinations instead of assuming that `model` is always needed.
+
+Bare names are literal syntax: `re(Days)` does not evaluate a `Days` variable
+in the data or formula environment. Calls such as `re(get("Days"))` and
+`re(Days + 1)` remain unsupported. Keep model and group names quoted, for example
+`re(Days, model = "growth", group = "Subject")`. Use a quoted coefficient name
+or backticks for nonsyntactic names. If choosing coefficient names in a program,
+insert the actual string when constructing the formula, rather than expecting
+`re(variable)` to look up the value of `variable`.
 One equation can combine predictions from separate fits when you explicitly specify
 their cross-model prediction-error covariance policy; see
 `vignette("multiple-models")` for the independence and supplied-covariance options.
@@ -104,11 +117,8 @@ The MLM's repeated observations and the structural table remain explicit:
 
 ```{r inline-mlm}
 inline <- repair(
-  re("Days", model = "growth") ~ observed,
-  models = list(growth = repair_mlm(
-    Reaction ~ Days + (Days | Subject), lme4::sleepstudy,
-    engine = "lmer", REML = TRUE,
-    control = lme4::lmerControl(optimizer = "bobyqa"))),
+  re(Days) ~ observed,
+  models = repair_mlm(Reaction ~ Days + (Days | Subject), lme4::sleepstudy),
   data = people, id = "person"
 )
 repair_coefficients(inline)

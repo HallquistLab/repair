@@ -19,6 +19,9 @@ behavior. A design draft does not make its proposed functions available.
 
 ## Implementation evidence
 
+- [Concise coefficient references](re-shorthand-validation.md): literal bare names,
+  optional qualification, ambiguity diagnostics and numerical equivalence.
+
 - [Inline MLM specifications](inline-mlm-validation.md): optional native lmer/lme
   fitting, unchanged fitted inputs and estimation, replay contracts and validation.
 

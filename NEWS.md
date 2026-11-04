@@ -6,6 +6,12 @@ step-up regularization, and experimental whole-unit bootstrap inference.
 
 ## Estimation and supported models
 
+* Allow unquoted random-coefficient names such as `re(day)` alongside
+  `re("day")`. Read bare names literally without evaluating variables or calls.
+  Preserve optional model qualification for unique references and model/group
+  ambiguity checks. Improve errors to identify matching coefficients and the
+  qualifier needed, including group ambiguity within a single MLM.
+
 * Add optional `repair_mlm()` specifications for fitting first-stage Gaussian
   lmer or linear lme models inside `repair()`, `repair_data()`, and
   `repair_effects()`. Retain fitted-model inputs and allow named lists mixing

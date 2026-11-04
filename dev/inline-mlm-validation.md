@@ -6,6 +6,10 @@ specification, while the outer formula continues to describe the structural
 regression. The helper name follows the existing MLM terminology and the
 maintainer's explicit naming choice.
 
+This records candidate `bb0ed01` and its source archive. The subsequent
+[concise-reference update](re-shorthand-validation.md) supersedes that archive;
+its original bundle is retained under `check/cran-bb0ed01/`.
+
 ## Scope and implementation
 
 - `repair_mlm(formula, data, engine = c("lmer", "lme"), ...)` creates an unfitted

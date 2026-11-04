@@ -79,6 +79,9 @@ repair_coefficients(fit)
 a deviation from the fitted fixed slope. IDs align people across the measurement
 model and structural data; row order never determines a match. The
 [support guide](articles/support-and-troubleshooting.html) executes this example.
+When the coefficient reference is unique, `re(day)` and `re("day")` are equivalent
+and `model` can be omitted. Model and group qualifiers resolve repeated names;
+`repair_effects()` lists the available choices.
 The [getting-started guide](articles/repair-workflow.html) explains the broader
 workflow, omissions, regularization, and interpretation.
 

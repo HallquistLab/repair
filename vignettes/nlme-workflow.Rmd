@@ -22,10 +22,10 @@ random effects and grouping. For example:
 ```{r inline-lme}
 data(repair_example)
 inline_lme <- repair(
-  re("day", model = "growth") ~ practice,
-  models = list(growth = repair_mlm(score ~ day, repair_example$repeated,
+  re(day) ~ practice,
+  models = repair_mlm(score ~ day, repair_example$repeated,
     engine = "lme", random = ~ day | person, method = "REML",
-    control = nlme::lmeControl(msMaxIter = 300))),
+    control = nlme::lmeControl(msMaxIter = 300)),
   data = repair_example$people, id = "person"
 )
 repair_coefficients(inline_lme)

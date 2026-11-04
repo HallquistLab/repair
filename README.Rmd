@@ -104,10 +104,9 @@ For an integrated call, supply an unfitted first-stage MLM specification:
 
 ```{r inline-mlm}
 inline_fit <- repair(
-  re("day", model = "growth") ~ practice,
-  models = list(growth = repair_mlm(
-    score ~ day + (day | person), data = repair_example$repeated,
-    engine = "lmer", REML = TRUE)),
+  re(day) ~ practice,
+  models = repair_mlm(score ~ day + (day | person),
+    data = repair_example$repeated),
   data = people, id = "person"
 )
 repair_coefficients(inline_fit)
@@ -124,7 +123,12 @@ and specifications can be mixed in named lists. See `?repair_mlm` and the
 The marker `re("day", model = "growth")` selects the random slope for `day`.
 It represents a deviation from the fitted fixed slope. Use
 `re("(Intercept)", model = "growth")` for the random intercept. When there is
-only one matching effect, `model` may be omitted.
+only one matching effect, `model` may be omitted: `re("day")` and `re(day)`
+are equivalent. A bare name is read literally, without looking up a variable
+named `day`. Quoted names remain supported. Multiple models can require `model`,
+and repeated coefficient names across groups in one MLM can require `group`;
+use `repair_effects()` to inspect the available names. Qualifier values remain
+quoted, for example `re(day, model = "growth", group = "person")`.
 
 ```{r accessors}
 coef(fit)

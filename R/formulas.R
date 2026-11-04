@@ -3,15 +3,28 @@
 #' Use only inside the structural formula passed to [repair()] or
 #' [repair_data()]. Each reference selects one scalar coefficient, not a
 #' multi-column formula term. Inspect available names with [repair_effects()].
-#' @param term Random coefficient name; use `"(Intercept)"` for an intercept.
+#' @param term Random coefficient name, either a literal string (`re("day")`)
+#'   or an unquoted name (`re(day)`). Names are read literally, without evaluating
+#'   variables in the data or formula environment. Use backticks for nonsyntactic
+#'   names, or keep the quoted form. Use `"(Intercept)"` for an intercept.
 #' @param model Name in the `models` list. May be omitted if unambiguous.
 #' @param group Target grouping-factor name from [repair_effects()]. May be
 #'   omitted if the coefficient is unambiguous. Select one target group per model;
 #'   other lmer groups must have every fitted level contained within that target.
+#' @details `model` is optional whenever the coefficient reference is unique;
+#'   this includes a single MLM. One MLM can still contain several grouping
+#'   factors with the same coefficient name, requiring `group`. With several
+#'   MLMs, use `model` to resolve shared names. `model` and `group` must remain
+#'   literal strings. Expressions such as `re(get("day"))` are not evaluated.
+#'   If a variable `term <- "day"` exists, `re(term)` refers to a coefficient
+#'   literally named `term`, not to `day`. Construct the formula explicitly when
+#'   inserting programmatically chosen names.
 #' @return A formula marker; calling it outside a structural formula is an error.
 #' @examples
 #' equation <- re("day", model = "growth") ~ practice
 #' equation
+#' concise <- re(day) ~ practice
+#' concise
 #' # Use this formula with models = list(growth = your_fitted_model).
 #' @export
 re <- function(term, model = NULL, group = NULL) {
@@ -36,19 +49,23 @@ parse_struc_formula <- function(formula, catalog) {
     }
     if (!is.call(expr) || !identical(expr[[1L]], as.name("re"))) {
       repair_error(paste0(
-        "Use additive bare variable names and `re(\"term\", model = \"name\", group = \"target\")`. ",
+        "Use additive bare variable names and `re(term)` or `re(\"term\", model = \"name\", group = \"target\")`. ",
         "Interactions, transformations, offsets, and `.` are not supported; ",
         "precompute transformations of observed variables in `data`."
       ))
     }
     matched <- tryCatch(match.call(definition = re, call = expr),
-      error = function(e) repair_error("Use `re(\"term\", model = \"name\", group = \"target\")` with literal strings."))
+      error = function(e) repair_error("Use `re(term)` or `re(\"term\")`; `model` and `group` must be literal strings."))
     args <- list(term = matched$term)
+    # A bare coefficient name is syntax, not a value to evaluate. Preserve the
+    # canonical resolved labels and all existing model/group ambiguity checks.
+    if (is.symbol(args$term) && as.character(args$term) != ".")
+      args$term <- as.character(args$term)
     if (!is.null(matched$model)) args$model <- matched$model
     if (!is.null(matched$group)) args$group <- matched$group
     if (!all(vapply(args, function(x) is.character(x) && length(x) == 1L &&
           !is.na(x) && nzchar(x), logical(1)))) {
-      repair_error("Use `re(\"term\", model = \"name\", group = \"target\")` with literal strings.")
+      repair_error("Use a bare coefficient name or literal string in `re()`; `model` and `group` must be literal strings.")
     }
     term <- args$term
     if (term %in% c("1", "Intercept")) term <- "(Intercept)"
@@ -56,7 +73,12 @@ parse_struc_formula <- function(formula, catalog) {
     if (!is.null(args$model)) candidates <- candidates[candidates$model == args$model, , drop = FALSE]
     if (!is.null(args$group)) candidates <- candidates[candidates$group == args$group, , drop = FALSE]
     if (nrow(candidates) != 1L) {
-      repair_error("Random-effect reference is unknown or ambiguous. Use `repair_effects(models)` and specify `model` and, where needed, `group`.")
+      if (!nrow(candidates))
+        repair_error("Random-effect reference is unknown or ambiguous: no match for {.val {term}} with the supplied qualifiers. Use `repair_effects(models)` to inspect coefficient, model and group names.")
+      qualifiers <- c(if (length(unique(candidates$model)) > 1L) "model",
+        if (any(table(candidates$model) > 1L)) "group")
+      matches <- unique(paste(candidates$model, candidates$group, candidates$term, sep = " / "))
+      repair_error("Random-effect reference is unknown or ambiguous: {.val {term}} matches {.val {matches}}. Specify {.arg {qualifiers}} using literal strings; inspect `repair_effects(models)`.")
     }
     entry <- candidates[1L, , drop = FALSE]
     key <- paste(entry$model, entry$group, entry$term, sep = "\r")

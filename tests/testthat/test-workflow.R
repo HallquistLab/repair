@@ -110,7 +110,7 @@ test_that("effect names and formula grammar fail clearly before numerical fittin
   expect_identical(catalog$model, rep("growth", 2))
   expect_error(re("Days"), "formula marker")
   invalid <- list(~ x, x ~ 1, x ~ missing, x ~ re("typo"),
-    x ~ re("Days", model = "typo"), x ~ re(Days), x ~ I(re("Days")^2),
+    x ~ re("Days", model = "typo"), x ~ re(get("Days")), x ~ I(re("Days")^2),
     x ~ re("Days") * category, x ~ 0 + re("Days"), x ~ re("Days") - 1,
     x ~ ., x ~ offset(re("Days")), cbind(x, x) ~ re("Days"),
     re("Days") ~ re("Days"), re("Days") ~ x + person)

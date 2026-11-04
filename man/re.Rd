@@ -7,7 +7,10 @@
 re(term, model = NULL, group = NULL)
 }
 \arguments{
-\item{term}{Random coefficient name; use \code{"(Intercept)"} for an intercept.}
+\item{term}{Random coefficient name, either a literal string (\code{re("day")})
+or an unquoted name (\code{re(day)}). Names are read literally, without evaluating
+variables in the data or formula environment. Use backticks for nonsyntactic
+names, or keep the quoted form. Use \code{"(Intercept)"} for an intercept.}
 
 \item{model}{Name in the \code{models} list. May be omitted if unambiguous.}
 
@@ -23,8 +26,20 @@ Use only inside the structural formula passed to \code{\link[=repair]{repair()}}
 \code{\link[=repair_data]{repair_data()}}. Each reference selects one scalar coefficient, not a
 multi-column formula term. Inspect available names with \code{\link[=repair_effects]{repair_effects()}}.
 }
+\details{
+\code{model} is optional whenever the coefficient reference is unique;
+this includes a single MLM. One MLM can still contain several grouping
+factors with the same coefficient name, requiring \code{group}. With several
+MLMs, use \code{model} to resolve shared names. \code{model} and \code{group} must remain
+literal strings. Expressions such as \code{re(get("day"))} are not evaluated.
+If a variable \code{term <- "day"} exists, \code{re(term)} refers to a coefficient
+literally named \code{term}, not to \code{day}. Construct the formula explicitly when
+inserting programmatically chosen names.
+}
 \examples{
 equation <- re("day", model = "growth") ~ practice
 equation
+concise <- re(day) ~ practice
+concise
 # Use this formula with models = list(growth = your_fitted_model).
 }

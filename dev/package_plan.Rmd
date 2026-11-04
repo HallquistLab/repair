@@ -80,7 +80,9 @@ covariance cannot enter the row-wise M-MOM contract. Multilevel nlme remains uns
 
 ## Effect identity and formula parsing
 
-Identity is `(model, group, scalar coefficient)`. `re()` accepts literal strings;
+Identity is `(model, group, scalar coefficient)`. `re()` accepts literal strings
+or bare coefficient names; bare names are read without evaluating bindings.
+Model and group qualifiers remain literal strings;
 model and target-group qualification are optional only when unambiguous. Each
 model selects exactly one target group. Existing single-group labels are preserved;
 labels from multi-group models include the group. `(Intercept)` is canonical;

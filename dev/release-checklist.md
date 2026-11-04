@@ -128,3 +128,19 @@ Win-builder R-devel has a new receipt for the updated archive; its result is
 pending delivery to the maintainer address. Earlier results apply to their
 original archive and must not be reused for this updated candidate. PRs 21 and
 22 remain excluded. No CRAN submission or release tag has been created.
+
+## Concise coefficient references, November 4, 2026
+
+`re(day)` is now shorthand for `re("day")`; model qualification remains optional
+for unique references. Model/group ambiguity is preserved and errors identify
+matching catalog entries and the needed qualifier. See
+[the syntax validation](re-shorthand-validation.md). Both dependency archive
+checks pass all 4,076 assertions, with no errors or warnings. Full local checking
+includes the PDF/HTML manuals and retains the New submission and external-clock
+NOTEs. README and all 48 site pages validate.
+
+The current archive supersedes the previous `bb0ed01` bundle and has its own
+hash in `cran-comments.md`. The earlier Win-builder receipt does not validate
+this new archive; recheck the final frozen archive before submission. Statistical
+calculations remain unchanged, PRs 21 and 22 remain excluded, and no CRAN
+submission or release tag has been created.
