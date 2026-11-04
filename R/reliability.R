@@ -13,7 +13,7 @@ repair_require_model <- function(object) {
   invisible(object)
 }
 
-#' Inspect posterior reliability of selected random coefficients
+#' Inspect posterior reliability of selected random effects
 #'
 #' Report plug-in posterior reliability using the manuscript's marginal and
 #' intercept-residualized definitions. These diagnostics do not change the fit.

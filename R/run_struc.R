@@ -5,7 +5,7 @@
 #' and its order. No aggregation, row-order matching, or silent omission occurs.
 #' @param formula An additive structural formula with at least one [re()] marker.
 #'   Observed predictors may be numeric, logical, or factors. The outcome must
-#'   be numeric or a random coefficient. An intercept is always included.
+#'   be numeric or a random effect. An intercept is always included.
 #' @param models A fitted Gaussian `lme4::lmer()` or linear `nlme::lme()`
 #'   model, an experimental [repair_bayes_plugin()] snapshot, or named list.
 #'   Bayesian support is restricted to the snapshot's documented scope; its
@@ -46,7 +46,7 @@
 #'   Target-specific prediction-error covariance includes every nuisance contribution.
 #'   See `vignette("nested-nuisance", package = "repair")` for a complete example.
 #'
-#'   Within-model covariance always comes from the scorer and cannot be
+#'   Within-model covariance always comes from prediction extraction and cannot be
 #'   overridden. Supplied blocks are conditional on the fitted MLMs;
 #'   uncertainty in their estimation is not propagated. Independent errors do not
 #'   imply independent latent processes. The package does not estimate cross-model
@@ -56,7 +56,7 @@
 #' @return An S7 analysis-data object. Use `@ids`, `@outcome`, `@predictors`,
 #'   `@err_x`, `@err_y`, `@err_xy`, `@effects`, and `@diagnostics` to inspect it.
 #'   Error arrays are ordered predictor by predictor by ID. Observed variables
-#'   have zero sampling error. Scores are deviations from fitted fixed effects.
+#'   have zero sampling error. Predictions are deviations from fitted fixed effects.
 #'   `@predictions` holds a prediction object for one referenced model, or a named list for
 #'   multiple models. `@diagnostics$mlm_models` always provides diagnostics
 #'   by model, including the verified `nuisance_groups`;

@@ -250,7 +250,7 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
       names(elements@fixed_coefs)
     )
     if (anyNA(fixed_indices)) {
-      repair_error("`include_fixed = TRUE` requires matching fixed coefficients for every random coefficient.")
+      repair_error("`include_fixed = TRUE` requires matching fixed coefficients for every random effect.")
     }
     available <- !is.na(fixed_indices)
 
@@ -333,7 +333,7 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
 #' @return An S7 prediction object with group-keyed `@predictions` matrices (ID by
 #'   coefficient), `@prediction_error_covariance` arrays (coefficient by coefficient by ID),
 #'   `@levels`, `@terms`, and `@diagnostics`; `@success` is true only if all selected
-#'   clusters scored successfully. These are sampling-error covariances, not
+#'   clusters predicted successfully. These are sampling-error covariances, not
 #'   posterior BLUP covariances.
 #' @examples
 #' data(repair_example)

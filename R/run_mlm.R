@@ -18,7 +18,7 @@ normalize_repair_models <- function(models) {
   models
 }
 
-#' Inspect available random coefficients
+#' Inspect available random effects
 #' @param models A fitted Gaussian `lme4::lmer()` or linear `nlme::lme()`
 #'   model, a [repair_mlm()] specification, an experimental [repair_bayes_plugin()]
 #'   snapshot, or a named list mixing these types.

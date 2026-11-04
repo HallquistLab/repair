@@ -1,13 +1,13 @@
 #' Fit a REPAIR structural regression from MLMs
 #'
 #' Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
-#' accounts for sampling error when estimated random coefficients are used as
+#' accounts for sampling error when estimated random effects are used as
 #' predictors, the outcome, or both in a second-stage regression.
 #'
-#' Select random coefficients with [re()], match them to unit-level data by
-#' ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
-#' models can be fitted beforehand or supplied as explicit [repair_mlm()]
-#' specifications for fitting during this call.
+#' Select random effects with [re()], match them to unit-level data by
+#' ID, and fit the modified method-of-moments (M-MOM) regression. MLMs can be
+#' fitted beforehand or supplied as explicit [repair_mlm()] specifications for
+#' fitting during this call.
 #' @inheritParams repair_data
 #' @param regularization Moment regularization: `"minimum"` (default), `"none"`,
 #'   `"step_up"`, or `"custom"`. `"none"` still subtracts measurement error; it disables only
@@ -27,7 +27,7 @@
 #'   [repair_bayes_plugin()] snapshot; see its restrictions and inference limits.
 #'   Multiple models require an explicit `cross_model_error` policy; separate
 #'   fits do not establish independent prediction errors. See [repair_data()].
-#'   Observed variables are treated as measured without error. Scores are random
+#'   Observed variables are treated as measured without error. Predictions are random
 #'   deviations, not fixed-plus-random individual coefficients. For nlme fits,
 #'   supported residual structures and stored-data requirements are described
 #'   in [repair_ranef_gls()]. Use [repair_refit()] to verify and replay one

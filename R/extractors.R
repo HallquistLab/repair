@@ -48,7 +48,7 @@ repair_coefficients <- function(object, conf.level = 0.95) {
 #'   A numerical structural failure is accepted because MLM predictions exist.
 #' @param scope `"structural"` (default) returns retained structural IDs in their
 #'   analysis order. `"all"` returns each model's effective grouping levels
-#'   in saved scorer order, including units outside or excluded from the analysis.
+#'   in saved prediction-extraction order, including units outside or excluded from the analysis.
 #' @details Only effects selected in the structural formula are returned. Predictions
 #'   are likelihood-only random deviations, not BLUPs or fixed-plus-random totals.
 #'   `std.error` is the square root of the prediction-error variance conditional on
@@ -107,7 +107,7 @@ repair_predictions <- function(object, scope = c("structural", "all")) {
 #' coefficients, including cross-model blocks. This is distinct from `vcov(fit)`,
 #' which describes uncertainty in structural regression coefficients.
 #' @inheritParams repair_predictions
-#' @details Only structural units and formula-selected random coefficients are
+#' @details Only structural units and formula-selected random effects are
 #'   included. MLM-scope cross-model covariance may not be available,
 #'   so this accessor has no MLM-scope option. Observed structural columns
 #'   have zero error by assumption and are not included. Within-model entries come

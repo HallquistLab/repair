@@ -53,10 +53,10 @@ fit <- repair(re("Days", "growth") ~ observed,
 summary(fit)
 ```
 
-`repair_effects()` lists scalar random coefficients; `repair_data()` computes
+`repair_effects()` lists scalar random effects; `repair_data()` computes
 and aligns their likelihood-only predictions and error covariance by person ID;
 `repair()` performs that assembly and fits M-MOM. These functions have the same
-interface for lmer and lme inputs. Scores remain deviations from fixed effects,
+interface for lmer and lme inputs. Predictions remain deviations from fixed effects,
 and observed structural variables are treated as error-free.
 
 The summary identifies the MLM backend. For nlme, singularity is not

@@ -26,7 +26,7 @@ coefficients, including cross-model blocks. This is distinct from \code{vcov(fit
 which describes uncertainty in structural regression coefficients.
 }
 \details{
-Only structural units and formula-selected random coefficients are
+Only structural units and formula-selected random effects are
 included. MLM-scope cross-model covariance may not be available,
 so this accessor has no MLM-scope option. Observed structural columns
 have zero error by assumption and are not included. Within-model entries come
