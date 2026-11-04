@@ -3,7 +3,7 @@
 \docType{package}
 \name{repair-package}
 \alias{repair-package}
-\title{REPAIR: structural regression with estimated random effects}
+\title{REPAIR}
 \description{
 Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
 estimates relationships involving person- or cluster-specific processes

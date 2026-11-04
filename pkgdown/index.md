@@ -1,4 +1,4 @@
-# repair: regression with estimated random effects
+# repair
 
 `repair` implements **Random-Effect Prediction Adjustment for Inference in
 Regression (REPAIR)**, a two-stage method for estimating relationships involving
