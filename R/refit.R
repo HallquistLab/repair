@@ -20,6 +20,13 @@ repair_replay_formula <- function(expr, columns, dynamic = FALSE) {
 
 repair_replay_eval <- function(expr, data, literal = FALSE) {
   if (is.null(expr) || is.atomic(expr)) return(expr)
+  # do.call/native specification fits can retain evaluated literal lists (e.g.
+  # lmerControl, lmeControl or random formulas) directly in their stored calls.
+  if (is.list(expr) && !is.call(expr)) {
+    value <- lapply(expr, repair_replay_eval, data = data, literal = literal)
+    attributes(value) <- attributes(expr)
+    return(value)
+  }
   if (is.symbol(expr)) {
     name <- as.character(expr)
     if (!literal && name %in% names(data)) return(data[[name]])

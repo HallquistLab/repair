@@ -5,6 +5,11 @@ submission or a published release tag. Core REPAIR, step-up and experimental
 whole-unit bootstrap remain in scope. PRs 21 and 22, influence-function,
 leverage, delete-one and all statistical rule changes remain excluded.
 
+This document records candidate `1de2d65` and its November 3 checks. The
+November 4 `repair_mlm()` addition has a separate
+[validation record](inline-mlm-validation.md). Its refreshed archive/check bundle
+supersedes the earlier bundle, retained under `check/cran-1de2d65/`.
+
 ## Metadata and documentation
 
 - Consolidate unreleased development changes into NEWS for 1.0.0 and update the

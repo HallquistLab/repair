@@ -15,6 +15,27 @@ stopifnot(requireNamespace("nlme", quietly = TRUE))
 
 ## Fit an nlme MLM
 
+As an alternative to fitting separately, specify the first-stage MLM with
+`repair_mlm()`. The first formula describes fixed effects; `random` describes
+random effects and grouping. For example:
+
+```{r inline-lme}
+data(repair_example)
+inline_lme <- repair(
+  re("day", model = "growth") ~ practice,
+  models = list(growth = repair_mlm(score ~ day, repair_example$repeated,
+    engine = "lme", random = ~ day | person, method = "REML",
+    control = nlme::lmeControl(msMaxIter = 300))),
+  data = repair_example$people, id = "person"
+)
+repair_coefficients(inline_lme)
+```
+
+Supported correlation and variance objects can be supplied as native
+`correlation` and `weights` arguments. The same residual-structure validation
+applies to specifications and fitted inputs. `keep.data = TRUE` is required.
+See `?repair_mlm` for evaluation, data retention and refitting boundaries.
+
 The paper uses `nlme` for its primary MLMs.
 The public workflow for Random-Effect Prediction Adjustment for Inference in
 Regression (REPAIR) accepts a fitted, single-group linear `nlme::lme()` model:

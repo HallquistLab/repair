@@ -6,7 +6,8 @@
 #'
 #' Select random coefficients with [re()], match them to unit-level data by
 #' ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
-#' models are fitted beforehand so that their fitting choices remain explicit.
+#' models can be fitted beforehand or supplied as explicit [repair_mlm()]
+#' specifications for fitting during this call.
 #' @inheritParams repair_data
 #' @param regularization Moment regularization: `"minimum"` (default), `"none"`,
 #'   `"step_up"`, or `"custom"`. `"none"` still subtracts measurement error; it disables only

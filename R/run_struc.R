@@ -11,6 +11,9 @@
 #'   lmer models may also contain nuisance groups whose every fitted level belongs
 #'   to exactly one target level; nlme models must have one grouping factor.
 #'   Grouping column names may differ, but their values must identify the same units.
+#'   Alternatively supply a [repair_mlm()] specification, or a named list mixing
+#'   specifications and fitted models. Each specification is fitted once per call
+#'   through its native engine before the usual validation and extraction.
 #' @param data A data frame with one row per analysis ID, containing the observed
 #'   structural variables. Its ID values must match the model's grouping levels.
 #' @param id Name of the ID column in `data`; need not equal the grouping name.

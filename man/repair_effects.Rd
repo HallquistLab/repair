@@ -8,7 +8,8 @@ repair_effects(models)
 }
 \arguments{
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, or a named list of models.}
+model, a \code{\link[=repair_mlm]{repair_mlm()}} specification, or a named list mixing either type.
+Specifications are fitted once during this call.}
 }
 \value{
 A data frame with \code{model}, \code{group}, \code{term}, and \code{n_levels} columns.

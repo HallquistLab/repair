@@ -155,3 +155,16 @@ nuisance levels. Verified contained lmer nuisance groups, explicit group-qualifi
 references, and consistent nuisance covariance in reliability are documented in
 [nested-nuisance-validation.md](nested-nuisance-validation.md). The shared-level
 rejection and the row-wise structural covariance contract remain in force.
+
+## Optional integrated MLM fitting (2026-11-04)
+
+The original automatic-fitting deferral is superseded by optional `repair_mlm()`
+specifications for native lmer/lme fitting. `repair()`, `repair_data()` and
+`repair_effects()` resolve specifications once per call, preserving fitted inputs
+and supporting named mixtures. Explicit repeated and structural data, native
+arguments and per-model names supply the contracts absent from the original
+outline. The existing extraction/assembly/estimation pipeline is reused.
+Evaluated control/random/covariance objects and data-bound weight/offset/subset
+expressions support ordinary native inspection and the existing bounded replay
+interface. No estimator or inference changes accompany this API addition.
+See `test-mlm-spec.R` and the executable workflow and nlme guides.

@@ -54,7 +54,8 @@ requires **R 4.3 or later** and a C++20 compiler with the R build toolchain
 
 ## Fit a first model
 
-Fit your MLM as usual, then provide a separate table with one row
+Fit your MLM as usual, or supply a first-stage specification with
+[`repair_mlm()`](reference/repair_mlm.html). Provide a separate table with one row
 per unit. The included data are entirely simulated; `practice` represents prior practice
 hours per week. See `?repair_example` for provenance and generating parameters.
 

@@ -31,7 +31,9 @@ separates preparation from publishing a versioned artifact.
 
 # Analyst workflow
 
-1. Fit and inspect a Gaussian `lmer()` or linear `lme()` model using its native interface.
+1. Fit and inspect a Gaussian `lmer()` or linear `lme()` model using its native
+   interface, or create an optional `repair_mlm()` specification for native fitting
+   inside the consuming call.
 2. Name the fit in `models = list(growth = growth_fit)`.
 3. Call `repair_effects(models)` to discover scalar coefficient names and groups.
 4. Specify one additive structural formula, such as
@@ -47,6 +49,14 @@ separates preparation from publishing a versioned artifact.
    unit-level reliability to inspect heterogeneity.
 
 # Supported scope
+
+November 4, 2026 update: `repair_mlm(formula, data, engine, ...)` provides the
+original outline's optional integrated first-stage fitting. Specifications defer
+fitting to `repair()`, `repair_data()` or `repair_effects()`, accept native named
+options, and can be mixed with fitted models. Fitted inputs remain unchanged;
+no structural estimator, formula, covariance or inferential scope is extended.
+The workflow guide documents separate repeated/structural data, evaluated controls,
+native data expressions, per-call fitting and reuse, and replay restrictions.
 
 One equation, Gaussian lmer or linear lme MLMs with one target grouping factor each,
 additive predictors, and an intercept. Random coefficients can appear on either
