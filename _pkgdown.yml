@@ -11,7 +11,7 @@ template:
     navbar-dark-bg: "#719FC6"
 
 home:
-  title: "REPAIR: random-effect prediction adjustment for inference in regression"
+  title: "repair"
   description: >
     Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
     estimates relationships involving unit-specific change and other processes
