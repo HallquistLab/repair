@@ -46,6 +46,7 @@ articles:
   - nested-nuisance
   - multiple-models
   - nlme-workflow
+  - bayesian-plugin
 
 reference:
 - title: Teaching data
@@ -80,6 +81,7 @@ reference:
   desc: Lower-level interfaces for validated score inputs and custom estimation workflows.
 - contents:
   - repair_ranef_gls
+  - repair_bayes_plugin
   - fit_mmom
   - class_repair_mod
   - repair-package

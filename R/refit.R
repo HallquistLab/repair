@@ -416,6 +416,8 @@ repair_refit <- function(object, mlm_data, data, new_mlm_data = NULL,
                          new_data = NULL, id = NULL, refitter = NULL, draw = NULL,
                          tolerance = 1e-6) {
   repair_require_model(object); repair_require_fit(object)
+  if (any(vapply(object@mlm_fit, repair_is_bayes_plugin, logical(1))))
+    repair_error("Bayesian plug-in snapshots are not yet supported by `repair_refit()`; refit the Bayesian model externally and create a new snapshot.")
   if (length(object@mlm_fit) != 1L) repair_error("Initial refitting supports one MLM; multiple-model covariance replay is not yet supported.")
   if (!is.numeric(tolerance) || length(tolerance) != 1L || !is.finite(tolerance) || tolerance <= 0)
     repair_error("`tolerance` must be one positive finite number.")

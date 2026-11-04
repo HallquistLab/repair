@@ -79,6 +79,15 @@ jobs:
         if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
         run: Rscript .github/scripts/check-readme.R
         shell: bash
+      - name: Exercise native Bayesian model adapters
+        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        env:
+          REPAIR_RUN_STAN_TESTS: 'true'
+        run: >-
+          Rscript -e '.libPaths(c(normalizePath("check/repair.Rcheck"), .libPaths()));
+          library(repair); testthat::test_file("tests/testthat/test-bayes-plugin-native.R",
+          reporter = "summary", stop_on_failure = TRUE)'
+        shell: bash
 
   package-checks:
     name: Package checks

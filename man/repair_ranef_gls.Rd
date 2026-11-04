@@ -7,7 +7,8 @@
 repair_ranef_gls(mlm, target_group = NULL, include_fixed = FALSE)
 }
 \arguments{
-\item{mlm}{A Gaussian \code{lme4::lmer()} or \code{nlme::lme()} fit.}
+\item{mlm}{A Gaussian \code{lme4::lmer()} or \code{nlme::lme()} fit, or an
+experimental \code{\link[=repair_bayes_plugin]{repair_bayes_plugin()}} snapshot.}
 
 \item{target_group}{Grouping factor for prediction extraction; NULL predicts all groups.}
 
@@ -32,6 +33,8 @@ Failed clusters have missing predictions and covariance blocks, issue
 a warning, and appear in \verb{@diagnostics[[group]]$failed_levels}. A singular
 random-effect covariance is allowed when the target design is identifiable.
 Standard errors condition on fitted MLM parameters.
+Bayesian snapshots use posterior means of shared parameters; step-1
+uncertainty is not propagated and full-workflow coverage is unvalidated.
 
 Single-group linear nlme fits must retain their data (\code{keep.data = TRUE}).
 Supported correlations are independent, \code{corAR1}, and \code{corCAR1}; an AR(1)

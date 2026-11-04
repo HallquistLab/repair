@@ -92,7 +92,7 @@ get_ranef_design <- function(elements, group, rows, level = NULL) {
 
 get_ranef_base_covariance <- function(elements, rows) {
   operator <- elements@residual_covariance
-  if (identical(elements@backend, "lme4")) {
+  if (identical(operator$type, "independent")) {
     return(
       operator$matrix(group = NULL, level = NULL, rows = rows)
     )
@@ -299,7 +299,8 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
 #' Compute target-specific GLS predictions after subtracting fitted fixed effects
 #' and offsets. The target covariance excludes the target random effects and
 #' includes residual and nuisance-group covariance contributions.
-#' @param mlm A Gaussian `lme4::lmer()` or `nlme::lme()` fit.
+#' @param mlm A Gaussian `lme4::lmer()` or `nlme::lme()` fit, or an
+#'   experimental [repair_bayes_plugin()] snapshot.
 #' @param target_group Grouping factor for prediction extraction; NULL predicts all groups.
 #' @param include_fixed Add matching fixed coefficients to the predictions. Default
 #'   FALSE gives deviations. TRUE requires a fixed coefficient for every random
@@ -308,6 +309,8 @@ get_ranef_predictions <- function(elements, group, include_fixed = FALSE) {
 #'   a warning, and appear in `@diagnostics[[group]]$failed_levels`. A singular
 #'   random-effect covariance is allowed when the target design is identifiable.
 #'   Standard errors condition on fitted MLM parameters.
+#'   Bayesian snapshots use posterior means of shared parameters; step-1
+#'   uncertainty is not propagated and full-workflow coverage is unvalidated.
 #'
 #'   Single-group linear nlme fits must retain their data (`keep.data = TRUE`).
 #'   Supported correlations are independent, `corAR1`, and `corCAR1`; an AR(1)
@@ -353,8 +356,8 @@ repair_ranef_gls <- function(mlm, target_group = NULL, include_fixed = FALSE) {
     repair_error("`include_fixed` must be TRUE or FALSE.")
   }
 
-  if (!inherits(mlm, "lmerMod") && !inherits(mlm, "lme")) {
-    repair_error("`mlm` must be a Gaussian lmer or lme fit; GLMMs are not supported.")
+  if (!inherits(mlm, "lmerMod") && !inherits(mlm, "lme") && !repair_is_bayes_plugin(mlm)) {
+    repair_error("`mlm` must be a Gaussian lmer/lme fit or a `repair_bayes_plugin()` snapshot; GLMMs are not supported.")
   }
   elements <- repair_get_mlm_elements(mlm)
   group_names <- names(elements@random_terms)

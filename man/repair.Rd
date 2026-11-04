@@ -23,7 +23,11 @@ Observed predictors may be numeric, logical, or factors. The outcome must
 be numeric or a random coefficient. An intercept is always included.}
 
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, or named list. Select one target grouping factor per model. Gaussian
+model, an experimental \code{\link[=repair_bayes_plugin]{repair_bayes_plugin()}} snapshot, or named list.
+Bayesian support is restricted to the snapshot's documented scope; its
+structural inference conditions on posterior summaries, does not propagate
+step-1 uncertainty, and has unvalidated full-workflow coverage.
+Select one target grouping factor per model. Gaussian
 lmer models may also contain nuisance groups whose every fitted level belongs
 to exactly one target level; nlme models must have one grouping factor.
 Grouping column names may differ, but their values must identify the same units.}
@@ -83,6 +87,8 @@ Effects may come from multiple Gaussian lmer or linear lme models, each with
 one target grouping factor. Gaussian lmer models may have nuisance groups
 entirely contained within targets; shared nuisance levels are rejected.
 Full within-unit prediction-error covariance is retained.
+Experimental Bayesian measurement fits require an explicit
+\code{\link[=repair_bayes_plugin]{repair_bayes_plugin()}} snapshot; see its restrictions and inference limits.
 Multiple models require an explicit \code{cross_model_error} policy; separate
 fits do not establish independent prediction errors. See \code{\link[=repair_data]{repair_data()}}.
 Observed variables are treated as measured without error. Scores are random

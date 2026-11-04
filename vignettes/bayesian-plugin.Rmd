@@ -1,0 +1,160 @@
+---
+title: "Experimental Bayesian measurement-model plug-ins"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Experimental Bayesian measurement-model plug-ins}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(repair)
+```
+
+`repair_bayes_plugin()` explicitly opts in to **experimental plug-in REPAIR**
+using a Bayesian-fitted Gaussian measurement model. The structural estimator
+remains modified method of moments. Its standard errors, normal tests and
+confidence intervals condition on measurement-parameter summaries. They are not
+posterior SDs or credible intervals. Unconditional coverage of the complete,
+refitted Bayesian measurement-model workflow has not been established.
+
+## Fit the measurement model, then create a snapshot
+
+The Bayesian packages are optional dependencies. Fit models through their native
+interfaces so priors, sampler settings and model assessment remain explicit.
+These examples sample models and are not run when building this guide.
+
+```{r rstanarm-example, eval=FALSE}
+library(rstanarm)
+growth <- rstanarm::stan_lmer(
+  Reaction ~ Days + (Days | Subject), data = lme4::sleepstudy,
+  prior = rstanarm::normal(0, 50, autoscale = FALSE),
+  prior_intercept = rstanarm::normal(250, 100, autoscale = FALSE),
+  prior_aux = rstanarm::exponential(.05, autoscale = FALSE),
+  chains = 4, iter = 2000, seed = 42, adapt_delta = .95
+)
+measurement <- repair_bayes_plugin(growth)  # experimental-inference warning
+people <- data.frame(Subject = levels(lme4::sleepstudy$Subject), x = 1:18)
+repair_effects(measurement)
+fit <- repair(re("Days") ~ x, measurement, people, "Subject")
+summary(fit)
+repair_coefficients(fit)  # conditional model-based confidence intervals
+repair_diagnostics(fit, table = "mlm")
+```
+
+The artificial `x` column illustrates the interface, not a substantive analysis.
+Choose priors using the response/predictor scales and scientific context; these
+example choices are not defaults recommended for every application.
+
+```{r brms-example, eval=FALSE}
+growth_brms <- brms::brm(
+  Reaction ~ Days + (Days | Subject), data = lme4::sleepstudy,
+  family = gaussian(link = "identity"),
+  prior = c(brms::prior(normal(0, 50), class = "b"),
+    brms::prior(normal(250, 100), class = "Intercept"),
+    brms::prior(exponential(.05), class = "sigma"),
+    brms::prior(exponential(.05), class = "sd"),
+    brms::prior(lkj(2), class = "cor")),
+  chains = 4, iter = 2000, seed = 43, control = list(adapt_delta = .95)
+)
+measurement_brms <- repair_bayes_plugin(growth_brms)
+fit_brms <- repair(re("Days") ~ x, measurement_brms, people, "Subject")
+```
+
+Priors differ across these engines, including covariance-prior families; their
+estimates need not coincide. Unwrapped `brmsfit` and `stanreg` objects are rejected.
+A snapshot records its original fit and plug-in quantities; recreate it after
+changing the fit.
+
+## Initial support boundary
+
+| Component | Accepted | Excluded |
+|---|---|---|
+| Engine | Sampled `brms::brm()`, `rstanarm::stan_lmer()` or `stan_glmer()` fits | Variational/optimization fits and other stanreg model families |
+| Likelihood | One numeric response, Gaussian identity link | Multivariate, non-Gaussian, censored, truncated or measurement-error likelihoods |
+| Measurement equation | Additive numeric columns, at least one fixed coefficient | Factors, interactions, inline transformations and special terms; precompute numeric columns instead |
+| Random effects | Exactly one ordinary random-effects block and one bare grouping column | Independent multiple blocks, double-bar syntax, nuisance/crossed/nested groups and structured/non-Gaussian random effects |
+| Residuals | Constant, independent Gaussian variance | Autocorrelation, heterogeneous/distributional variance and residual extensions |
+| Other features | Native effective rows/designs; unused grouping levels omitted by the fitting engine | Weights, offsets, custom Stan code/data, nonlinear models and prior-only fits |
+| Sampling information | At least two chains and four retained iterations per chain | Missing posterior/shared-parameter draws or sampler information |
+| Structural workflow | Existing additive grammar; random coefficients as predictors, outcomes or both | Bayesian posterior structural inference; Bayesian `repair_refit()` / `repair_bootstrap()` |
+
+The chain/iteration minimum only makes diagnostics computable; it is not an
+adequacy criterion. The adapter records Rhat, bulk/tail ESS, mean MCSE,
+divergences, maximum observed tree depth and configured-depth hits when available.
+It warns for undefined/high Rhat, low ESS, divergences and depth hits; it does not
+discard draws or diagnose model adequacy. Resolve sampling problems in the
+original fit before interpreting REPAIR. The full audit is available as
+`measurement$diagnostics` and `summary(fit)$mlm_models$mlm` (or your model-list
+name), including priors and engine version.
+
+Multiple-model analyses retain the existing explicit cross-model error policy.
+Separate Bayesian fits do not establish independent measurement errors;
+`cross_model_error = "independent"` remains a substantive assumption.
+
+## What is passed to REPAIR
+
+The snapshot uses posterior means of fixed coefficients, complete random
+covariance matrices and **squared residual SD draws**:
+
+\[
+\widehat\beta=E(\beta\mid y),\qquad
+\widehat G=E(G\mid y),\qquad
+\widehat\sigma^2=E(\sigma^2\mid y).
+\]
+
+It does not square the posterior mean SD or multiply separately averaged SDs
+and correlations. From native fitted Gaussian designs it reconstructs
+
+\[
+\widetilde b_i=(Z_i^\top\widehat R_i^{-1}Z_i)^{-1}
+  Z_i^\top\widehat R_i^{-1}(y_i-X_i\widehat\beta),\qquad
+\Psi_i=(Z_i^\top\widehat R_i^{-1}Z_i)^{-1},
+\quad\widehat R_i=\widehat\sigma^2 I.
+\]
+
+The existing GLS scorer and structural M-MOM estimator are shared with the
+frequentist workflows. Scores are deviations from fitted fixed effects, and
+full within-person error covariance is retained. The target covariance `G`
+is used for plug-in reliability diagnostics, not for these likelihood-only
+scores. A proper Bayesian posterior cannot rescue a rank-deficient individual
+likelihood design; the usual scoring failure and explicit omission policies apply.
+
+Posterior random-effect SDs are not sampling-error SDs for these scores.
+Covariances of marginal MCMC random-effect draws integrate over shared-parameter
+uncertainty. Gaussian prior-precision subtraction requires conditional moments
+at one matching parameter set. The adapter therefore reconstructs GLS directly.
+
+## Inferential limits and validation
+
+At true fixed shared parameters, Gaussian algebra supplies the additive
+sampling-error representation needed by REPAIR. Using estimated shared
+parameters introduces an approximation. Conditional structural SEs exclude:
+
+* Uncertainty in fixed effects and residual variance, including dependence
+  induced across people by estimating them from the same cohort.
+* Prior sensitivity and possible bias from restrictive or misspecified shared
+  parameter priors. Removing target shrinkage does not make REPAIR prior-free.
+* Measurement-model misspecification and uncertainty in estimated cross-model
+  error blocks.
+
+Plug-in reliability also conditions on parameter summaries; it is not a fully
+marginalized Bayesian reliability measure. Good sampling diagnostics, high
+reliability or successful numerical fitting do not establish structural interval
+coverage. Posterior means used as predictors can preserve linear structural
+relationships under appropriate calibration conditions; REPAIR is not guaranteed
+to improve on that alternative in every setting.
+
+Recomputing REPAIR for posterior parameter draws and pooling coefficients/SEs
+does not automatically define a posterior or valid multiple-imputation procedure.
+A joint Bayesian structural model or an explicitly specified modular model needs
+a separate methodological argument.
+
+Software tests check GLS equivalence and actual native-model extraction. They do
+not validate unconditional inference. The development
+[full refitted-workflow simulation plan](https://github.com/HallquistLab/repair/blob/main/dev/bayesian-plugin-simulation-plan.md)
+specifies fresh-data generation and complete Bayesian refitting in every outer
+replicate, prior sensitivity, structural estimands, failure accounting,
+comparators and coverage/Monte Carlo reporting. No full-workflow coverage results
+are claimed by this experimental release.

@@ -60,6 +60,7 @@ audits describe the scope at the time they were written.
 |---|---|---|
 | lme4 MLM | Gaussian `lmer()` with one target grouping factor, including independent target blocks and nuisance groups contained within targets | GLMMs and nuisance levels shared across targets are rejected; see `vignette("nested-nuisance")` |
 | nlme MLM | Linear `lme()` with one grouping factor and retained effective data (`keep.data = TRUE`) | Nonlinear or multilevel lme fits are rejected |
+| Experimental Bayesian MLM | Explicit `repair_bayes_plugin()` snapshots of sampled brms/rstanarm Gaussian identity-link fits; additive numeric columns, one random block, constant independent residual variance | Plug-in summaries only; no step-1 uncertainty propagation, Bayesian structural posterior, or established full-refitted-workflow coverage. See `vignette("bayesian-plugin")` for exclusions |
 | nlme residual correlation | Independent, `corAR1`, `corCAR1`; internal ARMA(1,0) representation of AR(1) | Correlation grouping must match random-effects grouping; other structures are unsupported |
 | nlme residual variance | Constant, `varIdent`, `varPower`, including supported fitted-value covariates | Other variance structures are rejected; see `vignette("nlme-workflow")` |
 | Structural equation | Additive regression with an intercept; random coefficients on either side | At least one predictor and one `re()` reference; no random-coefficient interactions, nonlinear transformations, offsets, `.`, or joint equations |

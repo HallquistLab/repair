@@ -1,3 +1,16 @@
+# repair (development version)
+
+* Add explicit experimental `repair_bayes_plugin()` snapshots for narrowly
+  supported sampled Gaussian identity-link brms/rstanarm measurement models.
+  Reuse the existing likelihood-only GLS and M-MOM workflow with posterior means
+  of shared parameters, full covariance matrices and E(sigma^2).
+* Record priors, native-engine version, sampler diagnostics and inference limits.
+  Reject unsupported likelihood/design features and Bayesian refitting/bootstrap
+  requests. Structural intervals remain conditional model-based confidence
+  intervals; full refitted-workflow coverage is unvalidated.
+* Add a Bayesian plug-in guide, focused software tests, opt-in native sampling
+  tests and a prospective full refitted-workflow simulation plan in `dev/`.
+
 # repair 1.0.0 (2026-11-03)
 
 First release candidate for Random-Effect Prediction Adjustment for Inference

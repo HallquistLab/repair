@@ -60,6 +60,14 @@ predictors, the outcome, or both. Numeric, logical, and factor observed predicto
 are supported. See the [workflow guide](vignettes/repair-workflow.Rmd) for matching,
 omission, interpretation, and current limits.
 
+**Experimental Bayesian inputs:** explicitly wrap a narrowly supported sampled
+Gaussian brms/rstanarm fit with `repair_bayes_plugin(fit)`. This uses posterior
+summaries of shared measurement parameters with the existing estimator.
+Structural inference remains conditional and model-based; step-1 uncertainty
+is not propagated, full refitted-workflow coverage is unvalidated, and Bayesian
+refitting/bootstrap APIs are unsupported. See the
+[Bayesian plug-in guide](vignettes/bayesian-plugin.Rmd) for the precise scope.
+
 ## Package website
 
 Browse the [package website](https://hallquistlab.github.io/repair/) for a guided

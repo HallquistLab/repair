@@ -8,7 +8,7 @@ repair_effects(models)
 }
 \arguments{
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, or a named list of models.}
+model, an experimental \code{\link[=repair_bayes_plugin]{repair_bayes_plugin()}} snapshot, or a named list.}
 }
 \value{
 A data frame with \code{model}, \code{group}, \code{term}, and \code{n_levels} columns.
