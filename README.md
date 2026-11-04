@@ -76,14 +76,18 @@ documents the current package version.
 
 ## Install
 
+To install from CRAN, use:
+
 ``` r
-# install.packages("remotes")
-remotes::install_github("HallquistLab/repair")
+install.packages("repair")
 ```
 
-Installation from source requires R \>= 4.3 and a C++20 compiler with
-the R build toolchain. On Windows, use the Rtools version appropriate
-for your R installation.
+To install the development version, use:
+
+``` r
+# install.packages("pak")
+pak::pak("HallquistLab/repair")
+```
 
 ## Fit, inspect, and summarize
 
