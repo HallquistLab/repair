@@ -13,6 +13,9 @@ step-up regularization, and experimental whole-unit bootstrap inference.
   Add `repair_sensitivity()` to compare explicit scenarios with conditional
   coefficient tables, selected alphas, fallback flags, warnings and failures.
   Expand the multiple-model guide with design guidance and complete examples.
+  Add a reproducible 48-condition, 24,000-dataset simulation screen with
+  condition-level performance and Monte Carlo uncertainty; document its
+  iid-design and inactive-step-up limits.
   No automatic covariance estimation or estimator changes are introduced.
 
 * Allow unquoted random-coefficient names such as `re(day)` alongside

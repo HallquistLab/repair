@@ -306,6 +306,30 @@ correlation. The existing whole-unit bootstrap supports a single measurement
 model; this sensitivity workflow does not add a multiple-model bootstrap or
 propagate uncertainty in externally estimated cross-model parameters.
 
+### Basic simulation evidence
+
+A repeated-sampling screen accompanying
+[PR #24](https://github.com/HallquistLab/repair/pull/24) used 500 replicates in
+each of 48 paired iid Gaussian conditions, varying N (50/200), nominal occasions
+(6/12), balance, true cross-error correlation (-0.5/0/0.5), and a null/nonzero
+structural slope. With the correct covariance assumption, overall 95% interval
+coverage was 95.15% with fitted marginal models and 95.28% with known measurement
+parameters; condition-level coverage ranged from 93.2% to 97.2%. Near 95%, the
+condition-level Monte Carlo SE is approximately one percentage point.
+
+Assuming independence when the true cross-error correlation was -0.5 or 0.5
+produced pooled null-effect Type I error rates of 58.6% and 59.0% in these
+illustrative conditions. A valid covariance matrix need not encode a correct
+scientific assumption. This supports examining justified alternatives rather
+than selecting independence for convenience. It does not identify the true
+correlation or supply unconditional inference over unknown covariance parameters.
+
+There were no fitting failures. All default step-up searches retained alpha 3,
+so this screen does not assess activated adaptive selection or fallback
+inference. The PR includes reproducible scripts and full condition-level tables;
+its findings are limited to this two-process, one-predictor iid design, not a
+general coverage guarantee or validation of automatic covariance estimation.
+
 ## Check matching and exclusions
 
 The unit-level data frame defines the scope and output order. Each model's

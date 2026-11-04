@@ -65,3 +65,14 @@ rho caveats, explicit observation matrices, propagation equivalence checks, a
 sensitivity grid retaining construction errors, and conditional-inference limits.
 Automatic covariance estimation is deliberately left for separately validated
 methodological work.
+
+## Repeated-sampling follow-up
+
+The [basic simulation screen](covariance-screen/README.md) adds 500 replicates
+in each of 48 iid two-process conditions, with known and fitted marginal
+measurement quantities, three assumed correlations and minimum/default step-up
+regularization. It records all 288,000 structural fits, Monte Carlo uncertainty,
+prediction-error covariance checks, and public-interface/backend audits. Correct
+assumptions give approximately nominal coverage in this screen; wrong but
+admissible cross-covariances can severely bias inference. Every step-up selection
+remained at alpha 3, so this does not validate activated adaptive selection.
