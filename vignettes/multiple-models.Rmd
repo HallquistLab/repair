@@ -64,7 +64,42 @@ Correlated latent slopes do not necessarily have correlated prediction errors.
 Conversely, separate MLM fits do not establish independent errors.
 Shared occasion-level disturbances or overlapping measurements can correlate the
 errors. Choose the policy from the measurement design and a defensible covariance
-model. The package cannot estimate that covariance from separate fitted models.
+model. The package does not estimate that covariance from separate fitted models.
+
+### Where do these covariances come from?
+
+The target is the covariance of the **estimation errors in the likelihood-only
+predictions**, conditional on fitted measurement parameters. It is different from
+the covariance between people's true intercepts/slopes. Correlating extracted
+slopes across people mixes true between-person variation with prediction error;
+it does not estimate the needed error covariance.
+
+Start with the measurement design:
+
+| Design or evidence | Practical action |
+|:--|:--|
+| Defensible independent measurement errors, conditional on each process's target effects | Use `"independent"`, and state why. Sharing people alone does not contradict this assumption. |
+| Paired occasions with plausible shared noise | Specify an observation-level cross-error model and propagate it with `repair_cross_covariance()`. Examine a range of justified assumptions with `repair_sensitivity()`. |
+| Calibration data or a jointly fitted multivariate measurement model | Obtain compatible observation error covariances from that source, separating residual/nuisance covariance from target random-effect covariance. Supply the observation blocks or externally propagated prediction blocks. |
+| Insufficient evidence to choose one covariance | Report sensitivity over a scientifically plausible range. The package cannot turn unidentified assumptions into empirical estimates. |
+
+Separate fits do not demonstrate independent errors. Different occasions do not
+guarantee independence either: persistent or serially correlated disturbances
+can bridge occasions. Conversely, correlated latent processes do not by
+themselves require nonzero cross-error blocks. The relevant assumption concerns
+the noise remaining after the target random coefficients are separated out.
+
+Ordinary mixed-model residual correlations are not an automatic solution.
+For example, `nlme::residuals()` depends on the chosen grouping level and residual
+type; conditional residuals also reflect estimation and shrinkage of random
+effects. They are not interchangeable with observation errors or prediction
+errors. See the [nlme residual documentation](https://stat.ethz.ch/R-manual/R-devel/library/nlme/html/residuals.lme.html).
+A joint multivariate measurement model can distinguish residual correlations from
+cross-process random-effect correlations; the
+[brms multivariate guide](https://paulbuerkner.com/brms/articles/brms_multivariate.html)
+illustrates that distinction. REPAIR does not directly accept brms fits: an
+external covariance source must be compatible with the supported marginal fits,
+measurement scales, IDs, occasions, and effective nuisance covariance.
 
 Each model must select one target grouping factor. lmer models can also have
 nuisance groups contained within each target person; see `vignette("nested-nuisance")`.
@@ -118,6 +153,151 @@ The policy and original supplied blocks remain in
 The estimator's final aligned inputs are `@err_x`, `@err_y`, and `@err_xy`.
 Standard errors condition on the MLM fits and supplied covariance; they
 do not propagate uncertainty in estimating either.
+
+## Propagate observation covariance with a helper
+
+`repair_cross_covariance()` computes the extraction operators from the fitted
+models and propagates supplied observation error assumptions:
+
+\[
+L_{a,i} = (Z_{a,i}^{\mathsf T}R_{a,i}^{-1}Z_{a,i})^{-1}
+           Z_{a,i}^{\mathsf T}R_{a,i}^{-1}, \qquad
+\Omega_{ab,i} = L_{a,i}R_{ab,i}L_{b,i}^{\mathsf T}.
+\]
+
+Here R_a and R_b are the fitted effective error covariances used by the scorer,
+including contained nuisance random effects when present; they exclude the target
+random effects. R_ab describes covariance between those effective observation
+errors. Only the formula-selected coefficients are returned. The helper does
+not refit a joint model or estimate R_ab.
+
+### Matched occasions under an assumed iid correlation
+
+For two models with homoscedastic iid errors and no nuisance random groups, the
+`rho` shortcut assumes correlation rho at matching occasions for the same person,
+and zero covariance at all other occasion pairs. This fixture has known matching
+time scales: z = time / 4 and w = 0.5 + time / 5. Its generating rho = 0.25 is
+known only because the data are synthetic; this is not an empirical estimate.
+
+```{r propagate-iid}
+# Values are occasion keys, names identify original observation rows.
+# Real data should use recorded visit/occasion identifiers, on a common scale.
+keys <- list(
+  growth = setNames(as.character(round(4 * correlated$a$z)), rownames(correlated$a)),
+  response = setNames(as.character(round(5 * (correlated$b$w - .5))),
+                      rownames(correlated$b))
+)
+propagated <- repair_cross_covariance(structural, models2, keys,
+  rho = .25, ids = correlated$people$person)
+fit_propagated <- repair(structural, models2, correlated$people, "person",
+                         cross_model_error = propagated)
+stopifnot(isTRUE(all.equal(coef(fit_propagated), coef(fit2), tolerance = 1e-12)),
+          isTRUE(all.equal(vcov(fit_propagated), vcov(fit2), tolerance = 1e-12)))
+```
+
+Keys are matched to **effective fitted row names**, so original input order,
+subsetting and omitted rows do not silently change alignment. Supply unique,
+nonempty occasion keys within each person and model; they can repeat between
+people. Equal keys identify equal occasions across models. Preserve the original
+row names in the key vectors. The helper never pairs by row position or nearest
+time. Unmatched occasions have zero cross-covariance under this shortcut, an
+assumption that needs justification for your design. The shortcut rejects
+correlated or heterogeneous marginal errors; a plausible scalar rho alone is
+insufficient to specify a joint covariance for those models.
+
+### Explicit observation blocks
+
+For more general errors, supply a matrix R_ab for every requested person and
+every unordered pair of referenced models. Matrix row and column names identify
+effective occasion keys in the two models; these matrices may be rectangular.
+The following explicitly constructs the same iid assumption for illustration:
+
+```{r propagate-explicit}
+observation_covariance <- lapply(correlated$people$person, function(person) {
+  a <- keys$growth[rownames(correlated$a)[correlated$a$id == person]]
+  b <- keys$response[rownames(correlated$b)[correlated$b$subject == person]]
+  rab <- outer(unname(a), unname(b), `==`) * .25 *
+    sigma(models2$growth) * sigma(models2$response)
+  dimnames(rab) <- list(a, b)
+  rab
+})
+names(observation_covariance) <- correlated$people$person
+explicit <- repair_cross_covariance(structural, models2, keys,
+  residual_cross_covariance = list(list(models = c("growth", "response"),
+    covariance = observation_covariance)), ids = correlated$people$person)
+stopifnot(isTRUE(all.equal(explicit, propagated, tolerance = 1e-12)))
+```
+
+In a real analysis, replace those matrices with a scientifically justified joint
+error model or compatible external calibration. Their entries are observation
+covariances, not correlations. For nested nuisance groups, include any cross-model
+nuisance covariance in addition to residual covariance. Automatic estimation from
+paired residuals would need its own statistical method and validation and is
+outside this workflow.
+
+The helper checks the **complete joint observation covariance** using fitted
+within-model blocks, then checks the propagated selected-effect covariance.
+With three or more models, valid pairs need not form a valid joint covariance.
+It rejects invalid inputs rather than projecting them to a nearby matrix.
+The fitted marginal blocks are preserved. Incompatible external estimates must
+be reconciled through the measurement model, not silently modified here.
+
+## Examine sensitivity to the cross-error assumption
+
+Choose a range from substantive knowledge of the measurement errors, calibration,
+or external studies. The values below are illustrative and not a recommended
+universal range. A sensitivity grid is not a confidence interval for rho, and
+choosing the scenario with the preferred structural result would undermine its
+purpose. Keep other fitting choices and the analysis scope fixed.
+
+```{r sensitivity}
+rhos <- c(-.5, 0, .25, .5)
+scenario_names <- paste0("rho=", rhos)
+constructed <- setNames(vector("list", length(rhos)), scenario_names)
+construction <- data.frame(scenario = scenario_names, rho = rhos,
+                           status = "ok", message = "")
+for (j in seq_along(rhos)) {
+  # Preserve construction failures as well as downstream fitting failures.
+  constructed[j] <- list(tryCatch(
+    repair_cross_covariance(structural, models2, keys, rho = rhos[j],
+                             ids = correlated$people$person),
+    error = function(e) {
+      construction$status[j] <<- "error"
+      construction$message[j] <<- conditionMessage(e)
+      NULL
+    }))
+}
+construction
+scenarios <- c(list(independent = "independent"),
+               constructed[construction$status == "ok"])
+sensitivity <- repair_sensitivity(structural, models2, correlated$people,
+  "person", scenarios = scenarios, regularization = "step_up")
+sensitivity$scenarios  # status, warnings, selected alphas, fallback flags
+sensitivity$coefficients[, c("scenario", "term", "estimate", "std.error",
+                             "conf.low", "conf.high")]
+# Inspect full diagnostics for a particular assumption.
+repair_diagnostics(sensitivity$fits[["rho=0.25"]], table = "conditioning")
+stopifnot(identical(sensitivity$fits$independent@struc_fit,
+                    sensitivity$fits[["rho=0"]]@struc_fit))
+```
+
+The models are reused across scenarios; `repair_mlm()` specifications, if
+supplied, are fitted once for the whole sensitivity call. Each scenario uses the
+existing estimator and reselects step-up alphas when requested. Scenario-specific
+invalid covariance inputs have status `"error"`, numerical structural failures
+have status `"failed"`, and neither produces coefficient rows. A usable
+minimum-alpha fallback remains `"ok"` with explicit fallback flags. Shared input
+errors stop the call. Warnings during each scenario are saved in its summary.
+Construction failures occur before `repair_sensitivity()`, so keep the
+`construction` table alongside its outputs, as above.
+
+Report the assumptions, admissible range, rejected or failed scenarios, and how
+the estimates, SEs, intervals, and regularization change. Intervals remain
+conditional on each assumed covariance and the fitted marginal model parameters.
+They do not average over scenarios or include uncertainty in an estimated error
+correlation. The existing whole-unit bootstrap supports a single measurement
+model; this sensitivity workflow does not add a multiple-model bootstrap or
+propagate uncertainty in externally estimated cross-model parameters.
 
 ## Check matching and exclusions
 

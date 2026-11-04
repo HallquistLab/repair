@@ -80,6 +80,8 @@ overridden. Supplied blocks are conditional on the fitted MLMs;
 uncertainty in their estimation is not propagated. Independent errors do not
 imply independent latent processes. The package does not estimate cross-model
 covariance from separate fits. See \code{vignette("multiple-models", package = "repair")}.
+Use \code{\link[=repair_cross_covariance]{repair_cross_covariance()}} to propagate explicitly assumed observation
+covariances and \code{\link[=repair_sensitivity]{repair_sensitivity()}} to compare supplied assumptions.
 }
 \examples{
 data(repair_example)

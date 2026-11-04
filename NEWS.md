@@ -6,6 +6,15 @@ step-up regularization, and experimental whole-unit bootstrap inference.
 
 ## Estimation and supported models
 
+* Add `repair_cross_covariance()` to propagate explicit observation error
+  covariance to selected between-model prediction-error blocks. Match occasions
+  through fitted row identities, validate joint observation and prediction
+  covariance, and provide an assumed-correlation shortcut for paired iid errors.
+  Add `repair_sensitivity()` to compare explicit scenarios with conditional
+  coefficient tables, selected alphas, fallback flags, warnings and failures.
+  Expand the multiple-model guide with design guidance and complete examples.
+  No automatic covariance estimation or estimator changes are introduced.
+
 * Allow unquoted random-coefficient names such as `re(day)` alongside
   `re("day")`. Read bare names literally without evaluating variables or calls.
   Preserve optional model qualification for unique references and model/group

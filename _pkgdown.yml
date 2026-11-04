@@ -62,6 +62,8 @@ reference:
   - re
   - repair_effects
   - repair_data
+  - repair_cross_covariance
+  - repair_sensitivity
 - title: Extract results for reporting and reuse
   desc: Use stable data frames for reports and joins, or familiar R generics for fitted models.
 - contents:
