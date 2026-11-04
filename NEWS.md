@@ -20,7 +20,7 @@
 * Support Gaussian lmer nuisance groups contained within each selected target
   person, including nested random slopes and multiple nuisance groups. Verify
   containment on all effective fitted rows; retain rejection of shared levels.
-* Add optional `group` qualification to `re()` for ambiguous random coefficient
+* Add optional `group` qualification to `re()` for ambiguous random effect
   names. Each referenced model selects one target group; existing single-group
   labels and stable table schemas are preserved.
 * Include nuisance covariance in both prediction extraction and posterior reliability; report

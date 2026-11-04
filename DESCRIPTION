@@ -1,5 +1,5 @@
 Package: repair
-Title: Measurement-Error-Corrected Regression of Random Coefficients
+Title: REPAIR: Random-Effect Prediction Adjustment for Inference in Regression
 Version: 0.5.0
 Authors@R: 
     c(person("Zachary A.", "Vig", email = "zachvig@rocketmail.com",
@@ -11,7 +11,7 @@ Description: Implements Random-Effect Prediction Adjustment for Inference in
     Regression (REPAIR), a two-stage method for estimating relationships involving
     person- or cluster-specific intercepts and slopes from Gaussian mixed models.
     Uses a modified method-of-moments correction for sampling error in these
-    estimated random coefficients. Extracts likelihood-only predictions and sampling-error
+    estimated random effects. Extracts likelihood-only predictions and sampling-error
     covariances, aligns them with unit-level data by identifier, and reports conditional
     model-based inference and analysis diagnostics.
 URL: https://hallquistlab.github.io/repair/, https://github.com/HallquistLab/repair

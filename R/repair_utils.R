@@ -157,7 +157,7 @@ S7::method(repair_get_mlm_elements, class_merMod) <- function(model) {
     }
 
     if (anyDuplicated(terms)) {
-      repair_error("Random coefficient names must be unique within each grouping factor for likelihood-only prediction extraction.")
+      repair_error("Random effect names must be unique within each grouping factor for likelihood-only prediction extraction.")
     }
     blocks <- which(names(block_terms) == group_name)
     # Gp contains zero-based offsets for blocks, not distinct grouping factors.

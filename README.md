@@ -37,26 +37,26 @@ regression. It first obtains **likelihood-only predictions** and their
 unit-specific sampling-error covariances from fitted Gaussian mixed
 models. These predictions remove shrinkage but remain noisy estimates.
 It then uses a **modified method-of-moments (M-MOM)** regression to
-account for their sampling error when random coefficients serve as
+account for their sampling error when random effects serve as
 predictors, the outcome, or both.
 
 This workflow is useful when you want to connect processes measured
 across different tasks, settings, or timescales while keeping the MLMs
 separate from the regression of interest. The same principle applies to
 other clusters, such as students nested within classrooms. The
-motivation follows Vig and Hallquist’s *Regression among random effects*
-manuscript; run `citation("repair")` for the method and software
-references.
+motivation follows Vig and Hallquist’s *REPAIR: Random-effect prediction
+adjustment for inference in regression* manuscript; run
+`citation("repair")` for the method and software references.
 
 ## Supported analyses
 
 Version 0.5.0 is a development release. The supported structural
 workflow is an additive regression with an intercept, using random
-coefficients from **fitted `lme4::lmer()` or linear `nlme::lme()`
-models**. Select one target grouping factor per model; lmer models can
-also have nuisance groups contained within each target person. Random
-coefficients may be predictors, the outcome, or both. Numeric, logical,
-and factor observed predictors are supported. See the [workflow
+effects from **fitted `lme4::lmer()` or linear `nlme::lme()` models**.
+Select one target grouping factor per model; lmer models can also have
+nuisance groups contained within each target person. Random effects may
+be predictors, the outcome, or both. Numeric, logical, and factor
+observed predictors are supported. See the [workflow
 guide](vignettes/repair-workflow.Rmd) for matching, omission,
 interpretation, and current limits.
 
@@ -107,7 +107,7 @@ summary(fit)
 #> Units: 60 analyzed / 60 requested; 0 excluded
 #> MLM: growth (lme4; group person; 0 IDs outside scope)
 #> Cross-model prediction errors: not applicable (one model)
-#> Scores: likelihood-only random deviations
+#> Predictions: likelihood-only random deviations
 #>   model  group term    role
 #>  growth person  day outcome
 #>
@@ -291,7 +291,7 @@ and a dual-process reproduction against the paper’s simulation code.
 
 ## Reliability and diagnostics
 
-Assess the selected random coefficients using the manuscript’s posterior
+Assess the selected random effects using the manuscript’s posterior
 reliability definitions. The default uses analyzed units with equal
 weights:
 
@@ -341,18 +341,18 @@ Zach is the primary R package maintainer contact. The package version is
 
 - Standard errors are model-based and conditional on estimated MLM
   quantities. They use the modified final predictor moment, consistent
-  with the manuscript and primary simulation estimator.
-  Measurement-model parameter uncertainty is not propagated; intervals
-  and tests use a normal reference.
+  with the manuscript and primary simulation estimator. MLM parameter
+  uncertainty is not propagated; intervals and tests use a normal
+  reference.
 - `regularization = "minimum"` is the default. `"none"` disables
   stabilization but **still corrects for measurement error**. Custom
   settings require `alpha`.
 - Observed structural variables are assumed measured without error. The
-  complete error covariance is preserved when random coefficients appear
-  on both sides.
-- Interactions or nonlinear transformations involving random
-  coefficients, models without an intercept, and joint multiple-equation
-  fitting are not implemented. Unsupported formulas fail explicitly.
+  complete error covariance is preserved when random effects appear on
+  both sides.
+- Interactions or nonlinear transformations involving random effects,
+  models without an intercept, and joint multiple-equation fitting are
+  not implemented. Unsupported formulas fail explicitly.
 - Single-group `nlme` models support independent/AR(1)/continuous-time
   AR(1) correlation and constant/`varIdent`/`varPower` residual
   variance. Keep the data in the fit (`keep.data = TRUE`). See the [nlme

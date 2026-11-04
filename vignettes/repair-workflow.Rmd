@@ -44,7 +44,7 @@ The high-level interface supports Gaussian `lmer()` or linear `lme()` measuremen
 models, each with one target grouping factor. lmer models may include nuisance
 groups contained within targets; see `vignette("nested-nuisance")`. Multiple referenced models require an
 explicit cross-model prediction-error policy; see `vignette("multiple-models")`. The structural model is
-additive and includes an intercept. Scores are deviations from the fitted fixed
+additive and includes an intercept. Predictions are deviations from the fitted fixed
 effects. The MLM remains fixed while structural relationships are
 explored; `repair()` does not refit it.
 
@@ -125,7 +125,7 @@ internal covariance contract is:
 | `err_y` | Outcome-error variance, length n |
 | `err_xy` | Outcome/predictor-error covariance, n by q |
 | `effects` | Model, grouping factor, coefficient, and structural role |
-| `predictions` | Full scorer result and per-cluster diagnostics |
+| `predictions` | Full prediction-extraction result and per-cluster diagnostics |
 | `diagnostics` | Cohort counts, exclusions, unused IDs, and model messages |
 
 All observed variables, including factor contrast columns, have zero measurement
@@ -158,9 +158,9 @@ weights in that term. It assumes the model-based normal-error covariance and
 independent analysis people. It is not a robust sandwich estimator and does not
 include uncertainty from estimating the MLM.
 
-## Random coefficients on either side
+## Random effects on either side
 
-An observed outcome can be regressed on a random coefficient:
+An observed outcome can be regressed on a random effect:
 
 ```{r predictor}
 predictor_fit <- repair(
@@ -170,7 +170,7 @@ predictor_fit <- repair(
 coef(predictor_fit)
 ```
 
-Both sides may contain random coefficients from the same MLM:
+Both sides may contain random effects from the same MLM:
 
 ```{r both}
 both <- repair(
@@ -184,7 +184,7 @@ The nonzero outcome/predictor-error covariance is retained. Adding a constant
 fixed coefficient changes the intercept interpretation; it does not turn a
 random deviation into a general unit-specific effect when fixed interactions
 or person-varying covariates contribute. The structural workflow consistently
-uses deviations. The low-level scorer's `include_fixed` option adds only matching
+uses deviations. The low-level prediction extractor's `include_fixed` option adds only matching
 fixed coefficients and errors if any coefficient lacks a match.
 
 ## Missingness is a decision
@@ -226,7 +226,7 @@ manual <- fit_mmom(list(
 stopifnot(isTRUE(all.equal(unname(coef(fit)), manual@coefficients$estimate)))
 ```
 
-The lower-level scorer `repair_ranef_gls()` returns group-keyed S7 properties
+The lower-level prediction extractor `repair_ranef_gls()` returns group-keyed S7 properties
 `@predictions`, `@prediction_error_covariance`, `@levels`, `@terms`, and `@diagnostics`.
 Single-group `nlme` extraction supports the residual structures documented in
 `vignette("nlme-workflow")`. lmer nuisance effects entirely contained within each

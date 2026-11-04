@@ -2,7 +2,7 @@ citHeader("Please cite both the repair software and the REPAIR method manuscript
 
 bibentry(
   bibtype = "Manual",
-  title = "repair: Measurement-Error-Corrected Regression of Random Coefficients",
+  title = "REPAIR: Random-effect prediction adjustment for inference in regression",
   author = c(person("Zachary A.", "Vig"), person("Michael N.", "Hallquist")),
   year = "2026",
   note = paste("R package version", meta$Version),
@@ -11,7 +11,7 @@ bibentry(
 
 bibentry(
   bibtype = "Unpublished",
-  title = "Regression among random effects",
+  title = "REPAIR: Random-effect prediction adjustment for inference in regression",
   author = c(person("Zachary A.", "Vig"), person("Michael N.", "Hallquist")),
   year = "2026",
   note = "Unpublished manuscript, version dated October 27, 2026"

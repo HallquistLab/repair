@@ -13,7 +13,7 @@ normalize_repair_models <- function(models) {
   models
 }
 
-#' Inspect available random coefficients
+#' Inspect available random effects
 #' @param models A fitted Gaussian `lme4::lmer()` or linear `nlme::lme()`
 #'   model, or a named list of models.
 #' @return A data frame with `model`, `group`, `term`, and `n_levels` columns.

@@ -11,7 +11,7 @@ template:
     navbar-dark-bg: "#719FC6"
 
 home:
-  title: Measurement-error-corrected regression of random coefficients in R
+  title: "REPAIR: random-effect prediction adjustment for inference in regression"
   description: >
     Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
     estimates relationships involving unit-specific change and other processes
@@ -50,7 +50,7 @@ reference:
 - contents:
   - repair_example
 - title: Fit and inspect an analysis
-  desc: Discover random coefficients, specify a structural equation, and inspect the analysis scope before fitting.
+  desc: Discover random effects, specify a structural equation, and inspect the analysis scope before fitting.
 - contents:
   - repair
   - repair_refit
@@ -70,7 +70,7 @@ reference:
   - plot.repair_reliability
   - repair_diagnostics
 - title: Advanced estimation and object structure
-  desc: Lower-level interfaces for validated score inputs and custom estimation workflows.
+  desc: Lower-level interfaces for validated prediction inputs and custom estimation workflows.
 - contents:
   - repair_ranef_gls
   - fit_mmom

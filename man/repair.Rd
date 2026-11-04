@@ -19,7 +19,7 @@ repair(
 \arguments{
 \item{formula}{An additive structural formula with at least one \code{\link[=re]{re()}} marker.
 Observed predictors may be numeric, logical, or factors. The outcome must
-be numeric or a random coefficient. An intercept is always included.}
+be numeric or a random effect. An intercept is always included.}
 
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
 model, or named list. Select one target grouping factor per model. Gaussian
@@ -65,12 +65,12 @@ inspectable \verb{@analysis_data}. Use \code{summary()}, \code{coef()}, \code{vc
 }
 \description{
 Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
-accounts for sampling error when estimated random coefficients are used as
+accounts for sampling error when estimated random effects are used as
 predictors, the outcome, or both in a second-stage regression.
 }
 \details{
-Select random coefficients with \code{\link[=re]{re()}}, match them to unit-level data by
-ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
+Select random effects with \code{\link[=re]{re()}}, match them to unit-level data by
+ID, and fit the modified method-of-moments (M-MOM) regression. MLM
 models are fitted beforehand so that their fitting choices remain explicit.
 
 The supported structural grammar is additive with an intercept.
@@ -80,7 +80,7 @@ entirely contained within targets; shared nuisance levels are rejected.
 Full within-unit prediction-error covariance is retained.
 Multiple models require an explicit \code{cross_model_error} policy; separate
 fits do not establish independent prediction errors. See \code{\link[=repair_data]{repair_data()}}.
-Observed variables are treated as measured without error. Scores are random
+Observed variables are treated as measured without error. Predictions are random
 deviations, not fixed-plus-random individual coefficients. For nlme fits,
 supported residual structures and stored-data requirements are described
 in \code{\link[=repair_ranef_gls]{repair_ranef_gls()}}. Use \code{\link[=repair_refit]{repair_refit()}} to verify and replay one

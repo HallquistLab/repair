@@ -94,8 +94,8 @@ establish the original coding from the supplied reference data.
 
 | Component | Behavior |
 |---|---|
-| Measurement backend | Gaussian lmer or supported single-group linear lme |
-| Formula and target | Same fixed/random coefficient schema and target grouping; contained lmer nuisance groups remain supported |
+| MLM backend | Gaussian lmer or supported single-group linear lme |
+| Formula and target | Same fixed/random effect schema and target grouping; contained lmer nuisance groups remain supported |
 | ML/REML | Recorded method retained and checked |
 | Weights/offsets | Data-only expressions rebuilt on the supplied rows; global vectors require an explicit recipe |
 | Contrasts | Recorded fixed-factor matrices and levels retained; incompatible levels fail |

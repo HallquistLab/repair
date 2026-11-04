@@ -62,7 +62,7 @@ audits describe the scope at the time they were written.
 | nlme MLM | Linear `lme()` with one grouping factor and retained effective data (`keep.data = TRUE`) | Nonlinear or multilevel lme fits are rejected |
 | nlme residual correlation | Independent, `corAR1`, `corCAR1`; internal ARMA(1,0) representation of AR(1) | Correlation grouping must match random-effects grouping; other structures are unsupported |
 | nlme residual variance | Constant, `varIdent`, `varPower`, including supported fitted-value covariates | Other variance structures are rejected; see `vignette("nlme-workflow")` |
-| Structural equation | Additive regression with an intercept; random coefficients on either side | At least one predictor and one `re()` reference; no random-coefficient interactions, nonlinear transformations, offsets, `.`, or joint equations |
+| Structural equation | Additive regression with an intercept; random effects on either side | At least one predictor and one `re()` reference; no random-effect interactions, nonlinear transformations, offsets, `.`, or joint equations |
 | Observed structural variables | Numeric outcome; numeric/logical/factor predictors | Treated as measured without error; precompute observed transformations and explicitly convert character categories to factors |
 | Multiple MLMs | Named fits with model-qualified effects and ID matching | Explicit independent-error or supplied prediction-error covariance policy; separate fitting does not establish independence |
 | IDs and missingness | One structural row per unit; character-value ID matching; explicit `na_action = "omit"` audit | Duplicate/missing/empty IDs always fail; default is to stop on incomplete inputs |
@@ -79,7 +79,7 @@ errors. `repair_prediction_covariance(fit)` exposes what actually enters the est
 
 | Quantity | Interface | Meaning |
 |---|---|---|
-| Likelihood-only sampling error | `repair_predictions()`, `repair_prediction_covariance()` | Error in estimated unit-specific random coefficients, conditional on fitted MLM quantities |
+| Likelihood-only sampling error | `repair_predictions()`, `repair_prediction_covariance()` | Error in estimated unit-specific random effects, conditional on fitted MLM quantities |
 | Posterior reliability | `repair_reliability()` | Reduction in uncertainty under the fitted MLM relative to its prior random-effect variance |
 | Structural coefficient uncertainty | `vcov()`, `confint()`, `repair_coefficients()` | Conditional model-based uncertainty in the structural regression coefficients |
 
@@ -87,7 +87,7 @@ A BLUP's posterior covariance cannot replace likelihood-only sampling-error
 covariance. Neither successful computation nor high reliability establishes
 nominal interval coverage. Small samples, weak information, and correlated effects
 require particular care and analysis-specific simulation; no universal diagnostic
-cutoff is imposed. Measurement-model adequacy must be assessed with the usual
+cutoff is imposed. MLM adequacy must be assessed with the usual
 lme4/nlme tools before interpreting structural estimates.
 
 ## Diagnose before changing an analysis

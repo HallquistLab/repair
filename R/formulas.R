@@ -1,9 +1,9 @@
-#' Refer to a MLM random coefficient
+#' Refer to a MLM random effect
 #'
 #' Use only inside the structural formula passed to [repair()] or
 #' [repair_data()]. Each reference selects one scalar coefficient, not a
 #' multi-column formula term. Inspect available names with [repair_effects()].
-#' @param term Random coefficient name; use `"(Intercept)"` for an intercept.
+#' @param term Random effect name; use `"(Intercept)"` for an intercept.
 #' @param model Name in the `models` list. May be omitted if unambiguous.
 #' @param group Target grouping-factor name from [repair_effects()]. May be
 #'   omitted if the coefficient is unambiguous. Select one target group per model;
@@ -92,7 +92,7 @@ parse_struc_formula <- function(formula, catalog) {
   for (name in used_models) {
     selected <- effects[vapply(effects, function(e) e$model == name, logical(1))]
     if (length(unique(vapply(selected, `[[`, character(1), "group"))) != 1L) {
-      repair_error("All selected random coefficients from model {.val {name}} must use one target grouping factor.")
+      repair_error("All selected random effects from model {.val {name}} must use one target grouping factor.")
     }
   }
   list(formula = parsed, original = formula, effects = effects, observed = observed,

@@ -15,7 +15,7 @@ stopifnot(requireNamespace("nlme", quietly = TRUE))
 
 ## Fit a relationship between two processes
 
-Each MLM estimates a person's random coefficients from repeated
+Each MLM estimates a person's random effects from repeated
 observations. Random-Effect Prediction Adjustment for Inference in Regression
 (REPAIR) fits a structural regression using their likelihood-only
 predictions and sampling-error covariance. For example, one process's slope can
@@ -109,7 +109,7 @@ necessarily every coefficient in the fitted model. Every retained person must
 have a block entry; extra IDs are permitted. Row, column, ID, model-list, and
 block ordering do not matter. Reversing a pair requires transposing its first
 two array dimensions. Supply a pair only once; REPAIR supplies its transpose.
-Within-model error blocks are computed by the scorer and cannot be overridden.
+Within-model error blocks are computed by prediction extraction and cannot be overridden.
 The complete assembled covariance must be positive semidefinite for each person;
 checking pairs separately would be insufficient for three or more models.
 

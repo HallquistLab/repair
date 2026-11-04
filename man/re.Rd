@@ -2,12 +2,12 @@
 % Please edit documentation in R/formulas.R
 \name{re}
 \alias{re}
-\title{Refer to a MLM random coefficient}
+\title{Refer to a MLM random effect}
 \usage{
 re(term, model = NULL, group = NULL)
 }
 \arguments{
-\item{term}{Random coefficient name; use \code{"(Intercept)"} for an intercept.}
+\item{term}{Random effect name; use \code{"(Intercept)"} for an intercept.}
 
 \item{model}{Name in the \code{models} list. May be omitted if unambiguous.}
 

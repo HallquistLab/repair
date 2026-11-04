@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_mlm.R
 \name{repair_effects}
 \alias{repair_effects}
-\title{Inspect available random coefficients}
+\title{Inspect available random effects}
 \usage{
 repair_effects(models)
 }
@@ -17,7 +17,7 @@ The catalog includes nuisance groups; discovery does not establish eligibility
 for structural fitting. Select the target with the \code{group} argument of \code{\link[=re]{re()}}.
 }
 \description{
-Inspect available random coefficients
+Inspect available random effects
 }
 \examples{
 data(repair_example)

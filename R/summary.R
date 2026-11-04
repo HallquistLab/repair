@@ -103,7 +103,7 @@ print.summary_repair <- function(x, ...) {
     }
     if (identical(d$mlm_backend, "nlme")) cat("nlme singularity is not assessed; inspect the MLM fit and its fitting warnings.\n")
     if (isTRUE(d$mlm_singular)) cat("MLM: singular random-effect covariance.\n")
-    if (length(d$mlm_messages)) cat("Measurement-model messages:", paste(d$mlm_messages, collapse = "; "), "\n")
+    if (length(d$mlm_messages)) cat("MLM messages:", paste(d$mlm_messages, collapse = "; "), "\n")
   }
   cat("Cross-model prediction errors: ", switch(x$cross_model_error$policy,
       independent = "assumed independent (zero covariance)",
@@ -114,7 +114,7 @@ print.summary_repair <- function(x, ...) {
       " (", x$refit$adapter, ")\n", sep = "")
     if (length(unlist(x$refit$warnings))) cat("Refit warnings recorded: inspect summary(fit)$refit$warnings.\n")
   }
-  cat("Scores: likelihood-only random deviations\n")
+  cat("Predictions: likelihood-only random deviations\n")
   print(x$effects[, c("model", "group", "term", "role"), drop = FALSE], row.names = FALSE)
   cat("\nPosterior reliability (structural scope; equal unit weights):\n")
   print(as.data.frame(x$reliability)[, c("model", "term", "role", "measure", "reliability",

@@ -2,7 +2,7 @@
 % Please edit documentation in R/reliability.R
 \name{repair_reliability}
 \alias{repair_reliability}
-\title{Inspect posterior reliability of selected random coefficients}
+\title{Inspect posterior reliability of selected random effects}
 \usage{
 repair_reliability(
   object,
