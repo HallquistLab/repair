@@ -152,6 +152,15 @@ Its budget is now 90 minutes as well, preserving examples, articles, link checks
 and preview artifacts. These changes address compiler prerequisites and cold
 setup time; they do not disable sampling or relax numerical assertions.
 
+At revision cff78f2, hosted brms/RStan and rstanarm sampling passed all 161
+native assertions, and website construction/link checks passed. The R 4.3 job
+failed twice before dependency resolution because downloading the pak binary
+hit R's default 60-second Internet timeout. Both workflows now set
+`R_DEFAULT_INTERNET_TIMEOUT=300` before setup-r-dependencies, including its pak
+bootstrap. This setting is supported from R 4.0.3 onward and changes transport
+timeouts only. The package matrix, dependency requirements and numerical tests
+remain intact; repeated download failures are not treated as passing checks.
+
 ## Scope and audit
 
 The package previously relied on manually executed macOS checks. The new workflow
