@@ -85,3 +85,14 @@ records the research source hash, revision, settings and R version. Neither the
 generator nor normal tests obtain expected values from repair. These are
 per-dataset algorithm comparisons, not coverage guarantees. Existing fixtures
 are not changed.
+
+`step-up-60c46ec.R` freezes the original package's M-MOM pipeline, conditional
+SEs, guards and exhaustive search at commit
+`60c46ece17071f7401717a2eefe1a169e5a598d6`. Tests source it into a separate
+environment as an oracle for computation-only changes, resolving unchanged
+shared input/covariance/solver helpers in the namespace. Never regenerate it
+from the optimized implementation. Comparisons require identical selected
+alphas, complete coefficient/SE/covariance outputs, failure decisions, and guard
+checks at every evaluated point. Complete matched public bootstraps also check
+draw maps, selected constants, attempt eligibility, RNG preservation and interval
+extraction, excluding elapsed timings and unevaluated candidate histories.

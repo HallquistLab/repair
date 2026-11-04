@@ -1,0 +1,9 @@
+"case","backend","n","repetitions","fits_before","fits_after","roots_before","roots_after","median_seconds_before","median_seconds_after","speed_ratio","exact_estimates_SEs_alphas"
+"minimum_passes","r",80,5,17,1,34,2,0.0579999999999999,0.00700000000000001,8.28571428571427,TRUE
+"minimum_passes","rcpp",80,5,17,1,34,2,0.05,0.004,12.5,TRUE
+"both_stages_refine","r",80,5,39,30,78,16,0.137,0.0860000000000003,1.59302325581395,TRUE
+"both_stages_refine","rcpp",80,5,39,30,78,16,0.126,0.0800000000000001,1.575,TRUE
+"no_passing_candidate","r",80,5,17,17,34,11,0.0700000000000003,0.0549999999999997,1.27272727272728,TRUE
+"no_passing_candidate","rcpp",80,5,17,17,34,11,0.0579999999999998,0.0510000000000002,1.13725490196078,TRUE
+"repeated_inputs","r",800,5,41,33,82,18,0.305000000000001,0.163,1.87116564417178,TRUE
+"repeated_inputs","rcpp",800,5,41,33,82,18,0.133000000000001,0.0839999999999996,1.58333333333335,TRUE

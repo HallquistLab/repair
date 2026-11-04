@@ -30,8 +30,9 @@
 #'   number of predictor columns excluding the intercept. The upper bound is N
 #'   when the determinant root exceeds `1 + 1/N`, and `N * lambda - 1`
 #'   otherwise. A missing root or an upper bound below the minimum leaves only
-#'   the minimum candidate. The default grid has nine equally spaced candidates.
-#'   Refine between the first passing candidate and its preceding failing
+#'   the minimum candidate. The default grid has nine equally spaced candidates,
+#'   evaluated in ascending order only until the first pass. A passing minimum
+#'   stops that stage immediately. Refine between the first passing candidate and its preceding failing
 #'   candidate by at most 12 bisections, stopping at an alpha gap of 0.005.
 #'   This finds the smallest passing alpha evaluated, not a global optimum.
 #'
@@ -56,6 +57,9 @@
 #'   remain in the saved controls; selected constants are `alpha_prelim` and
 #'   `alpha_final` in diagnostics. `diagnostics$step_up` records each stage's
 #'   bounds, selected candidate, all candidate checks, settings, and fallback.
+#'   Candidate histories contain only evaluated points; unused larger grid
+#'   values are omitted. Moment/root caching and early stopping preserve selected
+#'   alphas, estimates, SEs, and complete-fit eligibility checks.
 #'   Refitting and bootstrapping rerun selection on each new dataset.
 #' @return An S7 `class_mmom_fit` object. Numerical failures use the same class.
 #' @examples
@@ -91,7 +95,7 @@ fit_mmom <- function(data_list,
 }
 
 # Canonical fixed-alpha estimator, also used to evaluate every step-up candidate.
-mmom_fit_prepared <- function(inputs) {
+mmom_fit_prepared <- function(inputs, cache = NULL) {
   context <- list(nobs = inputs$nobs, npredictors = inputs$npredictors,
     backend = inputs$backend, preliminary_moment_control = inputs$preliminary_moment_control,
     final_moment_control = inputs$final_moment_control)
@@ -101,26 +105,41 @@ mmom_fit_prepared <- function(inputs) {
   }
 
   # Stop at the first numerical failure and return it as an mmom_fit.
-  step1 <- mmom_step1(inputs)
+  # A cache belongs to one normalized dataset and one step-up invocation. Only
+  # preliminary controls vary; changing them invalidates all weight-dependent
+  # quantities. Fixed-policy fits keep the ordinary uncached path.
+  if (!is.null(cache)) {
+    if (is.null(cache$unweighted)) cache$unweighted <- mmom_preliminary_moments(inputs)
+    if (!identical(cache$preliminary_control, inputs$preliminary_moment_control)) {
+      cache$preliminary_control <- inputs$preliminary_moment_control
+      cache$step1 <- mmom_step1(inputs, cache$unweighted)
+      cache$step2 <- cache$weighted <- cache$meat <- NULL
+    }
+  }
+  step1 <- if (is.null(cache)) mmom_step1(inputs) else cache$step1
   if (mmom_is_failure(step1)) {
     return(failed(step1))
   }
   context$lambda_prelim <- step1@lambda_prelim
-  step2 <- mmom_step2(
-    inputs,
-    coef0 = step1@coef0,
-    predictor_idx = step1@predictor_idx,
-    lambda_prelim = step1@lambda_prelim
-  )
+  if (is.null(cache) || is.null(cache$step2)) {
+    step2 <- mmom_step2(
+      inputs, coef0 = step1@coef0, predictor_idx = step1@predictor_idx,
+      lambda_prelim = step1@lambda_prelim
+    )
+    if (!is.null(cache)) cache$step2 <- step2
+  } else step2 <- cache$step2
   if (mmom_is_failure(step2)) {
     return(failed(step2))
   }
-  step3 <- mmom_step3(inputs, case_weight = step2@case_weight)
+  if (!is.null(cache) && is.null(cache$weighted))
+    cache$weighted <- mmom_final_moments(inputs, step2@case_weight)
+  step3 <- mmom_step3(inputs, case_weight = step2@case_weight,
+    moments = if (is.null(cache)) NULL else cache$weighted)
   if (mmom_is_failure(step3)) {
     return(failed(step3))
   }
   context$lambda_final <- step3@lambda_final
-  step_se <- mmom_step_se(inputs, step1, step2, step3)
+  step_se <- mmom_step_se(inputs, step1, step2, step3, cache)
   if (mmom_is_failure(step_se)) {
     return(failed(step_se))
   }
@@ -128,8 +147,9 @@ mmom_fit_prepared <- function(inputs) {
   construct_mmom_fit(inputs, step1, step2, step3, step_se)
 }
 
-# Step 1: estimate preliminary coefficients, residual variance, and weights.
-mmom_step1 <- function(inputs) {
+# Alpha-independent unweighted moments. Keep the original arithmetic operations
+# (including separate crossproducts) so cached and uncached fits agree exactly.
+mmom_preliminary_moments <- function(inputs) {
   # Build the unweighted measurement-error moment.
   err_x_sum <- mmom_weighted_err_cov_sum(
     inputs$err_x, rep(1, inputs$nobs), inputs$backend
@@ -139,6 +159,21 @@ mmom_step1 <- function(inputs) {
   )
   observed_moment <- crossprod(cbind(inputs$outcome, inputs$design))
   lambda_prelim <- mmom_smallest_det_root(observed_moment, err_moment)
+  err_cov_design <- matrix(0, inputs$ncoef, inputs$ncoef)
+  err_cov_design[inputs$predictor_index, inputs$predictor_index] <- err_x_sum
+  list(err_x_sum = err_x_sum, err_moment = err_moment,
+    lambda_prelim = lambda_prelim, err_cov_design = err_cov_design,
+    design_moment = crossprod(inputs$design),
+    outcome_moment = crossprod(inputs$design, inputs$outcome),
+    err_xy_sum = colSums(cbind(0, inputs$err_xy)))
+}
+
+# Step 1: estimate preliminary coefficients, residual variance, and weights.
+mmom_step1 <- function(inputs, moments = NULL) {
+  if (is.null(moments)) moments <- mmom_preliminary_moments(inputs)
+  err_x_sum <- moments$err_x_sum
+  err_moment <- moments$err_moment
+  lambda_prelim <- moments$lambda_prelim
   correction_prelim <- if (
     identical(inputs$preliminary_moment_control$correction, "none") ||
       max(abs(err_moment)) <= .Machine$double.eps
@@ -149,12 +184,10 @@ mmom_step1 <- function(inputs) {
   }
 
   # Solve the preliminary corrected coefficient equation.
-  err_cov_design <- matrix(0, inputs$ncoef, inputs$ncoef)
-  err_cov_design[inputs$predictor_index, inputs$predictor_index] <- err_x_sum
-  coef_moment <- crossprod(inputs$design) - correction_prelim * err_cov_design
+  err_cov_design <- moments$err_cov_design
+  coef_moment <- moments$design_moment - correction_prelim * err_cov_design
   outcome_moment <- as.vector(
-    crossprod(inputs$design, inputs$outcome) -
-      correction_prelim * colSums(cbind(0, inputs$err_xy))
+    moments$outcome_moment - correction_prelim * moments$err_xy_sum
   )
   coef0_solve <- repair_solve(
     coef_moment,
@@ -249,8 +282,8 @@ mmom_step2 <- function(inputs, coef0, predictor_idx, lambda_prelim) {
   )
 }
 
-# Step 3: apply feasible case weights and solve the final corrected moment.
-mmom_step3 <- function(inputs, case_weight) {
+# Moments shared by all final-alpha candidates with the same preliminary fit.
+mmom_final_moments <- function(inputs, case_weight) {
   # Recompute moments using the inverse case-variance weights.
   weighted_design <- inputs$design * sqrt(case_weight)
   weighted_outcome <- inputs$outcome * sqrt(case_weight)
@@ -271,6 +304,22 @@ mmom_step3 <- function(inputs, case_weight) {
     weighted_xy_sum
   )
   lambda_final <- mmom_smallest_det_root(weighted_moment, weighted_err_moment)
+  list(weighted_design = weighted_design, weighted_moment = weighted_moment,
+    weighted_x_sum = weighted_x_sum, weighted_cov_design = weighted_cov_design,
+    weighted_xy_sum = weighted_xy_sum, weighted_err_moment = weighted_err_moment,
+    lambda_final = lambda_final)
+}
+
+# Step 3: apply feasible case weights and solve the final corrected moment.
+mmom_step3 <- function(inputs, case_weight, moments = NULL) {
+  if (is.null(moments)) moments <- mmom_final_moments(inputs, case_weight)
+  weighted_design <- moments$weighted_design
+  weighted_moment <- moments$weighted_moment
+  weighted_x_sum <- moments$weighted_x_sum
+  weighted_cov_design <- moments$weighted_cov_design
+  weighted_xy_sum <- moments$weighted_xy_sum
+  weighted_err_moment <- moments$weighted_err_moment
+  lambda_final <- moments$lambda_final
   correction_final <- if (
     identical(inputs$final_moment_control$correction, "none") ||
       max(abs(weighted_err_moment)) <= .Machine$double.eps
@@ -335,7 +384,7 @@ mmom_step3 <- function(inputs, case_weight) {
 }
 
 # Compute the conditional model-based coefficient covariance.
-mmom_step_se <- function(inputs, step1, step2, step3) {
+mmom_step_se <- function(inputs, step1, step2, step3, cache = NULL) {
   # Use the same regularized moment as the final coefficient equation.
   bread <- step3@coef_moment
   bread_inverse_solve <- repair_solve(
@@ -352,10 +401,14 @@ mmom_step_se <- function(inputs, step1, step2, step3) {
   }
   bread_inverse <- as.matrix(bread_inverse_solve@solution)
 
-  tilde_crossprod <- mmom_tilde_crossprod(
-    inputs, step1@coef0[step1@predictor_idx], step2@case_weight
-  )
-  meat <- crossprod(step3@weighted_design) + tilde_crossprod
+  # Populate the meat only after the bread succeeds, retaining the original
+  # failure ordering and complete candidate-availability checks.
+  if (is.null(cache)) {
+    meat <- mmom_covariance_meat(inputs, step1, step2, step3)
+  } else {
+    if (is.null(cache$meat)) cache$meat <- mmom_covariance_meat(inputs, step1, step2, step3)
+    meat <- cache$meat
+  }
   bread_diagnostics <- bread_inverse_solve@diagnostics
   coef_vcov <- mmom_symmetrize(
     bread_inverse %*% meat %*% bread_inverse / inputs$nobs^2
@@ -383,6 +436,14 @@ mmom_step_se <- function(inputs, step1, step2, step3) {
       covariance_dimension = nrow(coef_vcov)
     )
   )
+}
+
+# The meat depends on preliminary coefficients and weights, not final alpha.
+mmom_covariance_meat <- function(inputs, step1, step2, step3) {
+  tilde_crossprod <- mmom_tilde_crossprod(
+    inputs, step1@coef0[step1@predictor_idx], step2@case_weight
+  )
+  crossprod(step3@weighted_design) + tilde_crossprod
 }
 
 # Package estimates, covariance, and diagnostics as one S7 object.

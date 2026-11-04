@@ -1,5 +1,12 @@
 # repair 0.5.0 (2026-11-03)
 
+* Accelerate step-up with early stopping and dataset-local moment/root/weight
+  caching. Preserve selected alphas, estimates, SEs, complete candidate checks,
+  bootstrap draws/results, and failure policy. Candidate histories contain only
+  evaluated points. Verify against the frozen pre-optimization implementation
+  and existing independent numerical references; statistical guard changes are
+  deferred.
+
 * Implement sequential step-up (M-MOMS) alpha selection, candidate checks, and
   explicit minimum-alpha fallbacks. Preserve selected constants and search histories;
   rerun selection during refitting and whole-unit bootstrap sampling.

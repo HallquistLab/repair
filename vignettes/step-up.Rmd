@@ -41,6 +41,15 @@ the minimum-alpha candidate. After finding a passing candidate, at most 12
 bisections refine the interval from the preceding failing candidate, stopping at
 an alpha gap of 0.005. The selected value is the smallest passing value evaluated.
 
+The ascending coarse search stops at its first passing candidate. If the minimum
+already passes, that stage stops immediately. Candidate histories contain the
+points actually evaluated, so unused larger grid values are absent. The search
+reuses alpha-independent moments and determinant roots, and reuses weights and
+weighted moments within the final-alpha search. Every evaluated candidate still
+passes through the full structural fit and SE availability checks. These are
+computational changes; the conditioning criteria, selected alphas, statistical
+results, and fallback policy are unchanged.
+
 A candidate must produce a usable complete fit. The corrected predictor block,
 excluding the intercept, must have minimum eigenvalue at least
 `sqrt(.Machine$double.eps)`, corrected-minimum/observed-maximum eigenvalue ratio

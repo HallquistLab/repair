@@ -18,10 +18,16 @@ leverage, and delete-one inference are excluded.
 
 The note is "New submission".
 
-Installed-package tests: 2,308 passing assertions, with no test failures,
+Installed-package tests: 3,875 passing assertions, with no test failures,
 warnings, or skips. Existing independent numerical fixtures are unchanged.
 New step-up references compare both computation backends with the separate
 research implementation, including sequential alpha selection and fallback.
+Computation-only changes also match the frozen pre-optimization estimator
+exactly for alphas, coefficients, SEs, covariance, intermediate calculations
+and failure decisions. Matched public bootstrap runs cover robust/nested lmer,
+correlated-residual lme, and natural failed draws, with identical draws,
+results, inference eligibility and RNG preservation. Candidate histories omit
+unevaluated larger grid points; statistical criteria and fallback are unchanged.
 
 The README executes against the checked installation. The documentation site
 build and internal-link validation cover 47 HTML pages.
@@ -29,6 +35,6 @@ build and internal-link validation cover 47 HTML pages.
 ## Source artifact
 
 File: repair_0.5.0.tar.gz
-SHA-256: de59565ac833f315fd17021d78ecdc6ee61a68888d12b45db1621f84bf9eba91
+SHA-256: 5aadd0c101efc5f0ae9705bb5b0768a1468ac03422b84061185ab8e988bbfda5
 
 No CRAN submission or release tag has been created during preparation.

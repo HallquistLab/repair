@@ -28,23 +28,31 @@ mmom_step_up_control <- function(control) {
   settings
 }
 
-mmom_step_up_guard <- function(fit, inputs, stage, alpha, settings) {
+mmom_step_up_observed <- function(fit, inputs, stage) {
+  moment <- if (stage == "preliminary") crossprod(inputs$design) else
+    crossprod(fit@steps$step3@weighted_design)
+  scale <- if (stage == "preliminary") inputs$nobs else 1
+  index <- inputs$predictor_index
+  list(moment = moment, diagnostics = mmom_matrix_diagnostics(
+    (moment / scale)[index, index, drop = FALSE]))
+}
+
+mmom_step_up_guard <- function(fit, inputs, stage, alpha, settings, observed = NULL) {
   result <- data.frame(alpha = alpha, usable = isTRUE(fit@converged), guard_pass = FALSE,
     reason = if (isTRUE(fit@converged)) "" else fit@message,
     min_eigenvalue = NA_real_, max_eigenvalue = NA_real_,
     relative_min_eigenvalue = NA_real_, condition_number = NA_real_)
   if (!isTRUE(fit@converged)) return(result)
+  if (is.null(observed)) observed <- mmom_step_up_observed(fit, inputs, stage)
   if (stage == "preliminary") {
-    observed <- crossprod(inputs$design) / inputs$nobs
-    corrected <- (crossprod(inputs$design) -
+    corrected <- (observed$moment -
       fit@steps$step1@correction_prelim * fit@steps$step1@err_cov_design) / inputs$nobs
   } else {
-    observed <- crossprod(fit@steps$step3@weighted_design)
     corrected <- fit@corrected_design_moment
   }
   index <- inputs$predictor_index
   info <- mmom_matrix_diagnostics(corrected[index, index, drop = FALSE])
-  observed_info <- mmom_matrix_diagnostics(observed[index, index, drop = FALSE])
+  observed_info <- observed$diagnostics
   relative <- if (is.finite(observed_info$max_eigen) && observed_info$max_eigen > sqrt(.Machine$double.eps))
     info$min_eigen / observed_info$max_eigen else NA_real_
   result$min_eigenvalue <- info$min_eigen
@@ -68,7 +76,9 @@ mmom_step_up <- function(inputs) {
     field <- paste0(stage, "_moment_control")
     working[[field]] <- list(correction = "custom", alpha = requested[[stage]]$alpha)
   }
-  fit <- mmom_fit_prepared(working)
+  # Dataset-local, never shared by separate fits, refits, or bootstrap samples.
+  cache <- new.env(parent = emptyenv())
+  fit <- mmom_fit_prepared(working, cache)
   searches <- list()
   for (stage in names(requested)[active]) {
     field <- paste0(stage, "_moment_control")
@@ -78,24 +88,41 @@ mmom_step_up <- function(inputs) {
     upper <- if (length(lambda) == 1L && is.finite(lambda)) {
       if (lambda <= 1 + 1 / inputs$nobs) lambda * inputs$nobs - 1 else inputs$nobs
     } else lower
+    grid <- numeric()
+    if (upper > lower) {
+      grid <- settings$candidate_alphas
+      if (is.null(grid)) grid <- seq(lower, upper, length.out = settings$coarse_grid_size)
+      grid <- sort(unique(c(lower, pmin(upper, pmax(lower, grid)))))
+    }
     # Cache candidates to avoid refitting the baseline and selected midpoint.
     fits <- list(fit)
-    history <- mmom_step_up_guard(fit, working, stage, lower, settings)
+    observed <- NULL
+    guard <- function(candidate_fit, candidate, alpha) {
+      if (isTRUE(candidate_fit@converged) && is.null(observed))
+        observed <<- mmom_step_up_observed(candidate_fit, candidate, stage)
+      mmom_step_up_guard(candidate_fit, candidate, stage, alpha, settings, observed)
+    }
+    history <- guard(fit, working, lower)
+    # Preserve the scalar type produced by the exhaustive search's rbind even
+    # when a passing minimum lets us skip the remaining double-valued grid.
+    if (length(grid) > 1L && is.double(grid)) history$alpha <- as.double(history$alpha)
     evaluate <- function(alpha) {
       known <- match(alpha, history$alpha)
       if (!is.na(known)) return(known)
       candidate <- working
       candidate[[field]]$alpha <- alpha
-      candidate_fit <- mmom_fit_prepared(candidate)
+      candidate_fit <- mmom_fit_prepared(candidate, cache)
       fits[[length(fits) + 1L]] <<- candidate_fit
-      history <<- rbind(history, mmom_step_up_guard(candidate_fit, candidate, stage, alpha, settings))
+      history <<- rbind(history, guard(candidate_fit, candidate, alpha))
       nrow(history)
     }
-    if (upper > lower) {
-      grid <- settings$candidate_alphas
-      if (is.null(grid)) grid <- seq(lower, upper, length.out = settings$coarse_grid_size)
-      grid <- sort(unique(c(lower, pmin(upper, pmax(lower, grid)))))
-      for (alpha in grid) evaluate(alpha)
+    if (length(grid) && !history$guard_pass[1L]) {
+      # Later coarse candidates cannot lower the first passing alpha or change
+      # its preceding-failure bracket. No monotonicity assumption is needed.
+      for (alpha in grid) {
+        row <- evaluate(alpha)
+        if (history$guard_pass[row]) break
+      }
       passing <- history$alpha[history$guard_pass]
       if (length(passing)) {
         hi <- min(passing)

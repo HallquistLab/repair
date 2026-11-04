@@ -75,3 +75,16 @@ dated check counts are in `cran-comments.md`; the tarball and logs are retained
 locally under ignored `check/cran/`. The automated matrix additionally checks
 Linux release/oldrel/devel/R 4.3, macOS, and Windows on the integrated revision.
 The release CI now includes PDF-manual and incoming checks on Linux release.
+
+## Computation-only step-up update, November 3, 2026
+
+This update supersedes the preceding local candidate: full source-tarball
+`R CMD check --as-cran` passes with zero errors, zero warnings, and the single
+new-submission note, including PDF/HTML manuals. All 3,875 assertions pass with
+no failures, warnings or skips. Exact old/new structural and public-bootstrap
+comparisons, deterministic operation counts and environment-specific timing
+results are documented in `dev/README.md` and `dev/step-up-efficiency.csv`.
+The frozen oracle is revision 60c46ec. Statistical guard/fallback changes remain
+deferred, and PRs 21 and 22 remain excluded. The updated exact artifact hash is
+in `cran-comments.md`; the previous local bundle is retained in ignored
+`check/cran-60c46ec/` and the current candidate in `check/cran/`.

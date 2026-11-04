@@ -53,8 +53,9 @@ and select the final alpha. Each search starts at \code{q + 2}, where q is the
 number of predictor columns excluding the intercept. The upper bound is N
 when the determinant root exceeds \code{1 + 1/N}, and \code{N * lambda - 1}
 otherwise. A missing root or an upper bound below the minimum leaves only
-the minimum candidate. The default grid has nine equally spaced candidates.
-Refine between the first passing candidate and its preceding failing
+the minimum candidate. The default grid has nine equally spaced candidates,
+evaluated in ascending order only until the first pass. A passing minimum
+stops that stage immediately. Refine between the first passing candidate and its preceding failing
 candidate by at most 12 bisections, stopping at an alpha gap of 0.005.
 This finds the smallest passing alpha evaluated, not a global optimum.
 
@@ -79,6 +80,9 @@ augmented with the minimum; bisection still applies unless disabled.
 remain in the saved controls; selected constants are \code{alpha_prelim} and
 \code{alpha_final} in diagnostics. \code{diagnostics$step_up} records each stage's
 bounds, selected candidate, all candidate checks, settings, and fallback.
+Candidate histories contain only evaluated points; unused larger grid
+values are omitted. Moment/root caching and early stopping preserve selected
+alphas, estimates, SEs, and complete-fit eligibility checks.
 Refitting and bootstrapping rerun selection on each new dataset.
 }
 \examples{
