@@ -153,7 +153,7 @@ a separate methodological argument.
 
 Software tests check GLS equivalence and actual native-model extraction. They do
 not validate unconditional inference. The development
-[full refitted-workflow simulation plan](https://github.com/HallquistLab/repair/blob/main/dev/bayesian-plugin-simulation-plan.md)
+[full refitted-workflow simulation plan](https://github.com/HallquistLab/repair/blob/51f33760c1f17db227fee48c866503682abdad06/dev/bayesian-plugin-simulation-plan.md)
 specifies fresh-data generation and complete Bayesian refitting in every outer
 replicate, prior sensitivity, structural estimands, failure accounting,
 comparators and coverage/Monte Carlo reporting. No full-workflow coverage results

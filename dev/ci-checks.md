@@ -122,6 +122,22 @@ R versions; R 4.3 intentionally stays fixed until the package minimum changes.
 All jobs have time limits, older runs on the same PR/ref are canceled when
 superseded, and matrix failures do not cancel the other diagnostic runs.
 
+Ubuntu/release and Ubuntu/devel have 90-minute job limits; the other package
+matrix members retain 45 minutes. The first Bayesian plug-in run (PR 23,
+Actions run 41856471343, revision 51f3376) exceeded the old 45-minute limits:
+release spent 38m54s downloading system dependencies (70.5 MB at 30.2 kB/s),
+and devel spent 37m20s installing dependencies, including 19m41s compiling
+rstanarm. Devel then passed all 4,136 assertions but timed out during vignette
+rebuilding; release timed out during tests. Native sampling was not reached.
+The larger cold-start budget preserves every dependency, package/manual check,
+README execution, and the native Bayesian integration step. A timeout is not a
+test assertion failure, and the aggregate correctly fails if any member is
+canceled. Hosted results must still demonstrate that these jobs complete.
+
+Vignette links to development plans must resolve before a PR is merged. Use a
+published immutable commit for a plan not yet on main, rather than a main-branch
+URL that returns 404 during incoming checks.
+
 ## Scope and audit
 
 The package previously relied on manually executed macOS checks. The new workflow
