@@ -30,7 +30,7 @@ fitting choices and do not require a tidyverse or broom dependency.
 | What is the covariance of structural coefficient estimates? | `vcov(fit)` |
 
 `coef()`, `vcov()`, `confint()`, `nobs()`, `summary()`, and the existing full
-`repair_diagnostics(fit)` list remain available. Score uncertainty, posterior
+`repair_diagnostics(fit)` list remain available. Prediction uncertainty, posterior
 uncertainty, and structural coefficient uncertainty have different meanings.
 
 ## Fit an example
@@ -97,9 +97,9 @@ reason; its saved missing values stay missing. An ID absent from a measurement
 model has no prediction row. Inspect `repair_diagnostics(fit, "excluded")` to find
 those IDs and all exclusion reasons.
 
-Scores are **likelihood-only random deviations**. Their `std.error` is a
+Predictions are **likelihood-only random deviations**. Their `std.error` is a
 conditional sampling-error SD, not a BLUP posterior SD, a structural coefficient
-SE, or the person's total fixed-plus-random coefficient.
+SE, or the person's total fixed-plus-random effect.
 
 These same prediction interfaces work before structural fitting:
 
@@ -111,7 +111,7 @@ stopifnot(identical(repair_prediction_covariance(assembled), repair_prediction_c
 
 ## Preserve covariance when reusing predictions
 
-Score variances do not capture correlated errors. The covariance extractor reads
+Prediction variances do not capture correlated errors. The covariance extractor reads
 the **assembled** error inputs, including the selected cross-model policy:
 
 ```{r covariance}

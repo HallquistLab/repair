@@ -1,4 +1,4 @@
-#' REPAIR: structural regression with estimated random coefficients
+#' REPAIR: structural regression with estimated random effects
 #'
 #' Random-Effect Prediction Adjustment for Inference in Regression (REPAIR)
 #' estimates relationships involving person- or cluster-specific processes

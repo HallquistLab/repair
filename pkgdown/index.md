@@ -1,4 +1,4 @@
-# repair: regression with estimated random coefficients
+# repair: regression with estimated random effects
 
 `repair` implements **Random-Effect Prediction Adjustment for Inference in
 Regression (REPAIR)**, a two-stage method for estimating relationships involving
@@ -29,7 +29,7 @@ regression. It first obtains **likelihood-only predictions** and their unit-spec
 sampling-error covariances from fitted Gaussian mixed models. These predictions
 remove shrinkage but remain noisy estimates. It then uses a **modified
 method-of-moments (M-MOM)** regression to account for their sampling error when
-random coefficients serve as predictors, the outcome, or both.
+random effects serve as predictors, the outcome, or both.
 
 This workflow is useful when you want to connect processes measured across
 different tasks, settings, or timescales while keeping the MLMs
@@ -90,7 +90,7 @@ workflow, omissions, regularization, and interpretation.
 
 | Task | Interface | What you get |
 |---|---|---|
-| Discover available random coefficients | `repair_effects()` | Model, grouping factor, and coefficient names to use in `re()` |
+| Discover available random effects | `repair_effects()` | Model, grouping factor, and effect names to use in `re()` |
 | Inspect the analysis before fitting | `repair_data()` | Aligned predictions, error covariances, and an audit of the analysis scope |
 | Fit the structural regression | `repair()` | Corrected coefficients and conditional model-based inference |
 | Report or export results | `repair_coefficients()`, `repair_predictions()`, `repair_prediction_covariance()` | Ordinary data frames with stable column contracts and explicit IDs where applicable |
@@ -110,7 +110,7 @@ and executable examples. Familiar `summary()`, `coef()`, `vcov()`, `confint()`, 
 | Run and understand a complete analysis | [A structural regression with REPAIR](articles/repair-workflow.html) |
 | Create reporting tables, join by ID, or export results | [Extracting tables for reporting and reuse](articles/extracting-results.html) |
 | Assess marginal and intercept-residualized reliability | [Reliability and analysis diagnostics](articles/reliability-diagnostics.html) |
-| Relate random coefficients from separate MLMs | [REPAIR across multiple MLMs](articles/multiple-models.html) |
+| Relate random effects from separate MLMs | [REPAIR across multiple MLMs](articles/multiple-models.html) |
 | Include day or occasion effects nested within each person | [Nested nuisance effects within people](articles/nested-nuisance.html) |
 | Use correlated or heterogeneous residuals in nlme | [Validated nlme prediction extraction and reproduction](articles/nlme-workflow.html) |
 

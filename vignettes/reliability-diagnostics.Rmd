@@ -16,7 +16,7 @@ stopifnot(requireNamespace("nlme", quietly = TRUE))
 ## Assess the information behind an analysis
 
 Random-Effect Prediction Adjustment for Inference in Regression
-(REPAIR) reports posterior reliability for the random coefficients selected by
+(REPAIR) reports posterior reliability for the random effects selected by
 the structural formula and provides tables of sample, prediction, and numerical
 diagnostics. These are descriptive checks, not automatic tests of whether an
 analysis is adequate. Numerical convergence alone does not establish strong
@@ -44,7 +44,7 @@ regularization, coefficients, or standard errors.
 
 ## Two distinct uncertainty calculations
 
-For a selected random coefficient k, marginal posterior reliability for person i is
+For a selected random effect k, marginal posterior reliability for person i is
 
 \[
 \rho_{ik}=1-\frac{V_{i,kk}}{G_{kk}}, \qquad
@@ -53,7 +53,7 @@ V_i=G-GZ_i^\top(R_i+Z_iGZ_i^\top)^{-1}Z_iG.
 
 Here G is the fitted random-effect covariance, Z_i is the effective random-effect
 design, and R_i is the fitted residual covariance. This calculation uses all
-random coefficients within that MLM. It supports a singular G
+random effects within that MLM. It supports a singular G
 without inverting it. It conditions on fitted parameters.
 
 V_i is a **posterior covariance**. REPAIR's structural estimator instead uses

@@ -1,4 +1,4 @@
-#' Refer to a MLM random coefficient
+#' Refer to a MLM random effect
 #'
 #' Use only inside the structural formula passed to [repair()] or
 #' [repair_data()]. Each reference selects one scalar coefficient, not a
@@ -114,7 +114,7 @@ parse_struc_formula <- function(formula, catalog) {
   for (name in used_models) {
     selected <- effects[vapply(effects, function(e) e$model == name, logical(1))]
     if (length(unique(vapply(selected, `[[`, character(1), "group"))) != 1L) {
-      repair_error("All selected random coefficients from model {.val {name}} must use one target grouping factor.")
+      repair_error("All selected random effects from model {.val {name}} must use one target grouping factor.")
     }
   }
   list(formula = parsed, original = formula, effects = effects, observed = observed,

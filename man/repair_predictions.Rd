@@ -12,7 +12,7 @@ A numerical structural failure is accepted because MLM predictions exist.}
 
 \item{scope}{\code{"structural"} (default) returns retained structural IDs in their
 analysis order. \code{"all"} returns each model's effective grouping levels
-in saved scorer order, including units outside or excluded from the analysis.}
+in saved prediction-extraction order, including units outside or excluded from the analysis.}
 }
 \value{
 A plain data frame with columns in order: \code{id}, \code{model}, \code{group}, \code{term},

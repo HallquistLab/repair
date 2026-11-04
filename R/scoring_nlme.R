@@ -1,6 +1,6 @@
 # A linear lme object stores source data separately from its effective rows.
 # getData()/getResponse() may reinsert exclusions or re-evaluate a subset; neither
-# defines a safe common row order for score extraction.
+# defines a safe common row order for prediction extraction.
 repair_nlme_structure <- function(model) {
   repair_check_pkg("nlme")
   if (inherits(model, "nlme")) repair_error("Nonlinear `nlme` fits are not supported; supply a linear `nlme::lme()` fit.")

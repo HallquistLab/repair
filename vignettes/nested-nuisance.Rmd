@@ -66,7 +66,7 @@ summary(fit)$mlm_models$growth
 ```
 
 This regresses the latent person slope deviation on the person intercept
-deviation and practice. Scores remain deviations from fitted fixed effects.
+deviation and practice. Predictions remain deviations from fitted fixed effects.
 The selected intercept/slope prediction-error covariance is retained. Nuisance
 coefficients do not become structural predictors or outcomes: all references to
 one MLM must select the same target group.

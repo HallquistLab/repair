@@ -20,7 +20,7 @@ coefficient; it does not reconstruct covariate-dependent individual effects.}
 An S7 prediction object with group-keyed \verb{@predictions} matrices (ID by
 coefficient), \verb{@prediction_error_covariance} arrays (coefficient by coefficient by ID),
 \verb{@levels}, \verb{@terms}, and \verb{@diagnostics}; \verb{@success} is true only if all selected
-clusters scored successfully. These are sampling-error covariances, not
+clusters predicted successfully. These are sampling-error covariances, not
 posterior BLUP covariances.
 }
 \description{

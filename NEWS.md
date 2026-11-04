@@ -19,6 +19,10 @@ step-up regularization, and experimental whole-unit bootstrap inference.
 
 ## Estimation and supported models
 
+* Refine public terminology to use **predictions** for likelihood-only random-effect
+  estimates and **MLMs** for first-stage mixed models, while preserving random
+  effects terminology throughout the user-facing workflow.
+
 * Add `repair_cross_covariance()` to propagate explicit observation error
   covariance to selected between-model prediction-error blocks. Match occasions
   through fitted row identities, validate joint observation and prediction
