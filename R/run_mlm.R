@@ -1,23 +1,28 @@
-# Fitted MLMs are supplied explicitly, preserving their controls,
-# contrasts, weights, offsets, and effective observations.
+# Fitted inputs are preserved; explicit specifications fit through native engines.
 normalize_repair_models <- function(models) {
   if (inherits(models, "brmsfit") || inherits(models, "stanreg"))
     repair_error("Bayesian fits require explicit opt-in with `repair_bayes_plugin()`; see its supported scope and inference limits.")
-  if (inherits(models, "lmerMod") || inherits(models, "lme") || repair_is_bayes_plugin(models)) models <- list(mlm = models)
+  if (inherits(models, "lmerMod") || inherits(models, "lme") ||
+      inherits(models, "repair_mlm_spec") || repair_is_bayes_plugin(models)) models <- list(mlm = models)
   if (!is.list(models) || !length(models) || is.null(names(models)) ||
       anyNA(names(models)) || any(!nzchar(names(models))) || anyDuplicated(names(models))) {
-    repair_error("`models` must be a fitted lmer/lme model, a `repair_bayes_plugin()` snapshot, or a uniquely named list of these.")
+    repair_error("`models` must be a fitted lmer/lme model, a `repair_mlm()` specification, a `repair_bayes_plugin()` snapshot, or a uniquely named list of these.")
   }
   if (!all(vapply(models, function(x) inherits(x, "lmerMod") ||
-      (inherits(x, "lme") && !inherits(x, "nlme")) || repair_is_bayes_plugin(x), logical(1)))) {
+      (inherits(x, "lme") && !inherits(x, "nlme")) || inherits(x, "repair_mlm_spec") ||
+      repair_is_bayes_plugin(x), logical(1)))) {
     repair_error("Supply Gaussian `lme4::lmer()` or linear `nlme::lme()` models, or explicitly opt in with `repair_bayes_plugin()` for supported Bayesian fits.")
   }
+  for (name in names(models)) if (inherits(models[[name]], "repair_mlm_spec"))
+    models[[name]] <- repair_fit_mlm_spec(models[[name]], name)
   models
 }
 
 #' Inspect available random coefficients
 #' @param models A fitted Gaussian `lme4::lmer()` or linear `nlme::lme()`
-#'   model, an experimental [repair_bayes_plugin()] snapshot, or a named list.
+#'   model, a [repair_mlm()] specification, an experimental [repair_bayes_plugin()]
+#'   snapshot, or a named list mixing these types.
+#'   Specifications are fitted once during this call.
 #' @return A data frame with `model`, `group`, `term`, and `n_levels` columns.
 #'   A bare model is named `mlm`. Terms are scalar coefficient names.
 #'   The catalog includes nuisance groups; discovery does not establish eligibility

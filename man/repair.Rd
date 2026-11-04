@@ -30,7 +30,10 @@ step-1 uncertainty, and has unvalidated full-workflow coverage.
 Select one target grouping factor per model. Gaussian
 lmer models may also contain nuisance groups whose every fitted level belongs
 to exactly one target level; nlme models must have one grouping factor.
-Grouping column names may differ, but their values must identify the same units.}
+Grouping column names may differ, but their values must identify the same units.
+Alternatively supply a \code{\link[=repair_mlm]{repair_mlm()}} specification, or a named list mixing
+specifications and fitted models. Each specification is fitted once per call
+through its native engine before the usual validation and extraction.}
 
 \item{data}{A data frame with one row per analysis ID, containing the observed
 structural variables. Its ID values must match the model's grouping levels.}
@@ -80,7 +83,8 @@ predictors, the outcome, or both in a second-stage regression.
 \details{
 Select random coefficients with \code{\link[=re]{re()}}, match them to unit-level data by
 ID, and fit the modified method-of-moments (M-MOM) regression. Measurement
-models are fitted beforehand so that their fitting choices remain explicit.
+models can be fitted beforehand or supplied as explicit \code{\link[=repair_mlm]{repair_mlm()}}
+specifications for fitting during this call.
 
 The supported structural grammar is additive with an intercept.
 Effects may come from multiple Gaussian lmer or linear lme models, each with

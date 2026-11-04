@@ -86,7 +86,8 @@ toolchain. On Windows, use the Rtools version appropriate for your R installatio
 
 ## Fit, inspect, and summarize
 
-Fit the MLM using its usual `lmer()` or `lme()` interface. Its weights,
+Fit the MLM using its usual `lmer()` or `lme()` interface, or use `repair_mlm()`
+to specify fitting inside `repair()`. Its weights,
 offsets, contrasts, estimation choices, and effective observations remain under
 your control. Supply structural variables in a separate data frame containing
 one row per analysis ID.
@@ -106,6 +107,27 @@ fit <- repair(
 )
 summary(fit)
 ```
+
+For an integrated call, supply an unfitted first-stage MLM specification:
+
+```{r inline-mlm}
+inline_fit <- repair(
+  re("day", model = "growth") ~ practice,
+  models = list(growth = repair_mlm(
+    score ~ day + (day | person), data = repair_example$repeated,
+    engine = "lmer", REML = TRUE)),
+  data = people, id = "person"
+)
+repair_coefficients(inline_fit)
+```
+
+`repair_mlm()` describes the first-stage MLM; the outer formula describes the
+structural model. `engine = "lme"` uses an explicit fixed-effects formula and a
+separate `random` argument. Native controls can be supplied in the specification.
+The helper defers fitting until consumed, and each consuming call fits afresh;
+reuse `inline_fit@mlm_fit` for further analyses without refitting. Fitted models
+and specifications can be mixed in named lists. See `?repair_mlm` and the
+[workflow guide](vignettes/repair-workflow.Rmd) for both engines and replay limits.
 
 The marker `re("day", model = "growth")` selects the random slope for `day`.
 It represents a deviation from the fitted fixed slope. Use

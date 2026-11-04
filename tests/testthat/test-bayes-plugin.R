@@ -107,3 +107,18 @@ test_that("native fits require explicit opt-in and unsupported engines fail", {
   skip_if_not_installed("posterior")
   expect_error(repair_bayes_plugin(lm(mpg ~ wt, mtcars)), "supported sampled")
 })
+
+test_that("Bayesian snapshots coexist with native MLM specifications", {
+  snapshot <- bayes_test_snapshot()
+  p <- bayes_test_parts()
+  data <- data.frame(y = p$y, z = p$z[, "z"], id = p$grouping)
+  models <- normalize_repair_models(list(bayes = snapshot,
+    frequentist = repair_mlm(y ~ z + (z | id), data)))
+  expect_identical(models$bayes, snapshot)
+  expect_s4_class(models$frequentist, "lmerMod")
+  expect_setequal(repair_effects(models)$model, c("bayes", "frequentist"))
+  people <- data.frame(id = p$levels, x = seq_along(p$levels))
+  mixed <- repair(re("z", "bayes") ~ x, models, people, "id")
+  single <- repair(re("z") ~ x, snapshot, people, "id")
+  expect_equal(repair_coefficients(mixed), repair_coefficients(single))
+})

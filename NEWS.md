@@ -11,13 +11,21 @@
 * Add a Bayesian plug-in guide, focused software tests, opt-in native sampling
   tests and a prospective full refitted-workflow simulation plan in `dev/`.
 
-# repair 1.0.0 (2026-11-03)
+# repair 1.0.0 (2026-11-04)
 
 First release candidate for Random-Effect Prediction Adjustment for Inference
 in Regression (REPAIR). This version provides the core estimator, adaptive
 step-up regularization, and experimental whole-unit bootstrap inference.
 
 ## Estimation and supported models
+
+* Add optional `repair_mlm()` specifications for fitting first-stage Gaussian
+  lmer or linear lme models inside `repair()`, `repair_data()`, and
+  `repair_effects()`. Retain fitted-model inputs and allow named lists mixing
+  specifications and fitted models. Forward native fitting choices and preserve
+  data expressions and resolved controls for supported reference replay.
+  Structural estimation, regularization, inference and bootstrap failure rules
+  are unchanged.
 
 * Add `repair()`, `re()`, `repair_effects()`, and `repair_data()` for additive
   structural regressions with an intercept. Random coefficients can be

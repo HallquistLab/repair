@@ -112,3 +112,19 @@ check result is pending delivery to the designated maintainer email. Preserve
 and review that result before treating Win-builder as passed. No CRAN submission,
 release tag or release publication has been performed. Statistical changes and
 PRs 21 and 22 remain excluded.
+
+## Optional first-stage fitting, November 4, 2026
+
+`repair_mlm()` adds optional native lmer/lme fitting without changing fitted
+inputs or structural calculations. It supersedes the November 3 source archive.
+See [the interface validation](inline-mlm-validation.md) for contracts and
+evidence. Both current and older dependency archive checks pass all 4,029
+assertions with no errors or warnings. The full check includes PDF/HTML manuals;
+its notes are New submission and unavailable external current-time verification.
+The README runs against the checked installation and site validation covers 48
+HTML pages. The source archive hash is recorded in `cran-comments.md`.
+
+Win-builder R-devel has a new receipt for the updated archive; its result is
+pending delivery to the maintainer address. Earlier results apply to their
+original archive and must not be reused for this updated candidate. PRs 21 and
+22 remain excluded. No CRAN submission or release tag has been created.

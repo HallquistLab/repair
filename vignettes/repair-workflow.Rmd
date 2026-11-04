@@ -45,8 +45,9 @@ models, each with one target grouping factor. lmer models may include nuisance
 groups contained within targets; see `vignette("nested-nuisance")`. Multiple referenced models require an
 explicit cross-model prediction-error policy; see `vignette("multiple-models")`. The structural model is
 additive and includes an intercept. Scores are deviations from the fitted fixed
-effects. The MLM remains fixed while structural relationships are
-explored; `repair()` does not refit it.
+effects. Supplied fitted MLMs remain fixed while structural relationships are
+explored. Alternatively, `repair_mlm()` specifications are fitted by their native
+engines during the consuming call.
 
 ## 1. Fit and check the MLM
 
@@ -94,6 +95,43 @@ Each row requests one analysis person. Duplicate, missing, or empty IDs always
 fail. Repeated-observation data must first be reduced to a deliberate unit-level
 table; REPAIR does not choose an aggregation rule. Extra MLM IDs
 outside the requested scope are recorded as `unused_prediction_ids`.
+
+### Optional integrated MLM fitting
+
+`repair_mlm()` describes the **first-stage MLM**, while the formula in `repair()`
+describes the **structural model**. Constructing a specification does not fit it.
+The MLM's repeated observations and the structural table remain explicit:
+
+```{r inline-mlm}
+inline <- repair(
+  re("Days", model = "growth") ~ observed,
+  models = list(growth = repair_mlm(
+    Reaction ~ Days + (Days | Subject), lme4::sleepstudy,
+    engine = "lmer", REML = TRUE,
+    control = lme4::lmerControl(optimizer = "bobyqa"))),
+  data = people, id = "person"
+)
+repair_coefficients(inline)
+```
+
+You can mix fitted models and specifications in a named list. Each call to
+`repair()`, `repair_data()`, or `repair_effects()` fits each supplied specification
+once. For repeated structural analyses or discovery, reuse `inline@mlm_fit`.
+The structural `backend` still chooses R/Rcpp computation; `engine` selects the
+native MLM fitter. Neither choice changes the supported covariance assumptions.
+
+Native arguments must be fully named. For lmer, `weights`, `offset` and `subset`
+retain native data-expression semantics, such as `weights = precision` when
+`precision` is a repeated-data column. Other arguments, including control and
+contrast objects, are evaluated when the specification is created. Native
+warnings remain visible; fitting errors identify the model name and engine.
+
+The helper retains data for ordinary fitted-model inspection. Refitting and
+bootstrapping still require explicit original repeated and structural data and
+the usual identity checks. Supported data-only recipes replay natively; external
+vectors, custom transformations and unsupported expressions can still require
+an explicit `refitter`. Initial subset/omission is handled by the native fitter;
+replacement fits retain the existing strict effective-row requirements.
 
 ## 3. Inspect matched predictions and covariances
 

@@ -87,7 +87,8 @@ for your R installation.
 
 ## Fit, inspect, and summarize
 
-Fit the MLM using its usual `lmer()` or `lme()` interface. Its weights,
+Fit the MLM using its usual `lmer()` or `lme()` interface, or use
+`repair_mlm()` to specify fitting inside `repair()`. Its weights,
 offsets, contrasts, estimation choices, and effective observations
 remain under your control. Supply structural variables in a separate
 data frame containing one row per analysis ID.
@@ -133,6 +134,36 @@ summary(fit)
 #> Moment conditioning and unit weights: repair_diagnostics(fit).
 #> Conditional on fitted MLM parameters; model-based normal SEs and intervals.
 ```
+
+For an integrated call, supply an unfitted first-stage MLM
+specification:
+
+``` r
+inline_fit <- repair(
+  re("day", model = "growth") ~ practice,
+  models = list(growth = repair_mlm(
+    score ~ day + (day | person), data = repair_example$repeated,
+    engine = "lmer", REML = TRUE)),
+  data = people, id = "person"
+)
+repair_coefficients(inline_fit)
+#>          term   estimate std.error statistic      p.value   conf.low  conf.high
+#> 1 (Intercept) -0.7895289 0.1147252 -6.881913 5.905407e-12 -1.0143862 -0.5646716
+#> 2    practice  0.1754854 0.0214190  8.192979 2.548385e-16  0.1335049  0.2174659
+#>   conf.level
+#> 1       0.95
+#> 2       0.95
+```
+
+`repair_mlm()` describes the first-stage MLM; the outer formula
+describes the structural model. `engine = "lme"` uses an explicit
+fixed-effects formula and a separate `random` argument. Native controls
+can be supplied in the specification. The helper defers fitting until
+consumed, and each consuming call fits afresh; reuse
+`inline_fit@mlm_fit` for further analyses without refitting. Fitted
+models and specifications can be mixed in named lists. See `?repair_mlm`
+and the [workflow guide](vignettes/repair-workflow.Rmd) for both engines
+and replay limits.
 
 The marker `re("day", model = "growth")` selects the random slope for
 `day`. It represents a deviation from the fitted fixed slope. Use
