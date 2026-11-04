@@ -11,7 +11,7 @@ bibentry(
 
 bibentry(
   bibtype = "Unpublished",
-  title = "Regression among random effects",
+  title = "REPAIR: Random-effect prediction adjustment for inference in regression",
   author = c(person("Zachary A.", "Vig"), person("Michael N.", "Hallquist")),
   year = "2026",
   note = "Unpublished manuscript, version dated November 3, 2026"

@@ -42,9 +42,9 @@ This workflow is useful when you want to connect processes measured
 across different tasks, settings, or timescales while keeping the MLMs
 separate from the regression of interest. The same principle applies to
 other clusters, such as students nested within classrooms. The
-motivation follows Vig and Hallquist’s *Regression among random effects*
-manuscript; run `citation("repair")` for the method and software
-references.
+motivation follows Vig and Hallquist’s *REPAIR: Random-effect prediction
+adjustment for inference in regression* manuscript; run
+`citation("repair")` for the method and software references.
 
 ## Supported analyses
 
