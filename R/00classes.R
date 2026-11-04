@@ -190,3 +190,4 @@ class_repair_ranef <- S7::new_class(
 # Classes from other packages
 class_merMod <- methods::getClassDef("merMod", package = "lme4")
 class_lme <- S7::new_S3_class("lme")
+class_bayes_plugin <- S7::new_S3_class("repair_bayes_plugin")

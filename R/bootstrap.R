@@ -103,6 +103,8 @@ repair_bootstrap_metadata <- function(value, object, method) {
 repair_bootstrap <- function(object, mlm_data, data, id = NULL,
                              refitter = NULL, B = 1999L, seed = 1L, tolerance = 1e-6) {
   repair_require_model(object); repair_require_fit(object)
+  if (any(vapply(object@mlm_fit, repair_is_bayes_plugin, logical(1))))
+    repair_error("Bayesian plug-in snapshots are not yet supported by `repair_bootstrap()`; full refitted-workflow coverage remains unvalidated.")
   if (!is.numeric(B) || length(B) != 1L || !is.finite(B) || B < 1 ||
       B %% 1 != 0 || B >= .Machine$integer.max)
     repair_error("`B` must be one positive integer smaller than .Machine$integer.max.")

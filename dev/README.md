@@ -7,6 +7,10 @@ behavior. A design draft does not make its proposed functions available.
 
 ## Current planning
 
+* [Bayesian plug-in full refitted-workflow simulation plan](bayesian-plugin-simulation-plan.md):
+  prospective inference validation and software/native sampling checks; no
+  unconditional coverage or Bayesian structural posterior is claimed.
+
 - [First-release readiness audit](release-readiness-audit.md): accomplished work,
   dated CI evidence, merged versus pending website status, concrete release gaps,
   short-term user improvements, and a separate CRAN preparation path.

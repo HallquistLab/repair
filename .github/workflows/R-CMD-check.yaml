@@ -18,19 +18,20 @@ jobs:
   check:
     name: ${{ matrix.config.os }} / R ${{ matrix.config.r }}
     runs-on: ${{ matrix.config.os }}
-    timeout-minutes: 45
+    timeout-minutes: ${{ matrix.config.timeout || 45 }}
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-latest, r: 'release', manual: true}
+          - {os: ubuntu-latest, r: 'release', manual: true, native: true, timeout: 90}
           - {os: macos-latest, r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest, r: 'oldrel-1'}
-          - {os: ubuntu-latest, r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest, r: 'devel', http-user-agent: 'release', timeout: 90}
           - {os: ubuntu-latest, r: '4.3'}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_DEFAULT_INTERNET_TIMEOUT: '300'
       R_KEEP_PKG_SOURCE: 'yes'
       _R_CHECK_FORCE_SUGGESTS_: 'true'
       _R_CHECK_CRAN_INCOMING_: ${{ matrix.config.manual && 'true' || 'false' }}
@@ -61,11 +62,17 @@ jobs:
         shell: bash
       - uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
-          extra-packages: any::rcmdcheck
+          # Binary RStan installations can omit LinkingTo-only dependencies,
+          # although runtime Stan compilation still needs their headers.
+          extra-packages: ${{ matrix.config.native && 'any::rcmdcheck, any::BH, any::RcppEigen' || 'any::rcmdcheck' }}
           dependencies: '"all"'
           needs: check
       - name: Verify check prerequisites
         run: Rscript .github/scripts/check-prerequisites.R
+        shell: bash
+      - name: Verify runtime Stan compilation headers
+        if: matrix.config.native
+        run: Rscript .github/scripts/check-stan-prerequisites.R
         shell: bash
       - uses: r-lib/actions/check-r-package@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
@@ -78,6 +85,15 @@ jobs:
       - name: Execute README against the checked package
         if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
         run: Rscript .github/scripts/check-readme.R
+        shell: bash
+      - name: Exercise native Bayesian model adapters
+        if: matrix.config.native
+        env:
+          REPAIR_RUN_STAN_TESTS: 'true'
+        run: >-
+          Rscript -e '.libPaths(c(normalizePath("check/repair.Rcheck"), .libPaths()));
+          library(repair); testthat::test_file("tests/testthat/test-bayes-plugin-native.R",
+          reporter = "summary", stop_on_failure = TRUE)'
         shell: bash
 
   package-checks:

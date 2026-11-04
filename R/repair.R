@@ -23,6 +23,8 @@
 #'   one target grouping factor. Gaussian lmer models may have nuisance groups
 #'   entirely contained within targets; shared nuisance levels are rejected.
 #'   Full within-unit prediction-error covariance is retained.
+#'   Experimental Bayesian measurement fits require an explicit
+#'   [repair_bayes_plugin()] snapshot; see its restrictions and inference limits.
 #'   Multiple models require an explicit `cross_model_error` policy; separate
 #'   fits do not establish independent prediction errors. See [repair_data()].
 #'   Observed variables are treated as measured without error. Scores are random

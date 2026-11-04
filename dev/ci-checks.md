@@ -122,6 +122,45 @@ R versions; R 4.3 intentionally stays fixed until the package minimum changes.
 All jobs have time limits, older runs on the same PR/ref are canceled when
 superseded, and matrix failures do not cancel the other diagnostic runs.
 
+Ubuntu/release and Ubuntu/devel have 90-minute job limits; the other package
+matrix members retain 45 minutes. The first Bayesian plug-in run (PR 23,
+Actions run 41856471343, revision 51f3376) exceeded the old 45-minute limits:
+release spent 38m54s downloading system dependencies (70.5 MB at 30.2 kB/s),
+and devel spent 37m20s installing dependencies, including 19m41s compiling
+rstanarm. Devel then passed all 4,136 assertions but timed out during vignette
+rebuilding; release timed out during tests. Native sampling was not reached.
+The larger cold-start budget preserves every dependency, package/manual check,
+README execution, and the native Bayesian integration step. A timeout is not a
+test assertion failure, and the aggregate correctly fails if any member is
+canceled. Hosted results must still demonstrate that these jobs complete.
+
+Vignette links to development plans must resolve before a PR is merged. Use a
+published immutable commit for a plan not yet on main, rather than a main-branch
+URL that returns 404 during incoming checks.
+
+The follow-up run at revision 59435cd completed all six package checks. The
+Ubuntu/release native sampling step then failed before fitting brms because
+RStan could not find Boost. Binary dependency resolution can omit LinkingTo-only
+packages, so the native job explicitly installs BH and RcppEigen and verifies
+their actual Boost/Eigen header files and RStan's configured include directories
+before starting checks. The brms and rstanarm native tests are separate, so a
+failure in one engine cannot prevent exercising the other. Both remain required.
+
+The same follow-up's documentation job spent about 28 minutes downloading system
+dependencies and reached its 30-minute limit just as website construction began.
+Its budget is now 90 minutes as well, preserving examples, articles, link checks
+and preview artifacts. These changes address compiler prerequisites and cold
+setup time; they do not disable sampling or relax numerical assertions.
+
+At revision cff78f2, hosted brms/RStan and rstanarm sampling passed all 161
+native assertions, and website construction/link checks passed. The R 4.3 job
+failed twice before dependency resolution because downloading the pak binary
+hit R's default 60-second Internet timeout. Both workflows now set
+`R_DEFAULT_INTERNET_TIMEOUT=300` before setup-r-dependencies, including its pak
+bootstrap. This setting is supported from R 4.0.3 onward and changes transport
+timeouts only. The package matrix, dependency requirements and numerical tests
+remain intact; repeated download failures are not treated as passing checks.
+
 ## Scope and audit
 
 The package previously relied on manually executed macOS checks. The new workflow

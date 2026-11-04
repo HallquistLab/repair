@@ -8,7 +8,8 @@ repair_effects(models)
 }
 \arguments{
 \item{models}{A fitted Gaussian \code{lme4::lmer()} or linear \code{nlme::lme()}
-model, a \code{\link[=repair_mlm]{repair_mlm()}} specification, or a named list mixing either type.
+model, a \code{\link[=repair_mlm]{repair_mlm()}} specification, an experimental \code{\link[=repair_bayes_plugin]{repair_bayes_plugin()}}
+snapshot, or a named list mixing these types.
 Specifications are fitted once during this call.}
 }
 \value{
