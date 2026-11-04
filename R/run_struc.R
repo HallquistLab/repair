@@ -47,6 +47,8 @@
 #'   uncertainty in their estimation is not propagated. Independent errors do not
 #'   imply independent latent processes. The package does not estimate cross-model
 #'   covariance from separate fits. See `vignette("multiple-models", package = "repair")`.
+#'   Use [repair_cross_covariance()] to propagate explicitly assumed observation
+#'   covariances and [repair_sensitivity()] to compare supplied assumptions.
 #' @return An S7 analysis-data object. Use `@ids`, `@outcome`, `@predictors`,
 #'   `@err_x`, `@err_y`, `@err_xy`, `@effects`, and `@diagnostics` to inspect it.
 #'   Error arrays are ordered predictor by predictor by ID. Observed variables

@@ -19,6 +19,10 @@ behavior. A design draft does not make its proposed functions available.
 
 ## Implementation evidence
 
+- [Explicit cross-model covariance](cross-covariance-validation.md): observation
+  alignment, covariance propagation, admissibility checks, sensitivity scenarios
+  and conditional-inference boundaries.
+
 - [Concise coefficient references](re-shorthand-validation.md): literal bare names,
   optional qualification, ambiguity diagnostics and numerical equivalence.
 

@@ -381,8 +381,12 @@ fits alone do not justify the assumption. If the prediction errors are
 correlated, supply per-person covariance blocks instead. Omitting the
 policy is an error for multiple referenced models. Within-model
 covariance is always retained. See the executable [multiple-model
-guide](vignettes/multiple-models.Rmd) for both policies, ID matching,
-and a dual-process reproduction against the paper’s simulation code.
+guide](vignettes/multiple-models.Rmd) for design guidance,
+`repair_cross_covariance()` to propagate explicitly assumed observation
+error covariance, and `repair_sensitivity()` to compare assumptions with
+estimates, SEs, intervals, and regularization diagnostics. Automatic
+covariance estimation is not included. The guide also reproduces a
+dual-process analysis against the paper’s simulation code.
 
 ## Reliability and diagnostics
 

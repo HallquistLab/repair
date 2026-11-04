@@ -1,0 +1,20 @@
+REPAIR cross-model covariance screen
+Started UTC: 2026-11-04 17:35:45
+Package source commit: 7394c75949705f0505e4a1690e52e66b5db77e93
+Simulation script MD5: 3c8dd79efd55e74e43747a225ec770e0
+Seed: 20261104
+RNG: L'Ecuyer-CMRG; one stream per cell and substream per replicate
+Replicates per condition: 500
+Workers: 8
+Public audits per cell: 5
+R: R version 4.5.2 (2025-10-31)
+repair: 1.0.0
+lme4: 2.0.6
+S7: 0.2.2
+Rcpp: 1.1.2
+Dataset count: 24000
+Structural-fit count: 288000
+Measurement failures: 0
+Structural failures: 0
+Public scenario audits: 1440
+R/C++ comparisons: 2880
