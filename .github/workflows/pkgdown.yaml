@@ -18,7 +18,8 @@ jobs:
   build:
     name: Build documentation
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # Full optional Bayesian dependencies can exceed 30 minutes on a cold runner.
+    timeout-minutes: 90
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:

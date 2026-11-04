@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: ubuntu-latest, r: 'release', manual: true, timeout: 90}
+          - {os: ubuntu-latest, r: 'release', manual: true, native: true, timeout: 90}
           - {os: macos-latest, r: 'release'}
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest, r: 'oldrel-1'}
@@ -61,11 +61,17 @@ jobs:
         shell: bash
       - uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
-          extra-packages: any::rcmdcheck
+          # Binary RStan installations can omit LinkingTo-only dependencies,
+          # although runtime Stan compilation still needs their headers.
+          extra-packages: ${{ matrix.config.native && 'any::rcmdcheck, any::BH, any::RcppEigen' || 'any::rcmdcheck' }}
           dependencies: '"all"'
           needs: check
       - name: Verify check prerequisites
         run: Rscript .github/scripts/check-prerequisites.R
+        shell: bash
+      - name: Verify runtime Stan compilation headers
+        if: matrix.config.native
+        run: Rscript .github/scripts/check-stan-prerequisites.R
         shell: bash
       - uses: r-lib/actions/check-r-package@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
@@ -80,7 +86,7 @@ jobs:
         run: Rscript .github/scripts/check-readme.R
         shell: bash
       - name: Exercise native Bayesian model adapters
-        if: matrix.config.os == 'ubuntu-latest' && matrix.config.r == 'release'
+        if: matrix.config.native
         env:
           REPAIR_RUN_STAN_TESTS: 'true'
         run: >-

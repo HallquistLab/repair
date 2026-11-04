@@ -138,6 +138,20 @@ Vignette links to development plans must resolve before a PR is merged. Use a
 published immutable commit for a plan not yet on main, rather than a main-branch
 URL that returns 404 during incoming checks.
 
+The follow-up run at revision 59435cd completed all six package checks. The
+Ubuntu/release native sampling step then failed before fitting brms because
+RStan could not find Boost. Binary dependency resolution can omit LinkingTo-only
+packages, so the native job explicitly installs BH and RcppEigen and verifies
+their actual Boost/Eigen header files and RStan's configured include directories
+before starting checks. The brms and rstanarm native tests are separate, so a
+failure in one engine cannot prevent exercising the other. Both remain required.
+
+The same follow-up's documentation job spent about 28 minutes downloading system
+dependencies and reached its 30-minute limit just as website construction began.
+Its budget is now 90 minutes as well, preserving examples, articles, link checks
+and preview artifacts. These changes address compiler prerequisites and cold
+setup time; they do not disable sampling or relax numerical assertions.
+
 ## Scope and audit
 
 The package previously relied on manually executed macOS checks. The new workflow
