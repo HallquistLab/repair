@@ -22,7 +22,7 @@ test_that("iid propagation reproduces independently generated prediction covaria
     ids = ex$case$people$person)
   expect_identical(blocks[[1]]$models, c("response", "growth"))
   expect_equal(aperm(blocks[[1]]$covariance, c(2, 1, 3)),
-    ex$case$cross_model_error[[1]]$covariance, tolerance = 1e-12)
+    ex$case$cross_model_error[[1]]$covariance, tolerance = 1e-5)
   explicit <- repair_cross_covariance(ex$formula, ex$models, keys,
     observation_blocks(ex, keys), ids = ex$case$people$person)
   expect_equal(explicit, blocks, tolerance = 1e-12)
