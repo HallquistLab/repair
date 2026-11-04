@@ -52,6 +52,13 @@ jobs:
           tlmgr update --self
           tlmgr install inconsolata collection-fontsrecommended
         shell: bash
+      - name: Install HTML-manual validator
+        if: matrix.config.manual
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes tidy
+          tidy --version
+        shell: bash
       - uses: r-lib/actions/setup-r-dependencies@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2
         with:
           extra-packages: any::rcmdcheck

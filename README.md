@@ -48,13 +48,14 @@ references.
 
 ## Supported analyses
 
-Version 0.5.0 is a development release. The supported structural
-workflow is an additive regression with an intercept, using random
-coefficients from **fitted `lme4::lmer()` or linear `nlme::lme()`
-models**. Select one target grouping factor per model; lmer models can
-also have nuisance groups contained within each target person. Random
-coefficients may be predictors, the outcome, or both. Numeric, logical,
-and factor observed predictors are supported. See the [workflow
+Version 1.0.0 is the first release candidate and has not yet been
+submitted to CRAN. The supported structural workflow is an additive
+regression with an intercept, using random coefficients from **fitted
+`lme4::lmer()` or linear `nlme::lme()` models**. Select one target
+grouping factor per model; lmer models can also have nuisance groups
+contained within each target person. Random coefficients may be
+predictors, the outcome, or both. Numeric, logical, and factor observed
+predictors are supported. See the [workflow
 guide](vignettes/repair-workflow.Rmd) for matching, omission,
 interpretation, and current limits.
 
@@ -393,7 +394,7 @@ meaningful synthetic unit-level variables.
 Run `citation("repair")` for separate software and method references.
 Zachary A. Vig and Michael N. Hallquist are authors and co-maintainers;
 Zach is the primary R package maintainer contact. The package version is
-0.5.0; see the release notes for changes.
+1.0.0; see the release notes for changes.
 
 ## Interpretation and limits
 

@@ -19,6 +19,8 @@ behavior. A design draft does not make its proposed functions available.
 
 ## Implementation evidence
 
+- [Version 1.0.0 hardening](release-1.0-validation.md): release identity, attribution,
+  tested dependency floors, source-archive checks and Win-builder status.
 - [Design audit](design-audit.md): original workflow corrections and follow-ups.
 - [nlme validation](nlme-validation.md): effective rows, residual covariance,
   independent prediction extraction and end-to-end reference checks.

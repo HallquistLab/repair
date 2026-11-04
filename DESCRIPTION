@@ -1,18 +1,19 @@
 Package: repair
 Title: Measurement-Error-Corrected Regression of Random Coefficients
-Version: 0.5.0
+Version: 1.0.0
 Authors@R: 
     c(person("Zachary A.", "Vig", email = "zachvig@rocketmail.com",
-             role = c("aut", "cre"), comment = "Co-maintainer"),
-      person("Michael N.", "Hallquist", role = "aut", comment = "Co-maintainer"))
-Author: Zachary A. Vig [aut, cre] (Co-maintainer), Michael N. Hallquist [aut] (Co-maintainer)
+             role = c("aut", "cre", "cph"), comment = "Co-maintainer"),
+      person("Michael N.", "Hallquist", role = c("aut", "cph"), comment = "Co-maintainer"))
+Author: Zachary A. Vig [aut, cre, cph] (Co-maintainer), Michael N. Hallquist [aut, cph] (Co-maintainer)
 Maintainer: Zachary A. Vig <zachvig@rocketmail.com>
 Description: Implements Random-Effect Prediction Adjustment for Inference in
     Regression (REPAIR), a two-stage method for estimating relationships involving
     person- or cluster-specific intercepts and slopes from Gaussian mixed models.
     Uses a modified method-of-moments correction for sampling error in these
-    estimated random coefficients. Extracts likelihood-only predictions and sampling-error
-    covariances, aligns them with unit-level data by identifier, and reports conditional
+    estimated random coefficients, adapting the measurement-error methods of
+    Fuller (1987) <doi:10.1002/9780470316665>. Extracts likelihood-only predictions
+    and sampling-error covariances, aligns them with unit-level data by identifier, and reports conditional
     model-based inference and analysis diagnostics. Supports adaptive step-up
     regularization and whole-unit bootstrap sampling with percentile intervals
     for complete refitted analyses.
@@ -26,14 +27,14 @@ Depends:
 Imports:
     parallel,
     geigen,
-    Rcpp,
-    S7,
-    lme4,
+    Rcpp (>= 1.0.12),
+    S7 (>= 0.2.0),
+    lme4 (>= 1.1-35.5),
     cli,
     rlang
 LinkingTo:
-    Rcpp,
-    RcppArmadillo
+    Rcpp (>= 1.0.12),
+    RcppArmadillo (>= 0.12.8.4.0)
 Suggests: 
     callr,
     knitr,

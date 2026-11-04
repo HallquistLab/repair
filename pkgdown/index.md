@@ -47,7 +47,8 @@ Vig and Hallquist's *Regression among random effects* manuscript; run
 remotes::install_github("HallquistLab/repair")
 ```
 
-Version 0.5.0 is currently distributed through GitHub. Installation
+Version 1.0.0 is the first release candidate, currently distributed through
+GitHub; it has not yet been submitted to CRAN. Installation
 requires **R 4.3 or later** and a C++20 compiler with the R build toolchain
 (including the matching Rtools installation on Windows).
 

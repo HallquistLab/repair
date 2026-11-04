@@ -14,5 +14,5 @@ bibentry(
   title = "Regression among random effects",
   author = c(person("Zachary A.", "Vig"), person("Michael N.", "Hallquist")),
   year = "2026",
-  note = "Unpublished manuscript, version dated October 27, 2026"
+  note = "Unpublished manuscript, version dated November 3, 2026"
 )

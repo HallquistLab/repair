@@ -1,6 +1,6 @@
 ## Candidate
 
-repair 0.5.0, first CRAN submission candidate, checked November 3, 2026.
+repair 1.0.0, first CRAN submission candidate, checked November 3, 2026.
 
 Scope: core REPAIR, conditional model-based inference, sequential step-up
 (M-MOMS) regularization, and experimental whole-unit bootstrap inference with
@@ -29,12 +29,23 @@ correlated-residual lme, and natural failed draws, with identical draws,
 results, inference eligibility and RNG preservation. Candidate histories omit
 unevaluated larger grid points; statistical criteria and fallback are unchanged.
 
+A second archive check recompiles against the declared older dependency stack
+(S7 0.2.0, lme4 1.1-35.5, Rcpp 1.0.12, RcppArmadillo 0.12.8.4.0)
+and passes all 3,875 assertions with no errors or warnings.
+
 The README executes against the checked installation. The documentation site
 build and internal-link validation cover 47 HTML pages.
 
 ## Source artifact
 
-File: repair_0.5.0.tar.gz
-SHA-256: 5aadd0c101efc5f0ae9705bb5b0768a1468ac03422b84061185ab8e988bbfda5
+File: repair_1.0.0.tar.gz
+SHA-256: b55a0256bb626094e7a2349c3c1e2995d89fb2dc5a4a147192a2f69200f54929
+
+## Win-builder
+
+The exact archive above was uploaded to Win-builder R-devel on November 3, 2026
+(2026-11-04 02:18 UTC). The upload page returned a receipt for the matching
+filename and 664,027-byte size. Results are pending and are sent to the
+designated maintainer email in DESCRIPTION; a receipt is not a passing check.
 
 No CRAN submission or release tag has been created during preparation.

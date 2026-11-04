@@ -15,8 +15,8 @@ library(repair)
 `repair_refit()` rebuilds a MLM, recomputes predictions and their error
 covariance, and fits the structural regression again. It first replays the
 reference analysis and verifies agreement with the supplied fit. This supports
-reproducible sensitivity analyses and provides groundwork for a future person
-bootstrap. It currently supports **one MLM**.
+reproducible sensitivity analyses and powers the experimental person bootstrap
+in `repair_bootstrap()`. It currently supports **one MLM**.
 
 ## Verify the reference analysis
 
