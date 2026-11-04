@@ -82,8 +82,8 @@ predictors, the outcome, or both in a second-stage regression.
 }
 \details{
 Select random effects with \code{\link[=re]{re()}}, match them to unit-level data by
-ID, and fit the modified method-of-moments (M-MOM) regression. MLM
-models can be fitted beforehand or supplied as explicit
+ID, and fit the modified method-of-moments (M-MOM) regression. MLMs can be
+fitted beforehand or supplied as explicit
 \code{\link[=repair_mlm]{repair_mlm()}} specifications for fitting during this call.
 
 The supported structural grammar is additive with an intercept.
