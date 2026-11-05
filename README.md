@@ -53,19 +53,19 @@ submitted to CRAN. The supported structural workflow is an additive
 regression with an intercept, using random effects from **fitted
 `lme4::lmer()` or linear `nlme::lme()` models**. Select one target
 grouping factor per model; lmer models can also have nuisance groups
-contained within each target person. Random effects may be
-predictors, the outcome, or both. Numeric, logical, and factor observed
-predictors are supported. See the [workflow
-guide](vignettes/repair-workflow.Rmd) for matching, omission,
-interpretation, and current limits.
+contained within each target person. Random effects may be predictors,
+the outcome, or both. Numeric, logical, and factor observed predictors
+are supported. See the [workflow guide](vignettes/repair-workflow.Rmd)
+for matching, omission, interpretation, and current limits.
 
-**Experimental Bayesian inputs:** explicitly wrap a narrowly supported sampled
-Gaussian brms/rstanarm fit with `repair_bayes_plugin(fit)`. This uses posterior
-summaries of shared measurement parameters with the existing estimator.
-Structural inference remains conditional and model-based; step-1 uncertainty
-is not propagated, full refitted-workflow coverage is unvalidated, and Bayesian
-refitting/bootstrap APIs are unsupported. See the
-[Bayesian plug-in guide](vignettes/bayesian-plugin.Rmd) for the precise scope.
+**Experimental Bayesian inputs:** explicitly wrap a narrowly supported
+sampled Gaussian brms/rstanarm fit with `repair_bayes_plugin(fit)`. This
+uses posterior summaries of shared measurement parameters with the
+existing estimator. Structural inference remains conditional and
+model-based; step-1 uncertainty is not propagated, full
+refitted-workflow coverage is unvalidated, and Bayesian
+refitting/bootstrap APIs are unsupported. See the [Bayesian plug-in
+guide](vignettes/bayesian-plugin.Rmd) for the precise scope.
 
 ## Package website
 
@@ -115,26 +115,26 @@ fit <- repair(
 )
 summary(fit)
 #> REPAIR structural regression
-#> re("day", model = "growth") ~ practice
+#> re("day", model = "growth") ~ practice 
 #> Units: 60 analyzed / 60 requested; 0 excluded
 #> MLM: growth (lme4; group person; 0 IDs outside scope)
 #> Cross-model prediction errors: not applicable (one model)
 #> Predictions: likelihood-only random deviations
 #>   model  group term    role
 #>  growth person  day outcome
-#>
+#> 
 #> Posterior reliability (structural scope; equal unit weights):
 #>   model term    role      measure reliability n_units n_defined
 #>  growth  day outcome     marginal       0.943      60        60
 #>  growth  day outcome residualized       0.897      60        60
-#>
+#> 
 #>             estimate      se  zstat      pval  ci_low ci_high
 #> (Intercept)  -0.7895 0.11473 -6.882 5.905e-12 -1.0144 -0.5647
 #> practice      0.1755 0.02142  8.193 2.548e-16  0.1335  0.2175
-#>
-#> Regularization (preliminary / final): minimum / minimum
-#> Error-moment subtraction multipliers: 0.95 / 0.95
-#> Largest analysis-weight fraction: 0.0179 ; weight-equivalent count: 59.8
+#> 
+#> Regularization (preliminary / final): minimum / minimum 
+#> Error-moment subtraction multipliers: 0.95 / 0.95 
+#> Largest analysis-weight fraction: 0.0179 ; weight-equivalent count: 59.8 
 #> Moment conditioning and unit weights: repair_diagnostics(fit).
 #> Conditional on fitted MLM parameters; model-based normal SEs and intervals.
 ```
@@ -181,7 +181,7 @@ inspect the available names. Qualifier values remain quoted, for example
 
 ``` r
 coef(fit)
-#> (Intercept)    practice
+#> (Intercept)    practice 
 #>  -0.7895289   0.1754854
 confint(fit)
 #>                  2.5 %     97.5 %
@@ -212,11 +212,11 @@ head(repair_predictions(analysis))
 #> 5 P005 growth person  day re("day", model = "growth") outcome  0.6052267
 #> 6 P006 growth person  day re("day", model = "growth") outcome -1.2120879
 #>   std.error prediction.error.variance      scope analyzed status reason
-#> 1 0.1401763                0.01964941 structural     TRUE     ok
-#> 2 0.1401763                0.01964941 structural     TRUE     ok
-#> 3 0.2268540                0.05146273 structural     TRUE     ok
-#> 4 0.1618617                0.02619921 structural     TRUE     ok
-#> 5 0.1401763                0.01964941 structural     TRUE     ok
+#> 1 0.1401763                0.01964941 structural     TRUE     ok       
+#> 2 0.1401763                0.01964941 structural     TRUE     ok       
+#> 3 0.2268540                0.05146273 structural     TRUE     ok       
+#> 4 0.1618617                0.02619921 structural     TRUE     ok       
+#> 5 0.1401763                0.01964941 structural     TRUE     ok       
 #> 6 0.2268540                0.05146273 structural     TRUE     ok
 head(repair_prediction_covariance(analysis))
 #>     id model1 group1 term1                      label1   role1 model2 group2
@@ -260,11 +260,11 @@ head(repair_predictions(fit))
 #> 5 P005 growth person  day re("day", model = "growth") outcome  0.6052267
 #> 6 P006 growth person  day re("day", model = "growth") outcome -1.2120879
 #>   std.error prediction.error.variance      scope analyzed status reason
-#> 1 0.1401763                0.01964941 structural     TRUE     ok
-#> 2 0.1401763                0.01964941 structural     TRUE     ok
-#> 3 0.2268540                0.05146273 structural     TRUE     ok
-#> 4 0.1618617                0.02619921 structural     TRUE     ok
-#> 5 0.1401763                0.01964941 structural     TRUE     ok
+#> 1 0.1401763                0.01964941 structural     TRUE     ok       
+#> 2 0.1401763                0.01964941 structural     TRUE     ok       
+#> 3 0.2268540                0.05146273 structural     TRUE     ok       
+#> 4 0.1618617                0.02619921 structural     TRUE     ok       
+#> 5 0.1401763                0.01964941 structural     TRUE     ok       
 #> 6 0.2268540                0.05146273 structural     TRUE     ok
 repair_diagnostics(fit, table = "excluded")
 #> [1] id     reason
@@ -476,20 +476,25 @@ Zach is the primary R package maintainer contact. The package version is
 
 ## Development and reproducibility
 
-The [design plan](dev/package_plan.Rmd) describes the implemented
-contracts and extension sequence. The [audit and
-decisions](dev/design-audit.md) trace findings to corrections and tests.
-The test suite includes frozen REPAIR simulation and independent
-algebra-audit fixtures for both R and C++ backends, plus three
-single-model nlme and two dual-process reproduction datasets; see
-[fixture provenance](tests/testthat/fixtures/README.md).
+The [design
+plan](https://github.com/HallquistLab/repair/blob/main/dev/package_plan.Rmd)
+describes the implemented contracts and extension sequence. The [audit
+and
+decisions](https://github.com/HallquistLab/repair/blob/main/dev/design-audit.md)
+trace findings to corrections and tests. The test suite includes frozen
+REPAIR simulation and independent algebra-audit fixtures for both R and
+C++ backends, plus three single-model nlme and two dual-process
+reproduction datasets; see [fixture
+provenance](tests/testthat/fixtures/README.md).
 
 Pull requests and pushes to main run package checks on Linux, macOS, and
 Windows, with additional Linux checks for previous, development, and
 minimum-supported R. Tests, examples, and all vignettes run with
 suggested dependencies installed; errors and warnings fail CI. See the
-[CI guide](dev/ci-checks.md) for the matrix, check artifacts, local
-reproduction, and the `Package checks` branch-protection target.
+[CI
+guide](https://github.com/HallquistLab/repair/blob/main/dev/ci-checks.md)
+for the matrix, check artifacts, local reproduction, and the
+`Package checks` branch-protection target.
 
 ``` r
 # From a source checkout:

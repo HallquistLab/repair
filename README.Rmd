@@ -339,8 +339,8 @@ R package maintainer contact. The package version is 1.0.0; see the release note
 
 ## Development and reproducibility
 
-The [design plan](dev/package_plan.Rmd) describes the implemented contracts and
-extension sequence. The [audit and decisions](dev/design-audit.md) trace findings
+The [design plan](https://github.com/HallquistLab/repair/blob/main/dev/package_plan.Rmd) describes the implemented contracts and
+extension sequence. The [audit and decisions](https://github.com/HallquistLab/repair/blob/main/dev/design-audit.md) trace findings
 to corrections and tests. The test suite includes frozen REPAIR simulation and
 independent algebra-audit fixtures for both R and C++ backends, plus three
 single-model nlme and two dual-process reproduction datasets; see
@@ -349,7 +349,7 @@ single-model nlme and two dual-process reproduction datasets; see
 Pull requests and pushes to main run package checks on Linux, macOS, and Windows,
 with additional Linux checks for previous, development, and minimum-supported R.
 Tests, examples, and all vignettes run with suggested dependencies installed;
-errors and warnings fail CI. See the [CI guide](dev/ci-checks.md) for the matrix,
+errors and warnings fail CI. See the [CI guide](https://github.com/HallquistLab/repair/blob/main/dev/ci-checks.md) for the matrix,
 check artifacts, local reproduction, and the `Package checks` branch-protection target.
 
 ```r
