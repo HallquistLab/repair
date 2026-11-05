@@ -11,3 +11,6 @@
 ^_pkgdown\.yml$
 ^pkgdown$
 ^docs$
+^CRAN-SUBMISSION$
+^.vscode
+^.DS_Store

@@ -13,8 +13,15 @@
 #' Failed numerical fits remain inspectable with `summary()`; coefficient and
 #' covariance accessors stop rather than presenting failed estimates.
 #' @name repair-methods
+#' @docType methods
+#' @aliases coef
+#' @aliases vcov
+#' @aliases nobs
+#' @aliases confint
+#' @aliases summary
+#' @aliases print
 #' @importFrom stats coef vcov nobs confint
-#' @param object,x A fitted REPAIR result.
+#' @param object,x A fitted REPAIR model or REPAIR data object.
 #' @param parm Coefficient names or integer positions; missing selects all.
 #' @param level Confidence level strictly between zero and one.
 #' @param ... Reserved for generic compatibility.
@@ -30,19 +37,27 @@ repair_require_fit <- function(object) {
   object@struc_fit
 }
 
+#' @rdname repair-methods
+#' @export
 S7::method(coef, class_repair_mod) <- function(object, ...) {
   fit <- repair_require_fit(object)
   stats::setNames(fit@coefficients$estimate, fit@coefficients$term)
 }
 
+#' @rdname repair-methods
+#' @export
 S7::method(vcov, class_repair_mod) <- function(object, ...) {
   repair_require_fit(object)@vcov
 }
 
+#' @rdname repair-methods
+#' @export
 S7::method(nobs, class_repair_mod) <- function(object, ...) {
   length(object@analysis_data@ids)
 }
 
+#' @rdname repair-methods
+#' @export
 S7::method(confint, class_repair_mod) <- function(object, parm, level = 0.95, ...) {
   beta <- stats::coef(object)
   if (!is.numeric(level) || length(level) != 1L || !is.finite(level) || level <= 0 || level >= 1) {
@@ -63,6 +78,8 @@ S7::method(confint, class_repair_mod) <- function(object, parm, level = 0.95, ..
   result
 }
 
+#' @rdname repair-methods
+#' @export
 S7::method(summary, class_repair_mod) <- function(object, ...) {
   fit <- object@struc_fit
   data <- object@analysis_data
@@ -152,11 +169,15 @@ print.summary_repair <- function(x, ...) {
   invisible(x)
 }
 
+#' @rdname repair-methods
+#' @export
 S7::method(print, class_repair_mod) <- function(x, ...) {
   print(summary(x), ...)
   invisible(x)
 }
 
+#' @rdname repair-methods
+#' @export
 S7::method(print, class_repair_data) <- function(x, ...) {
   cat("REPAIR analysis data:", length(x@ids), "people,", ncol(x@predictors), "predictor columns\n")
   cat("Excluded:", nrow(x@diagnostics$excluded), "of", x@diagnostics$n_requested, "requested IDs\n")

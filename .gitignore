@@ -9,5 +9,7 @@ src/*.dll
 src/*.dylib
 src/symbols.rds
 
+.DS_Store
+
 /check/
 /docs/
